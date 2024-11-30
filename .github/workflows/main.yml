@@ -1,0 +1,29 @@
+name: Deploy-To-Firebase
+
+on: 
+  push:
+    branches: 
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 20.18.1
+      uses: actions/setup-node@v1
+      with:
+        node-version: 20.18.1   
+    - name: Install dependencies
+      run: npm install
+    - name: Build
+      run: npm run build -- --prod
+    - uses: w9jds/firebase-action@master
+      with:
+        args: deploy
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
