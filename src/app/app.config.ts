@@ -12,7 +12,7 @@ import {getPerformance, providePerformance} from '@angular/fire/performance';
 import {getStorage, provideStorage} from '@angular/fire/storage';
 import {getRemoteConfig, provideRemoteConfig} from '@angular/fire/remote-config';
 import { provideStore } from '@ngrx/store';
-import {environment} from '../enviorments/enviorment';
+import {environment} from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
