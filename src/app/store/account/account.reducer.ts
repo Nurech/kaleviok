@@ -1,18 +1,21 @@
 import {createFeature, createReducer, on} from '@ngrx/store';
 import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
-import {Account} from './account.model';
 import {AccountActions} from './account.actions';
 
 export const featureKey = 'accounts';
 
+export interface Account {
+  id: string;
+}
+
 export interface State extends EntityState<Account> {
-  // additional entities state properties
+  id: string;
 }
 
 export const adapter: EntityAdapter<Account> = createEntityAdapter<Account>();
 
 export const initialState: State = adapter.getInitialState({
-  // additional entity state properties
+  id: ''
 });
 
 export const reducer = createReducer(
