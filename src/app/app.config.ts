@@ -1,4 +1,4 @@
-import {ApplicationConfig, provideZoneChangeDetection, isDevMode} from '@angular/core';
+import {ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
@@ -11,13 +11,16 @@ import {getMessaging, provideMessaging} from '@angular/fire/messaging';
 import {getPerformance, providePerformance} from '@angular/fire/performance';
 import {getStorage, provideStorage} from '@angular/fire/storage';
 import {getRemoteConfig, provideRemoteConfig} from '@angular/fire/remote-config';
-import { provideStore } from '@ngrx/store';
+import {provideStore} from '@ngrx/store';
 import {environment} from '../environments/environment';
-import { provideServiceWorker } from '@angular/service-worker';
+import {provideServiceWorker} from '@angular/service-worker';
+import {provideEffects} from '@ngrx/effects';
+import {provideRouterStore, routerReducer} from '@ngrx/router-store';
+import {RootStoreModule} from './store/root/root.module';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
@@ -30,9 +33,17 @@ export const appConfig: ApplicationConfig = {
     providePerformance(() => getPerformance()),
     provideStorage(() => getStorage()),
     provideRemoteConfig(() => getRemoteConfig()),
-    provideStore(), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          })
-],
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
+    provideEffects(),
+    provideRouterStore(),
+    importProvidersFrom(RootStoreModule),
+    provideStore({}),
+    provideEffects([]),
+    provideStore({
+      router: routerReducer,
+    }),
+  ],
 };
