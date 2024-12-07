@@ -18,16 +18,7 @@ import {environment} from '../environments/environment';
 import {provideStoreDevtools} from '@ngrx/store-devtools';
 import {MetaReducer} from '@ngrx/store';
 import {reducer} from './store/core/core.reducer';
-
-export function logState() {
-  return (state: any, action: any) => {
-    const nextState = reducer(state, action);
-    console.log('Next State:', nextState);
-    return nextState;
-  };
-}
-
-export const metaReducers: MetaReducer[] = [logState];
+import {usersFeature} from './store/user/user.reducer';
 
 
 export const appConfig: ApplicationConfig = {
@@ -46,7 +37,6 @@ export const appConfig: ApplicationConfig = {
     provideAnalytics(() => getAnalytics()),
     ScreenTrackingService,
     UserTrackingService,
-    metaReducers,
     provideFirestore(() => getFirestore()),
     provideFunctions(() => getFunctions()),
     provideMessaging(() => getMessaging()),
@@ -59,10 +49,12 @@ export const appConfig: ApplicationConfig = {
     }),
     provideRouterStore(),
     importProvidersFrom(RootStoreModule),
-    provideStore({
-      router: routerReducer,
-    }, {
-      metaReducers,
+    provideStoreDevtools({
+      maxAge: 25,
+      traceLimit: 75,
+      connectInZone: true,
     }),
+    provideRouterStore(), // Router store setup
+    importProvidersFrom(RootStoreModule), // Import the RootStoreModule
   ],
 };
