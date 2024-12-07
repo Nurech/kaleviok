@@ -10,11 +10,11 @@ export const startGmailAuthenticationError = createAction(
 );
 
 export const startGmailAuthenticationSuccess = createAction(
-  '[Core/API] Gmail Authentication Success', props<{ user: User }>()
+  '[Core/API] Gmail Authentication Success', props<{ payload: User }>()
 );
 
-export const login = createAction(
-  '[Core/API] Login', props<{ user: User }>()
+export const loginSuccess = createAction(
+  '[Core/API] Login', props<{ payload: User }>()
 );
 
 export const logout = createAction(

@@ -23,7 +23,7 @@ export const initialState: State = adapter.getInitialState({
 export const reducer = createReducer(
   initialState,
   on(upsertUser, (state, action) => adapter.upsertOne(action.user, state)),
-  on(startGmailAuthenticationSuccess, (state, action) => adapter.upsertOne(action.user, state)),
+  on(startGmailAuthenticationSuccess, (state, action) => adapter.upsertOne(action.payload, state)),
 );
 
 export const usersFeature = createFeature({

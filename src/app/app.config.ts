@@ -43,18 +43,11 @@ export const appConfig: ApplicationConfig = {
     providePerformance(() => getPerformance()),
     provideStorage(() => getStorage()),
     provideRemoteConfig(() => getRemoteConfig()),
+    provideRouterStore(),
+    importProvidersFrom(RootStoreModule),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
-    provideRouterStore(),
-    importProvidersFrom(RootStoreModule),
-    provideStoreDevtools({
-      maxAge: 25,
-      traceLimit: 75,
-      connectInZone: true,
-    }),
-    provideRouterStore(), // Router store setup
-    importProvidersFrom(RootStoreModule), // Import the RootStoreModule
   ],
 };

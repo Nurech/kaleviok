@@ -1,5 +1,10 @@
 import {catchError, map, mergeMap, of, tap} from 'rxjs';
-import {startGmailAuthentication, startGmailAuthenticationError, startGmailAuthenticationSuccess} from './core.actions';
+import {
+  loginSuccess,
+  startGmailAuthentication,
+  startGmailAuthenticationError,
+  startGmailAuthenticationSuccess
+} from './core.actions';
 import {inject, Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {AuthService} from '../../services/auth.service';
@@ -19,8 +24,8 @@ export class CoreEffects {
       mergeMap(() =>
         this.authService.loginWithGoogle().pipe(
           map((response) => {
-            const user: User = UserMapper.mapResponseToUser(response);
-            return startGmailAuthenticationSuccess({user});
+            const payload: User = UserMapper.mapResponseToUser(response);
+            return startGmailAuthenticationSuccess({payload});
           }),
           catchError((error) => of(startGmailAuthenticationError({error})))
         )
@@ -29,15 +34,17 @@ export class CoreEffects {
   );
 
 
-  saveUserToFirestore$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(startGmailAuthenticationSuccess),
-        tap(({ user }) => {
-          this.dataService.saveUserToFirestore(user.uid, user);
-        })
-      ),
-    { dispatch: false }
+  saveUserToFirestore$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(startGmailAuthenticationSuccess),
+      tap(({ payload }) => {
+        this.dataService.saveUserToFirestore(payload.uid, payload);
+      }),
+      map(({ payload }) => {
+        return loginSuccess({ payload });
+      })
+    )
   );
+
 
 }

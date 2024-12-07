@@ -14,6 +14,7 @@ export class LoginComponent {
   constructor(private store$: Store) {}
 
   loginWithGoogle() {
+    console.log('loginWithGoogle');
     this.store$.dispatch(startGmailAuthentication());
   }
 }
