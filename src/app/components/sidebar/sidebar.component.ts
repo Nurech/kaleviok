@@ -17,7 +17,6 @@ import {RouterLink} from '@angular/router';
   selector: 'app-sidebar',
   standalone: true,
   imports: [
-    LoginComponent,
     MatIconModule,
     MatSlideToggleModule,
     MatDivider,
