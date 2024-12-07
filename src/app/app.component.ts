@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {initFlowbite} from 'flowbite';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 
 @Component({
@@ -14,6 +13,5 @@ export class AppComponent implements OnInit {
   title = 'kaleviok';
 
   ngOnInit(): void {
-    initFlowbite();
   }
 }
