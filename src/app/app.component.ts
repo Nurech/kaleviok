@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {initFlowbite} from 'flowbite';
-import {SidebarComponent} from '../components/sidebar/sidebar.component';
+import {SidebarComponent} from './components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',

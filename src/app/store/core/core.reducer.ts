@@ -1,17 +1,18 @@
 import {createFeature, createReducer, on} from '@ngrx/store';
 import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
-import {CoreActions} from './core.actions';
+import {login, logout} from './core.actions';
+import {User} from '../user/user.model';
 
 export const featureKey = 'core';
 
 export interface Core {
   isAuthenticated: boolean;
-  user: any;
+  user: User;
 }
 
 export interface State extends EntityState<Core> {
   isAuthenticated: boolean;
-  user: any | null;
+  user: User | null;
 }
 
 export const adapter: EntityAdapter<Core> = createEntityAdapter<Core>();
@@ -23,8 +24,8 @@ export const initialState: State = adapter.getInitialState({
 
 export const reducer = createReducer(
   initialState,
-  on(CoreActions.loginSuccess, (state, {user}) => ({...state, isAuthenticated: true, user,})),
-  on(CoreActions.logout, (state) => ({...state, isAuthenticated: false, user: null,}))
+  on(login, (state, {user}) => ({...state, isAuthenticated: true, user,})),
+  on(logout, (state) => ({...state, isAuthenticated: false, user: null,}))
 );
 
 export const coreFeature = createFeature({
