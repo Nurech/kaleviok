@@ -1,3 +1,28 @@
 @use '@angular/material' as mat;
-@use "theme/m3-theme.scss";
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+$theme: mat.define-theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$blue-palette,
+        tertiary: mat.$orange-palette,
+      ),
+    )
+);
+
+body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 30px;
+  height: 100%;
+
+  @include mat.all-component-themes($theme);
+}
+
+html {
+  height: 100%;
+}
+
+@include mat.core();
+@include mat.color-variants-backwards-compatibility($theme);
