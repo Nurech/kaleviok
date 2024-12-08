@@ -1,2 +1,8 @@
-<app-sidebar></app-sidebar>
-<router-outlet></router-outlet>
+<app-layout>
+  <div left-content>
+    @if ((isHandset$ | async) === false) {
+      <div class="main-card" #mainCardContainer>
+      </div>
+    }
+  </div>
+</app-layout>

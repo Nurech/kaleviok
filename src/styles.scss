@@ -1,28 +1,100 @@
-@use '@angular/material' as mat;
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-
-$theme: mat.define-theme(
-    (
-      color: (
-        theme-type: light,
-        primary: mat.$blue-palette,
-        tertiary: mat.$orange-palette,
-      ),
-    )
-);
-
-body {
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-  margin: 0;
-  padding: 30px;
-  height: 100%;
-
-  @include mat.all-component-themes($theme);
-}
-
-html {
-  height: 100%;
-}
+@use "@angular/material" as mat;
+@use "../m3-theme";
+@use "styles/component-themes";
+@use "styles/sidenav";
+@use "styles/switch";
+@use "styles/utils";
+@use "styles/scroll";
+@use "styles/tabs";
+@use "styles/variables";
 
 @include mat.core();
-@include mat.color-variants-backwards-compatibility($theme);
+
+$theme: m3-theme.$light-theme;
+$dark-theme: m3-theme.$dark-theme;
+
+:root {
+  @include mat.all-component-themes($theme);
+  @include component-themes.theme($theme);
+  @include mat.color-variants-backwards-compatibility($theme);
+  @include mat.system-level-colors($theme);
+  @include mat.system-level-typography($theme);
+
+  @media (prefers-color-scheme: dark) {
+    @include mat.all-component-colors($dark-theme);
+    @include component-themes.theme($dark-theme);
+    @include mat.color-variants-backwards-compatibility($dark-theme);
+    @include mat.system-level-colors($dark-theme);
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: #{variables.$regular-font-family};
+}
+
+:root, :host {
+  --sys-background: #101418;
+  --sys-on-background: #e0e2e8;
+  --sys-surface: #101418;
+  --sys-surface-dim: #101418;
+  --sys-surface-bright: #36393e;
+  --sys-surface-container-lowest: #0b0f12;
+  --sys-surface-container-low: #181c20;
+  --sys-surface-container: #1c2024;
+  --sys-surface-container-high: #272a2f;
+  --sys-surface-container-highest: #323539;
+  --sys-on-surface: #e0e2e8;
+  --sys-surface-variant: #42474e;
+  --sys-on-surface-variant: #c2c7cf;
+  --sys-inverse-surface: #e0e2e8;
+  --sys-inverse-on-surface: #2d3135;
+  --sys-outline: #8c9198;
+  --sys-outline-variant: #42474e;
+  --sys-shadow: #000000;
+  --sys-scrim: #000000;
+  --sys-surface-tint: #9ccbfb;
+  --sys-primary: #9ccbfb;
+  --sys-on-primary: #003354;
+  --sys-primary-container: #0f4a73;
+  --sys-on-primary-container: #cee5ff;
+  --sys-inverse-primary: #30628c;
+  --sys-secondary: #9bcbfb;
+  --sys-on-secondary: #003353;
+  --sys-secondary-container: #0e4a73;
+  --sys-on-secondary-container: #cee5ff;
+  --sys-tertiary: #d9bafa;
+  --sys-on-tertiary: #3d245a;
+  --sys-tertiary-container: #543b72;
+  --sys-on-tertiary-container: #eedbff;
+  --sys-error: #ffb4ab;
+  --sys-on-error: #561e19;
+  --sys-error-container: #73342d;
+  --sys-on-error-container: #ffdad5;
+  --sys-neutral: #74777c;
+  --sys-neutral-variant: #72777e;
+  --sys-primary-fixed: #cee5ff;
+  --sys-primary-fixed-dim: #9ccbfb;
+  --sys-on-primary-fixed: #001d33;
+  --sys-on-primary-fixed-variant: #0f4a73;
+  --sys-secondary-fixed: #cee5ff;
+  --sys-secondary-fixed-dim: #9bcbfb;
+  --sys-on-secondary-fixed: #001d33;
+  --sys-on-secondary-fixed-variant: #0e4a73;
+  --sys-tertiary-fixed: #eedbff;
+  --sys-tertiary-fixed-dim: #d9bafa;
+  --sys-on-tertiary-fixed: #270d43;
+  --sys-on-tertiary-fixed-variant: #543b72;
+  --sys-inverse-secondary: #2f628c;
+  --sys-inverse-tertiary: #6d538b;
+  --sys-inverse-error: #904a43;
+  --sys-error-fixed: #ffdad5;
+  --sys-error-fixed-dim: #ffb4ab;
+  --sys-on-error-fixed: #3b0907;
+  --sys-on-error-fixed-variant: #73342d;
+}

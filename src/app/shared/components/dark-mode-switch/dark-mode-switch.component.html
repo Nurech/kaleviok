@@ -1,0 +1,35 @@
+<div class="switch-container">
+  <div
+    class="track"
+    [class.is-dark-mode]="colorMode() === 'dark'"
+    [class.is-auto-mode]="colorMode() === 'auto'"
+  >
+    <div
+      class="dark-mode switch"
+      role="button"
+      (click)="changeTheme('dark')"
+      matTooltip="Switch to dark mode"
+    >
+      <mat-icon>dark_mode</mat-icon>
+      @if (variant === 'full') { Switch to dark mode }
+    </div>
+    <div
+      class="auto-mode switch"
+      role="button"
+      (click)="changeTheme('auto')"
+      matTooltip="Switch to auto mode"
+    >
+      <mat-icon>brightness_medium</mat-icon>
+      @if (variant === 'full') { Switch to auto mode }
+    </div>
+    <div
+      class="light-mode switch"
+      role="button"
+      (click)="changeTheme('light')"
+      matTooltip="Switch to light mode"
+    >
+      <mat-icon>light_mode</mat-icon>
+      @if (variant === 'full') { Switch to light mode }
+    </div>
+  </div>
+</div>

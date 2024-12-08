@@ -1,0 +1,79 @@
+<h2 mat-dialog-title>Change {{ data.label }}</h2>
+<button mat-icon-button (click)="dialogRef.close()" class="close-btn">
+  <mat-icon>close</mat-icon>
+</button>
+<mat-dialog-content>
+  <div [formGroup]="control">
+    <div class="color-input-container">
+      <div class="color-preview" [style.backgroundColor]="hexColor"></div>
+      <mat-form-field appearance="outline" class="block-btn">
+        <mat-label>HEX Color</mat-label>
+        <input
+          matInput
+          placeholder="#XXXXXX"
+          formControlName="hex"
+          (input)="onHexInputChange($event)"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="margin">
+      <mat-form-field appearance="outline">
+        <mat-label>Hue</mat-label>
+        <input
+          matInput
+          placeholder="XXX"
+          type="number"
+          min="0"
+          max="360"
+          formControlName="hue"
+        />
+      </mat-form-field>
+      <mat-slider discrete min="0" max="360" step="1">
+        <input matSliderThumb [value]="hue" (valueChange)="hue = $event" />
+      </mat-slider>
+    </div>
+
+    <div class="margin">
+      <mat-form-field appearance="outline">
+        <mat-label>Chroma</mat-label>
+        <input
+          matInput
+          placeholder="XXX"
+          type="number"
+          min="0"
+          max="150"
+          formControlName="chroma"
+        />
+      </mat-form-field>
+      <mat-slider discrete min="0" max="150" step="1">
+        <input
+          matSliderThumb
+          [value]="chroma"
+          (valueChange)="chroma = $event"
+        />
+      </mat-slider>
+    </div>
+
+    <div class="margin">
+      <mat-form-field appearance="outline">
+        <mat-label>Tone</mat-label>
+        <input
+          matInput
+          placeholder="XXX"
+          type="number"
+          min="0"
+          max="100"
+          formControlName="tone"
+        />
+      </mat-form-field>
+      <mat-slider discrete min="0" max="100" step="1">
+        <input matSliderThumb [value]="tone" (valueChange)="tone = $event" />
+      </mat-slider>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button cdkFocusInitial mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="hexColor">Apply</button>
+</mat-dialog-actions>

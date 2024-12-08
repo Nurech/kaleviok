@@ -1,0 +1,34 @@
+// _alert-theme.scss
+
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  .alert {
+    color: mat.get-theme-color($theme, on-primary-container);
+    background: mat.get-theme-color($theme, primary-container);
+    border-color: mat.get-theme-color($theme, primary);
+
+    .alert-link {
+      color: mat.get-theme-color($theme, on-primary);
+    }
+  }
+}
+
+@mixin typography($theme) {
+  .alert {
+    font: mat.get-theme-typography($theme, "body-medium", "font");
+
+    .alert-heading {
+      font: mat.get-theme-typography($theme, "body-large", "font");
+    }
+    .alert-footer {
+      font: mat.get-theme-typography($theme, "label-small", "font");
+    }
+  }
+}
+
+@mixin theme($theme) {
+  @include color($theme);
+  @include typography($theme);
+}

@@ -19,6 +19,9 @@ import {provideStoreDevtools} from '@ngrx/store-devtools';
 import {MetaReducer} from '@ngrx/store';
 import {reducer} from './store/core/core.reducer';
 import {usersFeature} from './store/user/user.reducer';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {MAT_ICON_DEFAULT_OPTIONS} from '@angular/material/icon';
+import {provideHttpClient, withFetch} from '@angular/common/http';
 
 
 export const appConfig: ApplicationConfig = {
@@ -49,5 +52,11 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    provideAnimationsAsync(),
+    {
+      provide: MAT_ICON_DEFAULT_OPTIONS,
+      useValue: { fontSet: 'material-symbols-outlined' },
+    },
+    provideHttpClient(withFetch()),
   ],
 };

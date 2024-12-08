@@ -7,8 +7,8 @@ import {
 } from './core.actions';
 import {inject, Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {AuthService} from '../../services/auth.service';
-import {DataService} from '../../services/data.service';
+import {AuthService} from '../../shared/services/auth.service';
+import {DataService} from '../../shared/services/data.service';
 import {User, UserMapper} from '../user/user.model';
 
 @Injectable()

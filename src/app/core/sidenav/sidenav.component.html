@@ -1,0 +1,26 @@
+<div class="nav-rail-container">
+  <a routerLink="/" class="section-link home-link">
+    <img src="assets/img/logo.svg" height="42" alt="Logo" />
+  </a>
+  <nav class="nav-rail-content">
+    @for (item of rootMenuItems; track $index) {
+    <a
+      [routerLink]="item.href"
+      routerLinkActive="active"
+      #link="routerLinkActive"
+      [attr.aria-current]="link.isActive"
+      role="link"
+      class="section-link"
+      (click)="item.onClick && item.onClick()"
+    >
+      <mat-icon>{{ item.icon }}</mat-icon>
+      <div class="label">{{ item.label }}</div>
+    </a>
+    }
+  </nav>
+  <div class="dark-mode-switch-container">
+    <app-copy-url variant="compact"></app-copy-url>
+    <app-copy-css variant="compact"></app-copy-css>
+    <app-dark-mode-switch variant="compact"></app-dark-mode-switch>
+  </div>
+</div>

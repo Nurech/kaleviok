@@ -1,0 +1,26 @@
+<p>
+  {{ label() }}
+  <button
+    class="color-copy-btn"
+    mat-icon-button
+    [libCopyToClipboard]="hexValue"
+    matTooltip="Copy HEX Color"
+  >
+    <mat-icon>content_copy</mat-icon>
+  </button>
+</p>
+<div class="color-input-container">
+  <div class="color-preview" [style.backgroundColor]="hexValue"></div>
+  <mat-form-field appearance="outline">
+    <mat-label>HEX Color</mat-label>
+    <input matInput placeholder="#XXXXXX" [formControl]="hex" />
+    <button mat-icon-button matSuffix (click)="openHCT()">
+      <mat-icon>tune</mat-icon>
+    </button>
+  </mat-form-field>
+  @if (showRandomBtn()) {
+  <button class="random-color-btn" mat-icon-button (click)="randomColor()" matTooltip="Random color">
+    <mat-icon>shuffle</mat-icon>
+  </button>
+  }
+</div>

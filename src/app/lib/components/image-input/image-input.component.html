@@ -1,0 +1,30 @@
+<p>Source Image</p>
+<p>
+  <small
+    >User-generated color comes from a user's personal wallpaper. The wallpaper
+    is digitally analyzed through a process called quantization, and a single
+    color is selected as the source color.</small
+  >
+</p>
+<div
+  class="preview-container"
+  matRipple
+  role="button"
+  (click)="imageInput.click()"
+  [style.backgroundImage]="'url(' + imgSrc + ')'"
+>
+  @if (imgSrc) {
+  <mat-icon>check_circle</mat-icon>
+  } @else {
+  <mat-icon>add_photo_alternate</mat-icon>
+  }
+</div>
+<img #img class="hidden-preview" [src]="imgSrc" />
+<input
+  #imageInput
+  type="file"
+  name="image"
+  id="image"
+  (change)="fileChange($event, img)"
+  class="image-input"
+/>

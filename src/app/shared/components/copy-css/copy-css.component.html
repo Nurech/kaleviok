@@ -1,0 +1,46 @@
+<div class="switch-container">
+  <div
+    class="switch"
+    role="button"
+    matTooltip="Copy CSS Variables"
+    id="css-copy-btn"
+    cdkOverlayOrigin
+    #trigger="cdkOverlayOrigin"
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon>content_copy</mat-icon>
+    @if (variant === 'full') { Copy CSS Variables }
+  </div>
+</div>
+@defer () {
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+  [cdkConnectedOverlayPositions]="defaultPositionList"
+  [cdkConnectedOverlayPanelClass]="['popover-card']"
+>
+  <mat-card (click)="closePopover()">
+    <mat-card-content> Copy CSS Variables from here! </mat-card-content>
+  </mat-card>
+</ng-template>
+}
+
+<mat-menu #menu="matMenu">
+  <button
+    mat-menu-item
+    [libCopyToClipboard]="getThemeString() ?? ''"
+    [libCopyToClipboardSnackBarText]="'CSS Variables'"
+    (libCopyToClipboardCopied)="copied($event)"
+  >
+    Copy CSS Variables for Material 3
+  </button>
+  <button
+    mat-menu-item
+    [libCopyToClipboard]="getM2Theme()"
+    [libCopyToClipboardSnackBarText]="'SCSS Palettes'"
+    (libCopyToClipboardCopied)="copied($event)"
+  >
+    Copy SCSS Palettes for Material 2
+  </button>
+</mat-menu>

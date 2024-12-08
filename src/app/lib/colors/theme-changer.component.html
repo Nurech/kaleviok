@@ -1,0 +1,29 @@
+<div [style.--tab-top-gap.px]="tabTopGap()">
+  <mat-tab-group fitInkBarToContent class="m3-primary-tab">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="tab-icon">potted_plant</mat-icon>
+        Seed Colors
+      </ng-template>
+      <div class="tab-scroll">
+        <lib-alert>
+          <span alert-heading>Heads up!</span>
+          These are seed colors, based on this Material theme is generated and
+          may not be part of actual colors. To see actual colors, go to
+          "Generated Colors" tab.
+        </lib-alert>
+        <lib-image-input></lib-image-input>
+        <lib-theme-seed-colors></lib-theme-seed-colors>
+      </div>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="tab-icon">forest</mat-icon>
+        Generated Colors
+      </ng-template>
+      <div class="tab-scroll">
+        <lib-theme-generated-colors></lib-theme-generated-colors>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

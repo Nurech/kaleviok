@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin color($theme) {
+  app-dark-mode-switch {
+    // outline: 1px solid mat.get-theme-color($theme, on-surface);
+  }
+
+  .dark-mode-switch-container {
+    color: mat.get-theme-color($theme, on-surface);
+
+    .switch {
+      &:hover {
+        background: mat.get-theme-color($theme, primary-container);
+      }
+    }
+  }
+}
+
+@mixin theme($theme) {
+  @include color($theme);
+}

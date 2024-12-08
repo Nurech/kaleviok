@@ -1,0 +1,16 @@
+@mixin themed-scrollbar {
+  @media (pointer: fine) {
+    &::-webkit-scrollbar {
+      background-color: transparent;
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: var(--sys-primary);
+    }
+  }
+}
+
+.themed-scrollbar {
+  @include themed-scrollbar();
+}

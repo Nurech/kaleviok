@@ -1,0 +1,34 @@
+.align-middle {
+  vertical-align: middle;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.popover-card {
+  --mdc-elevated-card-container-color: var(--sys-on-surface);
+  .mat-mdc-card-content {
+    color: var(--sys-surface);
+  }
+
+  .mat-mdc-card {
+    margin-left: 12px;
+    &::before {
+      right: 100%;
+      top: 50%;
+      border: solid transparent;
+      content: "";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    &::before {
+      border-right-color: var(--mdc-elevated-card-container-color);
+      border-width: 12px;
+      margin-top: -12px;
+    }
+  }
+}

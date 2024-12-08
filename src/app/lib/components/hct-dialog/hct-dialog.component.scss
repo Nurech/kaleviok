@@ -1,0 +1,39 @@
+.color-input-container {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+  border-bottom: 1px solid var(--sys-outline);
+}
+
+.color-preview {
+  min-width: 40px;
+  max-width: 40px;
+  min-height: 40px;
+  max-height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--sys-outline);
+  margin-top: 8px;
+}
+
+.margin {
+  margin-bottom: 20px;
+
+  mat-form-field {
+    margin-bottom: -20px;
+  }
+}
+
+mat-form-field,
+mat-slider {
+  display: block;
+}
+
+.mat-mdc-dialog-title {
+  margin-right: 48px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 12px;
+}
