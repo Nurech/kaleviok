@@ -9,10 +9,8 @@ export interface MenuItem {
   onClick?: () => void;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class MenuService {
-  private dialog = inject(MatDialog);
-
   readonly rootMenuItems: MenuItem[] = [
     {
       label: 'Themes',
@@ -23,15 +21,16 @@ export class MenuService {
       label: 'Get Code',
       icon: 'code',
       onClick() {
-        goTo('https://store.angular-material.dev');
+        goTo('https://');
       },
     },
     {
       label: 'Main Site',
       icon: 'home',
       onClick() {
-        goTo('https://angular-material.dev');
+        goTo('https://');
       },
     },
   ];
+  private dialog = inject(MatDialog);
 }

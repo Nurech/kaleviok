@@ -26,15 +26,15 @@ import {ThemeChangerService} from './shared/services/theme-changer.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+  tabTopGap = signal(0);
+  isHandset$ = inject(DeviceService).isHandset$;
+  isFirstTime = true;
   private route = inject(ActivatedRoute);
   private themeChanger = inject(ThemeChangerService);
   private mainCardContainer =
     viewChild<ElementRef<HTMLDivElement>>('mainCardContainer');
   private breakpointObserver = inject(BreakpointObserver);
   private destroyed = new Subject<void>();
-  tabTopGap = signal(0);
-  isHandset$ = inject(DeviceService).isHandset$;
-  isFirstTime = true;
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     const resolver: IconResolver = (name) =>

@@ -22,6 +22,7 @@
     .alert-heading {
       font: mat.get-theme-typography($theme, "body-large", "font");
     }
+
     .alert-footer {
       font: mat.get-theme-typography($theme, "label-small", "font");
     }

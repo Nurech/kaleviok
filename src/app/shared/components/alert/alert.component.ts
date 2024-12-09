@@ -9,10 +9,13 @@ const ICON_MAP: Record<AlertType, string> = {
   info: 'info',
 };
 
-@Directive({ selector: '[alert-heading]', standalone: true })
-export class AlertHeadingDirective {}
-@Directive({ selector: '[alert-footer]', standalone: true })
-export class AlertFooterDirective {}
+@Directive({selector: '[alert-heading]', standalone: true})
+export class AlertHeadingDirective {
+}
+
+@Directive({selector: '[alert-footer]', standalone: true})
+export class AlertFooterDirective {
+}
 
 @Component({
   selector: 'lib-alert',
@@ -23,7 +26,7 @@ export class AlertFooterDirective {}
 })
 export class AlertComponent {
   @Input() type: AlertType = 'info';
-  @Input({ transform: booleanAttribute }) closeable = false;
+  @Input({transform: booleanAttribute}) closeable = false;
   @Input() message = '';
   @Input() heading = '';
   @Input() footer = '';

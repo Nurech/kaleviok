@@ -1,8 +1,10 @@
 .track {
   transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+
   &.is-dark-mode {
     transform: translateY(-48px);
   }
+
   &.is-auto-mode {
     transform: translateY(-96px);
   }

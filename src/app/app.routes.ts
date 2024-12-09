@@ -17,7 +17,6 @@ const libRoutes: Routes = [
   },
 ];
 
-// this routes are only for themes.angular-material.dev site
 const appRoutes: Routes = []
 
 export const routes: Routes = appRoutes;

@@ -387,7 +387,7 @@ export function changeColorAndMode(color: string, mode: ColorMode) {
 export function changeSysColor(sysColorName: string, color: string) {
   const theme = {
     ...getCurrentThemePalette(),
-    ...{ [sysColorName]: color },
+    ...{[sysColorName]: color},
   } as AppTheme;
   saveSysColor(sysColorName, color);
   saveThemeObject(theme);

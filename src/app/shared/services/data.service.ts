@@ -7,11 +7,12 @@ import {User} from '../../store/user/user.model';
 })
 export class DataService {
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore) {
+  }
 
 
   saveUserToFirestore(uid: string, userData: User) {
     const userRef = doc(this.firestore, `users/${uid}`);
-    return setDoc(userRef, userData, { merge: true });
+    return setDoc(userRef, userData, {merge: true});
   }
 }

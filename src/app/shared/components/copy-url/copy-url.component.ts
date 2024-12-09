@@ -23,13 +23,6 @@ import {ThemeChangerService} from '../../services/theme-changer.service';
 })
 export class CopyURLComponent {
   @Input() variant: 'compact' | 'full' = 'compact';
-  private themeChanger = inject(ThemeChangerService);
-  private dialog = inject(MatDialog);
-
-  getThemeURL() {
-    return this.themeChanger.getURL();
-  }
-
   isOpen = false;
   readonly defaultPositionList: ConnectedPosition[] = [
     {
@@ -39,6 +32,12 @@ export class CopyURLComponent {
       overlayY: 'center',
     },
   ];
+  private themeChanger = inject(ThemeChangerService);
+  private dialog = inject(MatDialog);
+
+  getThemeURL() {
+    return this.themeChanger.getURL();
+  }
 
   ngAfterViewInit(): void {
     requestAnimationFrame(() => {

@@ -6,6 +6,6 @@ import {Actions} from '@ngrx/effects';
 export class UserEffects {
 
 
-
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions) {
+  }
 }

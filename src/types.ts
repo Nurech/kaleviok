@@ -1,4 +1,4 @@
-import {materialColors} from './app/lib/utils/constants';
+import {materialColors} from './app/shared/utils/constants';
 
 export interface ThemePalette {
   primary: string;
@@ -25,9 +25,4 @@ interface M2ThemePaletteColor {
   name: string;
   hex: string;
   darkContrast: boolean;
-}
-
-export interface M2ThemePalette {
-  name: string;
-  colors: M2ThemePaletteColor[];
 }

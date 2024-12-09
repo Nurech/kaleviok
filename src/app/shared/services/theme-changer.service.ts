@@ -22,12 +22,12 @@ import {
   getLastSavedAutoColorMode,
   isModeDark,
   resetSysColors,
-} from '../../lib/utils/theme';
+} from '../utils/theme';
 import {AppTheme, ColorMode, MaterialColorName, ThemePalette} from '../../../types';
-import {DEFAULT_THEME_COLORS} from '../../lib/utils/constants';
+import {DEFAULT_THEME_COLORS} from '../utils/constants';
 import {hexFromArgb, sourceColorFromImage} from '@material/material-color-utilities';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class ThemeChangerService {
   themeSeed = {
     primary: signal(DEFAULT_THEME_COLORS.primary),
@@ -52,10 +52,15 @@ export class ThemeChangerService {
     neutral: (color: string) => this.changeNeutralColor(color),
     'neutral-variant': (color: string) => this.changeNeutralVariantColor(color),
   };
+
   constructor() {
     this.applyColorThemeListeners();
     this.initializeTheme();
     this.determinePageNavigationAutoMode();
+  }
+
+  get themeString() {
+    return getCurrentThemeString();
   }
 
   applyColorThemeListeners() {
@@ -202,10 +207,6 @@ export class ThemeChangerService {
     changeNeutralVariantColor(color);
     this.themeSeed['neutral-variant'].set(color);
     this.generateThemeFromStorage();
-  }
-
-  get themeString() {
-    return getCurrentThemeString();
   }
 
   themeChanger(sysColorName: MaterialColorName, color: string) {

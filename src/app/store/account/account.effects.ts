@@ -6,6 +6,6 @@ import {Actions} from '@ngrx/effects';
 export class AccountEffects {
 
 
-
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions) {
+  }
 }

@@ -3,10 +3,10 @@ export const goTo = (href: string) => {
 };
 
 export const share = ({
-  title,
-  text,
-  url,
-}: {
+                        title,
+                        text,
+                        url,
+                      }: {
   title?: string;
   text?: string;
   url: string;

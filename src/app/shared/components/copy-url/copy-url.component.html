@@ -1,29 +1,31 @@
 <div class="switch-container">
   <div
-    class="switch"
-    role="button"
-    matTooltip="Copy URL to current theme"
-    [libCopyToClipboard]="getThemeURL()"
-    [libCopyToClipboardSnackBarText]="'URL to current theme'"
-    id="url-copy-btn"
-    cdkOverlayOrigin
     #trigger="cdkOverlayOrigin"
     (libCopyToClipboardCopied)="copied()"
+    [libCopyToClipboardSnackBarText]="'URL to current theme'"
+    [libCopyToClipboard]="getThemeURL()"
+    cdkOverlayOrigin
+    class="switch"
+    id="url-copy-btn"
+    matTooltip="Copy URL to current theme"
+    role="button"
   >
     <mat-icon>link</mat-icon>
-    @if (variant === 'full') { Copy URL to current theme }
+    @if (variant === 'full') {
+      Copy URL to current theme
+    }
   </div>
 </div>
 @defer () {
-<ng-template
-  cdkConnectedOverlay
-  [cdkConnectedOverlayOrigin]="trigger"
-  [cdkConnectedOverlayOpen]="isOpen"
-  [cdkConnectedOverlayPositions]="defaultPositionList"
-  [cdkConnectedOverlayPanelClass]="['popover-card']"
->
-  <mat-card (click)="closePopover()">
-    <mat-card-content> Copy URL for current theme from here! </mat-card-content>
-  </mat-card>
-</ng-template>
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="isOpen"
+    [cdkConnectedOverlayPositions]="defaultPositionList"
+    [cdkConnectedOverlayPanelClass]="['popover-card']"
+  >
+    <mat-card (click)="closePopover()">
+      <mat-card-content> Copy URL for current theme from here!</mat-card-content>
+    </mat-card>
+  </ng-template>
 }

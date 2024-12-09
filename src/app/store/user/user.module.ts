@@ -16,4 +16,5 @@ import {UserEffects} from './user.effects';
   ],
   declarations: [],
 })
-export class UsersStoreModule {}
+export class UsersStoreModule {
+}

@@ -16,4 +16,5 @@ import {AccountEffects} from './account.effects';
   ],
   declarations: [],
 })
-export class AccountsStoreModule {}
+export class AccountsStoreModule {
+}

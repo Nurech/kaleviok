@@ -23,10 +23,8 @@ import {DeviceService} from '../../shared/services/device.service';
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-  private breakpointObserver = inject(BreakpointObserver);
   isHandset$ = inject(DeviceService).isHandset$;
-
   closeDrawer = output();
-
   readonly rootMenuItems = inject(MenuService).rootMenuItems;
+  private breakpointObserver = inject(BreakpointObserver);
 }

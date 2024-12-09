@@ -8,7 +8,8 @@ import {from} from 'rxjs';
 })
 export class AuthService {
 
-  constructor(private auth: Auth, private firestore: Firestore) {}
+  constructor(private auth: Auth, private firestore: Firestore) {
+  }
 
   loginWithGoogle() {
     const provider = new GoogleAuthProvider();

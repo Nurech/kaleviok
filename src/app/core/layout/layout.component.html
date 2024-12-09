@@ -1,15 +1,15 @@
 <mat-sidenav-container class="app-sidenav-container">
   <mat-sidenav
     #drawer
-    class="app-sidenav"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
+    class="app-sidenav"
   >
     <app-sidenav (closeDrawer)="drawer.close()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content class="app-sidenav-content">
-    <mat-tab-group fitInkBarToContent class="m3-primary-tab">
+    <mat-tab-group class="m3-primary-tab" fitInkBarToContent>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">palette</mat-icon>

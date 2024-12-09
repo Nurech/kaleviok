@@ -15,9 +15,6 @@ import {User, UserMapper} from '../user/user.model';
 export class CoreEffects {
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
-  private dataService = inject(DataService);
-
-
   loginWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(startGmailAuthentication),
@@ -32,16 +29,15 @@ export class CoreEffects {
       )
     )
   );
-
-
+  private dataService = inject(DataService);
   saveUserToFirestore$ = createEffect(() =>
     this.actions$.pipe(
       ofType(startGmailAuthenticationSuccess),
-      tap(({ payload }) => {
+      tap(({payload}) => {
         this.dataService.saveUserToFirestore(payload.uid, payload);
       }),
-      map(({ payload }) => {
-        return loginSuccess({ payload });
+      map(({payload}) => {
+        return loginSuccess({payload});
       })
     )
   );

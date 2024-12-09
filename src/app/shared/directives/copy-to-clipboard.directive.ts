@@ -15,7 +15,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class CopyToClipboardDirective {
   libCopyToClipboard = input.required<string>();
-  snackBarText = input<string>('', { alias: 'libCopyToClipboardSnackBarText' });
+  snackBarText = input<string>('', {alias: 'libCopyToClipboardSnackBarText'});
 
   private cdkCopyToClipboard = inject(CdkCopyToClipboard);
   private snackbar = inject(MatSnackBar);
@@ -30,7 +30,7 @@ export class CopyToClipboardDirective {
               : this.libCopyToClipboard()
           } to clipboard!`,
           undefined,
-          { duration: 3000 }
+          {duration: 3000}
         );
       } else {
         this.snackbar.open('Please try after some time');

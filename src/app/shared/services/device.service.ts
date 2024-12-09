@@ -2,7 +2,7 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {inject, Injectable} from '@angular/core';
 import {map, Observable, shareReplay} from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class DeviceService {
   private breakpointObserver = inject(BreakpointObserver);
 
