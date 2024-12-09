@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { MatTreeModule, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { files } from './example-data';
+import {Component} from '@angular/core';
+import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule} from '@angular/material/tree';
+import {FlatTreeControl} from '@angular/cdk/tree';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {files} from './example-data';
 
 /** File node data with possible child nodes. */
 export interface FileNode {

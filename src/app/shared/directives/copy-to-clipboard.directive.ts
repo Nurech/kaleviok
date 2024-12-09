@@ -1,6 +1,6 @@
-import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
-import { Directive, inject, input } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {CdkCopyToClipboard} from '@angular/cdk/clipboard';
+import {Directive, inject, input} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Directive({
   selector: '[libCopyToClipboard]',

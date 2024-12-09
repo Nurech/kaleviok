@@ -1,6 +1,6 @@
-import { Component, Input, inject } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import {Component, inject, Input} from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {ThemeChangerService} from '../../services/theme-changer.service';
 import {ColorMode} from '../../../../types';
 

@@ -1,5 +1,5 @@
 import {createFeature, createReducer, on} from '@ngrx/store';
-import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
 import {AccountActions} from './account.actions';
 
 export const featureKey = 'accounts';

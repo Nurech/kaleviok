@@ -1,4 +1,4 @@
-import {UserInfo, UserMetadata} from '@firebase/auth';
+import {UserInfo} from '@firebase/auth';
 import {UserCredential} from '@angular/fire/auth';
 
 export interface User {

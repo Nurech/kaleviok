@@ -1,5 +1,5 @@
-import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
+import {createActionGroup, emptyProps, props} from '@ngrx/store';
+import {Update} from '@ngrx/entity';
 import {Account} from './account.reducer';
 
 export const AccountActions = createActionGroup({

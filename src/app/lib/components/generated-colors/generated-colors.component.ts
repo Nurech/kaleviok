@@ -1,18 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  AlertComponent,
-  AlertHeadingDirective,
-} from '../alert/alert.component';
-import { ColorInputComponent } from '../color-input/color-input.component';
-import { ThemeChangerService } from '../../colors/theme-changer.service';
-import { MaterialColorName } from '../../types';
-import { noop } from 'rxjs';
+import {Component, inject} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AlertComponent, AlertHeadingDirective,} from '../alert/alert.component';
+import {ColorInputComponent} from '../color-input/color-input.component';
+import {ThemeChangerService} from '../../colors/theme-changer.service';
+import {MaterialColorName} from '../../types';
 
 @Component({
   selector: 'lib-theme-generated-colors',

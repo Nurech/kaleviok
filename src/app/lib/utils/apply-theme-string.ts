@@ -1,4 +1,4 @@
-import { WithStylesheet } from '../types';
+import {WithStylesheet} from '../types';
 
 /**
  * Applies a stringified CSS theme to a document or shadowroot by creating or

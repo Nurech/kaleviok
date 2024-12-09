@@ -1,14 +1,9 @@
-import { Component, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { merge } from 'rxjs';
+import {Component, inject} from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule,} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {merge} from 'rxjs';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -17,10 +12,10 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatIconModule } from '@angular/material/icon';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatIconModule} from '@angular/material/icon';
 
-import { hctFromHex, hexFromHct } from '../../utils/material-color-helpers';
+import {hctFromHex, hexFromHct} from '../../utils/material-color-helpers';
 
 export interface HctDialogData {
   label: string;

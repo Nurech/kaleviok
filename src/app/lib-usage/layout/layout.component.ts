@@ -1,20 +1,16 @@
-import { Component, inject } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AsyncPipe } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { routes } from '../../app.routes';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import {
-  argbFromHex,
-  themeFromSourceColor,
-  applyTheme,
-} from '@material/material-color-utilities';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { DeviceService } from '../../shared/services/device.service';
+import {Component, inject} from '@angular/core';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import {AsyncPipe} from '@angular/common';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+import {routes} from '../../app.routes';
+import {RouterLink, RouterLinkActive} from '@angular/router';
+import {applyTheme, argbFromHex, themeFromSourceColor,} from '@material/material-color-utilities';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {DeviceService} from '../../shared/services/device.service';
 import {ThemeChangerComponent} from '../../lib/colors/theme-changer.component';
 import {CopyCSSComponent} from '../../lib/components/copy-css/copy-css.component';
 import {ShareURLComponent} from '../../lib/components/share-url/share-url.component';

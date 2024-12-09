@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { goTo } from '../../utils';
+import {inject, Injectable} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {goTo} from '../../utils';
 
 export interface MenuItem {
   label: string;

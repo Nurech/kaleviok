@@ -1,4 +1,4 @@
-import { AppTheme, ColorMode } from '../types';
+import {AppTheme, ColorMode} from '../types';
 import {
   applyTheme,
   errorPaletteFromSourceColor,

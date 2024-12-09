@@ -1,7 +1,7 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-import { LayoutComponent } from './layout.component';
+import {LayoutComponent} from './layout.component';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;

@@ -1,4 +1,4 @@
-import { materialColors } from './utils/constants';
+import {materialColors} from './utils/constants';
 
 export interface ThemePalette {
   primary: string;

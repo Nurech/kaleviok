@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {doc, Firestore, setDoc} from '@angular/fire/firestore';
 import {User} from '../../store/user/user.model';
 

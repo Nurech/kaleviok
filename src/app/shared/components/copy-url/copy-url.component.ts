@@ -1,10 +1,10 @@
-import { Component, Input, inject } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { ConnectedPosition, OverlayModule } from '@angular/cdk/overlay';
-import { MatDialog } from '@angular/material/dialog';
-import { take } from 'rxjs';
+import {Component, inject, Input} from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {ConnectedPosition, OverlayModule} from '@angular/cdk/overlay';
+import {MatDialog} from '@angular/material/dialog';
+import {take} from 'rxjs';
 import {CopyToClipboardDirective} from '../../directives/copy-to-clipboard.directive';
 import {ThemeChangerService} from '../../services/theme-changer.service';
 

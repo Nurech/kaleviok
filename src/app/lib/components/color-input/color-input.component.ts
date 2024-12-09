@@ -1,11 +1,4 @@
-import {
-  Component,
-  booleanAttribute,
-  effect,
-  inject,
-  input,
-  output,
-} from '@angular/core';
+import {booleanAttribute, Component, effect, inject, input, output,} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -15,19 +8,16 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { argbFromHex } from '@material/material-color-utilities';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
-import {
-  HctDialogComponent,
-  HctDialogData,
-} from '../hct-dialog/hct-dialog.component';
-import { CopyToClipboardDirective } from '../../../shared/directives/copy-to-clipboard.directive';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { getRandomColor } from '../../utils/random-color';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {argbFromHex} from '@material/material-color-utilities';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDialog} from '@angular/material/dialog';
+import {HctDialogComponent, HctDialogData,} from '../hct-dialog/hct-dialog.component';
+import {CopyToClipboardDirective} from '../../../shared/directives/copy-to-clipboard.directive';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {getRandomColor} from '../../utils/random-color';
 
 export function forbiddenColorValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {

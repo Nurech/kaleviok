@@ -1,5 +1,5 @@
-import { MaterialDynamicColors } from '@material/material-color-utilities';
-import { ThemePalette } from '../types';
+import {MaterialDynamicColors} from '@material/material-color-utilities';
+import {ThemePalette} from '../types';
 
 export const onlyPrimaryMaterialColors = {
   primary: MaterialDynamicColors.primary,

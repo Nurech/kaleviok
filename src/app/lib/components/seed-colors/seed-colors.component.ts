@@ -1,14 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
+import {Component, inject} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
 
-import { ColorInputComponent } from '../color-input/color-input.component';
-import { ThemeChangerService } from '../../colors/theme-changer.service';
+import {ColorInputComponent} from '../color-input/color-input.component';
+import {ThemeChangerService} from '../../colors/theme-changer.service';
 
 @Component({
   selector: 'lib-theme-seed-colors',

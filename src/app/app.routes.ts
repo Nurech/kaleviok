@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 
 // use this routes when using <app-lib-usage> component
 const libRoutes: Routes = [

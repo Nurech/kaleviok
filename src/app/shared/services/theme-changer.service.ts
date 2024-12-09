@@ -1,4 +1,4 @@
-import { Injectable, WritableSignal, signal } from '@angular/core';
+import {Injectable, signal, WritableSignal} from '@angular/core';
 import queryString from 'query-string';
 import {
   changeColorAndMode,
@@ -23,9 +23,9 @@ import {
   isModeDark,
   resetSysColors,
 } from '../../lib/utils/theme';
-import { AppTheme, ColorMode, MaterialColorName, ThemePalette } from '../../../types';
-import { DEFAULT_THEME_COLORS } from '../../lib/utils/constants';
-import { hexFromArgb, sourceColorFromImage } from '@material/material-color-utilities';
+import {AppTheme, ColorMode, MaterialColorName, ThemePalette} from '../../../types';
+import {DEFAULT_THEME_COLORS} from '../../lib/utils/constants';
+import {hexFromArgb, sourceColorFromImage} from '@material/material-color-utilities';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeChangerService {

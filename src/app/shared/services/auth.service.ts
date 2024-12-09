@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Auth, signInWithPopup, GoogleAuthProvider, signOut, user } from '@angular/fire/auth';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
-import { BehaviorSubject, from } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Auth, GoogleAuthProvider, signInWithPopup, signOut, user} from '@angular/fire/auth';
+import {Firestore} from '@angular/fire/firestore';
+import {from} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

@@ -1,28 +1,17 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  inject,
-  signal,
-  viewChild,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, signal, viewChild,} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 import {MaterialColorName, ThemePalette} from '../types';
-import { LibUsageComponent } from './lib-usage/lib-usage.component';
-import { LayoutComponent } from './core/layout/layout.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subject, map, shareReplay, takeUntil } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { share } from './utils';
-import { MatIconRegistry, IconResolver } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
-import { DeviceService } from './shared/services/device.service';
-import { MatDialog } from '@angular/material/dialog';
+import {LibUsageComponent} from './lib-usage/lib-usage.component';
+import {LayoutComponent} from './core/layout/layout.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Subject, takeUntil} from 'rxjs';
+import {AsyncPipe} from '@angular/common';
+import {IconResolver, MatIconRegistry} from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
+import {DeviceService} from './shared/services/device.service';
 import {ThemeChangerService} from './shared/services/theme-changer.service';
 
 @Component({

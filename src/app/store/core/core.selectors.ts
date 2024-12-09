@@ -1,5 +1,5 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { featureKey, State } from './core.reducer';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {featureKey, State} from './core.reducer';
 
 export const selectCoreState = createFeatureSelector<State>(featureKey);
 

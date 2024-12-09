@@ -1,7 +1,7 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { EffectsModule } from "@ngrx/effects";
-import { StoreModule } from "@ngrx/store";
+import {CommonModule} from "@angular/common";
+import {NgModule} from "@angular/core";
+import {EffectsModule} from "@ngrx/effects";
+import {StoreModule} from "@ngrx/store";
 import {featureKey, reducer} from './account.reducer';
 import {AccountEffects} from './account.effects';
 

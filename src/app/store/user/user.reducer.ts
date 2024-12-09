@@ -1,8 +1,6 @@
 import {createFeature, createReducer, on} from '@ngrx/store';
-import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
-import {
-  upsertUser,
-} from './user.actions';
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {upsertUser,} from './user.actions';
 import {User} from './user.model';
 import {startGmailAuthenticationSuccess} from '../core/core.actions';
 

@@ -1,7 +1,7 @@
-import { Component, ContentChild, Directive, Input, booleanAttribute } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import {booleanAttribute, Component, ContentChild, Directive, Input} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 
 export type AlertType = 'info';
 

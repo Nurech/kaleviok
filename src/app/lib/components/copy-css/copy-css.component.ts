@@ -1,10 +1,9 @@
-import { ClipboardModule } from '@angular/cdk/clipboard';
-import { Component, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { ThemeChangerService } from '../../colors/theme-changer.service';
-import { CopyToClipboardDirective } from '../../../shared/directives/copy-to-clipboard.directive';
+import {Component, inject} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {ThemeChangerService} from '../../colors/theme-changer.service';
+import {CopyToClipboardDirective} from '../../../shared/directives/copy-to-clipboard.directive';
 
 @Component({
   selector: 'lib-copy-css',

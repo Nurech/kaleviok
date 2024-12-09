@@ -1,6 +1,6 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Injectable, inject } from '@angular/core';
-import { Observable, map, shareReplay } from 'rxjs';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {inject, Injectable} from '@angular/core';
+import {map, Observable, shareReplay} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DeviceService {

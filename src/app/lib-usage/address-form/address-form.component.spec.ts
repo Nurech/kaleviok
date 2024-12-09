@@ -1,7 +1,7 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-import { AddressFormComponent } from './address-form.component';
+import {AddressFormComponent} from './address-form.component';
 
 describe('AddressFormComponent', () => {
   let component: AddressFormComponent;

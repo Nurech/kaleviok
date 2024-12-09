@@ -1,17 +1,7 @@
-import {
-  argbFromHex,
-  Hct,
-  hexFromArgb,
-  SchemeTonalSpot as SchemeFunction
-} from '@material/material-color-utilities';
-import { applyThemeString } from './apply-theme-string';
-import {
-  materialColors,
-  neutralColors,
-  neutralVariantColors,
-  onlyPrimaryMaterialColors,
-} from './constants';
-import { AppTheme } from '../types';
+import {argbFromHex, Hct, hexFromArgb, SchemeTonalSpot as SchemeFunction} from '@material/material-color-utilities';
+import {applyThemeString} from './apply-theme-string';
+import {materialColors, neutralColors, neutralVariantColors, onlyPrimaryMaterialColors,} from './constants';
+import {AppTheme} from '../types';
 
 export function hctFromHex(value: string) {
   return Hct.fromInt(argbFromHex(value));

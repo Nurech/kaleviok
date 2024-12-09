@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, inject } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {AfterViewInit, Component, inject} from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
-import { ThemeChangerService } from '../../colors/theme-changer.service';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ColorMode } from '../../types';
+import {ThemeChangerService} from '../../colors/theme-changer.service';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ColorMode} from '../../types';
 
 @Component({
   selector: 'lib-color-mode',

@@ -1,6 +1,6 @@
-import {ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom} from '@angular/core';
+import {ApplicationConfig, importProvidersFrom, isDevMode, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
-import {provideFirebaseApp, initializeApp} from '@angular/fire/app';
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {getAuth, provideAuth} from '@angular/fire/auth';
 import {getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService} from '@angular/fire/analytics';
 import {getFirestore, provideFirestore} from '@angular/fire/firestore';
@@ -10,15 +10,11 @@ import {getPerformance, providePerformance} from '@angular/fire/performance';
 import {getStorage, provideStorage} from '@angular/fire/storage';
 import {getRemoteConfig, provideRemoteConfig} from '@angular/fire/remote-config';
 import {provideServiceWorker} from '@angular/service-worker';
-import {provideRouterStore, routerReducer} from '@ngrx/router-store';
-import {provideStore} from '@ngrx/store';
+import {provideRouterStore} from '@ngrx/router-store';
 import {RootStoreModule} from './store/root/root.module';
 import {routes} from './app.routes';
 import {environment} from '../environments/environment';
 import {provideStoreDevtools} from '@ngrx/store-devtools';
-import {MetaReducer} from '@ngrx/store';
-import {reducer} from './store/core/core.reducer';
-import {usersFeature} from './store/user/user.reducer';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MAT_ICON_DEFAULT_OPTIONS} from '@angular/material/icon';
 import {provideHttpClient, withFetch} from '@angular/common/http';
@@ -55,7 +51,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     {
       provide: MAT_ICON_DEFAULT_OPTIONS,
-      useValue: { fontSet: 'material-symbols-outlined' },
+      useValue: {fontSet: 'material-symbols-outlined'},
     },
     provideHttpClient(withFetch()),
   ],

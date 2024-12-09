@@ -1,12 +1,7 @@
-import {
-  afterNextRender,
-  Component,
-  inject,
-  Injector,
-} from '@angular/core';
-import { MatRippleModule } from '@angular/material/core';
-import { MatIconModule } from '@angular/material/icon';
-import { ThemeChangerService } from '../../colors/theme-changer.service';
+import {afterNextRender, Component, inject, Injector,} from '@angular/core';
+import {MatRippleModule} from '@angular/material/core';
+import {MatIconModule} from '@angular/material/icon';
+import {ThemeChangerService} from '../../colors/theme-changer.service';
 
 @Component({
   selector: 'lib-image-input',
