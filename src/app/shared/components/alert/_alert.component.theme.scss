@@ -1,7 +1,7 @@
 // _alert-theme.scss
 
 @use "sass:map";
-@use "@angular/material" as mat;
+@use "../../../../../node_modules/@angular/material/index" as mat;
 
 @mixin color($theme) {
   .alert {

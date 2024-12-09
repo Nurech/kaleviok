@@ -2,7 +2,6 @@ import {AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, signal,
 import {ActivatedRoute} from '@angular/router';
 
 import {MaterialColorName, ThemePalette} from '../types';
-import {LibUsageComponent} from './lib-usage/lib-usage.component';
 import {LayoutComponent} from './core/layout/layout.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -18,7 +17,6 @@ import {ThemeChangerService} from './shared/services/theme-changer.service';
   selector: 'app-root',
   standalone: true,
   imports: [
-    LibUsageComponent,
     LayoutComponent,
     MatCardModule,
     MatButtonModule,

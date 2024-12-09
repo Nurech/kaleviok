@@ -1,11 +1,9 @@
-@use "../app/lib-usage/layout/layout-component.theme" as lib-layout-theme;
 @use "../app/core/layout/layout.component.theme" as layout-theme;
 @use "app/shared/components/dark-mode-switch/dark-mode-switch-theme" as dark-mode-switch-theme;
 @use "styles/theme-changer" as theme-changer;
 
 
 @mixin theme($theme) {
-  @include lib-layout-theme.theme($theme);
   @include layout-theme.theme($theme);
   @include theme-changer.alert-theme($theme);
   @include dark-mode-switch-theme.theme($theme);

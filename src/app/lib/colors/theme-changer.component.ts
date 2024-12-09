@@ -7,7 +7,7 @@ import {ThemeGeneratedColorsComponent} from '../components/generated-colors/gene
 import {CopyCSSComponent} from '../components/copy-css/copy-css.component';
 import {ShareURLComponent} from '../components/share-url/share-url.component';
 import {ColorModeComponent} from '../components/color-mode/color-mode.component';
-import {AlertComponent, AlertHeadingDirective,} from '../components/alert/alert.component';
+import {AlertComponent, AlertHeadingDirective,} from '../../shared/components/alert/alert.component';
 import {ImageInputComponent} from '../components/image-input/image-input.component';
 
 @Component({
