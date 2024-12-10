@@ -1,5 +1,4 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
-import queryString from 'query-string';
 import {
   changeColorAndMode,
   changeColorMode,
@@ -219,10 +218,4 @@ export class ThemeChangerService {
     this.changeColorMode(this.colorMode());
   }
 
-  getURL() {
-    return (
-      window.location.origin +
-      `/?${queryString.stringify(getCurrentThemePalette()!)}`
-    );
-  }
 }
