@@ -13,20 +13,15 @@ export interface MenuItem {
 export class MenuService {
   readonly rootMenuItems: MenuItem[] = [
     {
-      label: 'Themes',
-      icon: 'palette',
-      href: '/',
-    },
-    {
-      label: 'Get Code',
-      icon: 'code',
+      label: 'login',
+      icon: 'login',
       onClick() {
         goTo('https://');
       },
     },
     {
-      label: 'Main Site',
-      icon: 'home',
+      label: 'users',
+      icon: 'group',
       onClick() {
         goTo('https://');
       },

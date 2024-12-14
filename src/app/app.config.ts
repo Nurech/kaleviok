@@ -17,8 +17,13 @@ import {environment} from '../environments/environment';
 import {provideStoreDevtools} from '@ngrx/store-devtools';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MAT_ICON_DEFAULT_OPTIONS} from '@angular/material/icon';
-import {provideHttpClient, withFetch} from '@angular/common/http';
+import {HttpClient, provideHttpClient, withFetch} from '@angular/common/http';
+import {MissingTranslationHandler, provideTranslateService, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {MissingTranslationService} from './shared/services/missing-translation.service';
 
+const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
+  new TranslateHttpLoader(http, './i18n/', '.json');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -54,5 +59,17 @@ export const appConfig: ApplicationConfig = {
       useValue: {fontSet: 'material-symbols-outlined'},
     },
     provideHttpClient(withFetch()),
+    provideTranslateService({
+      missingTranslationHandler: {
+        provide: MissingTranslationHandler,
+        useClass: MissingTranslationService
+      },
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient],
+      },
+      defaultLanguage: 'et',
+    }),
   ],
 };

@@ -1,6 +1,6 @@
 <div class="nav-rail-container">
   <a class="section-link home-link" routerLink="/">
-    <img alt="Logo" height="42" src="assets/img/logo.svg"/>
+    <img alt="Logo" height="42" src="/img/logo.svg"/>
   </a>
   <nav class="nav-rail-content">
     @for (item of rootMenuItems; track $index) {
@@ -14,7 +14,7 @@
         (click)="item.onClick && item.onClick()"
       >
         <mat-icon>{{ item.icon }}</mat-icon>
-        <div class="label">{{ item.label }}</div>
+        <div class="label">{{ item.label | translate }}</div>
       </a>
     }
   </nav>

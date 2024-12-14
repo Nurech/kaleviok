@@ -1,7 +1,19 @@
 import {Routes} from '@angular/router';
+import {inject} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
-// use this routes when using <app-lib-usage> component
 const libRoutes: Routes = [
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./core/components/login/login.component').then(
+        (c) => c.LoginComponent
+      ),
+    title: () => {
+      const translate = inject(TranslateService);
+      return translate.instant('login');
+    },
+  },
   {
     path: '',
     pathMatch: 'full',
@@ -17,6 +29,4 @@ const libRoutes: Routes = [
   },
 ];
 
-const appRoutes: Routes = []
-
-export const routes: Routes = appRoutes;
+export const routes: Routes = libRoutes;

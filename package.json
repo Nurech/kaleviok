@@ -31,6 +31,8 @@
     "@ngrx/router-store": "^18.0.0",
     "@ngrx/store": "^18.0.0",
     "@ngrx/store-devtools": "^18.0.0",
+    "@ngx-translate/core": "^16.0.3",
+    "@ngx-translate/http-loader": "^16.0.0",
     "@stackblitz/sdk": "^1.11.0",
     "@types/tinycolor2": "^1.4.6",
     "rxjs": "~7.8.0",
@@ -43,7 +45,9 @@
     "@angular/compiler-cli": "^18.0.0",
     "@ngrx/schematics": "^18.0.0",
     "@types/jasmine": "~5.1.0",
+    "angular-eslint": "19.0.0",
     "autoprefixer": "^10.4.20",
+    "eslint": "^9.15.0",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -53,8 +57,6 @@
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.16",
     "typescript": "~5.5.2",
-    "typescript-eslint": "8.16.0",
-    "angular-eslint": "19.0.0",
-    "eslint": "^9.15.0"
+    "typescript-eslint": "8.16.0"
   }
 }

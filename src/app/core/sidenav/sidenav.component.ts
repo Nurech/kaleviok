@@ -6,6 +6,7 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 import {DarkModeSwitchComponent} from '../../shared/components/dark-mode-switch/dark-mode-switch.component';
 import {MenuService} from '../../shared/services/menu.service';
 import {DeviceService} from '../../shared/services/device.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidenav',
@@ -16,6 +17,7 @@ import {DeviceService} from '../../shared/services/device.service';
     MatIconModule,
     AsyncPipe,
     DarkModeSwitchComponent,
+    TranslatePipe,
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
