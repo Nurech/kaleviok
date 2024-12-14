@@ -6,6 +6,8 @@ import {usersFeature} from '../user/user.reducer';
 import {CoreStoreModule} from '../core/core.module';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {coreFeature} from '../core/core.reducer';
+import {routerReducer} from '@ngrx/router-store';
+import {RouterEffects} from '../router/router.effects';
 
 export function logState(reducer: any): any {
   return (state: any, action: any) => {
@@ -20,9 +22,12 @@ export const metaReducers: MetaReducer[] = [logState];
 @NgModule({
   imports: [
     CommonModule,
-    EffectsModule.forRoot(),
+    EffectsModule.forRoot([
+      RouterEffects
+    ]),
     StoreModule.forRoot(
       {
+        router: routerReducer,
         core: coreFeature.reducer,
         users: usersFeature.reducer
       }, {metaReducers}
