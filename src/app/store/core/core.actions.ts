@@ -20,3 +20,8 @@ export const loginSuccess = createAction(
 export const logout = createAction(
   '[Core/API] Logout'
 );
+
+export const navigateTo = createAction(
+  '[Navigation] Navigate To',
+  props<{ path: string }>()
+);

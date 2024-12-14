@@ -1,6 +1,6 @@
 import {catchError, map, mergeMap, of, tap} from 'rxjs';
 import {
-  loginSuccess,
+  loginSuccess, navigateTo,
   startGmailAuthentication,
   startGmailAuthenticationError,
   startGmailAuthenticationSuccess
@@ -10,11 +10,14 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {AuthService} from '../../shared/services/auth.service';
 import {DataService} from '../../shared/services/data.service';
 import {User, UserMapper} from '../user/user.model';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class CoreEffects {
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
+  private router = inject(Router);
+
   loginWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(startGmailAuthentication),
@@ -42,5 +45,13 @@ export class CoreEffects {
     )
   );
 
+  navigateTo$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(navigateTo),
+        tap(({path}) => this.router.navigate([path]))
+      ),
+    {dispatch: false}
+  );
 
 }
