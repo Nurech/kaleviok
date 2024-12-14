@@ -24,7 +24,6 @@ import {
 } from '../utils/theme';
 import {AppTheme, ColorMode, MaterialColorName, ThemePalette} from '../../../types';
 import {DEFAULT_THEME_COLORS} from '../utils/constants';
-import {hexFromArgb, sourceColorFromImage} from '@material/material-color-utilities';
 
 @Injectable({providedIn: 'root'})
 export class ThemeChangerService {

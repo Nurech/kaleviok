@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import {navigateTo} from '../../store/core/core.actions';
 
