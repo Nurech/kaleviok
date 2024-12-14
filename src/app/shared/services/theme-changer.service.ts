@@ -144,13 +144,6 @@ export class ThemeChangerService {
     }
   }
 
-  async changeSeedFromImage(img: HTMLImageElement) {
-    const color = await sourceColorFromImage(img);
-    const strColor = hexFromArgb(color);
-    console.log(strColor);
-    this.changeSeedColor(strColor);
-  }
-
   changeSeedColor(color: string) {
     changeSeedColor(color);
     this.themeSeed.primary.set(color);
