@@ -29,22 +29,35 @@ export class ThemeChangerService {
 
   private getStoredThemeMode(): ColorMode {
     const storedMode = localStorage.getItem(this.THEME_KEY) as ColorMode;
+    console.log(`[ThemeChangerService] Stored theme mode: ${storedMode}`);
     return storedMode || 'auto';
   }
 
   private saveThemeMode(mode: ColorMode): void {
+    console.log(`[ThemeChangerService] Saving theme mode: ${mode}`);
     localStorage.setItem(this.THEME_KEY, mode);
   }
 
   applyColorThemeListeners() {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Apply the current system preference on initialization
+    if (this.colorMode() === 'auto') {
+      console.log('[ThemeChangerService] Initial system preference detected. Applying auto mode.');
+      this.applyAutoMode();
+    }
+
+    // Listen for system preference changes
+    mediaQuery.addEventListener('change', () => {
       if (this.colorMode() === 'auto') {
+        console.log('[ThemeChangerService] System preference changed. Reapplying auto mode.');
         this.applyAutoMode();
       }
     });
   }
 
   initializeTheme() {
+    console.log(`[ThemeChangerService] Initializing theme with mode: ${this.colorMode()}`);
     if (this.colorMode() === 'auto') {
       this.applyAutoMode();
     } else {
@@ -54,22 +67,34 @@ export class ThemeChangerService {
 
   applyAutoMode() {
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    this.changeColorMode(isDark ? 'dark' : 'light');
+    console.log(`[ThemeChangerService] Auto mode detected. System prefers ${isDark ? 'dark' : 'light'} mode.`);
+    this.applyTheme(this.themeSeed.primary(), isDark ? 'dark' : 'light');
+    this.saveThemeMode('auto'); // Keep the storage value as 'auto'
   }
 
   changeColorMode(mode: ColorMode) {
+    console.log(`[ThemeChangerService] Changing color mode to: ${mode}`);
     this.colorMode.set(mode);
     this.saveThemeMode(mode);
-    this.applyTheme(this.themeSeed.primary(), mode);
+
+    if (mode === 'auto') {
+      console.log('[ThemeChangerService] Auto mode selected. Checking system preference.');
+      this.applyAutoMode();
+    } else {
+      this.applyTheme(this.themeSeed.primary(), mode);
+    }
   }
+
 
   applyTheme(color: string, mode: ColorMode) {
     const isDark = mode === 'dark';
+    console.log(`[ThemeChangerService] Applying theme. Color: ${color}, Mode: ${mode}`);
     const theme = this.generateTheme(color, isDark);
     applyTheme(theme);
   }
 
   generateTheme(color: string, isDark: boolean): AppTheme {
+    console.log(`[ThemeChangerService] Generating theme for color: ${color}, IsDark: ${isDark}`);
     return {
       ...themeFromSourceColor(color, isDark),
       ...this.getAdditionalPalettes(isDark),
@@ -77,6 +102,7 @@ export class ThemeChangerService {
   }
 
   getAdditionalPalettes(isDark: boolean) {
+    console.log(`[ThemeChangerService] Generating additional palettes for isDark: ${isDark}`);
     return {
       ...secondaryPaletteFromSourceColor(this.themeSeed.secondary(), isDark),
       ...tertiaryPaletteFromSourceColor(this.themeSeed.tertiary(), isDark),
@@ -85,8 +111,6 @@ export class ThemeChangerService {
       ...neutralVariantPaletteFromSourceColor(this.themeSeed['neutral-variant'](), isDark),
     };
   }
-
-
 }
 
 
