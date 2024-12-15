@@ -25,3 +25,12 @@ export const navigateTo = createAction(
   '[Navigation] Navigate To',
   props<{ path: string }>()
 );
+
+export const openBottomSheet = createAction(
+  '[Core] Open Bottom Sheet',
+  props<{ component: string }>()
+);
+
+export const autoLogin = createAction('[Core] Auto Login');
+export const autoLoginSuccess = createAction('[Core] Auto Login Success', props<{ user: User }>());
+export const autoLoginFailed = createAction('[Core] Auto Login Failed');

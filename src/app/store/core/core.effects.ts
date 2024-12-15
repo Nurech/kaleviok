@@ -1,6 +1,7 @@
-import {catchError, map, mergeMap, of, tap} from 'rxjs';
+import {catchError, map, mergeMap, of, switchMap, tap} from 'rxjs';
 import {
-  loginSuccess, navigateTo,
+  autoLogin, autoLoginFailed, autoLoginSuccess,
+  loginSuccess, navigateTo, openBottomSheet,
   startGmailAuthentication,
   startGmailAuthenticationError,
   startGmailAuthenticationSuccess
@@ -11,12 +12,16 @@ import {AuthService} from '../../shared/services/auth.service';
 import {DataService} from '../../shared/services/data.service';
 import {User, UserMapper} from '../user/user.model';
 import {Router} from '@angular/router';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {BottomSheetComponent} from '../../shared/components/bottom-sheet/bottom-sheet.component';
 
 @Injectable()
 export class CoreEffects {
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private bottomSheet = inject(MatBottomSheet);
+  private dataService = inject(DataService);
 
   loginWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
@@ -32,7 +37,6 @@ export class CoreEffects {
       )
     )
   );
-  private dataService = inject(DataService);
   saveUserToFirestore$ = createEffect(() =>
     this.actions$.pipe(
       ofType(startGmailAuthenticationSuccess),
@@ -54,4 +58,32 @@ export class CoreEffects {
     {dispatch: false}
   );
 
+  openBottomSheet$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(openBottomSheet),
+        tap(({component}) => {
+          this.bottomSheet.open(BottomSheetComponent, {
+            data: {component},
+          });
+        })
+      ),
+    {dispatch: false}
+  );
+
+  autoLogin$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(autoLogin),
+      switchMap(() =>
+        this.authService.getCurrentUser().pipe(
+          map((user) => {
+            if (user) {
+              return autoLoginSuccess({user});
+            }
+            return autoLoginFailed();
+          }),
+          catchError(() => of(autoLoginFailed()))
+        )
+      )
+    ));
 }

@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Auth, GoogleAuthProvider, signInWithPopup, signOut, user} from '@angular/fire/auth';
 import {Firestore} from '@angular/fire/firestore';
-import {from} from 'rxjs';
+import {from, Observable} from 'rxjs';
+import {User} from '../../store/user/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ export class AuthService {
     return from(signOut(this.auth));
   }
 
-  getCurrentUser() {
+  getCurrentUser(): Observable<User> {
     return user(this.auth);
   }
 

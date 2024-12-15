@@ -1,1 +1,22 @@
-<p>login works!</p>
+<div class="flex-col">
+  <div class="flex justify-center">
+    <button mat-flat-button (click)="loginWithGoogl()">
+      <mat-icon svgIcon="google_logo"></mat-icon>
+      {{ 'login.google' | translate }}
+    </button>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Enter your email</mat-label>
+    <input
+      matInput
+      placeholder="pat@example.com"
+      [formControl]="email"
+      (blur)="updateErrorMessage()"
+      required
+    />
+    @if (email.invalid) {
+      <mat-error>{{ errorMessage() }}</mat-error>
+    }
+  </mat-form-field>
+</div>

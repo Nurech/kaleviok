@@ -7,6 +7,15 @@ import {
   SchemeTonalSpot as SchemeFunction
 } from '@material/material-color-utilities';
 
+export const DEFAULT_THEME_COLORS: ThemePalette = {
+  primary: '#2879c6',
+  secondary: '#302c2d',
+  tertiary: '#1a2d40',
+  error: '#FF5449',
+  neutral: '#938F94',
+  'neutral-variant': '#948F99',
+};
+
 @Injectable({providedIn: 'root'})
 export class ThemeChangerService {
   private readonly THEME_KEY = 'theme-mode';
@@ -205,15 +214,6 @@ export const materialColors = {
   'tertiary-fixed-dim': MaterialDynamicColors.tertiaryFixedDim,
   'on-tertiary-fixed': MaterialDynamicColors.onTertiaryFixed,
   'on-tertiary-fixed-variant': MaterialDynamicColors.onTertiaryFixedVariant,
-};
-
-export const DEFAULT_THEME_COLORS: ThemePalette = {
-  primary: '#2879c6',
-  secondary: '#302c2d',
-  tertiary: '#6cb3f8',
-  error: '#FF5449',
-  neutral: '#938F94',
-  'neutral-variant': '#948F99',
 };
 
 

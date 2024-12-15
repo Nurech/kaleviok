@@ -30,6 +30,10 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "public/img"
               }
             ],
             "styles": [

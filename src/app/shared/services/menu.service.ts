@@ -1,6 +1,7 @@
-import { inject, Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import {navigateTo} from '../../store/core/core.actions';
+import {inject, Injectable} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {navigateTo, openBottomSheet} from '../../store/core/core.actions';
+import {LoginComponent} from '../../core/components/login/login.component';
 
 export interface MenuItem {
   label: string;
@@ -9,13 +10,13 @@ export interface MenuItem {
   onClick?: () => void;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class MenuService {
   readonly rootMenuItems: MenuItem[] = [
     {
       label: 'login',
       icon: 'login',
-      onClick: () => this.handleNavigation('/login'),
+      onClick: () => this.store.dispatch(openBottomSheet({component: 'LoginComponent'})),
     },
     {
       label: 'users',
@@ -37,6 +38,6 @@ export class MenuService {
   private store = inject(Store);
 
   private handleNavigation(path: string): void {
-    this.store.dispatch(navigateTo({ path }));
+    this.store.dispatch(navigateTo({path}));
   }
 }
