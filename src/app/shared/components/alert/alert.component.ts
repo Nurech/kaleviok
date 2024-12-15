@@ -9,16 +9,16 @@ const ICON_MAP: Record<AlertType, string> = {
   info: 'info',
 };
 
-@Directive({selector: '[alert-heading]', standalone: true})
+@Directive({selector: '[alertHeading]', standalone: true})
 export class AlertHeadingDirective {
 }
 
-@Directive({selector: '[alert-footer]', standalone: true})
+@Directive({selector: '[alertFooter]', standalone: true})
 export class AlertFooterDirective {
 }
 
 @Component({
-  selector: 'lib-alert',
+  selector: 'appAlert',
   standalone: true,
   imports: [CommonModule, MatIconModule, MatButtonModule],
   templateUrl: './alert.component.html',

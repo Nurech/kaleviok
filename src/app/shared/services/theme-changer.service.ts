@@ -288,7 +288,7 @@ export function neutralVariantPaletteFromSourceColor(
 }
 
 export function applyTheme(theme: AppTheme, ssName = 'material-theme') {
-  let styleString = generateCSSFromTheme(theme);
+  const styleString = generateCSSFromTheme(theme);
   applyThemeString(document, styleString, ssName);
 }
 

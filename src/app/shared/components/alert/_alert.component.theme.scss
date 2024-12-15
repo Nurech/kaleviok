@@ -19,11 +19,11 @@
   .alert {
     font: mat.get-theme-typography($theme, "body-medium", "font");
 
-    .alert-heading {
+    .alertHeading {
       font: mat.get-theme-typography($theme, "body-large", "font");
     }
 
-    .alert-footer {
+    .alertFooter {
       font: mat.get-theme-typography($theme, "label-small", "font");
     }
   }

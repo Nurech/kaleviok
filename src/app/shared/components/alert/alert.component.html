@@ -1,11 +1,11 @@
 <div class="alert" role="alert">
   @if (headingDir || heading) {
-    <div class="alert-heading">
+    <div class="alertHeading">
       <mat-icon class="me-2">{{ icon }}</mat-icon>
       @if (heading) {
         <span [innerHTML]="heading"></span>
       } @else {
-        <ng-content select="[alert-heading]"></ng-content>
+        <ng-content select="[alertHeading]"></ng-content>
       }
     </div>
   }
@@ -23,11 +23,11 @@
   </p>
   @if (footerDir || footer) {
     <hr/>
-    <p class="alert-footer">
+    <p class="alertFooter">
       @if (footer) {
         <span [innerHTML]="footer"></span>
       } @else {
-        <ng-content select="[alert-footer]"></ng-content>
+        <ng-content select="[alertFooter]"></ng-content>
       }
     </p>
   }

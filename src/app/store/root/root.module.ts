@@ -9,7 +9,7 @@ import {coreFeature} from '../core/core.reducer';
 import {routerReducer} from '@ngrx/router-store';
 import {RouterEffects} from '../router/router.effects';
 
-export function logState(reducer: any): any {
+export function logState(reducer: any) {
   return (state: any, action: any) => {
     const nextState = reducer(state, action);
     console.log('Next State:', nextState);
