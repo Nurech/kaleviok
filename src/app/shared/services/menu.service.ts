@@ -8,29 +8,34 @@ export interface MenuItem {
   icon: string;
   href?: string;
   onClick?: () => void;
+  position?: 'start' | 'end';
 }
 
 @Injectable({providedIn: 'root'})
 export class MenuService {
   readonly rootMenuItems: MenuItem[] = [
     {
-      label: 'login',
-      icon: 'login',
-      onClick: () => this.store.dispatch(openBottomSheet({component: 'LoginComponent'})),
-    },
-    {
       label: 'users',
       icon: 'group',
+      position: 'start',
       onClick: () => this.handleNavigation('/users'),
+    },
+    {
+      label: 'login',
+      icon: 'login',
+      position: 'end',
+      onClick: () => this.store.dispatch(openBottomSheet({component: 'LoginComponent'})),
     },
     {
       label: 'admin_panel_settings',
       icon: 'admin_panel_settings',
+      position: 'end',
       onClick: () => this.handleNavigation('/admin-panel-settings'),
     },
     {
       label: 'contact_support',
       icon: 'contact_support',
+      position: 'end',
       onClick: () => this.handleNavigation('/contact-support'),
     },
   ];

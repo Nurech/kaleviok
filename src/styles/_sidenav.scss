@@ -100,19 +100,7 @@
     }
   }
 
-  .nav-rail-content {
-    display: flex;
-    flex-direction: column;
-    width: variables.$nav-rail-content-width;
-    margin-top: 20px;
-    .label {
-      margin-bottom: 4px;
-      transition: font-weight 0.2s cubic-bezier(0.2, 0, 0, 1);
-      text-align: center;
-      font-size: 12px;
-      font-family: #{variables.$heading-font-family};
-    }
-  }
+
 
   .dark-mode-switch-container {
     display: flex;

@@ -77,13 +77,11 @@ export class CoreEffects {
       switchMap(() =>
         this.authService.getCurrentUser().pipe(
           map((user) => {
-            if (user) {
-              return autoLoginSuccess({user});
-            }
-            return autoLoginFailed();
+            return autoLoginSuccess({user});
           }),
-          catchError(() => of(autoLoginFailed()))
+          catchError((error) => of(autoLoginFailed({error})))
         )
       )
     ));
+
 }

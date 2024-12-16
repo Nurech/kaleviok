@@ -8,6 +8,7 @@ import {IconResolver, MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Store} from '@ngrx/store';
 import {autoLogin} from './store/core/core.actions';
+import {StorageService} from './shared/services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -23,15 +24,20 @@ import {autoLogin} from './store/core/core.actions';
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private store$ = inject(Store);
-
-
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    const resolver: IconResolver = (name) => sanitizer.bypassSecurityTrustResourceUrl(`/img/${name}.svg`);
-    iconRegistry.addSvgIconResolver(resolver);
-  }
+  private storage = inject(StorageService);
+  private iconRegistry = inject(MatIconRegistry);
+  private sanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
-    this.store$.dispatch(autoLogin());
+    this.initializeIconRegistry();
+    if (this.storage.get('autoLogin')) {
+      this.store$.dispatch(autoLogin());
+    }
+  }
+
+  initializeIconRegistry() {
+    const resolver: IconResolver = (name) => this.sanitizer.bypassSecurityTrustResourceUrl(`/img/${name}.svg`);
+    this.iconRegistry.addSvgIconResolver(resolver);
   }
 
   ngAfterViewInit(): void {

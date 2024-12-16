@@ -1,5 +1,5 @@
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, NgClass} from '@angular/common';
 import {Component, inject, output} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterLink, RouterLinkActive} from '@angular/router';
@@ -18,6 +18,7 @@ import {TranslatePipe} from '@ngx-translate/core';
     AsyncPipe,
     DarkModeSwitchComponent,
     TranslatePipe,
+    NgClass,
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
@@ -25,6 +26,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 export class SidenavComponent {
   isHandset$ = inject(DeviceService).isHandset$;
   closeDrawer = output();
-  readonly rootMenuItems = inject(MenuService).rootMenuItems;
+  readonly menuItemsTopLeft = inject(MenuService).rootMenuItems.filter((item) => item.position === 'start');
+  readonly menuItemsBottomLeft = inject(MenuService).rootMenuItems.filter((item) => item.position === 'end');
   private breakpointObserver = inject(BreakpointObserver);
 }

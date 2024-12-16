@@ -1,0 +1,8 @@
+<div class="snackbar-content">
+  <span>{{ data.message }}</span>
+  @if (data.action) {
+    <button mat-button (click)="onActionClick()">
+      {{ data.action }}
+    </button>
+  }
+</div>
