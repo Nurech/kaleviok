@@ -2,6 +2,9 @@
   "login": "Logi sisse",
   "admin_panel_settings": "Admin seaded",
   "contact_support": "Abi",
+  "snackbar.autologin.start": "Login sisse...",
+  "snackbar.autologin.success": "Sisse logitud!",
+  "snackbar.autologin.error": "Tekkis viga: {{error}}",
   "login.google": "Logi sisse Google'iga",
   "users": "Kasutajad"
 }

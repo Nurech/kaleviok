@@ -8,8 +8,6 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {coreFeature} from '../core/core.reducer';
 import {routerReducer} from '@ngrx/router-store';
 import {RouterEffects} from '../router/router.effects';
-import {SnackbarStoreModule} from '../snackbar/snackbar.module';
-import {snackbarFeature} from '../snackbar/snackbar.reducer';
 
 export function logState(reducer: any) {
   return (state: any, action: any) => {
@@ -31,12 +29,10 @@ export const metaReducers: MetaReducer[] = [logState];
       {
         router: routerReducer,
         core: coreFeature.reducer,
-        snackbar: snackbarFeature.reducer,
         users: usersFeature.reducer
       }, {metaReducers}
     ),
     CoreStoreModule,
-    SnackbarStoreModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),

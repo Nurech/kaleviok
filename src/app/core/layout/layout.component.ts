@@ -8,6 +8,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {SidenavComponent} from '../sidenav/sidenav.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {DeviceService} from '../../shared/services/device.service';
+import {SnackbarService} from '../../shared/services/snackbar.service';
+import {SnackbarState, SnackbarType} from '../../shared/models';
 
 @Component({
   selector: 'app-layout',
@@ -28,4 +30,23 @@ import {DeviceService} from '../../shared/services/device.service';
 })
 export class LayoutComponent {
   isHandset$ = inject(DeviceService).isHandset$;
+  snackbarService = inject(SnackbarService);
+
+  opanSnackBar() {
+    this.snackbarService.snack({
+      name: SnackbarType.AUTOLOGIN,
+      show: true,
+      state: SnackbarState.INDETERMINATE,
+      message: 'Logging in...',
+    });
+  }
+
+  opanSnackBarSuccess() {
+    this.snackbarService.snack({
+      name: SnackbarType.AUTOLOGIN,
+      show: true,
+      state: SnackbarState.SUCCESS,
+      message: 'Login successful!',
+    });
+  }
 }

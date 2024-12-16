@@ -1,7 +1,20 @@
-<div class="snackbar-content">
-  <span>{{ data.message }}</span>
+<div class="flex flex-row items-center justify-center space-x-4">
+  <span class="flex items-center justify-center">{{ data.message }}</span>
+
+  @switch (data.state) {
+    @case (SnackbarState.INDETERMINATE) {
+      <mat-spinner class="size-6"></mat-spinner>
+    }
+    @case (SnackbarState.SUCCESS) {
+      <mat-icon>check_circle</mat-icon>
+    }
+    @case (SnackbarState.ERROR) {
+      <mat-icon>error</mat-icon>
+    }
+  }
+
   @if (data.action) {
-    <button mat-button (click)="onActionClick()">
+    <button mat-button class="ml-4" (click)="onActionClick()">
       {{ data.action }}
     </button>
   }

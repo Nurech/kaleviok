@@ -14,6 +14,9 @@ import {User, UserMapper} from '../user/user.model';
 import {Router} from '@angular/router';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {BottomSheetComponent} from '../../shared/components/bottom-sheet/bottom-sheet.component';
+import {SnackbarService} from '../../shared/services/snackbar.service';
+import {TranslateService} from '@ngx-translate/core';
+import {SnackbarState, SnackbarType} from '../../shared/models';
 
 @Injectable()
 export class CoreEffects {
@@ -22,6 +25,8 @@ export class CoreEffects {
   private router = inject(Router);
   private bottomSheet = inject(MatBottomSheet);
   private dataService = inject(DataService);
+  private snackbarService = inject(SnackbarService);
+  private translate = inject(TranslateService);
 
   loginWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
@@ -84,4 +89,54 @@ export class CoreEffects {
       )
     ));
 
+  autoLoginStart$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(autoLogin),
+        tap(() => {
+          const message = this.translate.instant('snackbar.autologin.start');
+          this.snackbarService.snack({
+            name: SnackbarType.AUTOLOGIN,
+            show: true,
+            state: SnackbarState.INDETERMINATE,
+            message,
+          });
+        })
+      ),
+    { dispatch: false }
+  );
+
+  autoLoginSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(autoLoginSuccess),
+        tap(() => {
+          const message = this.translate.instant('snackbar.autologin.success');
+          this.snackbarService.snack({
+            name: SnackbarType.AUTOLOGIN,
+            show: true,
+            state: SnackbarState.SUCCESS,
+            message,
+          });
+        })
+      ),
+    { dispatch: false }
+  );
+
+  autoLoginError$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(autoLoginFailed),
+        tap(({ error }) => {
+          const message = this.translate.instant('snackbar.autologin.error', { error: error.message || error });
+          this.snackbarService.snack({
+            name: SnackbarType.AUTOLOGIN,
+            show: true,
+            state: SnackbarState.ERROR,
+            message,
+          });
+        })
+      ),
+    { dispatch: false }
+  );
 }

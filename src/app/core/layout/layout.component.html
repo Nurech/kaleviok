@@ -16,32 +16,7 @@
         <mat-icon class="mb-1">menu</mat-icon>
       </button>
     }
-    <mat-tab-group class="m3-primary-tab" fitInkBarToContent>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon class="tab-icon">palette</mat-icon>
-          Build
-        </ng-template>
-        <div class="tab-scroll">
-          <ng-container *ngTemplateOutlet="leftContentTemplate"></ng-container>
-        </div>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon class="tab-icon">preview</mat-icon>
-          Preview
-        </ng-template>
-        <div class="tab-scroll">
-          <ng-container *ngTemplateOutlet="rightContentTemplate"></ng-container>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+    <button mat-button (click)="opanSnackBar()">open snack</button>
+    <button mat-button (click)="opanSnackBarSuccess()">snack success</button>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<ng-template #leftContentTemplate>
-  <ng-content select="[left-content]"></ng-content>
-</ng-template>
-<ng-template #rightContentTemplate>
-  <ng-content select="[right-content]"></ng-content>
-</ng-template>
