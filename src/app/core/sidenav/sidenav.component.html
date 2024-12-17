@@ -3,7 +3,7 @@
     <img alt="Logo" height="42" src="logo.svg"/>
   </a>
   @if (menuItemsTopLeft.length > 0) {
-    <nav class="flex md:flex-col flex-row justify-items-start justify-start mt-2 h-full">
+    <nav class="flex lex-col justify-items-start justify-start mt-2 h-full">
       @for (item of menuItemsTopLeft; track $index) {
         <a
           [routerLink]="item.href"
@@ -21,7 +21,7 @@
     </nav>
   }
   @if (menuItemsBottomLeft.length > 0) {
-    <nav class="flex md:flex-col flex-row justify-items-end justify-end mt-2 h-full">
+    <nav class="flex flex-col justify-items-end justify-end mt-2 h-full">
       @for (item of menuItemsBottomLeft; track $index) {
         <a
           [routerLink]="item.href"
