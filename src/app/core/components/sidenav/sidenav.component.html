@@ -1,10 +1,13 @@
 <div class="flex flex-col h-full relative items-center px-1">
   <a class="section-link home-link" routerLink="/">
-    <img alt="Logo" height="42" src="logo.svg"/>
+    <img alt="Logo" height="42" src="logo.svg" />
   </a>
-  @if (menuItemsTopLeft.length > 0) {
-    <nav class="flex flex-col justify-items-start justify-start mt-2 h-full">
-      @for (item of menuItemsTopLeft; track $index) {
+  @if (menuItems.length > 0) {
+    <nav
+      class="flex flex-col justify-items-start justify-start mt-2 h-full"
+      [@listAnimation]="animationState()"
+    >
+      @for (item of menuItems; track $index) {
         <a
           [routerLink]="item.href"
           routerLinkActive="active"
@@ -20,26 +23,6 @@
       }
     </nav>
   }
-  @if (menuItemsBottomLeft.length > 0) {
-    <nav class="flex flex-col justify-items-end justify-end mt-2 h-full">
-      @for (item of menuItemsBottomLeft; track $index) {
-        <a
-          [routerLink]="item.href"
-          routerLinkActive="active"
-          #link="routerLinkActive"
-          [attr.aria-current]="link.isActive"
-          role="link"
-          class="section-link"
-          (click)="item.onClick && item.onClick()"
-        >
-          <mat-icon>{{ item.icon }}</mat-icon>
-          <div class="text-xs">{{ item.label | translate }}</div>
-        </a>
-      }
-    </nav>
-  }
-
-
   <div class="dark-mode-switch-container">
     <app-dark-mode-switch variant="compact"></app-dark-mode-switch>
   </div>

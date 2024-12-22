@@ -1,12 +1,18 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { AsyncPipe, NgClass } from '@angular/common';
-import { Component, inject, output } from '@angular/core';
+import { Component, computed, inject, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { DarkModeSwitchComponent } from '../../../shared/components/dark-mode-switch/dark-mode-switch.component';
 import { MenuService } from '../../../shared/services/menu.service';
-import { DeviceService } from '../../../shared/services/device.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import {
+  animate,
+  query,
+  stagger,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-sidenav',
@@ -22,15 +28,29 @@ import { TranslatePipe } from '@ngx-translate/core';
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
+  animations: [
+    trigger('listAnimation', [
+      transition('* => open', [
+        query(
+          'a',
+          [
+            style({ opacity: 0, transform: 'translateX(30px)' }),
+            stagger(50, [
+              animate(
+                '200ms ease-out',
+                style({ opacity: 1, transform: 'translateX(0)' }),
+              ),
+            ]),
+          ],
+          { optional: true },
+        ),
+      ]),
+    ]),
+  ],
 })
 export class SidenavComponent {
-  isHandset$ = inject(DeviceService).isHandset$;
   closeDrawer = output();
-  readonly menuItemsTopLeft = inject(MenuService).rootMenuItems.filter(
-    (item) => item.position === 'start',
-  );
-  readonly menuItemsBottomLeft = inject(MenuService).rootMenuItems.filter(
-    (item) => item.position === 'end',
-  );
-  private breakpointObserver = inject(BreakpointObserver);
+  readonly menuItems = inject(MenuService).rootMenuItems;
+  public isOpen = signal(false);
+  animationState = computed(() => (this.isOpen() ? 'open' : ''));
 }

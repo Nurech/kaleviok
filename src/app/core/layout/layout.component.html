@@ -5,12 +5,14 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
+    (openedStart)="sidenav.isOpen.set(true)"
+    (closedStart)="sidenav.isOpen.set(false)"
     class="app-sidenav"
   >
-    <app-sidenav (closeDrawer)="drawer.close()"></app-sidenav>
+    <app-sidenav #sidenav (closeDrawer)="drawer.close()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content class="app-sidenav-content">
-    @if (isHandset$ | async){
+    @if (isHandset$ | async) {
       <button mat-icon-button class="absolute top-0 right-0 z-10 m-2"
               (click)="drawer.open()">
         <mat-icon class="mb-1">menu</mat-icon>
