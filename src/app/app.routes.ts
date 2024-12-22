@@ -16,6 +16,22 @@ const libRoutes: Routes = [
       ),
     title: () => translateKey('login'),
   },
+  {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./core/components/dashboard/dashboard.component').then(
+        (c) => c.DashboardComponent,
+      ),
+    title: () => translateKey('login'),
+  },
+  {
+    path: 'notifications',
+    loadComponent: () =>
+      import('./core/components/notifications/notifications.component').then(
+        (c) => c.NotificationsComponent,
+      ),
+    title: () => translateKey('notifications'),
+  },
 ];
 
 export const routes: Routes = libRoutes;

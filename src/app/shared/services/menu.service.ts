@@ -14,6 +14,12 @@ export interface MenuItem {
 export class MenuService {
   readonly rootMenuItems: MenuItem[] = [
     {
+      label: 'notifications',
+      icon: 'notifications',
+      position: 'start',
+      onClick: () => this.handleNavigation('/notifications'),
+    },
+    {
       label: 'dashboard',
       icon: 'team_dashboard',
       position: 'start',
