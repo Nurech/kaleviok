@@ -7,8 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "eslint \"**/*.{js,ts,html}\"",
+    "format": "prettier --write \"**/*.{js,ts,html,json,css,scss,md}\""
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
