@@ -1,22 +1,26 @@
-import {catchError, map, mergeMap, of, switchMap, tap} from 'rxjs';
+import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import {
-  autoLogin, autoLoginFailed, autoLoginSuccess,
-  loginSuccess, navigateTo, openBottomSheet,
+  autoLogin,
+  autoLoginFailed,
+  autoLoginSuccess,
+  loginSuccess,
+  navigateTo,
+  openBottomSheet,
   startGmailAuthentication,
   startGmailAuthenticationError,
-  startGmailAuthenticationSuccess
+  startGmailAuthenticationSuccess,
 } from './core.actions';
-import {inject, Injectable} from '@angular/core';
-import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {AuthService} from '../../shared/services/auth.service';
-import {DataService} from '../../shared/services/data.service';
-import {User, UserMapper} from '../user/user.model';
-import {Router} from '@angular/router';
-import {MatBottomSheet} from '@angular/material/bottom-sheet';
-import {BottomSheetComponent} from '../../shared/components/bottom-sheet/bottom-sheet.component';
-import {SnackbarService} from '../../shared/services/snackbar.service';
-import {TranslateService} from '@ngx-translate/core';
-import {SnackbarState, SnackbarType} from '../../shared/models';
+import { inject, Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { AuthService } from '../../shared/services/auth.service';
+import { DataService } from '../../shared/services/data.service';
+import { User, UserMapper } from '../user/user.model';
+import { Router } from '@angular/router';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
+import { SnackbarService } from '../../shared/services/snackbar.service';
+import { TranslateService } from '@ngx-translate/core';
+import { SnackbarState, SnackbarType } from '../../shared/models';
 
 @Injectable()
 export class CoreEffects {
@@ -35,45 +39,45 @@ export class CoreEffects {
         this.authService.loginWithGoogle().pipe(
           map((response) => {
             const payload: User = UserMapper.mapResponseToUser(response);
-            return startGmailAuthenticationSuccess({payload});
+            return startGmailAuthenticationSuccess({ payload });
           }),
-          catchError((error) => of(startGmailAuthenticationError({error})))
-        )
-      )
-    )
+          catchError((error) => of(startGmailAuthenticationError({ error }))),
+        ),
+      ),
+    ),
   );
   saveUserToFirestore$ = createEffect(() =>
     this.actions$.pipe(
       ofType(startGmailAuthenticationSuccess),
-      tap(({payload}) => {
+      tap(({ payload }) => {
         this.dataService.saveUserToFirestore(payload.uid, payload);
       }),
-      map(({payload}) => {
-        return loginSuccess({payload});
-      })
-    )
+      map(({ payload }) => {
+        return loginSuccess({ payload });
+      }),
+    ),
   );
 
   navigateTo$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(navigateTo),
-        tap(({path}) => this.router.navigate([path]))
+        tap(({ path }) => this.router.navigate([path])),
       ),
-    {dispatch: false}
+    { dispatch: false },
   );
 
   openBottomSheet$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(openBottomSheet),
-        tap(({component}) => {
+        tap(({ component }) => {
           this.bottomSheet.open(BottomSheetComponent, {
-            data: {component},
+            data: { component },
           });
-        })
+        }),
       ),
-    {dispatch: false}
+    { dispatch: false },
   );
 
   autoLogin$ = createEffect(() =>
@@ -82,12 +86,13 @@ export class CoreEffects {
       switchMap(() =>
         this.authService.getCurrentUser().pipe(
           map((user) => {
-            return autoLoginSuccess({user});
+            return autoLoginSuccess({ user });
           }),
-          catchError((error) => of(autoLoginFailed({error})))
-        )
-      )
-    ));
+          catchError((error) => of(autoLoginFailed({ error }))),
+        ),
+      ),
+    ),
+  );
 
   autoLoginStart$ = createEffect(
     () =>
@@ -101,9 +106,9 @@ export class CoreEffects {
             state: SnackbarState.INDETERMINATE,
             message,
           });
-        })
+        }),
       ),
-    { dispatch: false }
+    { dispatch: false },
   );
 
   autoLoginSuccess$ = createEffect(
@@ -118,9 +123,9 @@ export class CoreEffects {
             state: SnackbarState.SUCCESS,
             message,
           });
-        })
+        }),
       ),
-    { dispatch: false }
+    { dispatch: false },
   );
 
   autoLoginError$ = createEffect(
@@ -135,8 +140,8 @@ export class CoreEffects {
             state: SnackbarState.ERROR,
             message,
           });
-        })
+        }),
       ),
-    { dispatch: false }
+    { dispatch: false },
   );
 }

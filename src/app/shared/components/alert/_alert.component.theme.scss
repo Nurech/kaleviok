@@ -1,7 +1,7 @@
 // _alert-theme.scss
 
-@use "sass:map";
-@use "../../../../../node_modules/@angular/material/index" as mat;
+@use 'sass:map';
+@use '../../../../../node_modules/@angular/material/index' as mat;
 
 @mixin color($theme) {
   .alert {
@@ -17,14 +17,14 @@
 
 @mixin typography($theme) {
   .alert {
-    font: mat.get-theme-typography($theme, "body-medium", "font");
+    font: mat.get-theme-typography($theme, 'body-medium', 'font');
 
     .alertHeading {
-      font: mat.get-theme-typography($theme, "body-large", "font");
+      font: mat.get-theme-typography($theme, 'body-large', 'font');
     }
 
     .alertFooter {
-      font: mat.get-theme-typography($theme, "label-small", "font");
+      font: mat.get-theme-typography($theme, 'label-small', 'font');
     }
   }
 }

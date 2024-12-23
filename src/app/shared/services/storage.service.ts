@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 export class StorageService {
   private readonly PREFIX = 'kaleviok_';
 
-  set(key: string, value: any): void {
+  set(key: string, value: string): void {
     const prefixedKey = this.getPrefixedKey(key);
     const serializedValue = JSON.stringify(value);
     localStorage.setItem(prefixedKey, serializedValue);

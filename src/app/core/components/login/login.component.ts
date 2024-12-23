@@ -1,24 +1,21 @@
-import {Component, inject, signal} from '@angular/core';
-import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
-import {MatButton} from '@angular/material/button';
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
-import {NgIf} from '@angular/common';
-import {MatInput, MatInputModule} from '@angular/material/input';
-import {RouterLink} from '@angular/router';
-import {merge} from 'rxjs';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {MatIcon} from '@angular/material/icon';
-import {TranslatePipe} from '@ngx-translate/core';
-import {startGmailAuthentication} from '../../../store/core/core.actions';
-import {Store} from '@ngrx/store';
+import { Component, inject, signal } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { merge } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
+import { startGmailAuthentication } from '../../../store/core/core.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButton, MatIcon, TranslatePipe],
   templateUrl: './login.component.html',
-  styles: ``
+  styles: ``,
 })
 export class LoginComponent {
   private store$ = inject(Store);

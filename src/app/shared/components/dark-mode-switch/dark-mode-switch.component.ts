@@ -1,7 +1,7 @@
-import {Component, inject, Input} from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {ColorMode, ThemeChangerService} from '../../services/theme-changer.service';
+import { Component, inject, Input } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ColorMode, ThemeChangerService } from '../../services/theme-changer.service';
 
 @Component({
   selector: 'app-dark-mode-switch',

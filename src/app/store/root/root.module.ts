@@ -1,13 +1,13 @@
-import {isDevMode, NgModule} from '@angular/core';
-import {MetaReducer, StoreModule} from '@ngrx/store';
-import {EffectsModule} from '@ngrx/effects';
-import {CommonModule} from '@angular/common';
-import {usersFeature} from '../user/user.reducer';
-import {CoreStoreModule} from '../core/core.module';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {coreFeature} from '../core/core.reducer';
-import {routerReducer} from '@ngrx/router-store';
-import {RouterEffects} from '../router/router.effects';
+import { isDevMode, NgModule } from '@angular/core';
+import { MetaReducer, StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { CommonModule } from '@angular/common';
+import { usersFeature } from '../user/user.reducer';
+import { CoreStoreModule } from '../core/core.module';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { coreFeature } from '../core/core.reducer';
+import { routerReducer } from '@ngrx/router-store';
+import { RouterEffects } from '../router/router.effects';
 
 export function logState(reducer: any) {
   return (state: any, action: any) => {
@@ -22,15 +22,14 @@ export const metaReducers: MetaReducer[] = [logState];
 @NgModule({
   imports: [
     CommonModule,
-    EffectsModule.forRoot([
-      RouterEffects
-    ]),
+    EffectsModule.forRoot([RouterEffects]),
     StoreModule.forRoot(
       {
         router: routerReducer,
         core: coreFeature.reducer,
-        users: usersFeature.reducer
-      }, {metaReducers}
+        users: usersFeature.reducer,
+      },
+      { metaReducers },
     ),
     CoreStoreModule,
     StoreDevtoolsModule.instrument({
@@ -39,9 +38,8 @@ export const metaReducers: MetaReducer[] = [logState];
       autoPause: true,
       trace: false,
       traceLimit: 75,
-      connectInZone: true
+      connectInZone: true,
     }),
   ],
 })
-export class RootStoreModule {
-}
+export class RootStoreModule {}

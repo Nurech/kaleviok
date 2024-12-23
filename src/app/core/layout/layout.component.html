@@ -13,8 +13,7 @@
   </mat-sidenav>
   <mat-sidenav-content class="app-sidenav-content">
     @if (isHandset$ | async) {
-      <button mat-icon-button class="absolute top-0 right-0 z-10 m-2"
-              (click)="drawer.open()">
+      <button mat-icon-button class="absolute top-0 right-0 z-10 m-2" (click)="drawer.open()">
         <mat-icon class="mb-1">menu</mat-icon>
       </button>
     }

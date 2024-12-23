@@ -1,4 +1,4 @@
-@use "./variables";
+@use './variables';
 
 .app-sidenav {
   --mat-sidenav-container-width: auto;
@@ -34,7 +34,10 @@
 
     &:hover {
       mat-icon {
-        font-variation-settings: "FILL" 1, "wght" 600, "opsz" 24;
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 600,
+          'opsz' 24;
       }
       .label {
         font-weight: 500;
@@ -43,16 +46,24 @@
 
     &:active {
       mat-icon {
-        font-variation-settings: "wght" 300, "opsz" 24;
+        font-variation-settings:
+          'wght' 300,
+          'opsz' 24;
       }
     }
 
     &.active {
       &:active mat-icon {
-        font-variation-settings: "FILL" 1, "wght" 300, "opsz" 24;
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 300,
+          'opsz' 24;
       }
       mat-icon {
-        font-variation-settings: "FILL" 1, "wght" 400, "opsz" 24;
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 400,
+          'opsz' 24;
         &::before {
           opacity: 1;
           transform: scaleX(1);
@@ -63,7 +74,10 @@
       }
       &:hover {
         mat-icon {
-          font-variation-settings: "FILL" 1, "wght" 600, "opsz" 24;
+          font-variation-settings:
+            'FILL' 1,
+            'wght' 600,
+            'opsz' 24;
         }
       }
     }
@@ -78,8 +92,11 @@
       margin-right: auto;
       margin-bottom: 4px;
       margin-left: auto;
-      font-variation-settings: "wght" 400, "opsz" 24;
-      transition: font-variation-settings,
+      font-variation-settings:
+        'wght' 400,
+        'opsz' 24;
+      transition:
+        font-variation-settings,
         background 0.2s cubic-bezier(0.2, 0, 0, 1);
       border-radius: 16px;
 
@@ -94,13 +111,11 @@
         transition-timing-function: linear;
         border-radius: 100px;
 
-        content: "";
+        content: '';
         z-index: -1;
       }
     }
   }
-
-
 
   .dark-mode-switch-container {
     display: flex;

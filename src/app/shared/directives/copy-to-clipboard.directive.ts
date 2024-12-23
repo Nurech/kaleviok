@@ -1,9 +1,9 @@
-import {CdkCopyToClipboard} from '@angular/cdk/clipboard';
-import {Directive, inject, input} from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
+import { Directive, inject, input } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Directive({
-  selector: '[libCopyToClipboard]',
+  selector: '[appCopyToClipboard]',
   standalone: true,
   hostDirectives: [
     {
@@ -15,7 +15,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class CopyToClipboardDirective {
   libCopyToClipboard = input.required<string>();
-  snackBarText = input<string>('', {alias: 'libCopyToClipboardSnackBarText'});
+  snackBarText = input<string>('');
 
   private cdkCopyToClipboard = inject(CdkCopyToClipboard);
   private snackbar = inject(MatSnackBar);
@@ -24,13 +24,9 @@ export class CopyToClipboardDirective {
     this.cdkCopyToClipboard.copied.subscribe((copied) => {
       if (copied) {
         this.snackbar.open(
-          `Copied ${
-            this.snackBarText()
-              ? this.snackBarText()
-              : this.libCopyToClipboard()
-          } to clipboard!`,
+          `Copied ${this.snackBarText() ? this.snackBarText() : this.libCopyToClipboard()} to clipboard!`,
           undefined,
-          {duration: 3000}
+          { duration: 3000 },
         );
       } else {
         this.snackbar.open('Please try after some time');

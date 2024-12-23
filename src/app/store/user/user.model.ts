@@ -1,5 +1,5 @@
-import {UserInfo} from '@firebase/auth';
-import {UserCredential} from '@angular/fire/auth';
+import { UserInfo } from '@firebase/auth';
+import { UserCredential } from '@angular/fire/auth';
 
 export interface User {
   uid: string;
@@ -14,7 +14,6 @@ export interface User {
 
 export const UserMapper = {
   mapResponseToUser(response: UserCredential) {
-
     return {
       uid: response.user.uid,
       displayName: response.user.displayName || null,
@@ -23,7 +22,7 @@ export const UserMapper = {
       photoURL: response.user.photoURL || null,
       emailVerified: response.user.emailVerified,
       isAnonymous: response.user.isAnonymous,
-      providerData: response.user.providerData
+      providerData: response.user.providerData,
     } as User;
   },
 };

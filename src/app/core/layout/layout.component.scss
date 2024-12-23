@@ -27,8 +27,7 @@
 .tab-scroll {
   overflow-y: auto;
   --toolbar-height: var(--mat-toolbar-standard-height);
-  --tab-header-height: var(--mdc-secondary-navigation-tab-container-height) -
-    1px;
+  --tab-header-height: var(--mdc-secondary-navigation-tab-container-height) - 1px;
   max-height: calc(100dvh - var(--toolbar-height) - var(--tab-header-height));
 
   @media (max-width: 599.98px) {

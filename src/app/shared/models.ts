@@ -1,4 +1,3 @@
-
 export enum SnackbarType {
   AUTOLOGIN = 'autologin',
 }

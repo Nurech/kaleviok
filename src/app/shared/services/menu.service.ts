@@ -35,8 +35,7 @@ export class MenuService {
       label: 'login',
       icon: 'login',
       position: 'end',
-      onClick: () =>
-        this.store.dispatch(openBottomSheet({ component: 'LoginComponent' })),
+      onClick: () => this.store.dispatch(openBottomSheet({ component: 'LoginComponent' })),
     },
     {
       label: 'admin_panel_settings',

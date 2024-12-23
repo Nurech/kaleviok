@@ -3,7 +3,7 @@ import {
   ApplicationConfig,
   importProvidersFrom,
   isDevMode,
-  provideZoneChangeDetection
+  provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -24,7 +24,12 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
-import { MissingTranslationHandler, provideTranslateService, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import {
+  MissingTranslationHandler,
+  provideTranslateService,
+  TranslateLoader,
+  TranslateService,
+} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MissingTranslationService } from './shared/services/missing-translation.service';
 

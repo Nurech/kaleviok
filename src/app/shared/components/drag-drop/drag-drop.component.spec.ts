@@ -1,5 +1,5 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {DragDropComponent} from './drag-drop.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DragDropComponent } from './drag-drop.component';
 
 describe('DragDropComponent', () => {
   let component: DragDropComponent;

@@ -1,13 +1,13 @@
-@use "../m3-theme";
-@use "@angular/material" as mat;
-@use "styles/component-themes";
-@use "styles/sidenav";
-@use "styles/switch";
-@use "styles/utils";
-@use "styles/scroll";
-@use "styles/tabs";
-@use "styles/variables";
-@use "styles/material-override";
+@use '../m3-theme';
+@use '@angular/material' as mat;
+@use 'styles/component-themes';
+@use 'styles/sidenav';
+@use 'styles/switch';
+@use 'styles/utils';
+@use 'styles/scroll';
+@use 'styles/tabs';
+@use 'styles/variables';
+@use 'styles/material-override';
 
 @tailwind base;
 @tailwind components;

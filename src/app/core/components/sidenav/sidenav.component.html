@@ -3,10 +3,7 @@
     <img alt="Logo" height="42" src="logo.svg" />
   </a>
   @if (menuItems.length > 0) {
-    <nav
-      class="flex flex-col justify-items-start justify-start mt-2 h-full"
-      [@listAnimation]="animationState()"
-    >
+    <nav class="flex flex-col justify-items-start justify-start mt-2 h-full" [@listAnimation]="animationState()">
       @for (item of menuItems; track $index) {
         <a
           [routerLink]="item.href"

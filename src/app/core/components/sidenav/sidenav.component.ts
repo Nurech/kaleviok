@@ -5,27 +5,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { DarkModeSwitchComponent } from '../../../shared/components/dark-mode-switch/dark-mode-switch.component';
 import { MenuService } from '../../../shared/services/menu.service';
 import { TranslatePipe } from '@ngx-translate/core';
-import {
-  animate,
-  query,
-  stagger,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    MatIconModule,
-    AsyncPipe,
-    DarkModeSwitchComponent,
-    TranslatePipe,
-    NgClass,
-  ],
+  imports: [RouterLink, RouterLinkActive, MatIconModule, AsyncPipe, DarkModeSwitchComponent, TranslatePipe, NgClass],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
   animations: [
@@ -35,12 +20,7 @@ import {
           'a',
           [
             style({ opacity: 0, transform: 'translateX(30px)' }),
-            stagger(50, [
-              animate(
-                '200ms ease-out',
-                style({ opacity: 1, transform: 'translateX(0)' }),
-              ),
-            ]),
+            stagger(50, [animate('200ms ease-out', style({ opacity: 1, transform: 'translateX(0)' }))]),
           ],
           { optional: true },
         ),

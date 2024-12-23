@@ -1,6 +1,6 @@
-import {Component, Inject, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {MAT_BOTTOM_SHEET_DATA} from '@angular/material/bottom-sheet';
-import {LoginComponent} from '../../../core/components/login/login.component';
+import { Component, Inject, ViewChild, ViewContainerRef } from '@angular/core';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { LoginComponent } from '../../../core/components/login/login.component';
 
 @Component({
   selector: 'app-bottom-sheet',
@@ -9,19 +9,12 @@ import {LoginComponent} from '../../../core/components/login/login.component';
       <app-login></app-login>
     }
   `,
-  imports: [
-    LoginComponent
-  ],
-  standalone: true
+  imports: [LoginComponent],
+  standalone: true,
 })
-export class BottomSheetComponent implements OnInit {
-  @ViewChild('dynamicComponentContainer', {read: ViewContainerRef, static: true})
+export class BottomSheetComponent {
+  @ViewChild('dynamicComponentContainer', { read: ViewContainerRef, static: true })
   viewContainerRef!: ViewContainerRef;
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: { component: string }) {
-  }
-
-  ngOnInit() {
-  }
-
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: { component: string }) {}
 }

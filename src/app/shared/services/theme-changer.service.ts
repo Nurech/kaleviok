@@ -1,12 +1,12 @@
-import {inject, Injectable, signal} from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import {
   argbFromHex,
   Hct,
   hexFromArgb,
   MaterialDynamicColors,
-  SchemeTonalSpot as SchemeFunction
+  SchemeTonalSpot as SchemeFunction,
 } from '@material/material-color-utilities';
-import {StorageService} from './storage.service';
+import { StorageService } from './storage.service';
 
 export const DEFAULT_THEME_COLORS: ThemePalette = {
   primary: '#2879c6',
@@ -17,7 +17,7 @@ export const DEFAULT_THEME_COLORS: ThemePalette = {
   'neutral-variant': '#948F99',
 };
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ThemeChangerService {
   private readonly THEME_KEY = 'theme-mode';
   private storage = inject(StorageService);
@@ -88,7 +88,6 @@ export class ThemeChangerService {
     }
   }
 
-
   applyTheme(color: string, mode: ColorMode) {
     const isDark = mode === 'dark';
     const theme = this.generateTheme(color, isDark);
@@ -113,11 +112,7 @@ export class ThemeChangerService {
     };
   }
 
-  applyThemeString(
-    doc: DocumentOrShadowRoot,
-    themeString: string,
-    ssName = 'material-theme'
-  ) {
+  applyThemeString(doc: DocumentOrShadowRoot, themeString: string, ssName = 'material-theme') {
     let sheet = (globalThis as WithStylesheet)[ssName];
     if (!sheet) {
       sheet = new CSSStyleSheet();
@@ -125,13 +120,9 @@ export class ThemeChangerService {
       doc.adoptedStyleSheets.push(sheet);
     }
 
-    const surfaceContainer = themeString.match(
-      /--sys-surface-container:(.+?);/
-    )?.[1];
+    const surfaceContainer = themeString.match(/--sys-surface-container:(.+?);/)?.[1];
     if (surfaceContainer) {
-      document
-        .querySelector('meta[name="theme-color"]')
-        ?.setAttribute('content', surfaceContainer);
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', surfaceContainer);
     }
 
     sheet.replaceSync(themeString);
@@ -140,7 +131,7 @@ export class ThemeChangerService {
 
   themeFromSourceColor(color: string, isDark: boolean): AppTheme {
     const scheme = new SchemeFunction(Hct.fromInt(argbFromHex(color)), isDark, 0);
-    const theme: { [key: string]: string } = {};
+    const theme: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(materialColors)) {
       theme[key] = hexFromArgb(value.getArgb(scheme));
@@ -148,39 +139,29 @@ export class ThemeChangerService {
     return theme as AppTheme;
   }
 
-  secondaryPaletteFromSourceColor(
-    color: string,
-    isDark: boolean
-  ): AppTheme {
+  secondaryPaletteFromSourceColor(color: string, isDark: boolean): AppTheme {
     const scheme = new SchemeFunction(Hct.fromInt(argbFromHex(color)), isDark, 0);
-    const theme: { [key: string]: string } = {};
+    const theme: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(onlyPrimaryMaterialColors)) {
-      theme[key.replace('primary', 'secondary')] = hexFromArgb(
-        value.getArgb(scheme)
-      );
+      theme[key.replace('primary', 'secondary')] = hexFromArgb(value.getArgb(scheme));
     }
     return theme as AppTheme;
   }
 
   tertiaryPaletteFromSourceColor(color: string, isDark: boolean) {
     const scheme = new SchemeFunction(Hct.fromInt(argbFromHex(color)), isDark, 0);
-    const theme: { [key: string]: string } = {};
+    const theme: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(onlyPrimaryMaterialColors)) {
-      theme[key.replace('primary', 'tertiary')] = hexFromArgb(
-        value.getArgb(scheme)
-      );
+      theme[key.replace('primary', 'tertiary')] = hexFromArgb(value.getArgb(scheme));
     }
     return theme as AppTheme;
   }
 
-  neutralVariantPaletteFromSourceColor(
-    color: string,
-    isDark: boolean
-  ) {
+  neutralVariantPaletteFromSourceColor(color: string, isDark: boolean) {
     const scheme = new SchemeFunction(Hct.fromInt(argbFromHex(color)), isDark, 0);
-    const theme: { [key: string]: string } = {};
+    const theme: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(neutralVariantColors)) {
       theme[key] = hexFromArgb(value.getArgb(scheme));
@@ -199,7 +180,7 @@ export class ThemeChangerService {
 
   errorPaletteFromSourceColor(color: string, isDark: boolean) {
     const scheme = new SchemeFunction(Hct.fromInt(argbFromHex(color)), isDark, 0);
-    const theme: { [key: string]: string } = {};
+    const theme: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(onlyPrimaryMaterialColors)) {
       theme[key.replace('primary', 'error')] = hexFromArgb(value.getArgb(scheme));
@@ -209,16 +190,14 @@ export class ThemeChangerService {
 
   neutralPaletteFromSourceColor(color: string, isDark: boolean) {
     const scheme = new SchemeFunction(Hct.fromInt(argbFromHex(color)), isDark, 0);
-    const theme: { [key: string]: string } = {};
+    const theme: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(neutralColors)) {
       theme[key] = hexFromArgb(value.getArgb(scheme));
     }
     return theme as AppTheme;
   }
-
 }
-
 
 export const onlyPrimaryMaterialColors = {
   primary: MaterialDynamicColors.primary,
@@ -335,7 +314,5 @@ export interface ThemePalette {
   'neutral-variant': string;
 }
 
-export type WithStylesheet = typeof globalThis & {
-  [stylesheetName: string]: CSSStyleSheet | undefined;
-};
+export type WithStylesheet = typeof globalThis & Record<string, CSSStyleSheet | undefined>;
 export type MaterialColorName = keyof typeof materialColors;

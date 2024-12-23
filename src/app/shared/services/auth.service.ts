@@ -1,16 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Auth, GoogleAuthProvider, signInWithPopup, signOut, user} from '@angular/fire/auth';
-import {Firestore} from '@angular/fire/firestore';
-import {from, Observable} from 'rxjs';
-import {User} from '../../store/user/user.model';
+import { Injectable } from '@angular/core';
+import { Auth, GoogleAuthProvider, signInWithPopup, signOut, user } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
+import { from, Observable } from 'rxjs';
+import { User } from '../../store/user/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
-  constructor(private auth: Auth, private firestore: Firestore) {
-  }
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore,
+  ) {}
 
   loginWithGoogle() {
     const provider = new GoogleAuthProvider();
@@ -24,5 +25,4 @@ export class AuthService {
   getCurrentUser(): Observable<User> {
     return user(this.auth);
   }
-
 }

@@ -10,26 +10,18 @@ export function translateKey(key: string, params?: object) {
 const libRoutes: Routes = [
   {
     path: 'login',
-    loadComponent: () =>
-      import('./core/components/login/login.component').then(
-        (c) => c.LoginComponent,
-      ),
+    loadComponent: () => import('./core/components/login/login.component').then((c) => c.LoginComponent),
     title: () => translateKey('login'),
   },
   {
     path: 'dashboard',
-    loadComponent: () =>
-      import('./core/components/dashboard/dashboard.component').then(
-        (c) => c.DashboardComponent,
-      ),
+    loadComponent: () => import('./core/components/dashboard/dashboard.component').then((c) => c.DashboardComponent),
     title: () => translateKey('login'),
   },
   {
     path: 'notifications',
     loadComponent: () =>
-      import('./core/components/notifications/notifications.component').then(
-        (c) => c.NotificationsComponent,
-      ),
+      import('./core/components/notifications/notifications.component').then((c) => c.NotificationsComponent),
     title: () => translateKey('notifications'),
   },
 ];

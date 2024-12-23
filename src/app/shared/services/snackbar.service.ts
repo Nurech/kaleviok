@@ -1,7 +1,7 @@
-import {Injectable, signal} from '@angular/core';
-import {MatSnackBar, MatSnackBarRef} from '@angular/material/snack-bar';
-import {SnackbarComponent} from '../components/snackbar/snackbar.component';
-import {Snackbar, SnackbarType} from '../models';
+import { Injectable, signal } from '@angular/core';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { SnackbarComponent } from '../components/snackbar/snackbar.component';
+import { Snackbar, SnackbarType } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -10,16 +10,13 @@ export class SnackbarService {
   private snackbars = signal<Snackbar[]>([]);
   private openSnackbars: Record<string, MatSnackBarRef<SnackbarComponent>> = {};
 
-  constructor(private snackBar: MatSnackBar) {
-  }
+  constructor(private snackBar: MatSnackBar) {}
 
   snack(newSnackbar: Snackbar) {
-    const existing = this.snackbars().find(
-      (snackbar: Snackbar) => snackbar.name === newSnackbar.name
-    );
+    const existing = this.snackbars().find((snackbar: Snackbar) => snackbar.name === newSnackbar.name);
 
     if (existing) {
-      this.updateSnackbar({...existing, ...newSnackbar});
+      this.updateSnackbar({ ...existing, ...newSnackbar });
     } else {
       this.snackbars.update((state: Snackbar[]) => [...state, newSnackbar]);
       this.showSnackbar(newSnackbar);
@@ -28,9 +25,7 @@ export class SnackbarService {
 
   private updateSnackbar(updatedSnackbar: Snackbar) {
     this.snackbars.update((state: Snackbar[]) =>
-      state.map((snackbar: Snackbar) =>
-        snackbar.name === updatedSnackbar.name ? updatedSnackbar : snackbar
-      )
+      state.map((snackbar: Snackbar) => (snackbar.name === updatedSnackbar.name ? updatedSnackbar : snackbar)),
     );
 
     const snackbarRef = this.openSnackbars[updatedSnackbar.name];
@@ -66,9 +61,7 @@ export class SnackbarService {
   }
 
   private removeSnackbar(name: SnackbarType) {
-    this.snackbars.update((state: Snackbar[]) =>
-      state.filter((snackbar: Snackbar) => snackbar.name !== name)
-    );
+    this.snackbars.update((state: Snackbar[]) => state.filter((snackbar: Snackbar) => snackbar.name !== name));
 
     delete this.openSnackbars[name];
   }

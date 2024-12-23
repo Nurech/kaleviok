@@ -1,6 +1,6 @@
-import {createFeature, createReducer, on} from '@ngrx/store';
-import {autoLoginSuccess, loginSuccess, logout} from './core.actions';
-import {User} from '../user/user.model';
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { autoLoginSuccess, loginSuccess, logout } from './core.actions';
+import { User } from '../user/user.model';
 
 export const featureKey = 'core';
 
@@ -16,9 +16,9 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(loginSuccess, (state, {payload}) => ({...state, isAuthenticated: true, currentUser: payload})),
-  on(logout, (state) => ({...state, isAuthenticated: false, currentUser: null,})),
-  on(autoLoginSuccess, (state, { user }) => ({...state, isAuthenticated: !!user, currentUser: user,}))
+  on(loginSuccess, (state, { payload }) => ({ ...state, isAuthenticated: true, currentUser: payload })),
+  on(logout, (state) => ({ ...state, isAuthenticated: false, currentUser: null })),
+  on(autoLoginSuccess, (state, { user }) => ({ ...state, isAuthenticated: !!user, currentUser: user })),
 );
 
 export const coreFeature = createFeature({

@@ -1,8 +1,8 @@
-import {createFeature, createReducer, on} from '@ngrx/store';
-import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
-import {upsertUser,} from './user.actions';
-import {User} from './user.model';
-import {startGmailAuthenticationSuccess} from '../core/core.actions';
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import { upsertUser } from './user.actions';
+import { User } from './user.model';
+import { startGmailAuthenticationSuccess } from '../core/core.actions';
 
 export const featureKey = 'users';
 
@@ -27,9 +27,9 @@ export const reducer = createReducer(
 export const usersFeature = createFeature({
   name: featureKey,
   reducer,
-  extraSelectors: ({selectUsersState}) => ({
+  extraSelectors: ({ selectUsersState }) => ({
     ...adapter.getSelectors(selectUsersState),
   }),
 });
 
-export const {selectIds, selectEntities, selectAll, selectTotal} = usersFeature;
+export const { selectIds, selectEntities, selectAll, selectTotal } = usersFeature;

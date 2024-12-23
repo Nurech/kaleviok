@@ -1,6 +1,6 @@
-import {createActionGroup, emptyProps, props} from '@ngrx/store';
-import {Update} from '@ngrx/entity';
-import {Account} from './account.reducer';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+import { Account } from './account.reducer';
 
 export const AccountActions = createActionGroup({
   source: 'Account/API',
@@ -16,5 +16,5 @@ export const AccountActions = createActionGroup({
     'Delete Account': props<{ id: string }>(),
     'Delete Accounts': props<{ ids: string[] }>(),
     'Clear Accounts': emptyProps(),
-  }
+  },
 });
