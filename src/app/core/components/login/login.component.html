@@ -1,6 +1,6 @@
 <div class="flex-col">
   <div class="flex justify-center text-xl pb-1">
-    <h1>{{'login_to_your_account' | translate}}</h1>
+    <h1>{{ 'login_to_your_account' | translate }}</h1>
   </div>
   <div class="flex justify-center">
     <button mat-flat-button (click)="loginWithGoogle()">
@@ -9,20 +9,22 @@
     </button>
   </div>
   <div>
-
     <div class="p-2 flex flex-col justify-center items-center">
       <mat-divider class="w-full"></mat-divider>
       <span class="opacity-60 text-xs">{{ 'or_use_email' | translate }}</span>
     </div>
-
   </div>
-
 
   <div>
     <mat-form-field class="w-full pb-1">
-      <mat-label>{{ 'enter_your_email' |translate }}</mat-label>
-      <input matInput placeholder="jaan.jalgratas@example.com" [formControl]="email" (blur)="updateErrorMessage()"
-             required/>
+      <mat-label>{{ 'enter_your_email' | translate }}</mat-label>
+      <input
+        matInput
+        placeholder="jaan.jalgratas@example.com"
+        [formControl]="email"
+        (blur)="updateErrorMessage()"
+        required
+      />
       <mat-icon matSuffix>email</mat-icon>
       @if (email.invalid) {
         <mat-error>{{ errorMessage() }}</mat-error>
@@ -30,7 +32,7 @@
     </mat-form-field>
     <mat-form-field class="w-full pb-1">
       <mat-label>Enter your password</mat-label>
-      <input matInput/>
+      <input matInput />
       <button
         mat-icon-button
         matSuffix
@@ -43,5 +45,5 @@
     </mat-form-field>
   </div>
 
-  <mat-checkbox class="example-margin" [(ngModel)]="rememberMe">{{'remember_me' |translate }}</mat-checkbox>
+  <mat-checkbox class="example-margin" [(ngModel)]="rememberMe">{{ 'remember_me' | translate }}</mat-checkbox>
 </div>
