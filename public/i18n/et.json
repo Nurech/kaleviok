@@ -1,6 +1,12 @@
 {
   "login": "Logi sisse",
   "notifications": "Teavitused",
+  "or_use_email": "... või kasuta emaili.",
+  "enter_your_email": "Sisesta oma email",
+  "login_to_your_account": "Logi sisse oma kontole",
+  "email_is_required": "Email on kohustuslik",
+  "not_a_valid_email": "Vigane email",
+  "remember_me": "Mäleta mind",
   "dashboard": "Töölaud",
   "admin_panel_settings": "Admin seaded",
   "contact_support": "Abi",

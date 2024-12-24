@@ -12,6 +12,8 @@ export interface MenuItem {
 
 @Injectable({ providedIn: 'root' })
 export class MenuService {
+  private store$ = inject(Store);
+
   readonly rootMenuItems: MenuItem[] = [
     {
       label: 'notifications',
@@ -35,7 +37,7 @@ export class MenuService {
       label: 'login',
       icon: 'login',
       position: 'end',
-      onClick: () => this.store.dispatch(openBottomSheet({ component: 'LoginComponent' })),
+      onClick: () => this.store$.dispatch(openBottomSheet({ component: 'LoginComponent' })),
     },
     {
       label: 'admin_panel_settings',
@@ -51,9 +53,7 @@ export class MenuService {
     },
   ];
 
-  private store = inject(Store);
-
   private handleNavigation(path: string): void {
-    this.store.dispatch(navigateTo({ path }));
+    this.store$.dispatch(navigateTo({ path }));
   }
 }
