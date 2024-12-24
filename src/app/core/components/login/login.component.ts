@@ -33,11 +33,11 @@ import { MatCheckbox } from '@angular/material/checkbox';
 export class LoginComponent {
   private store$ = inject(Store);
   private translate = inject(TranslateService);
+  errorMessage = signal('');
+  rememberMe = signal(false);
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required, Validators.minLength(6)]);
 
-  errorMessage = signal('');
-  rememberMe = signal(false);
   hide = signal(true);
 
   clickEvent(event: MouseEvent) {
