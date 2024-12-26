@@ -1,1 +1,26 @@
-<p>install-pwa works!</p>
+<div class="max-w-md flex flex-col">
+  <div class="flex flex-row justify-center items-center">
+    <h2 class="text-xl m-2">Install PWA</h2>
+    <mat-icon>install_mobile</mat-icon>
+  </div>
+
+  <div class="text-sm">
+    Installing the app will use almost no storage on your device.
+    This will provide you a quick access to the app, you can see if you have notifications and much more!
+    <section class="flex flex-row justify-between">
+      <div class="flex items-center my-2">
+        <mat-slide-toggle
+          class="text-base"
+          (change)="showModal.set($event.checked)">
+          Don't show this again
+        </mat-slide-toggle>
+        <app-info
+          [text]="'Checking will prevent install instructions being shown again. You can still install the app later manually.'">
+        </app-info>
+      </div>
+
+      <button mat-raised-button (click)="pwaService.triggerInstall()">Install</button>
+    </section>
+  </div>
+
+</div>

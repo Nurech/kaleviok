@@ -35,7 +35,7 @@ $dark-theme: m3-theme.$dark-theme;
 html,
 body {
   height: 100%;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 body {
@@ -54,4 +54,8 @@ input:-webkit-autofill:focus {
 a {
   @apply hover:underline text-sm;
   color: var(--sys-primary) !important;
+}
+
+label {
+  @apply text-sm;
 }
