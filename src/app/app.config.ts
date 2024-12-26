@@ -32,6 +32,8 @@ import {
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MissingTranslationService } from './shared/services/missing-translation.service';
+import { PwaService } from './shared/services/pwa.service';
+import { firstValueFrom } from 'rxjs';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -83,16 +85,14 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializerFactory,
-      deps: [TranslateService],
+      deps: [TranslateService, PwaService],
       multi: true,
     },
   ],
 };
 
-export function appInitializerFactory(translate: TranslateService) {
-  return () => {
-    const langToSet = 'et';
-    translate.setDefaultLang(langToSet);
-    return translate.use(langToSet).toPromise();
+export function appInitializerFactory(translateService: TranslateService): () => Promise<void> {
+  return async () => {
+    await firstValueFrom(translateService.use('en'));
   };
 }

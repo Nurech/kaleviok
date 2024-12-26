@@ -21,19 +21,18 @@ import { AuthService } from '../../shared/services/auth.service';
 import { DataService } from '../../shared/services/data.service';
 import { User, UserMapper } from '../user/user.model';
 import { Router } from '@angular/router';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
 import { SnackbarService } from '../../shared/services/snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackbarState, SnackbarType } from '../../shared/models';
 import { DialogService } from '../../shared/services/dialog.service';
+import { SheetService } from '../../shared/services/sheet.service';
 
 @Injectable()
 export class CoreEffects {
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private bottomSheet = inject(MatBottomSheet);
+  private sheetService = inject(SheetService);
   private dataService = inject(DataService);
   private snackbarService = inject(SnackbarService);
   private translate = inject(TranslateService);
@@ -117,9 +116,7 @@ export class CoreEffects {
       this.actions$.pipe(
         ofType(openBottomSheet),
         tap(({ component }) => {
-          this.bottomSheet.open(BottomSheetComponent, {
-            data: { component },
-          });
+          this.sheetService.open(component);
         }),
       ),
     { dispatch: false },
