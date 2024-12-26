@@ -11,7 +11,7 @@ ng generate component login --standalone
 ```
 
 ```bash
-ng generate service snackbar  --skip-tests
+ng generate service snackbar --skip-tests
 ```
 
 ```bash

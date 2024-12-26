@@ -25,3 +25,6 @@ export const openBottomSheet = createAction('[Core] Open Bottom Sheet', props<{ 
 export const autoLogin = createAction('[Core] Auto Login');
 export const autoLoginSuccess = createAction('[Core] Auto Login Success', props<{ user: User }>());
 export const autoLoginFailed = createAction('[Core] Auto Login Failed', props<{ error: Error }>());
+
+export const openCookieDialog = createAction('[Core] Open Cookie Dialog');
+export const closeCookieDialog = createAction('[Core] Close Cookie Dialog');

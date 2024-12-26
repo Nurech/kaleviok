@@ -7,7 +7,7 @@ import { AsyncPipe } from '@angular/common';
 import { IconResolver, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { autoLogin, openBottomSheet } from './store/core/core.actions';
+import { autoLogin, openCookieDialog } from './store/core/core.actions';
 import { StorageService } from './shared/services/storage.service';
 
 @Component({
@@ -28,7 +28,8 @@ export class AppComponent implements OnInit {
     if (this.storage.get('autoLogin')) {
       this.store$.dispatch(autoLogin());
     }
-    this.store$.dispatch(openBottomSheet({ component: 'LoginComponent' }));
+    // this.store$.dispatch(openBottomSheet({ component: 'LoginComponent' }));
+    this.store$.dispatch(openCookieDialog());
   }
 
   initializeIconRegistry() {

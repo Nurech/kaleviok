@@ -3,9 +3,11 @@ import {
   autoLogin,
   autoLoginFailed,
   autoLoginSuccess,
+  closeCookieDialog,
   loginSuccess,
   navigateTo,
   openBottomSheet,
+  openCookieDialog,
   startEmailPasswordAuthentication,
   startEmailPasswordAuthenticationError,
   startEmailPasswordAuthenticationSuccess,
@@ -24,6 +26,7 @@ import { BottomSheetComponent } from '../../shared/components/bottom-sheet/botto
 import { SnackbarService } from '../../shared/services/snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackbarState, SnackbarType } from '../../shared/models';
+import { DialogService } from '../../shared/services/dialog.service';
 
 @Injectable()
 export class CoreEffects {
@@ -34,6 +37,29 @@ export class CoreEffects {
   private dataService = inject(DataService);
   private snackbarService = inject(SnackbarService);
   private translate = inject(TranslateService);
+  private dialogService = inject(DialogService);
+
+  openCookieDialog$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(openCookieDialog),
+        tap(() => {
+          this.dialogService.openCookieDialog();
+        }),
+      ),
+    { dispatch: false },
+  );
+
+  closeCookieDialog$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(closeCookieDialog),
+        tap(() => {
+          this.dialogService.closeCookieDialog();
+        }),
+      ),
+    { dispatch: false },
+  );
 
   loginWithGoogle$ = createEffect(() =>
     this.actions$.pipe(

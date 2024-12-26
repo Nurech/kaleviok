@@ -93,6 +93,11 @@ export class ThemeChangerService {
     const theme = this.generateTheme(color, isDark);
     const styleString = this.generateCSSFromTheme(theme);
     this.applyThemeString(document, styleString, 'material-theme');
+
+    // Add class so would work with Tailwind
+    const root = document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(mode);
   }
 
   generateTheme(color: string, isDark: boolean): AppTheme {
