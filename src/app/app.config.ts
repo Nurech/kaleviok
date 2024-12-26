@@ -88,6 +88,10 @@ export const appConfig: ApplicationConfig = {
       deps: [TranslateService, PwaService],
       multi: true,
     },
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
 };
 

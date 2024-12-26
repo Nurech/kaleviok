@@ -30,16 +30,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "src/assets/img"
-              },
-              {
-                "glob": "**/*",
-                "input": "src/assets/i18n"
-              },
-              {
-                "glob": "manifest.webmanifest",
-                "input": "src",
-                "output": "/"
+                "input": "public"
               }
             ],
             "styles": ["src/styles.scss", "node_modules/tailwindcss/tailwind.css"],
