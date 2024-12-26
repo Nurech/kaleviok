@@ -33,35 +33,46 @@ import { MatCheckbox } from '@angular/material/checkbox';
 export class LoginComponent {
   private store$ = inject(Store);
   private translate = inject(TranslateService);
-  errorMessage = signal('');
-  rememberMe = signal(false);
   readonly email = new FormControl('', [Validators.required, Validators.email]);
-  readonly password = new FormControl('', [Validators.required, Validators.minLength(6)]);
-
+  readonly password = new FormControl('', [Validators.required]);
+  emailErrorMessage = signal('');
+  passwordErrorMessage = signal('');
+  rememberMe = signal(false);
   hide = signal(true);
-
-  clickEvent(event: MouseEvent) {
-    this.hide.set(!this.hide());
-    event.stopPropagation();
-  }
 
   constructor() {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessage());
+      .subscribe(() => this.updateEmailErrorMessage());
+
+    merge(this.password.statusChanges, this.password.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updatePasswordErrorMessage());
   }
 
-  updateErrorMessage() {
+  updateEmailErrorMessage() {
     if (this.email.hasError('required')) {
-      this.errorMessage.set(this.translate.instant('email_is_required'));
+      this.emailErrorMessage.set(this.translate.instant('email_is_required'));
     } else if (this.email.hasError('email')) {
-      this.errorMessage.set(this.translate.instant('not_a_valid_email'));
+      this.emailErrorMessage.set(this.translate.instant('not_a_valid_email'));
     } else {
-      this.errorMessage.set('');
+      this.emailErrorMessage.set('');
     }
   }
 
   loginWithGoogle() {
     this.store$.dispatch(startGmailAuthentication());
+  }
+
+  updatePasswordErrorMessage() {
+    if (this.password.hasError('required')) {
+      this.passwordErrorMessage.set(this.translate.instant('password_is_required'));
+    } else {
+      this.passwordErrorMessage.set('');
+    }
+  }
+
+  togglePasswordVisibility() {
+    this.hide.set(!this.hide());
   }
 }

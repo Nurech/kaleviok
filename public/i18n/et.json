@@ -3,6 +3,8 @@
   "notifications": "Teavitused",
   "or_use_email": "... või kasuta emaili.",
   "enter_your_email": "Sisesta oma email",
+  "enter_your_password": "Sisesta oma parool",
+  "password_is_required": "Parool on kohustuslik",
   "login_to_your_account": "Logi sisse oma kontole",
   "email_is_required": "Email on kohustuslik",
   "not_a_valid_email": "Vigane email",
