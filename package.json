@@ -13,8 +13,8 @@
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
-      "prettier --write",
-      "eslint --fix"
+      "prettier --write \"**/*.{js,ts,html,json,css,scss,md}\"",
+      "eslint \"**/*.{js,ts,html}\" --fix"
     ]
   },
   "private": true,

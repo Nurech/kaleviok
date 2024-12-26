@@ -47,14 +47,11 @@
       {{ 'login' | translate }}
     </button>
 
-
-
-
-      <div class="py-3 flex flex-row justify-center items-center">
-        <mat-divider class="w-full"></mat-divider>
-        <span class="px-2 w-full opacity-60 text-xs">{{ 'or_use_email' | translate }}</span>
-        <mat-divider class="w-full"></mat-divider>
-      </div>
+    <div class="py-3 flex flex-row justify-center items-center">
+      <mat-divider class="w-full"></mat-divider>
+      <span class="px-2 w-full opacity-60 text-xs">{{ 'or_use_email' | translate }}</span>
+      <mat-divider class="w-full"></mat-divider>
+    </div>
 
     <div class="flex justify-center">
       <button mat-raised-button color="primary" (click)="loginWithGoogle()">
@@ -62,6 +59,5 @@
         {{ 'login.google' | translate }}
       </button>
     </div>
-
   </div>
 </div>
