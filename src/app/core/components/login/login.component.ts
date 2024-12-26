@@ -11,6 +11,8 @@ import { startEmailPasswordAuthentication, startGmailAuthentication } from '../.
 import { Store } from '@ngrx/store';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { RouterLink } from '@angular/router';
+import { InfoComponent } from '../../../shared/components/info/info.component';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,8 @@ import { MatCheckbox } from '@angular/material/checkbox';
     MatDivider,
     MatCheckbox,
     MatIconButton,
+    RouterLink,
+    InfoComponent,
   ],
   templateUrl: './login.component.html',
   styles: ``,

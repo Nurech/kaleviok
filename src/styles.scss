@@ -35,11 +35,13 @@ $dark-theme: m3-theme.$dark-theme;
 html,
 body {
   height: 100%;
+  font-size: 14px;
 }
 
 body {
   margin: 0;
   font-family: #{variables.$regular-font-family};
+  font-size: #{variables.$text-font-size};
 }
 
 input:-webkit-autofill,
@@ -47,4 +49,9 @@ input:-webkit-autofill:focus {
   transition:
     background-color 0s 600000s,
     color 0s 600000s !important;
+}
+
+a {
+  @apply hover:underline text-sm;
+  color: var(--sys-primary) !important;
 }
