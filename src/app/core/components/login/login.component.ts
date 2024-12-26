@@ -7,7 +7,7 @@ import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { startGmailAuthentication } from '../../../store/core/core.actions';
+import { startEmailPasswordAuthentication, startGmailAuthentication } from '../../../store/core/core.actions';
 import { Store } from '@ngrx/store';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -62,6 +62,14 @@ export class LoginComponent {
 
   loginWithGoogle() {
     this.store$.dispatch(startGmailAuthentication());
+  }
+
+  loginWithEmail() {
+    if (this.email.valid && this.password.valid) {
+      const email = this.email.value as string;
+      const password = this.password.value as string;
+      this.store$.dispatch(startEmailPasswordAuthentication({ email, password }));
+    }
   }
 
   updatePasswordErrorMessage() {

@@ -6,6 +6,9 @@ import {
   loginSuccess,
   navigateTo,
   openBottomSheet,
+  startEmailPasswordAuthentication,
+  startEmailPasswordAuthenticationError,
+  startEmailPasswordAuthenticationSuccess,
   startGmailAuthentication,
   startGmailAuthenticationError,
   startGmailAuthenticationSuccess,
@@ -46,6 +49,22 @@ export class CoreEffects {
       ),
     ),
   );
+
+  loginWithEmailAndPassword$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(startEmailPasswordAuthentication),
+      mergeMap(({ email, password }) =>
+        this.authService.loginWithEmail(email, password).pipe(
+          map((response) => {
+            const payload: User = UserMapper.mapResponseToUser(response);
+            return startEmailPasswordAuthenticationSuccess({ payload });
+          }),
+          catchError((error) => of(startEmailPasswordAuthenticationError({ error }))),
+        ),
+      ),
+    ),
+  );
+
   saveUserToFirestore$ = createEffect(() =>
     this.actions$.pipe(
       ofType(startGmailAuthenticationSuccess),

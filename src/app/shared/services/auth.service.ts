@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Auth, GoogleAuthProvider, signInWithPopup, signOut, user } from '@angular/fire/auth';
+import {
+  Auth,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  user,
+} from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
 import { User } from '../../store/user/user.model';
@@ -16,6 +23,10 @@ export class AuthService {
   loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     return from(signInWithPopup(this.auth, provider)).pipe();
+  }
+
+  loginWithEmail(email: string, password: string) {
+    return from(signInWithEmailAndPassword(this.auth, email, password));
   }
 
   logout() {
