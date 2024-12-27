@@ -1,14 +1,15 @@
-<div #infoContainer class="flex justify-center content-center">
-  <button
-    class="size-4 mx-1"
-    matRipple
-    [matRippleCentered]="true"
-    [matRippleUnbounded]="true"
-    [matRippleRadius]="20"
-    [matTooltip]="text"
-    matTooltipTouchGestures="auto"
-    [attr.aria-label]="'read_more' | translate"
-  >
-    <mat-icon class="size-auto text-base leading-4">info</mat-icon>
-  </button>
-</div>
+<button
+  class="size-4 mx-1 flex justify-center content-center"
+  matRipple
+  [matRippleCentered]="true"
+  [matRippleUnbounded]="true"
+  [matRippleRadius]="20"
+  [matTooltip]="text"
+  (mouseover)="show.set(true)"
+  (focus)="show.set(true)"
+  (click)="toggle()"
+  matTooltipTouchGestures="auto"
+  [attr.aria-label]="'read_more' | translate"
+>
+  <mat-icon class="size-auto text-base leading-4">info</mat-icon>
+</button>
