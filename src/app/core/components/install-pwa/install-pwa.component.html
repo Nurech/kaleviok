@@ -1,25 +1,21 @@
 <div class="max-w-lg flex flex-col">
   <div class="flex flex-row justify-center items-center">
-    <h2 class="text-xl m-2">{{'install_pwa' | translate}}</h2>
+    <h2 class="text-xl m-2">{{ 'install_pwa' | translate }}</h2>
     <mat-icon>install_mobile</mat-icon>
   </div>
 
   <div class="text-sm">
-    Installing the app will use almost no storage on your device. This will provide you quick access to the app, you
-    can see if you have notifications and much more!
+    {{ 'pwa_description' | translate }}
 
-    <!-- Dynamic template rendering -->
     <ng-container *ngTemplateOutlet="currentTemplate"></ng-container>
 
     <section class="flex flex-row justify-between">
       <div class="flex items-center my-2">
         <mat-slide-toggle class="text-base" (change)="dontShowAgain($event.checked)">
-          Don't show this again
+          {{ 'dont_show_this_again' | translate }}
         </mat-slide-toggle>
         <app-info
-          [text]="
-            'Checking will prevent install instructions being shown again. You can still install the app later manually.'
-          "
+          [text]="'checking_will_prevent' | translate"
         >
         </app-info>
       </div>

@@ -59,3 +59,11 @@ a {
 label {
   @apply text-sm;
 }
+
+mat-mdc-tooltip {
+  @apply text-center;
+}
+
+app-bottom-sheet {
+  @apply flex justify-center items-center;
+}

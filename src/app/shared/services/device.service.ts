@@ -19,11 +19,13 @@ export class DeviceService {
 
   private detectBrowser(): BrowserType {
     const userAgent = navigator.userAgent;
-    if (/chrome|chromium|crios/i.test(userAgent) && !/safari/i.test(userAgent)) {
+    if (/chrome|chromium|crios/i.test(userAgent) && !/edg/i.test(userAgent)) {
       return BrowserType.CHROME;
-    } else if (/safari/i.test(userAgent) && !/chrome|chromium|crios/i.test(userAgent)) {
+    }
+    if (/safari/i.test(userAgent) && !/chrome|chromium|crios|edg/i.test(userAgent)) {
       return BrowserType.SAFARI;
     }
+
     return BrowserType.OTHER;
   }
 

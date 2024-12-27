@@ -23,6 +23,9 @@
   "login.google": "Logi sisse Google'iga",
   "close_menu": "Sulge menüü",
   "install_pwa": "Installi rakendus",
+  "pwa_description": "Rakenduse installimine on soovituslik. See annab sulle kiire juurdepääsu rakendusele ja loob parema kasutajakogemuse.",
   "open_menu": "Ava menüü",
+  "dont_show_this_again": "Ära näita seda enam",
+  "checking_will_prevent": "Rohkem ei näidata sulle installi juhiseid. Rakendust saab siiski ka hiljem installida.",
   "users": "Kasutajad"
 }
