@@ -15,7 +15,10 @@
     @if (isHandheld()) {
       <button
         [attr.aria-label]="sidenav.isOpen() ? ('close_menu' | translate) : ('open_menu' | translate)"
-        mat-icon-button class="absolute top-0 right-0 z-10 m-2" (click)="drawer.open()">
+        mat-icon-button
+        class="absolute top-0 right-0 z-10 m-2"
+        (click)="drawer.open()"
+      >
         <mat-icon class="mb-1">menu</mat-icon>
       </button>
     }
