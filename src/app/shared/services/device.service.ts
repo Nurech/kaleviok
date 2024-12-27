@@ -2,9 +2,6 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { inject, Injectable, signal } from '@angular/core';
 import { map } from 'rxjs';
 
-type BrowserType = 'Chrome' | 'Safari' | 'Other';
-type PlatformType = 'Windows' | 'iOS' | 'Android' | 'Other';
-
 @Injectable({ providedIn: 'root' })
 export class DeviceService {
   private breakpointObserver = inject(BreakpointObserver);
@@ -23,11 +20,11 @@ export class DeviceService {
   private detectBrowser(): BrowserType {
     const userAgent = navigator.userAgent;
     if (/chrome|chromium|crios/i.test(userAgent) && !/safari/i.test(userAgent)) {
-      return 'Chrome';
+      return BrowserType.CHROME;
     } else if (/safari/i.test(userAgent) && !/chrome|chromium|crios/i.test(userAgent)) {
-      return 'Safari';
+      return BrowserType.SAFARI;
     }
-    return 'Other';
+    return BrowserType.OTHER;
   }
 
   private detectPlatform(): PlatformType {
@@ -35,27 +32,40 @@ export class DeviceService {
       const userAgentData = (navigator as any).userAgentData;
       if (userAgentData.platform) {
         if (userAgentData.platform.includes('Win')) {
-          return 'Windows';
+          return PlatformType.WINDOWS;
         } else if (
           userAgentData.platform.includes('iOS') ||
           (userAgentData.platform.includes('Mac') && navigator.maxTouchPoints > 1)
         ) {
-          return 'iOS';
+          return PlatformType.IOS;
         } else if (userAgentData.platform.includes('Android')) {
-          return 'Android';
+          return PlatformType.ANDROID;
         }
       }
     }
 
     const userAgent = navigator.userAgent;
     if (/win/i.test(userAgent)) {
-      return 'Windows';
+      return PlatformType.WINDOWS;
     } else if (/iphone|ipad|ipod|mac/i.test(userAgent) && navigator.maxTouchPoints > 1) {
-      return 'iOS';
+      return PlatformType.IOS;
     } else if (/android/i.test(userAgent)) {
-      return 'Android';
+      return PlatformType.ANDROID;
     }
 
-    return 'Other';
+    return PlatformType.OTHER;
   }
+}
+
+export enum BrowserType {
+  CHROME = 'Chrome',
+  SAFARI = 'Safari',
+  OTHER = 'Other',
+}
+
+export enum PlatformType {
+  WINDOWS = 'Windows',
+  IOS = 'iOS',
+  ANDROID = 'Android',
+  OTHER = 'Other',
 }

@@ -1,4 +1,4 @@
-<div class="flex flex-col h-full relative items-center px-1">
+<div class="flex flex-col h-full relative items-center px-1 max-w-24">
   @if (menuItems.length > 0) {
     <nav class="flex flex-col justify-items-start justify-start mt-2 h-full" [@listAnimation]="animationState()">
       @for (item of menuItems; track $index) {
@@ -8,7 +8,7 @@
           #link="routerLinkActive"
           [attr.aria-current]="link.isActive"
           role="link"
-          class="section-link w-auto h-auto"
+          class="section-link w-auto h-auto px-1"
           (click)="item.onClick && item.onClick()"
         >
           @if (item.logo) {

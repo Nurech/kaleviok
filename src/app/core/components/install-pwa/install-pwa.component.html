@@ -1,12 +1,16 @@
 <div class="max-w-lg flex flex-col">
   <div class="flex flex-row justify-center items-center">
-    <h2 class="text-xl m-2">Install PWA</h2>
+    <h2 class="text-xl m-2">{{'install_pwa' | translate}}</h2>
     <mat-icon>install_mobile</mat-icon>
   </div>
 
   <div class="text-sm">
-    Installing the app will use almost no storage on your device. This will provide you a quick access to the app, you
+    Installing the app will use almost no storage on your device. This will provide you quick access to the app, you
     can see if you have notifications and much more!
+
+    <!-- Dynamic template rendering -->
+    <ng-container *ngTemplateOutlet="currentTemplate"></ng-container>
+
     <section class="flex flex-row justify-between">
       <div class="flex items-center my-2">
         <mat-slide-toggle class="text-base" (change)="dontShowAgain($event.checked)">
@@ -19,8 +23,27 @@
         >
         </app-info>
       </div>
-
       <button mat-raised-button (click)="pwaService.triggerInstall()">Install</button>
     </section>
   </div>
+
+  <ng-template #chromeWeb>
+    <p>This is the installation guide for Chrome on desktop.</p>
+  </ng-template>
+
+  <ng-template #chromeAndroid>
+    <p>This is the installation guide for Chrome on Android.</p>
+  </ng-template>
+
+  <ng-template #chromeIos>
+    <p>This is the installation guide for Chrome on iOS.</p>
+  </ng-template>
+
+  <ng-template #safariIos>
+    <p>This is the installation guide for Safari on iOS.</p>
+  </ng-template>
+
+  <ng-template #other>
+    <p>General instructions for unsupported browsers and platforms.</p>
+  </ng-template>
 </div>

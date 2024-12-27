@@ -1,34 +1,55 @@
-import { Component, inject } from '@angular/core';
-import { MatCardActions, MatCardHeader, MatCardModule } from '@angular/material/card';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { PwaService } from '../../../shared/services/pwa.service';
+import { StorageService } from '../../../shared/services/storage.service';
+import { BrowserType, DeviceService, PlatformType } from '../../../shared/services/device.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { InfoComponent } from '../../../shared/components/info/info.component';
 import { MatButton } from '@angular/material/button';
+import { NgTemplateOutlet } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-import { PwaService } from '../../../shared/services/pwa.service';
-import { StorageService } from '../../../shared/services/storage.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-install-pwa',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatCheckbox,
-    FormsModule,
-    MatSlideToggle,
-    InfoComponent,
-    MatCardHeader,
-    MatCardActions,
-    MatButton,
-    MatIcon,
-  ],
   templateUrl: './install-pwa.component.html',
-  styles: ``,
+  imports: [MatSlideToggle, InfoComponent, MatButton, NgTemplateOutlet, MatIcon, TranslatePipe],
+  standalone: true,
 })
-export class InstallPwaComponent {
-  pwaService = inject(PwaService);
+export class InstallPwaComponent implements OnInit {
+  @ViewChild('chromeWeb', { static: true }) chromeWeb!: TemplateRef<any>;
+  @ViewChild('chromeAndroid', { static: true }) chromeAndroid!: TemplateRef<any>;
+  @ViewChild('chromeIos', { static: true }) chromeIos!: TemplateRef<any>;
+  @ViewChild('safariIos', { static: true }) safariIos!: TemplateRef<any>;
+  @ViewChild('other', { static: true }) other!: TemplateRef<any>;
+
+  deviceService = inject(DeviceService);
   storage = inject(StorageService);
+  pwaService = inject(PwaService);
+
+  currentTemplate: TemplateRef<any> | null = null;
+
+  ngOnInit() {
+    this.selectTemplate();
+  }
+
+  private selectTemplate() {
+    const browser = this.deviceService.browser();
+    const platform = this.deviceService.platform();
+
+    if (browser === BrowserType.CHROME) {
+      if (platform === PlatformType.ANDROID) {
+        this.currentTemplate = this.chromeAndroid;
+      } else if (platform === PlatformType.IOS) {
+        this.currentTemplate = this.chromeIos;
+      } else {
+        this.currentTemplate = this.chromeWeb;
+      }
+    } else if (browser === BrowserType.SAFARI && platform === PlatformType.IOS) {
+      this.currentTemplate = this.safariIos;
+    } else {
+      this.currentTemplate = this.other;
+    }
+  }
 
   dontShowAgain(checked: boolean) {
     this.storage.set(this.pwaService.DONT_SHOW_PWA_PROMOTION, checked.toString());

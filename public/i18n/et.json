@@ -22,6 +22,7 @@
   "snackbar.autologin.error": "Tekkis viga: {{error}}",
   "login.google": "Logi sisse Google'iga",
   "close_menu": "Sulge menüü",
+  "install_pwa": "Installi rakendus",
   "open_menu": "Ava menüü",
   "users": "Kasutajad"
 }
