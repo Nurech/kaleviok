@@ -31,7 +31,7 @@ import { RouterOutlet } from '@angular/router';
   ],
 })
 export class LayoutComponent {
-  isHandset$ = inject(DeviceService).isHandset$;
+  isHandheld = inject(DeviceService).isHandheld;
   snackbarService = inject(SnackbarService);
 
   opanSnackBar() {

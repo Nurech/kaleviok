@@ -9,7 +9,7 @@
     can see if you have notifications and much more!
     <section class="flex flex-row justify-between">
       <div class="flex items-center my-2">
-        <mat-slide-toggle class="text-base" (change)="showModal.set($event.checked)">
+        <mat-slide-toggle class="text-base" (change)="dontShowAgain($event.checked)">
           Don't show this again
         </mat-slide-toggle>
         <app-info

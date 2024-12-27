@@ -1,48 +1,50 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal, effect } from '@angular/core';
+import { openBottomSheet } from '../../store/core/core.actions';
+import { Store } from '@ngrx/store';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PwaService {
+  store$ = inject(Store);
+  storage = inject(StorageService);
+  DONT_SHOW_PWA_PROMOTION = 'dont_show_pwa_promotion';
   private deferredPrompt: any;
 
   canInstall = signal(false);
   runningInPwa = signal(false);
   isInstalled = signal(false);
+  displayMode = signal('');
 
   constructor() {
-    console.log('PWA service initialized');
     this.detectPwaEnvironment();
     this.listenForEvents();
+    effect(() => this.handleInstallPromotion(), { allowSignalWrites: true });
   }
 
   private detectPwaEnvironment() {
-    const displayMode = this.getPWADisplayMode();
+    this.displayMode.set(this.getPWADisplayMode());
 
-    if (displayMode !== 'unknown') {
-      console.log('App is running in PWA mode');
+    if (['standalone', 'minimal-ui', 'fullscreen', 'window-controls-overlay'].includes(this.displayMode())) {
       this.runningInPwa.set(true);
       this.canInstall.set(false);
     } else {
-      console.log('App is not running in PWA mode');
       this.runningInPwa.set(false);
     }
   }
 
   private listenForEvents() {
-    // Listen for the `beforeinstallprompt` event
     window.addEventListener('beforeinstallprompt', (e: Event) => {
       e.preventDefault();
       this.deferredPrompt = e;
       this.canInstall.set(true);
-      console.log('Installation prompt is available');
     });
 
-    // Listen for the `appinstalled` event
     window.addEventListener('appinstalled', () => {
       this.canInstall.set(false);
       this.isInstalled.set(true);
-      console.log('App has been installed');
+      this.deferredPrompt = null;
     });
   }
 
@@ -69,22 +71,19 @@ export class PwaService {
   }
 
   async triggerInstall() {
-    console.log('this.deferredPrompt', this.deferredPrompt);
     if (this.deferredPrompt) {
-      this.deferredPrompt.prompt(); // Trigger the install prompt
-      console.log('Installation Dialog opened');
-
+      this.deferredPrompt.prompt();
       const { outcome } = await this.deferredPrompt.userChoice;
-      this.deferredPrompt = null; // Reset the deferred prompt after use
-
       if (outcome === 'accepted') {
-        console.log('User accepted the install prompt.');
         this.canInstall.set(false);
-      } else {
-        console.log('User dismissed the install prompt');
       }
-    } else {
-      console.log('No install prompt available');
+    }
+  }
+
+  private handleInstallPromotion() {
+    const showPromotion = this.storage.get(this.DONT_SHOW_PWA_PROMOTION) !== 'true';
+    if (showPromotion && this.canInstall() && !this.runningInPwa()) {
+      this.store$.dispatch(openBottomSheet({ component: 'InstallPwaComponent' }));
     }
   }
 }
