@@ -3,8 +3,9 @@ import { Store } from '@ngrx/store';
 import { navigateTo, openBottomSheet } from '../../store/core/core.actions';
 
 export interface MenuItem {
-  label: string;
-  icon: string;
+  label?: string;
+  icon?: string;
+  logo?: string;
   href?: string;
   onClick?: () => void;
   position?: 'start' | 'end';
@@ -15,6 +16,11 @@ export class MenuService {
   private store$ = inject(Store);
 
   readonly rootMenuItems: MenuItem[] = [
+    {
+      logo: 'logo.svg',
+      position: 'start',
+      onClick: () => this.handleNavigation('/'),
+    },
     {
       label: 'notifications',
       icon: 'notifications',

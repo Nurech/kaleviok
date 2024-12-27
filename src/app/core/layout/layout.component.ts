@@ -11,6 +11,8 @@ import { DeviceService } from '../../shared/services/device.service';
 import { SnackbarService } from '../../shared/services/snackbar.service';
 import { SnackbarState, SnackbarType } from '../../shared/models';
 import { RouterOutlet } from '@angular/router';
+import { SheetService } from '../../shared/services/sheet.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-layout',
@@ -28,11 +30,13 @@ import { RouterOutlet } from '@angular/router';
     MatTabsModule,
     NgTemplateOutlet,
     RouterOutlet,
+    TranslatePipe,
   ],
 })
 export class LayoutComponent {
   isHandheld = inject(DeviceService).isHandheld;
   snackbarService = inject(SnackbarService);
+  sheetService = inject(SheetService);
 
   opanSnackBar() {
     this.snackbarService.snack({

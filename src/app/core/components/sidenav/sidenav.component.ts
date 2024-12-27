@@ -1,4 +1,4 @@
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe, NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -10,7 +10,16 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, MatIconModule, AsyncPipe, DarkModeSwitchComponent, TranslatePipe, NgClass],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    MatIconModule,
+    AsyncPipe,
+    DarkModeSwitchComponent,
+    TranslatePipe,
+    NgClass,
+    NgOptimizedImage,
+  ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
   animations: [

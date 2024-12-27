@@ -1,5 +1,4 @@
 <div class="flex flex-col h-full relative items-center px-1">
-  <a><img alt="Logo" class="size-16 mt-2" src="logo.svg" /></a>
   @if (menuItems.length > 0) {
     <nav class="flex flex-col justify-items-start justify-start mt-2 h-full" [@listAnimation]="animationState()">
       @for (item of menuItems; track $index) {
@@ -9,11 +8,18 @@
           #link="routerLinkActive"
           [attr.aria-current]="link.isActive"
           role="link"
-          class="section-link"
+          class="section-link w-auto h-auto"
           (click)="item.onClick && item.onClick()"
         >
-          <mat-icon>{{ item.icon }}</mat-icon>
-          <div class="text-xs">{{ item.label | translate }}</div>
+          @if (item.logo) {
+            <img alt="Logo" class="size-16 mt-2 relative" [ngSrc]="item.logo" fill priority/>
+          }
+          @if (item.icon) {
+            <mat-icon>{{ item.icon }}</mat-icon>
+          }
+          @if (item.label) {
+            <div class="text-xs">{{ item.label | translate }}</div>
+          }
         </a>
       }
     </nav>

@@ -21,5 +21,7 @@
   "snackbar.autologin.success": "Sisse logitud!",
   "snackbar.autologin.error": "Tekkis viga: {{error}}",
   "login.google": "Logi sisse Google'iga",
+  "close_menu": "Sulge menüü",
+  "open_menu": "Ava menüü",
   "users": "Kasutajad"
 }
