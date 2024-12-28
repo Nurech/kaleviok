@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs';
-import { gmailAuthenticationSuccess } from '../core/core.actions';
 import { UsersService } from './users.service';
+import { gmailSuccess } from '../auth/auth.actions';
 
 @Injectable()
 export class UsersEffects {
@@ -11,9 +11,9 @@ export class UsersEffects {
 
   saveUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(gmailAuthenticationSuccess),
-      tap(({ payload }) => {
-        this.userService.save(payload);
+      ofType(gmailSuccess),
+      tap((payload) => {
+        this.userService.save(payload.user);
       }),
     ),
   );
