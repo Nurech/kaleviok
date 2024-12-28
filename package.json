@@ -29,7 +29,7 @@
     "@angular/material": "^18.0.0",
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
-    "@angular/pwa": "^18.0.0",
+    "@angular/pwa": "^19.0.6",
     "@angular/router": "^18.0.0",
     "@angular/service-worker": "^18.0.0",
     "@material/material-color-utilities": "^0.3.0",
