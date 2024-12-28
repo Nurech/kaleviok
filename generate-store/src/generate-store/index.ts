@@ -4,11 +4,10 @@ import schemaJson from './schema.json';
 type GenerateStoreSchema = typeof schemaJson;
 
 export function generateStore(options: GenerateStoreSchema): Rule {
-  console.log('Options received:', options); // Debug logging
   return (tree: Tree, _context: SchematicContext) => {
     const templateSource = apply(url('./files'), [
       template({ ...strings, ...options }),
-      move(`src/app/${strings.dasherize(options.name)}`),
+      move(strings.dasherize(options.name)),
     ]);
 
     return chain([mergeWith(templateSource)])(tree, _context);
