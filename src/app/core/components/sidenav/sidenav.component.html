@@ -12,7 +12,7 @@
           (click)="item.onClick && item.onClick()"
         >
           @if (item.logo) {
-            <img alt="Logo" class="size-16 mt-2 relative" src="{{item.logo}}" />
+            <img alt="Logo" class="size-16 mt-2 relative" src="{{ item.logo }}" />
           }
           @if (item.icon) {
             <mat-icon>{{ item.icon }}</mat-icon>

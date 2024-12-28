@@ -2,7 +2,7 @@
   <mat-sidenav
     #drawer
     position="end"
-    [attr.role]=" 'navigation'"
+    [attr.role]="'navigation'"
     [mode]="isHandheld() ? 'over' : 'side'"
     [opened]="!isHandheld()"
     (openedStart)="sidenav.isOpen.set(true)"
