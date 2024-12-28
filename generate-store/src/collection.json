@@ -1,0 +1,10 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "generate-store": {
+      "description": "Generate an NgRx store",
+      "factory": "./generate-store/index#generateStore",
+      "schema": "./generate-store/schema.json"
+    }
+  }
+}

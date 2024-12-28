@@ -6,7 +6,7 @@ const imports = require('eslint-plugin-import');
 
 module.exports = tseslint.config(
   {
-    ignores: ['.angular/'],
+    ignores: ['.angular/', '**/__*'],
   },
   {
     files: ['**/*.ts'],
