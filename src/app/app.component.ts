@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
 import { IconResolver, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
 import { LayoutComponent } from './core/layout/layout.component';
 import { SheetService } from './shared/services/sheet.service';
 
@@ -16,7 +15,6 @@ import { SheetService } from './shared/services/sheet.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  private store$ = inject(Store);
   private sheetService = inject(SheetService);
   private iconRegistry = inject(MatIconRegistry);
   private sanitizer = inject(DomSanitizer);
