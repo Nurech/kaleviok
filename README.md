@@ -30,6 +30,7 @@ ng serve --configuration=production --host 0.0.0.0 --ssl --ssl-cert localhost.cr
 ```
 
 # Schematics
+
 Use the following command to generate a new feature module.
 
 ```bash
@@ -37,4 +38,5 @@ ng generate ./src/schematics/collection.json:generate-store foo
 ```
 
 ## Add schemactics
-Edit source files in ``src/schematics``
+
+Edit source files in `src/schematics`
