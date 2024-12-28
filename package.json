@@ -41,8 +41,6 @@
     "@ngrx/store-devtools": "^18.0.0",
     "@ngx-translate/core": "^16.0.3",
     "@ngx-translate/http-loader": "^16.0.1",
-    "@stackblitz/sdk": "^1.11.0",
-    "@types/tinycolor2": "^1.4.6",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.0"
