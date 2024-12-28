@@ -14,10 +14,7 @@
         <mat-slide-toggle class="text-base" (change)="dontShowAgain($event.checked)">
           {{ 'dont_show_this_again' | translate }}
         </mat-slide-toggle>
-        <app-info
-          [text]="'checking_will_prevent' | translate"
-        >
-        </app-info>
+        <app-info [text]="'checking_will_prevent' | translate"></app-info>
       </div>
       <button mat-raised-button (click)="pwaService.triggerInstall()">Install</button>
     </section>
