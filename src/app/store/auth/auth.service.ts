@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   Auth,
   GoogleAuthProvider,
@@ -7,18 +7,14 @@ import {
   signOut,
   user,
 } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
-import { User } from '../../store/user/user.model';
+import { User } from '../users/users.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(
-    private auth: Auth,
-    private firestore: Firestore,
-  ) {}
+  private auth = inject(Auth);
 
   loginWithGoogle() {
     const provider = new GoogleAuthProvider();

@@ -4,10 +4,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { CommonModule } from '@angular/common';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer } from '@ngrx/router-store';
-import { usersFeature } from '../user/user.reducer';
-import { CoreStoreModule } from '../core/core.module';
-import { coreFeature } from '../core/core.reducer';
+import { usersFeature } from '../users/users.reducer';
 import { RouterEffects } from '../router/router.effects';
+import { authFeature } from '../auth/auth.reducer';
+import { AuthStoreModule } from '../auth/auth.module';
 
 export function logState(reducer: any) {
   return (state: any, action: any) => {
@@ -25,13 +25,13 @@ export const metaReducers: MetaReducer[] = [logState];
     EffectsModule.forRoot([RouterEffects]),
     StoreModule.forRoot(
       {
+        auth: authFeature.reducer,
         router: routerReducer,
-        core: coreFeature.reducer,
         users: usersFeature.reducer,
       },
       { metaReducers },
     ),
-    CoreStoreModule,
+    AuthStoreModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),

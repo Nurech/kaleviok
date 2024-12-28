@@ -6,8 +6,7 @@ import { IconResolver, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { LayoutComponent } from './core/layout/layout.component';
-import { autoLogin } from './store/core/core.actions';
-import { StorageService } from './shared/services/storage.service';
+import { SheetService } from './shared/services/sheet.service';
 
 @Component({
   selector: 'app-root',
@@ -18,16 +17,16 @@ import { StorageService } from './shared/services/storage.service';
 })
 export class AppComponent implements OnInit {
   private store$ = inject(Store);
-  private storage = inject(StorageService);
+  private sheetService = inject(SheetService);
   private iconRegistry = inject(MatIconRegistry);
   private sanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
     this.initializeIconRegistry();
-    if (this.storage.get('autologin')) {
-      this.store$.dispatch(autoLogin());
-    }
-    // this.store$.dispatch(openBottomSheet({ component: 'LoginComponent' }));
+    // if (this.storage.get('autologin')) {
+    //   this.store$.dispatch(autoLogin());
+    // }
+    this.sheetService.open('LoginComponent');
     // this.store$.dispatch(openCookieDialog());
   }
 

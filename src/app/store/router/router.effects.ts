@@ -13,7 +13,7 @@ export class RouterEffects {
     () =>
       this.actions$.pipe(
         ofType(navigateTo),
-        tap(({ path, extras }) => this.router.navigate(path, extras)),
+        tap(({ path }) => this.router.navigate([path])),
       ),
     { dispatch: false },
   );

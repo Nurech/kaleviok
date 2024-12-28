@@ -11,8 +11,8 @@ import { Store } from '@ngrx/store';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
-import { startEmailPasswordAuthentication, startGmailAuthentication } from '../../../store/core/core.actions';
 import { InfoComponent } from '../../../shared/components/info/info.component';
+import { emailStart, gmailStart } from '../../../store/auth/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -41,7 +41,6 @@ export class LoginComponent {
   readonly password = new FormControl('', [Validators.required]);
   emailErrorMessage = signal('');
   passwordErrorMessage = signal('');
-  rememberMe = signal(false);
   hide = signal(true);
 
   constructor() {
@@ -65,14 +64,14 @@ export class LoginComponent {
   }
 
   loginWithGoogle() {
-    this.store$.dispatch(startGmailAuthentication());
+    this.store$.dispatch(gmailStart());
   }
 
   loginWithEmail() {
     if (this.email.valid && this.password.valid) {
       const email = this.email.value as string;
       const password = this.password.value as string;
-      this.store$.dispatch(startEmailPasswordAuthentication({ email, password }));
+      this.store$.dispatch(emailStart({ email, password }));
     }
   }
 

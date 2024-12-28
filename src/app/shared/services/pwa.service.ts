@@ -1,14 +1,13 @@
 import { inject, Injectable, signal, effect } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { openBottomSheet } from '../../store/core/core.actions';
 import { StorageService } from './storage.service';
+import { SheetService } from './sheet.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PwaService {
-  store$ = inject(Store);
   storage = inject(StorageService);
+  private sheetService = inject(SheetService);
   DONT_SHOW_PWA_PROMOTION = 'dont_show_pwa_promotion';
   private deferredPrompt: any;
 
@@ -83,7 +82,7 @@ export class PwaService {
   private handleInstallPromotion() {
     const showPromotion = this.storage.get(this.DONT_SHOW_PWA_PROMOTION) !== 'true';
     if (showPromotion && this.canInstall() && !this.runningInPwa()) {
-      this.store$.dispatch(openBottomSheet({ component: 'InstallPwaComponent' }));
+      this.sheetService.open('InstallPwaComponent');
     }
   }
 }

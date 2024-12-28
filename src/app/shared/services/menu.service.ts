@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { navigateTo, openBottomSheet } from '../../store/core/core.actions';
+import { navigateTo } from '../../store/router/router.actions';
+import { SheetService } from './sheet.service';
 
 export interface MenuItem {
   label?: string;
@@ -14,6 +15,7 @@ export interface MenuItem {
 @Injectable({ providedIn: 'root' })
 export class MenuService {
   private store$ = inject(Store);
+  private sheetService = inject(SheetService);
 
   readonly rootMenuItems: MenuItem[] = [
     {
@@ -43,7 +45,7 @@ export class MenuService {
       label: 'login',
       icon: 'login',
       position: 'end',
-      onClick: () => this.store$.dispatch(openBottomSheet({ component: 'LoginComponent' })),
+      onClick: () => this.sheetService.open('LoginComponent'),
     },
     {
       label: 'admin_panel_settings',
@@ -60,6 +62,6 @@ export class MenuService {
   ];
 
   private handleNavigation(path: string): void {
-    this.store$.dispatch(navigateTo({ path }));
+    this.store$.dispatch(navigateTo({ path: [path] }));
   }
 }
