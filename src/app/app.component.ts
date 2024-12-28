@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeIconRegistry();
-    if (this.storage.get('autoLogin')) {
+    if (this.storage.get('autologin')) {
       this.store$.dispatch(autoLogin());
     }
     // this.store$.dispatch(openBottomSheet({ component: 'LoginComponent' }));
