@@ -2,6 +2,7 @@ const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
 const unusedImports = require('eslint-plugin-unused-imports');
+const imports = require('eslint-plugin-import');
 
 module.exports = tseslint.config(
   {
@@ -11,6 +12,7 @@ module.exports = tseslint.config(
     files: ['**/*.ts'],
     plugins: {
       'unused-imports': unusedImports,
+      import: imports,
     },
     extends: [
       eslint.configs.recommended,
@@ -20,6 +22,13 @@ module.exports = tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal', ['sibling', 'parent'], 'index'],
+          'newlines-between': 'never',
+        },
+      ],
       '@typescript-eslint/no-explicit-any': 'off',
       '@angular-eslint/directive-selector': [
         'error',
