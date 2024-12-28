@@ -30,27 +30,33 @@ ng serve --configuration=production --host 0.0.0.0 --ssl --ssl-cert localhost.cr
 ```
 
 # Schematics
+
 Provide a way to generate feature modules with ngrx store, actions, effects, reducers, selectors and service. This helps to keep the codebase consistent and reduces the time to create new feature modules and keeps the codebase consistent.
+
 ### To install
 
-From project root navigate to ``<root>/generate-store`` install and link the schematics package.
-  ```bash
-  cd generate-store
-  npm install
-  npm run build
-  npm link
-  ```
-Go to project ``<root>`` and install the schematics package.
-  ```bash
-  cd..
-  npm install --save-dev ./generate-store
-  ```
+From project root navigate to `<root>/generate-store` install and link the schematics package.
+
+```bash
+cd generate-store
+npm install
+npm run build
+npm link
+```
+
+Go to project `<root>` and install the schematics package.
+
+```bash
+cd..
+npm install --save-dev ./generate-store
+```
+
 Use the following command to generate a new feature module.
 
 ```bash
-ng g generate-store:generate-store foo 
+ng g generate-store:generate-store foo
 ```
 
-### Add upgrades to 
+### Add upgrades to
 
 Edit source files in `<root>/generate-store`
