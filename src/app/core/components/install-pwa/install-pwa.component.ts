@@ -8,11 +8,12 @@ import { MatButton } from '@angular/material/button';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MatBadge } from '@angular/material/badge';
 
 @Component({
   selector: 'app-install-pwa',
   templateUrl: './install-pwa.component.html',
-  imports: [MatSlideToggle, InfoComponent, MatButton, NgTemplateOutlet, MatIcon, TranslatePipe],
+  imports: [MatSlideToggle, InfoComponent, MatButton, NgTemplateOutlet, MatIcon, TranslatePipe, MatBadge],
   standalone: true,
 })
 export class InstallPwaComponent implements OnInit {
