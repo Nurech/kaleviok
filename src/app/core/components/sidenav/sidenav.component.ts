@@ -29,7 +29,7 @@ import { MenuService } from '../../../shared/services/menu.service';
           'a',
           [
             style({ opacity: 0, transform: 'translateX(30px)' }),
-            stagger(50, [animate('200ms ease-out', style({ opacity: 1, transform: 'translateX(0)' }))]),
+            stagger(40, [animate('150ms ease-out', style({ opacity: 1, transform: 'translateX(0)' }))]),
           ],
           { optional: true },
         ),

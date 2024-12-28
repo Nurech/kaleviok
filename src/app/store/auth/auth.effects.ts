@@ -16,8 +16,8 @@ export class AuthEffects {
       mergeMap(() =>
         this.authService.loginWithGoogle().pipe(
           map((response) => {
-            const payload: User = UserMapper.mapResponseToUser(response);
-            return gmailSuccess({ payload });
+            const user: User = UserMapper.mapResponseToUser(response);
+            return gmailSuccess({ user });
           }),
           catchError((error) => of(gmailError({ error }))),
         ),
