@@ -2,10 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { MatButton } from '@angular/material/button';
 import { NgIf } from '@angular/common';
-import { Snackbar, SnackbarState } from '../../models';
 import { state } from '@angular/animations';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
+import { Snackbar, SnackbarState } from '../../models';
 
 @Component({
   selector: 'app-snackbar',

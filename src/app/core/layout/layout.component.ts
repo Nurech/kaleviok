@@ -5,14 +5,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { SidenavComponent } from '../components/sidenav/sidenav.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { RouterOutlet } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { SidenavComponent } from '../components/sidenav/sidenav.component';
 import { DeviceService } from '../../shared/services/device.service';
 import { SnackbarService } from '../../shared/services/snackbar.service';
 import { SnackbarState, SnackbarType } from '../../shared/models';
-import { RouterOutlet } from '@angular/router';
 import { SheetService } from '../../shared/services/sheet.service';
-import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-layout',

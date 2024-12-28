@@ -17,9 +17,6 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { getRemoteConfig, provideRemoteConfig } from '@angular/fire/remote-config';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideRouterStore } from '@ngrx/router-store';
-import { RootStoreModule } from './store/root/root.module';
-import { routes } from './app.routes';
-import { environment } from '../environments/environment';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
@@ -31,9 +28,12 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { firstValueFrom } from 'rxjs';
 import { MissingTranslationService } from './shared/services/missing-translation.service';
 import { PwaService } from './shared/services/pwa.service';
-import { firstValueFrom } from 'rxjs';
+import { environment } from '../environments/environment';
+import { routes } from './app.routes';
+import { RootStoreModule } from './store/root/root.module';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');

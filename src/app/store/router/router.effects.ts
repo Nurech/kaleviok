@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Router } from '@angular/router';
-import { navigateTo, navigateBack, navigateForward } from './router.actions';
 import { tap } from 'rxjs/operators';
+import { navigateTo, navigateBack, navigateForward } from './router.actions';
 
 @Injectable()
 export class RouterEffects {

@@ -7,11 +7,11 @@ import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { startEmailPasswordAuthentication, startGmailAuthentication } from '../../../store/core/core.actions';
 import { Store } from '@ngrx/store';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
+import { startEmailPasswordAuthentication, startGmailAuthentication } from '../../../store/core/core.actions';
 import { InfoComponent } from '../../../shared/components/info/info.component';
 
 @Component({

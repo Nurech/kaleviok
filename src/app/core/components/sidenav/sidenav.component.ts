@@ -2,10 +2,10 @@ import { AsyncPipe, NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { DarkModeSwitchComponent } from '../../../shared/components/dark-mode-switch/dark-mode-switch.component';
-import { MenuService } from '../../../shared/services/menu.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+import { DarkModeSwitchComponent } from '../../../shared/components/dark-mode-switch/dark-mode-switch.component';
+import { MenuService } from '../../../shared/services/menu.service';
 
 @Component({
   selector: 'app-sidenav',

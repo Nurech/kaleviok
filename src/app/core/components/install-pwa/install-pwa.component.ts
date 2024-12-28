@@ -1,14 +1,14 @@
 import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { PwaService } from '../../../shared/services/pwa.service';
-import { StorageService } from '../../../shared/services/storage.service';
-import { BrowserType, DeviceService, PlatformType } from '../../../shared/services/device.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { InfoComponent } from '../../../shared/components/info/info.component';
 import { MatButton } from '@angular/material/button';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatBadge } from '@angular/material/badge';
+import { InfoComponent } from '../../../shared/components/info/info.component';
+import { BrowserType, DeviceService, PlatformType } from '../../../shared/services/device.service';
+import { StorageService } from '../../../shared/services/storage.service';
+import { PwaService } from '../../../shared/services/pwa.service';
 
 @Component({
   selector: 'app-install-pwa',

@@ -1,4 +1,8 @@
 import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import {
   autoLogin,
   autoLoginFailed,
@@ -15,14 +19,10 @@ import {
   startGmailAuthenticationError,
   startGmailAuthenticationSuccess,
 } from './core.actions';
-import { inject, Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../shared/services/auth.service';
 import { DataService } from '../../shared/services/data.service';
 import { User, UserMapper } from '../user/user.model';
-import { Router } from '@angular/router';
 import { SnackbarService } from '../../shared/services/snackbar.service';
-import { TranslateService } from '@ngx-translate/core';
 import { SnackbarState, SnackbarType } from '../../shared/models';
 import { DialogService } from '../../shared/services/dialog.service';
 import { SheetService } from '../../shared/services/sheet.service';
