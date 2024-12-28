@@ -28,3 +28,13 @@ Https localhost testing if needed
 $ openssl req -x509 -newkey rsa:2048 -nodes -keyout localhost.key -out localhost.crt -days 9999 -subj "//CN=localhost"
 ng serve --configuration=production --host 0.0.0.0 --ssl --ssl-cert localhost.crt --ssl-key localhost.key
 ```
+
+# Schematics
+Use the following command to generate a new feature module.
+
+```bash
+ng generate ./src/schematics/collection.json:generate-store foo
+```
+
+## Add schemactics
+Edit source files in ``src/schematics``
