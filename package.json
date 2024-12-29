@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prepare": "husky",
+    "bump-version": "node ./scripts/bump-version.js",
     "lint": "eslint \"**/*.{js,ts,html}\"",
     "format": "prettier --write \"**/*.{js,ts,html,json,css,scss,md}\""
   },

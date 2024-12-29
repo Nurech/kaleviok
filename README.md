@@ -1,13 +1,18 @@
 # KaleviOK project
+
 ### Run locally
+
 At project root run:
-````bash
+
+```bash
 npm install
 ng serve
-````
+```
+
 Open browser at http://localhost:4200
 
 ### Project structure
+
 ```bash
 ng generate @ngrx/schematics:store AppState --root --state-path store/root --minimal --skip-tests --defaults
 ```
