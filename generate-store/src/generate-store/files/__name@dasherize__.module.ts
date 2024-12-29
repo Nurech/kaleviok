@@ -12,4 +12,4 @@ import { <%= classify(name) %>Effects } from './<%= dasherize(name) %>.effects';
     EffectsModule.forFeature([<%= classify(name) %>Effects]),
   ],
 })
-export class <%= classify(name) %>Module {}
+export class <%= classify(name) %>StoreModule {}

@@ -33,7 +33,7 @@ import { MissingTranslationService } from './shared/services/missing-translation
 import { PwaService } from './shared/services/pwa.service';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
-import { RootStoreModule } from './store/root/root.module';
+import { RootStoreModule } from './store/root.module';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');

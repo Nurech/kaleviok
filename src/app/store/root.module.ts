@@ -4,12 +4,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { CommonModule } from '@angular/common';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer } from '@ngrx/router-store';
-import { usersFeature } from '../users/users.reducer';
-import { RouterEffects } from '../router/router.effects';
-import { authFeature } from '../auth/auth.reducer';
-import { AuthStoreModule } from '../auth/auth.module';
-import { UsersStoreModule } from '../users/users.module';
-import { RouterStoreModule } from '../router/router-store.module';
+import { usersFeature } from './users/users.reducer';
+import { RouterEffects } from './router/router.effects';
+import { authFeature } from './auth/auth.reducer';
+import { AuthStoreModule } from './auth/auth.module';
+import { UsersStoreModule } from './users/users.module';
+import { RouterStoreModule } from './router/router-store.module';
 
 // Meta reducers
 export function logState(reducer: any) {

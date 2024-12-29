@@ -8,4 +8,4 @@ import { SettingsEffects } from './settings.effects';
 @NgModule({
   imports: [CommonModule, StoreModule.forFeature(featureKey, reducer), EffectsModule.forFeature([SettingsEffects])],
 })
-export class SettingsModule {}
+export class SettingsStoreModule {}
