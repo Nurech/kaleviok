@@ -27,7 +27,7 @@ export function logState(reducer: any) {
 
     if (isDevMode()) {
       const localStorageUsage = calculateLocalStorageUsage();
-      console.log(`Used: [${localStorageUsage}] State:  Action`, nextState, action);
+      console.log(`Used: [${localStorageUsage}] State: `, nextState, action);
     }
 
     return nextState;

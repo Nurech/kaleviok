@@ -89,7 +89,6 @@ export class PwaService {
   private handleInstallPromotion() {
     this.store$.select(selectMySetting('showPwaPopup')).subscribe((showPwaPopup) => {
       if (showPwaPopup) {
-        console.warn('showPwaPopup', showPwaPopup);
         if (showPwaPopup && this.canInstall() && !this.runningInPwa()) {
           this.sheetService.open('InstallPwaComponent');
         }
