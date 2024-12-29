@@ -1,15 +1,21 @@
 import { inject, Injectable, signal, effect } from '@angular/core';
+import { SwUpdate } from '@angular/service-worker';
 import { StorageService } from './storage.service';
 import { SheetService } from './sheet.service';
+import { DialogService } from './dialog.service';
+import { PwaUpdateDialogComponent } from '../../core/components/pwa-update-dialog/pwa-update-dialog.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PwaService {
-  storage = inject(StorageService);
+  private storage = inject(StorageService);
   private sheetService = inject(SheetService);
+  private dialogService = inject(DialogService);
+  private swUpdate = inject(SwUpdate);
   DONT_SHOW_PWA_PROMOTION = 'dont_show_pwa_promotion';
   private deferredPrompt: any;
+  UPDATE_INTERVAL = 30 * 1000;
 
   canInstall = signal(false);
   runningInPwa = signal(false);
@@ -20,6 +26,7 @@ export class PwaService {
     this.detectPwaEnvironment();
     this.listenForEvents();
     effect(() => this.handleInstallPromotion(), { allowSignalWrites: true });
+    this.startUpdateCheck();
   }
 
   private detectPwaEnvironment() {
@@ -84,5 +91,27 @@ export class PwaService {
     if (showPromotion && this.canInstall() && !this.runningInPwa()) {
       this.sheetService.open('InstallPwaComponent');
     }
+  }
+
+  private startUpdateCheck() {
+    if (!this.swUpdate.isEnabled) {
+      console.warn('Service worker updates are not enabled.');
+      return;
+    }
+
+    setInterval(async () => {
+      try {
+        const isUpdateAvailable = await this.swUpdate.checkForUpdate();
+        if (isUpdateAvailable) {
+          this.promptUserForUpdate();
+        }
+      } catch (error) {
+        console.error('Failed to check for updates:', error);
+      }
+    }, this.UPDATE_INTERVAL);
+  }
+
+  private promptUserForUpdate() {
+    this.dialogService.open(PwaUpdateDialogComponent);
   }
 }
