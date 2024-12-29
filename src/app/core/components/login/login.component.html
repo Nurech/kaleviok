@@ -49,9 +49,13 @@
 
     <div>
       <div class="flex items-center justify-center">
-        <mat-checkbox [labelPosition]="'after'" (change)="rememberMe($event.checked)">{{
-          'remember_me' | translate
-        }}</mat-checkbox>
+        <mat-checkbox
+          [labelPosition]="'after'"
+          [checked]="(mySettings$ | async)?.autologin"
+          (change)="rememberMe($event.checked)"
+        >
+          {{ 'remember_me' | translate }}
+        </mat-checkbox>
         <app-info [text]="'remember_me_info' | translate"></app-info>
       </div>
       <div class="flex justify-center py-2">

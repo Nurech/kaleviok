@@ -12,6 +12,7 @@ import { authFeature } from './auth/auth.reducer';
 import { AuthStoreModule } from './auth/auth.module';
 import { UsersStoreModule } from './users/users.module';
 import { RouterStoreModule } from './router/router-store.module';
+import { name } from '../../../package.json';
 
 // Meta reducers
 export function logState(reducer: any) {
@@ -22,7 +23,20 @@ export function logState(reducer: any) {
   };
 }
 
-export const metaReducers: MetaReducer[] = [logState];
+export function localStorageSyncReducer(reducer: any): any {
+  return (state: any, action: any) => {
+    if (state === undefined) {
+      const storedState = localStorage.getItem(`${name}-state`);
+      return storedState ? JSON.parse(storedState) : reducer(state, action);
+    }
+    const nextState = reducer(state, action);
+    localStorage.setItem(`${name}-state`, JSON.stringify(nextState));
+
+    return nextState;
+  };
+}
+
+export const metaReducers: MetaReducer[] = [logState, localStorageSyncReducer];
 
 // Feature reducers
 const rootReducers = {

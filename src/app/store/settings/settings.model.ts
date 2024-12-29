@@ -1,4 +1,5 @@
 export interface Setting {
-  uid?: string;
-  autologin?: boolean;
+  uid: string;
+  autologin: boolean;
+  theme: string;
 }

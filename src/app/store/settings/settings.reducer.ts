@@ -11,7 +11,7 @@ export interface State {
 }
 
 export const initialState: State = {
-  settings: [],
+  settings: [{ uid: '', autologin: false, theme: 'auto' }],
   loading: false,
   error: null,
 };
@@ -22,11 +22,9 @@ const settingsReducer = createReducer(
   on(loadSettingsSuccess, (state, { data }) => ({ ...state, loading: false, settings: data })),
   on(loadSettingsFailure, (state, { error }) => ({ ...state, loading: false, error })),
   on(changeMySettings, (state, { changes }) => {
-    const uid = changes.uid || '';
-    const existingSetting = state.settings.some((setting) => setting.uid === uid);
-    const settings = existingSetting
-      ? state.settings.map((setting) => (setting.uid === uid ? { ...setting, ...changes } : setting))
-      : state.settings.concat({ uid, ...changes });
+    const settings = state.settings.map((setting) =>
+      setting.uid === changes.uid ? { ...setting, ...changes } : setting,
+    );
     return { ...state, settings };
   }),
 );

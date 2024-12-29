@@ -7,7 +7,4 @@ export const loadSettingsSuccess = createAction('[Settings] Load Settings Succes
 
 export const loadSettingsFailure = createAction('[Settings] Load Settings Failure', props<{ error: any }>());
 
-export const changeMySettings = createAction(
-  '[Settings] Change My Settings',
-  props<{ changes: Partial<Setting> & { uid?: string } }>(),
-);
+export const changeMySettings = createAction('[Settings] Change My Settings', props<{ changes: Partial<Setting> }>());
