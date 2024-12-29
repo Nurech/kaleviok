@@ -1,4 +1,15 @@
-import { apply, chain, mergeWith, move, Rule, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
+import {
+  apply,
+  chain,
+  MergeStrategy,
+  mergeWith,
+  move,
+  Rule,
+  SchematicContext,
+  template,
+  Tree,
+  url,
+} from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
 
 interface GenerateStoreSchema {
@@ -40,7 +51,7 @@ function insertToFile(
 function updateRootModule(tree: Tree, name: string): void {
   const dashedName = strings.dasherize(name);
   const reducerImport = `import { ${name}Feature } from './${dashedName}/${dashedName}.reducer';`;
-  const moduleImport = `import { ${name}StoreModule } from './${dashedName}/${dashedName}.module';`;
+  const moduleImport = `import { ${strings.classify(name)}StoreModule } from './${dashedName}/${dashedName}.module';`;
 
   const reducerEntry = `  ${strings.camelize(name)}: ${name}Feature.reducer,`;
   const moduleEntry = `  ${strings.classify(name)}StoreModule,`;
@@ -69,6 +80,6 @@ export function generateStore(options: GenerateStoreSchema): Rule {
     // Update the root module
     updateRootModule(tree, options.name);
 
-    return chain([mergeWith(templateSource)])(tree, _context);
+    return chain([mergeWith(templateSource, MergeStrategy.Overwrite)])(tree, _context);
   };
 }

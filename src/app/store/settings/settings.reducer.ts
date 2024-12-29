@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store';
+import { createReducer, on, createFeature } from '@ngrx/store';
 import { loadSettings, loadSettingsSuccess, loadSettingsFailure } from './settings.actions';
 
 export const featureKey = 'settings';
@@ -15,9 +15,14 @@ export const initialState: State = {
   error: null,
 };
 
-export const reducer = createReducer(
+const settingsReducer = createReducer(
   initialState,
   on(loadSettings, (state) => ({ ...state, loading: true })),
   on(loadSettingsSuccess, (state, { data }) => ({ ...state, loading: false, data })),
   on(loadSettingsFailure, (state, { error }) => ({ ...state, loading: false, error })),
 );
+
+export const settingsFeature = createFeature({
+  name: featureKey,
+  reducer: settingsReducer,
+});
