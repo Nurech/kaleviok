@@ -60,9 +60,13 @@
 
     <div class="py-3 flex flex-row justify-center items-center">
       <mat-divider class="w-full"></mat-divider>
-      <span class="px-2 w-full opacity-60 text-sm flex justify-center">{{ 'or_use_other_provider' | translate }}</span>
+      <span
+        class="px-2 w-full opacity-60 text-sm text-center whitespace-nowrap flex justify-center"
+      >{{ 'or_use_other_provider' | translate }}</span
+      >
       <mat-divider class="w-full"></mat-divider>
     </div>
+
 
     <div class="flex justify-center">
       <button mat-raised-button color="primary" (click)="loginWithGoogle()">
