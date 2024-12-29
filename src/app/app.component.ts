@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
     //   this.store$.dispatch(autoLogin());
     // }
     this.sheetService.open('LoginComponent');
-    // this.store$.dispatch(openCookieDialog());
   }
 
   initializeIconRegistry() {

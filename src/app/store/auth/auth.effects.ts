@@ -17,6 +17,7 @@ export class AuthEffects {
         this.authService.loginWithGoogle().pipe(
           map((response) => {
             const user: User = UserMapper.mapResponseToUser(response);
+            console.warn('User from auth:', user);
             return gmailSuccess({ user });
           }),
           catchError((error) => of(gmailError({ error }))),

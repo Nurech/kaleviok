@@ -17,7 +17,7 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(load<%= classify(name) %>, (state) => ({...state, loading: true,})),
-  on(load<%= classify(name) %>Success, (state, { data }) => ({...state, loading: false, data,})),
-  on(load<%= classify(name) %>Failure, (state, { error }) => ({...state, loading: false, error,}))
+  on(load<%= classify(name) %>, (state) => ({...state, loading: true})),
+  on(load<%= classify(name) %>Success, (state, { data }) => ({...state, loading: false, data})),
+  on(load<%= classify(name) %>Failure, (state, { error }) => ({...state, loading: false, error}))
 );

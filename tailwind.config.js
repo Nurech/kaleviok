@@ -6,6 +6,9 @@ module.exports = {
   content: ['./dist/**/*.{js,ts,jsx,tsx,html}', './src/**/*.{js,ts,jsx,tsx,html}'],
   theme: {
     extend: {
+      opacity: {
+        '05': '0.05',
+      },
       colors: {
         green: {
           50: '#FFFFFF',

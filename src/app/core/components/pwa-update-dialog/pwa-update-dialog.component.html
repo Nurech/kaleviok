@@ -1,1 +1,17 @@
-<p>pwa-update-dialog works!</p>
+<h2 mat-dialog-title>
+  {{ 'update_available' | translate }}
+  <mat-icon class="icon-lg">system_update</mat-icon>
+</h2>
+
+<mat-dialog-content class="flex items-center">
+  <span class="w-3/4">{{ 'refresh_now_for_updates' | translate }}</span>
+  <app-info [text]="'new_pwa_version_on_reload' | translate"></app-info>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="onDismiss()">
+    {{ 'no' | translate }}
+  </button>
+  <button mat-flat-button mat-dialog-close cdkFocusInitial (click)="onReload()">
+    {{ 'ok' | translate }}
+  </button>
+</mat-dialog-actions>

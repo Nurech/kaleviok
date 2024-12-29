@@ -8,7 +8,10 @@ import { usersFeature } from '../users/users.reducer';
 import { RouterEffects } from '../router/router.effects';
 import { authFeature } from '../auth/auth.reducer';
 import { AuthStoreModule } from '../auth/auth.module';
+import { UsersStoreModule } from '../users/users.module';
+import { RouterStoreModule } from '../router/router-store.module';
 
+// Meta reducers
 export function logState(reducer: any) {
   return (state: any, action: any) => {
     const nextState = reducer(state, action);
@@ -19,19 +22,22 @@ export function logState(reducer: any) {
 
 export const metaReducers: MetaReducer[] = [logState];
 
+// Feature reducers
+const rootReducers = {
+  router: routerReducer,
+  auth: authFeature.reducer,
+  users: usersFeature.reducer,
+};
+
+// Feature modules
+const featureModules = [RouterStoreModule, AuthStoreModule, UsersStoreModule];
+
 @NgModule({
   imports: [
     CommonModule,
     EffectsModule.forRoot([RouterEffects]),
-    StoreModule.forRoot(
-      {
-        auth: authFeature.reducer,
-        router: routerReducer,
-        users: usersFeature.reducer,
-      },
-      { metaReducers },
-    ),
-    AuthStoreModule,
+    StoreModule.forRoot(rootReducers, { metaReducers }),
+    ...featureModules,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),

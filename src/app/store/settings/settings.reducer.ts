@@ -1,16 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 import { loadSettings, loadSettingsSuccess, loadSettingsFailure } from './settings.actions';
+import { Setting } from './settings.model';
 
 export const featureKey = 'settings';
 
 export interface State {
-  data: any;
+  setting: Setting | null;
   loading: boolean;
   error: any;
 }
 
 export const initialState: State = {
-  data: null,
+  setting: null,
   loading: false,
   error: null,
 };

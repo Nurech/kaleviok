@@ -9,12 +9,15 @@ export class UsersEffects {
   private actions$ = inject(Actions);
   private userService = inject(UsersService);
 
-  saveUser$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(gmailSuccess),
-      tap((payload) => {
-        this.userService.save(payload.user);
-      }),
-    ),
+  saveUser$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(gmailSuccess),
+        tap((payload) => {
+          console.warn('Saving user:', payload.user);
+          this.userService.save(payload.user);
+        }),
+      ),
+    { dispatch: false },
   );
 }

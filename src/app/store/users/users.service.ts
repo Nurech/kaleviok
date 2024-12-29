@@ -9,6 +9,7 @@ export class UsersService {
   private firestore = inject(Firestore);
 
   save(user: User) {
+    console.warn('User saved:', user);
     const userRef = doc(this.firestore, `users/${user.uid}`);
     return setDoc(userRef, user, { merge: true });
   }
