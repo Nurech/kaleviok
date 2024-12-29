@@ -16,6 +16,7 @@ import { InfoComponent } from '../../../shared/components/info/info.component';
 import { emailStart, gmailStart } from '../../../store/auth/auth.actions';
 import { selectMySettings } from '../../../store/settings/settings.selectors';
 import { SettingsService } from '../../../store/settings/settings.service';
+import { updateSettings } from '../../../store/settings/settings.actions';
 
 @Component({
   selector: 'app-login',
@@ -94,6 +95,6 @@ export class LoginComponent {
   }
 
   rememberMe(checked: boolean) {
-    this.settings.update({ autologin: checked });
+    this.store$.dispatch(updateSettings({ changes: { autologin: checked } }));
   }
 }

@@ -1,5 +1,5 @@
 import { createReducer, on, createFeature } from '@ngrx/store';
-import { loadSettings, loadSettingsSuccess, loadSettingsFailure, changeMySettings } from './settings.actions';
+import { loadSettings, loadSettingsSuccess, loadSettingsFailure, updateSettingsSuccess } from './settings.actions';
 import { Setting } from './settings.model';
 
 export const featureKey = 'settings';
@@ -21,7 +21,8 @@ const settingsReducer = createReducer(
   on(loadSettings, (state) => ({ ...state, loading: true })),
   on(loadSettingsSuccess, (state, { data }) => ({ ...state, loading: false, settings: data })),
   on(loadSettingsFailure, (state, { error }) => ({ ...state, loading: false, error })),
-  on(changeMySettings, (state, { changes }) => {
+  on(updateSettingsSuccess, (state, { changes }) => {
+    console.log('Reducer received changes:', changes);
     const settings = state.settings.map((setting) =>
       setting.uid === changes.uid ? { ...setting, ...changes } : setting,
     );

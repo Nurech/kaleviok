@@ -14,11 +14,22 @@ import { UsersStoreModule } from './users/users.module';
 import { RouterStoreModule } from './router/router-store.module';
 import { name } from '../../../package.json';
 
-// Meta reducers
+function calculateLocalStorageUsage(): string {
+  const totalSize = new TextEncoder().encode(JSON.stringify(localStorage)).length;
+  const maxLimitMB = 10;
+  const usedMB = (totalSize / (1024 * 1024)).toFixed(2);
+  return `${usedMB}/${maxLimitMB} MB`;
+}
+
 export function logState(reducer: any) {
   return (state: any, action: any) => {
     const nextState = reducer(state, action);
-    console.log('Next State:', nextState);
+
+    if (isDevMode()) {
+      const localStorageUsage = calculateLocalStorageUsage();
+      console.log(`Used: [${localStorageUsage}] State: `, nextState);
+    }
+
     return nextState;
   };
 }

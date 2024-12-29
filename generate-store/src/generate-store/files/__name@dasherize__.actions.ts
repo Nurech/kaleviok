@@ -11,5 +11,5 @@ export const load<%= classify(name) %>Success = createAction(
 
 export const load<%= classify(name) %>Failure = createAction(
   '[<%= classify(name) %>] Load <%= classify(name) %> Failure',
-  props<{ error: any }>()
+  props<{ error: Error }>()
 );
