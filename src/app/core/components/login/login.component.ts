@@ -3,7 +3,7 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { merge, take } from 'rxjs';
+import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -14,9 +14,8 @@ import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { InfoComponent } from '../../../shared/components/info/info.component';
 import { emailStart, gmailStart } from '../../../store/auth/auth.actions';
-import { changeMySettings } from '../../../store/settings/settings.actions';
 import { selectMySettings } from '../../../store/settings/settings.selectors';
-import { selectMyUid } from '../../../store/auth/auth.selectors';
+import { SettingsService } from '../../../store/settings/settings.service';
 
 @Component({
   selector: 'app-login',
@@ -43,6 +42,7 @@ export class LoginComponent {
   store$ = inject(Store);
   mySettings$ = this.store$.select(selectMySettings);
   private translate = inject(TranslateService);
+  private settings = inject(SettingsService);
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required]);
   emailErrorMessage = signal('');
@@ -94,11 +94,6 @@ export class LoginComponent {
   }
 
   rememberMe(checked: boolean) {
-    this.store$
-      .select(selectMyUid)
-      .pipe(take(1))
-      .subscribe((uid) => {
-        this.store$.dispatch(changeMySettings({ changes: { uid, autologin: checked } }));
-      });
+    this.settings.update({ autologin: checked });
   }
 }
