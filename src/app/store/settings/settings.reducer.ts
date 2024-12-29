@@ -1,16 +1,17 @@
 import { createReducer, on, createFeature } from '@ngrx/store';
-import { loadSettings, loadSettingsSuccess, loadSettingsFailure } from './settings.actions';
+import { loadSettings, loadSettingsSuccess, loadSettingsFailure, changeMySettings } from './settings.actions';
+import { Setting } from './settings.model';
 
 export const featureKey = 'settings';
 
 export interface State {
-  data: any;
+  settings: Setting[];
   loading: boolean;
   error: any;
 }
 
 export const initialState: State = {
-  data: null,
+  settings: [],
   loading: false,
   error: null,
 };
@@ -18,8 +19,16 @@ export const initialState: State = {
 const settingsReducer = createReducer(
   initialState,
   on(loadSettings, (state) => ({ ...state, loading: true })),
-  on(loadSettingsSuccess, (state, { data }) => ({ ...state, loading: false, data })),
+  on(loadSettingsSuccess, (state, { data }) => ({ ...state, loading: false, settings: data })),
   on(loadSettingsFailure, (state, { error }) => ({ ...state, loading: false, error })),
+  on(changeMySettings, (state, { changes }) => {
+    const uid = changes.uid || '';
+    const existingSetting = state.settings.some((setting) => setting.uid === uid);
+    const settings = existingSetting
+      ? state.settings.map((setting) => (setting.uid === uid ? { ...setting, ...changes } : setting))
+      : state.settings.concat({ uid, ...changes });
+    return { ...state, settings };
+  }),
 );
 
 export const settingsFeature = createFeature({

@@ -1,3 +1,4 @@
 export interface Setting {
-  uid: string;
+  uid?: string;
+  autologin?: boolean;
 }

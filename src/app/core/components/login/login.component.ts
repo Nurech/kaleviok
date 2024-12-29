@@ -13,6 +13,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
 import { InfoComponent } from '../../../shared/components/info/info.component';
 import { emailStart, gmailStart } from '../../../store/auth/auth.actions';
+import { changeMySettings } from '../../../store/settings/settings.actions';
 
 @Component({
   selector: 'app-login',
@@ -85,5 +86,9 @@ export class LoginComponent {
 
   togglePasswordVisibility() {
     this.hide.set(!this.hide());
+  }
+
+  rememberMe(checked: boolean) {
+    this.store$.dispatch(changeMySettings({ changes: { autologin: checked } }));
   }
 }

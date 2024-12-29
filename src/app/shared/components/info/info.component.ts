@@ -10,7 +10,6 @@ import { TranslatePipe } from '@ngx-translate/core';
   standalone: true,
   imports: [MatIconButton, MatIcon, MatTooltip, MatRipple, TranslatePipe],
   templateUrl: './info.component.html',
-  styles: [],
 })
 export class InfoComponent {
   @ViewChild(MatTooltip, { static: true }) tooltip!: MatTooltip;
