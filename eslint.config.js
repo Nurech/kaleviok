@@ -3,6 +3,7 @@ const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
 const unusedImports = require('eslint-plugin-unused-imports');
 const imports = require('eslint-plugin-import');
+const prettier = require('eslint-config-prettier');
 
 module.exports = tseslint.config(
   {
@@ -19,6 +20,7 @@ module.exports = tseslint.config(
       ...tseslint.configs.recommended,
       ...tseslint.configs.stylistic,
       ...angular.configs.tsRecommended,
+      prettier,
     ],
     processor: angular.processInlineTemplates,
     rules: {

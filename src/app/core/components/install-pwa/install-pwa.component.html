@@ -1,6 +1,6 @@
-<div class="max-w-lg flex flex-col">
-  <div class="flex flex-row justify-center items-center">
-    <h2 class="text-xl m-2">{{ 'install_pwa' | translate }}</h2>
+<div class="flex max-w-lg flex-col">
+  <div class="flex flex-row items-center justify-center">
+    <h2 class="m-2 text-xl">{{ 'install_pwa' | translate }}</h2>
   </div>
 
   <div class="text-sm">
@@ -8,13 +8,13 @@
       <span>
         {{ 'pwa_description' | translate }}
       </span>
-      <span class="flex flex-row justify-center items-center my-2">
+      <span class="my-2 flex flex-row items-center justify-center">
         <ng-container *ngTemplateOutlet="currentTemplate"></ng-container>
       </span>
     </div>
 
     <section class="flex flex-row justify-between">
-      <div class="flex items-center my-2">
+      <div class="my-2 flex items-center">
         <mat-slide-toggle class="text-base" (change)="dontShowAgain($event.checked)">
           {{ 'dont_show_this_again' | translate }}
         </mat-slide-toggle>
@@ -25,30 +25,30 @@
   </div>
 
   <ng-template #chromeWeb>
-    <mat-icon class="text-4xl size-auto">install_desktop</mat-icon>
+    <mat-icon class="size-auto text-4xl">install_desktop</mat-icon>
   </ng-template>
 
   <ng-template #chromeAndroid>
-    <mat-icon class="text-4xl size-auto">more_vert</mat-icon>
+    <mat-icon class="size-auto text-4xl">more_vert</mat-icon>
     <mat-icon>chevron_right</mat-icon>
-    <mat-icon class="text-4xl size-auto">add_to_home_screen</mat-icon>
+    <mat-icon class="size-auto text-4xl">add_to_home_screen</mat-icon>
   </ng-template>
 
   <ng-template #chromeIos>
-    <mat-icon class="text-4xl size-auto">more_vert</mat-icon>
+    <mat-icon class="size-auto text-4xl">more_vert</mat-icon>
     <mat-icon>chevron_right</mat-icon>
-    <mat-icon class="text-4xl size-auto">add_to_home_screen</mat-icon>
+    <mat-icon class="size-auto text-4xl">add_to_home_screen</mat-icon>
   </ng-template>
 
   <ng-template #safariIos>
-    <mat-icon class="text-4xl size-auto">ios_share</mat-icon>
+    <mat-icon class="size-auto text-4xl">ios_share</mat-icon>
     <mat-icon>chevron_right</mat-icon>
-    <mat-icon class="text-4xl size-auto">add_box</mat-icon>
+    <mat-icon class="size-auto text-4xl">add_box</mat-icon>
   </ng-template>
 
   <ng-template #other>
-    <mat-icon class="text-4xl size-auto">more_vert</mat-icon>
+    <mat-icon class="size-auto text-4xl">more_vert</mat-icon>
     <mat-icon>chevron_right</mat-icon>
-    <mat-icon class="text-4xl size-auto">add_to_home_screen</mat-icon>
+    <mat-icon class="size-auto text-4xl">add_to_home_screen</mat-icon>
   </ng-template>
 </div>
