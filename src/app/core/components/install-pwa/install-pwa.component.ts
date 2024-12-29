@@ -5,10 +5,11 @@ import { NgTemplateOutlet } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatBadge } from '@angular/material/badge';
+import { Store } from '@ngrx/store';
 import { InfoComponent } from '../../../shared/components/info/info.component';
 import { BrowserType, DeviceService, PlatformType } from '../../../shared/services/device.service';
-import { StorageService } from '../../../shared/services/storage.service';
 import { PwaService } from '../../../shared/services/pwa.service';
+import { updateSettings } from '../../../store/settings/settings.actions';
 
 @Component({
   selector: 'app-install-pwa',
@@ -24,8 +25,8 @@ export class InstallPwaComponent implements OnInit {
   @ViewChild('other', { static: true }) other!: TemplateRef<any>;
 
   deviceService = inject(DeviceService);
-  storage = inject(StorageService);
   pwaService = inject(PwaService);
+  store$ = inject(Store);
 
   currentTemplate: TemplateRef<any> | null = null;
 
@@ -53,6 +54,6 @@ export class InstallPwaComponent implements OnInit {
   }
 
   dontShowAgain(checked: boolean) {
-    this.storage.set(this.pwaService.DONT_SHOW_PWA_PROMOTION, checked.toString());
+    this.store$.dispatch(updateSettings({ changes: { showPwaPopup: !checked } }));
   }
 }

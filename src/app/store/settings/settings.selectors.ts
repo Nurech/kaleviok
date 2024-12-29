@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { State } from './settings.reducer';
 import { selectMyUid } from '../auth/auth.selectors';
+import { Setting } from './settings.model';
 
 export const selectSettingsState = createFeatureSelector<State>('settings');
 
@@ -10,5 +11,8 @@ export const selectError = createSelector(selectSettingsState, (state) => state.
 
 export const selectMySettings = createSelector(selectSettingsState, selectMyUid, (state, myUid) => {
   const mySetting = state.settings.find((setting) => setting.uid === myUid);
-  return mySetting || { uid: myUid, autologin: false };
+  return mySetting || new Setting();
 });
+
+export const selectMySetting = <K extends keyof Setting>(key: K) =>
+  createSelector(selectMySettings, (setting) => setting[key]);

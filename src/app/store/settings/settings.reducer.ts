@@ -11,7 +11,7 @@ export interface State {
 }
 
 export const initialState: State = {
-  settings: [{ uid: '', autologin: false, theme: 'auto' }],
+  settings: [new Setting()],
   loading: false,
   error: null,
 };
@@ -22,7 +22,6 @@ const settingsReducer = createReducer(
   on(loadSettingsSuccess, (state, { data }) => ({ ...state, loading: false, settings: data })),
   on(loadSettingsFailure, (state, { error }) => ({ ...state, loading: false, error })),
   on(updateSettingsSuccess, (state, { changes }) => {
-    console.log('Reducer received changes:', changes);
     const settings = state.settings.map((setting) =>
       setting.uid === changes.uid ? { ...setting, ...changes } : setting,
     );

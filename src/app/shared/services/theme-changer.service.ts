@@ -6,7 +6,10 @@ import {
   MaterialDynamicColors,
   SchemeTonalSpot as SchemeFunction,
 } from '@material/material-color-utilities';
-import { StorageService } from './storage.service';
+import { Store } from '@ngrx/store';
+import { firstValueFrom } from 'rxjs';
+import { updateSettings } from '../../store/settings/settings.actions';
+import { selectMySetting } from '../../store/settings/settings.selectors';
 
 export const DEFAULT_THEME_COLORS: ThemePalette = {
   primary: '#2879c6',
@@ -19,8 +22,7 @@ export const DEFAULT_THEME_COLORS: ThemePalette = {
 
 @Injectable({ providedIn: 'root' })
 export class ThemeChangerService {
-  private readonly THEME_KEY = 'theme-mode';
-  private storage = inject(StorageService);
+  private store$ = inject(Store);
 
   themeSeed = {
     primary: signal(DEFAULT_THEME_COLORS.primary),
@@ -31,20 +33,22 @@ export class ThemeChangerService {
     'neutral-variant': signal(DEFAULT_THEME_COLORS['neutral-variant']),
   };
 
-  colorMode = signal<ColorMode>(this.getStoredThemeMode());
+  colorMode = signal<ColorMode>('auto');
 
   constructor() {
-    this.applyColorThemeListeners();
-    this.initializeTheme();
+    this.getStoredThemeMode().then(() => {
+      this.applyColorThemeListeners();
+      this.initializeTheme();
+    });
   }
 
-  private getStoredThemeMode(): ColorMode {
-    const storedMode = this.storage.get(this.THEME_KEY) as ColorMode;
-    return storedMode || 'auto';
+  private async getStoredThemeMode() {
+    const storedMode = await firstValueFrom(this.store$.select(selectMySetting('colorMode')));
+    this.colorMode.set(storedMode);
   }
 
   private saveThemeMode(mode: ColorMode): void {
-    this.storage.set(this.THEME_KEY, mode);
+    this.store$.dispatch(updateSettings({ changes: { colorMode: mode } }));
   }
 
   applyColorThemeListeners() {
@@ -131,7 +135,6 @@ export class ThemeChangerService {
     }
 
     sheet.replaceSync(themeString);
-    this.storage.set(ssName, themeString);
   }
 
   themeFromSourceColor(color: string, isDark: boolean): AppTheme {

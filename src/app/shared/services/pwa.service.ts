@@ -1,19 +1,19 @@
 import { inject, Injectable, signal, effect } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { StorageService } from './storage.service';
+import { Store } from '@ngrx/store';
 import { SheetService } from './sheet.service';
 import { DialogService } from './dialog.service';
 import { PwaUpdateDialogComponent } from '../../core/components/pwa-update-dialog/pwa-update-dialog.component';
+import { selectMySetting } from '../../store/settings/settings.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PwaService {
-  private storage = inject(StorageService);
+  private store$ = inject(Store);
   private sheetService = inject(SheetService);
   private dialogService = inject(DialogService);
   private swUpdate = inject(SwUpdate);
-  DONT_SHOW_PWA_PROMOTION = 'dont_show_pwa_promotion';
   private deferredPrompt: any;
   UPDATE_INTERVAL = 30 * 1000;
 
@@ -87,10 +87,14 @@ export class PwaService {
   }
 
   private handleInstallPromotion() {
-    const showPromotion = this.storage.get(this.DONT_SHOW_PWA_PROMOTION) !== 'true';
-    if (showPromotion && this.canInstall() && !this.runningInPwa()) {
-      this.sheetService.open('InstallPwaComponent');
-    }
+    this.store$.select(selectMySetting('showPwaPopup')).subscribe((showPwaPopup) => {
+      if (showPwaPopup) {
+        console.warn('showPwaPopup', showPwaPopup);
+        if (showPwaPopup && this.canInstall() && !this.runningInPwa()) {
+          this.sheetService.open('InstallPwaComponent');
+        }
+      }
+    });
   }
 
   private startUpdateCheck() {
