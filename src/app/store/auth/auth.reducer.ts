@@ -12,7 +12,7 @@ export interface State {
 
 export const initialState: State = {
   account: null,
-  isAuthenticated: false,
+  isAuthenticated: true,
   loading: false,
 };
 

@@ -4,7 +4,7 @@
     position="end"
     [attr.role]="'navigation'"
     [mode]="isHandheld() ? 'over' : 'side'"
-    [opened]="!isHandheld()"
+    [opened]="true"
     (openedStart)="sidenav.isOpen.set(true)"
     (closedStart)="sidenav.isOpen.set(false)"
     class="app-sidenav"

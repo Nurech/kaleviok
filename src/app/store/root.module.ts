@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer } from '@ngrx/router-store';
 import { coreFeature } from './core/core.reducer';
-import { CoreStoreModule } from './core/core.module';
 import { settingsFeature } from './settings/settings.reducer';
 import { SettingsStoreModule } from './settings/settings.module';
 import { accountsFeature } from './accounts/accounts.reducer';
@@ -15,6 +14,7 @@ import { AuthStoreModule } from './auth/auth.module';
 import { UsersStoreModule } from './accounts/accounts.module';
 import { RouterStoreModule } from './router/router-store.module';
 import { name } from '../../../package.json';
+import { CoreStoreModule } from './core/core.module';
 
 function calculateLocalStorageUsage(): string {
   const totalSize = new TextEncoder().encode(JSON.stringify(localStorage)).length;

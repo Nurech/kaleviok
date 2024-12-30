@@ -1,26 +1,30 @@
-<div class="relative flex h-full max-w-24 flex-col items-center px-1">
-  @if (menuItems.length > 0) {
+<div class="relative flex h-full max-w-48 flex-col items-center px-1">
+  @if (menuItems().length > 0) {
     <nav class="mt-2 flex h-full flex-col justify-start justify-items-start" [@listAnimation]="animationState()">
-      @for (item of menuItems; track $index) {
-        <a
-          [routerLink]="item.href"
-          routerLinkActive="active"
-          #link="routerLinkActive"
-          [attr.aria-current]="link.isActive"
-          role="link"
-          class="section-link h-auto w-auto px-1"
-          (click)="item.onClick && item.onClick()"
-        >
-          @if (item.logo) {
-            <img alt="Logo" class="relative mt-2 size-16" src="{{ item.logo }}" />
-          }
-          @if (item.icon) {
-            <mat-icon>{{ item.icon }}</mat-icon>
-          }
-          @if (item.label) {
-            <div class="text-xs">{{ item.label | translate }}</div>
-          }
-        </a>
+      @for (item of menuItems(); track $index) {
+        @if (item.component) {
+          <ng-container *ngComponentOutlet="item.component"></ng-container>
+        } @else {
+          <a
+            [routerLink]="item.href"
+            routerLinkActive="active"
+            #link="routerLinkActive"
+            [attr.aria-current]="link.isActive"
+            role="link"
+            class="section-link h-auto w-auto px-1"
+            (click)="item.onClick && item.onClick()"
+          >
+            @if (item.logo) {
+              <img alt="Logo" class="relative mt-2 size-16" src="{{ item.logo }}" />
+            }
+            @if (item.icon) {
+              <mat-icon>{{ item.icon }}</mat-icon>
+            }
+            @if (item.label) {
+              <div class="text-xs">{{ item.label | translate }}</div>
+            }
+          </a>
+        }
       }
     </nav>
   }

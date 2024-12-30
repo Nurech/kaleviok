@@ -42,8 +42,6 @@ export class SheetService {
     if (sheetRef) {
       sheetRef.dismiss();
       this.sheetRefs.delete(key);
-    } else {
-      console.warn(`No bottom sheet found with key "${key}" to close.`);
     }
   }
 
