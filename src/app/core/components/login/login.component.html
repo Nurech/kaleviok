@@ -7,14 +7,7 @@
     <div>
       <mat-form-field class="w-full pb-1">
         <mat-label>{{ 'enter_your_email' | translate }}</mat-label>
-        <input
-          matInput
-          placeholder="jaan.jalgratas@example.com"
-          [formControl]="email"
-          type="email"
-          (blur)="updateEmailErrorMessage()"
-          required
-        />
+        <input matInput placeholder="jaan.jalgratas@example.com" [formControl]="email" type="email" required />
         <mat-icon matSuffix>email</mat-icon>
         @if (email.invalid) {
           <mat-error>{{ emailErrorMessage() }}</mat-error>
@@ -22,13 +15,7 @@
       </mat-form-field>
       <mat-form-field class="w-full pb-1">
         <mat-label>{{ 'enter_your_password' | translate }}</mat-label>
-        <input
-          matInput
-          [formControl]="password"
-          (blur)="updatePasswordErrorMessage()"
-          [type]="hide() ? 'password' : 'text'"
-          required
-        />
+        <input matInput [formControl]="password" [type]="hide() ? 'password' : 'text'" required />
         <button
           mat-icon-button
           matSuffix
@@ -67,9 +54,9 @@
 
     <div class="flex flex-row items-center justify-center py-3">
       <mat-divider class="w-full"></mat-divider>
-      <span class="flex w-full justify-center whitespace-nowrap px-2 text-center text-sm opacity-60">{{
-        'or_use_other_provider' | translate
-      }}</span>
+      <span class="flex w-full justify-center whitespace-nowrap px-2 text-center text-sm opacity-60">
+        {{ 'or_use_other_provider' | translate }}
+      </span>
       <mat-divider class="w-full"></mat-divider>
     </div>
 

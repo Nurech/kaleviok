@@ -8,6 +8,7 @@ import { autologin, emailError, emailStart, emailSuccess, gmailError, gmailStart
 import { AuthService } from './auth.service';
 import { selectMySettings } from '../settings/settings.selectors';
 import { updateSettings } from '../settings/settings.actions';
+import { LoginMethod } from '../settings/settings.model';
 
 @Injectable()
 export class AuthEffects {
@@ -23,7 +24,7 @@ export class AuthEffects {
           map((response) => {
             console.error('Response from loginWithGoogle:', response);
             const account: Account = UserMapper.mapUserCredentialToUser(response);
-            this.store$.dispatch(updateSettings({ changes: { loginMethod: 'google' } }));
+            this.store$.dispatch(updateSettings({ changes: { loginMethod: LoginMethod.Google } }));
             return gmailSuccess({ account });
           }),
           catchError((error) => of(gmailError({ error }))),
@@ -53,7 +54,7 @@ export class AuthEffects {
       withLatestFrom(this.store$.select(selectMySettings)),
       map(([, settings]) => {
         if (settings.autologin) {
-          if (settings.loginMethod === 'google') {
+          if (settings.loginMethod === LoginMethod.Google) {
             return gmailStart();
           }
         }

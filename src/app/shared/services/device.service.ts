@@ -1,20 +1,23 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { inject, Injectable, signal } from '@angular/core';
-import { map } from 'rxjs';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {inject, Injectable, signal, effect} from '@angular/core';
+import {map} from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class DeviceService {
   private breakpointObserver = inject(BreakpointObserver);
 
-  isHandheld = signal(false);
+  isHandheld = signal(true);
   browser = signal<BrowserType>(this.detectBrowser());
   platform = signal<PlatformType>(this.detectPlatform());
 
   constructor() {
-    this.breakpointObserver
+    const isHandheld$ = this.breakpointObserver
       .observe([Breakpoints.XSmall, Breakpoints.Small])
-      .pipe(map((result) => result.matches))
-      .subscribe((isHandheld) => this.isHandheld.set(isHandheld));
+      .pipe(map((result) => result.matches));
+
+    effect(() => {
+      isHandheld$.subscribe((isHandheld) => this.isHandheld.set(isHandheld));
+    }, {allowSignalWrites: true});
   }
 
   private detectBrowser(): BrowserType {
