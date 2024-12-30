@@ -5,16 +5,26 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  User,
   user,
 } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
-import { User } from '../users/users.model';
+import { Store } from '@ngrx/store';
+import { autologin } from './auth.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private auth = inject(Auth);
+  private store$ = inject(Store);
+
+  constructor() {
+    // TODO race condition?
+    setTimeout(() => {
+      this.store$.dispatch(autologin());
+    });
+  }
 
   loginWithGoogle() {
     const provider = new GoogleAuthProvider();

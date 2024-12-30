@@ -6,11 +6,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer } from '@ngrx/router-store';
 import { settingsFeature } from './settings/settings.reducer';
 import { SettingsStoreModule } from './settings/settings.module';
-import { usersFeature } from './users/users.reducer';
+import { accountsFeature } from './accounts/accounts.reducer';
 import { RouterEffects } from './router/router.effects';
 import { authFeature } from './auth/auth.reducer';
 import { AuthStoreModule } from './auth/auth.module';
-import { UsersStoreModule } from './users/users.module';
+import { UsersStoreModule } from './accounts/accounts.module';
 import { RouterStoreModule } from './router/router-store.module';
 import { name } from '../../../package.json';
 
@@ -27,7 +27,11 @@ export function logState(reducer: any) {
 
     if (isDevMode()) {
       const localStorageUsage = calculateLocalStorageUsage();
-      console.log(`Used: [${localStorageUsage}] State: `, nextState, action);
+      if (action?.error) {
+        console.error(`Used: [${localStorageUsage}] State: `, nextState, action);
+      } else {
+        console.log(`Used: [${localStorageUsage}] State: `, nextState, action);
+      }
     }
 
     return nextState;
@@ -37,6 +41,7 @@ export function logState(reducer: any) {
 export function localStorageSyncReducer(reducer: any): any {
   return (state: any, action: any) => {
     if (state === undefined) {
+      console.error('State is undefined. Returning initial state');
       const storedState = localStorage.getItem(`${name}-state`);
       return storedState ? JSON.parse(storedState) : reducer(state, action);
     }
@@ -54,7 +59,7 @@ const rootReducers = {
   settings: settingsFeature.reducer,
   router: routerReducer,
   auth: authFeature.reducer,
-  users: usersFeature.reducer,
+  accounts: accountsFeature.reducer,
 };
 
 // Feature modules
