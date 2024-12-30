@@ -6,6 +6,7 @@ import { IconResolver, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LayoutComponent } from './core/layout/layout.component';
 import { SheetService } from './shared/services/sheet.service';
+import { LoginComponent } from './core/components/login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
     // if (this.storage.get('autologin')) {
     //   this.store$.dispatch(autoLogin());
     // }
-    this.sheetService.open('LoginComponent');
+    this.sheetService.open(LoginComponent);
   }
 
   initializeIconRegistry() {

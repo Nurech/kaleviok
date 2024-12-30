@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { navigateTo } from '../../store/router/router.actions';
 import { SheetService } from './sheet.service';
+import { LoginComponent } from '../../core/components/login/login.component';
 
 export interface MenuItem {
   label?: string;
@@ -45,7 +46,7 @@ export class MenuService {
       label: 'login',
       icon: 'login',
       position: 'end',
-      onClick: () => this.sheetService.open('LoginComponent'),
+      onClick: () => this.sheetService.open(LoginComponent),
     },
     {
       label: 'admin_panel_settings',

@@ -10,7 +10,7 @@ import {
 } from '@angular/fire/auth';
 import { from, take } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { autologin, googleSuccess } from './auth.actions';
+import { manualLogin, googleSuccess, startAutoLogin } from './auth.actions';
 import { selectMySettings } from '../settings/settings.selectors';
 import { UserMapper } from '../accounts/account.model';
 
@@ -28,36 +28,37 @@ export class AuthService {
   }
 
   private initialize() {
-    onAuthStateChanged(this.auth, (user) => {
-      this.authState.set(user);
-    });
+    this.store$
+      .select(selectMySettings)
+      .pipe(take(1))
+      .subscribe((settings) => {
+        if (settings.autologin) {
+          onAuthStateChanged(this.auth, (user) => {
+            this.authState.set(user);
+          });
 
-    effect(
-      () => {
-        const user = this.authState();
-        if (user === undefined) {
-          console.log('Auth state is still loading');
-          return;
-        }
-
-        if (user) {
-          console.log('User authenticated:', user);
-          const account = UserMapper.mapFirebaseUserToUser(user);
-          this.store$.dispatch(googleSuccess({ account }));
-        } else {
-          console.log('No authenticated user, dispatching autologin');
-          this.store$
-            .select(selectMySettings)
-            .pipe(take(1))
-            .subscribe((settings) => {
-              if (settings.autologin && settings.loginMethod) {
-                this.store$.dispatch(autologin({ payload: settings.loginMethod }));
+          effect(
+            () => {
+              const user = this.authState();
+              if (user === undefined) {
+                console.log('Auth state is loading');
+                this.store$.dispatch(startAutoLogin());
+                return;
               }
-            });
+
+              if (user) {
+                console.log('User authenticated:', user);
+                const account = UserMapper.mapFirebaseUserToUser(user);
+                this.store$.dispatch(googleSuccess({ account }));
+              }
+            },
+            { allowSignalWrites: true },
+          );
+        } else {
+          console.log('No authenticated user, dispatching manual login');
+          this.store$.dispatch(manualLogin());
         }
-      },
-      { allowSignalWrites: true },
-    );
+      });
   }
 
   loginWithGoogle() {

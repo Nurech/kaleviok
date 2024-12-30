@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, filter, map, mergeMap, of } from 'rxjs';
-import { withLatestFrom } from 'rxjs/operators';
+import { catchError, map, mergeMap, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Account, UserMapper } from '../accounts/account.model';
 import {
-  autologin,
+  manualLogin,
   emailError,
   emailStart,
   emailSuccess,
@@ -14,15 +14,17 @@ import {
   googleSuccess,
 } from './auth.actions';
 import { AuthService } from './auth.service';
-import { selectMySettings } from '../settings/settings.selectors';
 import { updateSettings } from '../settings/settings.actions';
 import { LoginMethod } from '../settings/settings.model';
+import { LoginComponent } from '../../core/components/login/login.component';
+import { SheetService } from '../../shared/services/sheet.service';
 
 @Injectable()
 export class AuthEffects {
   private actions$ = inject(Actions);
   private store$ = inject(Store);
   private authService = inject(AuthService);
+  private sheetService = inject(SheetService);
 
   loginWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
@@ -56,19 +58,14 @@ export class AuthEffects {
     ),
   );
 
-  autoLogin$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(autologin),
-      withLatestFrom(this.store$.select(selectMySettings)),
-      map(([, settings]) => {
-        if (settings.autologin) {
-          if (settings.loginMethod === LoginMethod.Google) {
-            return googleStart();
-          }
-        }
-        return null;
-      }),
-      filter((action) => action !== null),
-    ),
+  manualLogin$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(manualLogin),
+        tap(() => {
+          this.sheetService.open(LoginComponent);
+        }),
+      ),
+    { dispatch: false },
   );
 }

@@ -5,6 +5,7 @@ import { SheetService } from './sheet.service';
 import { DialogService } from './dialog.service';
 import { PwaUpdateDialogComponent } from '../../core/components/pwa-update-dialog/pwa-update-dialog.component';
 import { selectMySetting } from '../../store/settings/settings.selectors';
+import { InstallPwaComponent } from '../../core/components/install-pwa/install-pwa.component';
 
 @Injectable({
   providedIn: 'root',
@@ -90,7 +91,7 @@ export class PwaService {
     this.store$.select(selectMySetting('showPwaPopup')).subscribe((showPwaPopup) => {
       if (showPwaPopup) {
         if (showPwaPopup && this.canInstall() && !this.runningInPwa()) {
-          this.sheetService.open('InstallPwaComponent');
+          this.sheetService.open(InstallPwaComponent);
         }
       }
     });
