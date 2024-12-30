@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { InfoComponent } from '../../../shared/components/info/info.component';
-import { emailStart, gmailStart } from '../../../store/auth/auth.actions';
+import { emailStart, googleStart } from '../../../store/auth/auth.actions';
 import { selectMySettings } from '../../../store/settings/settings.selectors';
 import { updateSettings } from '../../../store/settings/settings.actions';
 
@@ -63,7 +63,7 @@ export class LoginComponent {
   });
 
   loginWithGoogle() {
-    this.store$.dispatch(gmailStart());
+    this.store$.dispatch(googleStart());
   }
 
   loginWithEmail() {

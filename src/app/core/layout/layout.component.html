@@ -12,6 +12,7 @@
     <app-sidenav [attr.inert]="sheetService.isOpen() ? '' : null" #sidenav (closeDrawer)="drawer.close()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content class="app-sidenav-content">
+    <ng-template [ngTemplateOutlet]="progressBar"></ng-template>
     @if (isHandheld()) {
       <button
         [attr.aria-label]="sidenav.isOpen() ? ('close_menu' | translate) : ('open_menu' | translate)"
@@ -27,3 +28,13 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<ng-template #progressBar>
+  <div class="absolute top-0 w-full">
+    @if (isLoading$ | async) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    } @else {
+      <div class="h-[4px]"></div>
+    }
+  </div>
+</ng-template>

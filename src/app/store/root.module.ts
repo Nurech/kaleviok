@@ -4,6 +4,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { CommonModule } from '@angular/common';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer } from '@ngrx/router-store';
+import { coreFeature } from './core/core.reducer';
+import { CoreStoreModule } from './core/core.module';
 import { settingsFeature } from './settings/settings.reducer';
 import { SettingsStoreModule } from './settings/settings.module';
 import { accountsFeature } from './accounts/accounts.reducer';
@@ -56,6 +58,7 @@ export const metaReducers: MetaReducer[] = [logState, localStorageSyncReducer];
 
 // Feature reducers
 const rootReducers = {
+  core: coreFeature.reducer,
   settings: settingsFeature.reducer,
   router: routerReducer,
   auth: authFeature.reducer,
@@ -63,7 +66,7 @@ const rootReducers = {
 };
 
 // Feature modules
-const featureModules = [SettingsStoreModule, RouterStoreModule, AuthStoreModule, UsersStoreModule];
+const featureModules = [CoreStoreModule, SettingsStoreModule, RouterStoreModule, AuthStoreModule, UsersStoreModule];
 
 @NgModule({
   imports: [

@@ -4,7 +4,15 @@ import { catchError, filter, map, mergeMap, of } from 'rxjs';
 import { withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Account, UserMapper } from '../accounts/account.model';
-import { autologin, emailError, emailStart, emailSuccess, gmailError, gmailStart, gmailSuccess } from './auth.actions';
+import {
+  autologin,
+  emailError,
+  emailStart,
+  emailSuccess,
+  googleError,
+  googleStart,
+  googleSuccess,
+} from './auth.actions';
 import { AuthService } from './auth.service';
 import { selectMySettings } from '../settings/settings.selectors';
 import { updateSettings } from '../settings/settings.actions';
@@ -18,16 +26,16 @@ export class AuthEffects {
 
   loginWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(gmailStart),
+      ofType(googleStart),
       mergeMap(() =>
         this.authService.loginWithGoogle().pipe(
           map((response) => {
             console.error('Response from loginWithGoogle:', response);
             const account: Account = UserMapper.mapUserCredentialToUser(response);
             this.store$.dispatch(updateSettings({ changes: { loginMethod: LoginMethod.Google } }));
-            return gmailSuccess({ account });
+            return googleSuccess({ account });
           }),
-          catchError((error) => of(gmailError({ error }))),
+          catchError((error) => of(googleError({ error }))),
         ),
       ),
     ),
@@ -55,7 +63,7 @@ export class AuthEffects {
       map(([, settings]) => {
         if (settings.autologin) {
           if (settings.loginMethod === LoginMethod.Google) {
-            return gmailStart();
+            return googleStart();
           }
         }
         return null;

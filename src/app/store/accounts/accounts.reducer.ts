@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { saveAccountSuccess } from './accounts.actions';
+import { saveAccountSuccess, updateAccountSuccess } from './accounts.actions';
 import { Account } from './account.model';
 
 export const featureKey = 'accounts';
@@ -19,7 +19,7 @@ export const initialState: State = adapter.getInitialState({
 
 export const reducer = createReducer(
   initialState,
-  on(saveAccountSuccess, (state, action) => adapter.upsertOne(action.account, state)),
+  on(saveAccountSuccess, updateAccountSuccess, (state, action) => adapter.upsertOne(action.account, state)),
 );
 
 export const accountsFeature = createFeature({

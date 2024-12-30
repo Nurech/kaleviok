@@ -15,14 +15,14 @@ export const initialState: State = {
   error: null,
 };
 
-const settingsReducer = createReducer(
+const <%= camelize(name) %>Reducer = createReducer(
   initialState,
   on(load<%= classify(name) %>, (state) => ({...state, loading: true})),
   on(load<%= classify(name) %>Success, (state, { data }) => ({...state, loading: false, data})),
   on(load<%= classify(name) %>Failure, (state, { error }) => ({...state, loading: false, error}))
 );
 
-export const settingsFeature = createFeature({
+export const <%= camelize(name) %>Feature = createFeature({
   name: featureKey,
-  reducer: settingsReducer,
+  reducer: <%= camelize(name) %>Reducer,
 });
