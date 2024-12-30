@@ -13,7 +13,7 @@ import { MatIcon } from '@angular/material/icon';
 import { InfoComponent } from '../../../shared/components/info/info.component';
 import { emailStart, googleStart } from '../../../store/auth/auth.actions';
 import { selectMySettings } from '../../../store/settings/settings.selectors';
-import { updateSettings } from '../../../store/settings/settings.actions';
+import { updateMySettings } from '../../../store/settings/settings.actions';
 
 @Component({
   selector: 'app-login',
@@ -79,6 +79,6 @@ export class LoginComponent {
   }
 
   rememberMe(checked: boolean) {
-    this.store$.dispatch(updateSettings({ changes: { autologin: checked } }));
+    this.store$.dispatch(updateMySettings({ changes: { autologin: checked } }));
   }
 }

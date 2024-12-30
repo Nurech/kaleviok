@@ -20,7 +20,12 @@ export const reducer = createReducer(
   initialState,
   on(googleStart, startAutoLogin, (state) => ({ ...state, loading: true })),
   on(googleError, (state) => ({ ...state, loading: false })),
-  on(googleSuccess, (state, payload) => ({ ...state, isAuthenticated: true, loading: false, user: payload.account })),
+  on(googleSuccess, (state, payload) => ({
+    ...state,
+    isAuthenticated: true,
+    loading: false,
+    account: payload.account,
+  })),
   on(logout, () => initialState),
 );
 

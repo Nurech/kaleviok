@@ -4,7 +4,7 @@
       @for (item of menuItems(); track $index) {
         @if (item.component) {
           <ng-container *ngComponentOutlet="item.component"></ng-container>
-        } @else {
+        } @else if (item.show) {
           <a
             [routerLink]="item.href"
             routerLinkActive="active"

@@ -33,7 +33,7 @@ export class MenuService {
     {
       logo: 'logo.svg',
       position: 'start',
-      show: this.isAuthenticated() ? false : true,
+      show: !this.isAuthenticated(),
       href: '/',
       onClick: () => this.handleNavigation('/'),
     },

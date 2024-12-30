@@ -14,7 +14,7 @@ import {
   googleSuccess,
 } from './auth.actions';
 import { AuthService } from './auth.service';
-import { updateSettings } from '../settings/settings.actions';
+import { updateMySettings } from '../settings/settings.actions';
 import { LoginMethod } from '../settings/settings.model';
 import { LoginComponent } from '../../core/components/login/login.component';
 import { SheetService } from '../../shared/services/sheet.service';
@@ -32,9 +32,8 @@ export class AuthEffects {
       mergeMap(() =>
         this.authService.loginWithGoogle().pipe(
           map((response) => {
-            console.error('Response from loginWithGoogle:', response);
             const account: Account = UserMapper.mapUserCredentialToUser(response);
-            this.store$.dispatch(updateSettings({ changes: { loginMethod: LoginMethod.Google } }));
+            this.store$.dispatch(updateMySettings({ changes: { loginMethod: LoginMethod.Google } }));
             return googleSuccess({ account });
           }),
           catchError((error) => of(googleError({ error }))),

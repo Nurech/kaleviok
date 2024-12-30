@@ -12,8 +12,3 @@ export const emailError = createAction('[Auth] Email Password Error', props<{ er
 export const logout = createAction('[Auth] Logout');
 export const startAutoLogin = createAction('[Auth] Start Auto Login');
 export const manualLogin = createAction('[Auth] Manual Login');
-
-export const getCurrentAccountSuccess = createAction(
-  '[Auth] Get Current Account Success',
-  props<{ account: Account }>(),
-);

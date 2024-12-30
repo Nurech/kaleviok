@@ -8,7 +8,7 @@ import {
 } from '@material/material-color-utilities';
 import { Store } from '@ngrx/store';
 import { firstValueFrom } from 'rxjs';
-import { updateSettings } from '../../store/settings/settings.actions';
+import { updateMySettings } from '../../store/settings/settings.actions';
 import { selectMySetting } from '../../store/settings/settings.selectors';
 
 export const DEFAULT_THEME_COLORS: ThemePalette = {
@@ -48,7 +48,7 @@ export class ThemeChangerService {
   }
 
   private saveThemeMode(mode: ColorMode): void {
-    this.store$.dispatch(updateSettings({ changes: { colorMode: mode } }));
+    this.store$.dispatch(updateMySettings({ changes: { colorMode: mode } }));
   }
 
   applyColorThemeListeners() {

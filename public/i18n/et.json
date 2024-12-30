@@ -28,6 +28,7 @@
   "snackbar.autologin.error": "Tekkis viga: {{error}}",
   "login.google": "Logi sisse Google'iga",
   "close_menu": "Sulge menüü",
+  "your_profile": "Sinu konto",
   "install_pwa": "Installi rakendus",
   "pwa_description": "Rakenduse installimine on soovituslik. See annab sulle kiire juurdepääsu rakendusele ja loob parema kasutajakogemuse.",
   "open_menu": "Ava menüü",
