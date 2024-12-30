@@ -2,13 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import {
   Auth,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   User,
-  user,
 } from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
+import { BehaviorSubject, from } from 'rxjs';
+import { filter, take, switchMap, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { autologin } from './auth.actions';
 
@@ -18,17 +19,19 @@ import { autologin } from './auth.actions';
 export class AuthService {
   private auth = inject(Auth);
   private store$ = inject(Store);
+  private authState = new BehaviorSubject<User | null | undefined>(undefined);
 
   constructor() {
-    // TODO race condition?
-    setTimeout(() => {
-      this.store$.dispatch(autologin());
+    onAuthStateChanged(this.auth, (user) => {
+      this.authState.next(user);
     });
+
+    this.tryAutoLogin();
   }
 
   loginWithGoogle() {
     const provider = new GoogleAuthProvider();
-    return from(signInWithPopup(this.auth, provider)).pipe();
+    return from(signInWithPopup(this.auth, provider));
   }
 
   loginWithEmail(email: string, password: string) {
@@ -39,7 +42,27 @@ export class AuthService {
     return from(signOut(this.auth));
   }
 
-  getCurrentUser(): Observable<User> {
-    return user(this.auth);
+  tryAutoLogin() {
+    this.authState
+      .pipe(
+        filter((state) => state !== undefined),
+        take(1),
+        switchMap((user) => {
+          if (user) {
+            console.log('User authenticated:', user);
+            return [];
+          } else {
+            console.log('No authenticated user, dispatching autologin');
+            this.store$.dispatch(autologin());
+            return [];
+          }
+        }),
+        catchError((error) => {
+          console.error('Error during auto-login attempt:', error);
+          this.store$.dispatch(autologin());
+          return [];
+        }),
+      )
+      .subscribe();
   }
 }

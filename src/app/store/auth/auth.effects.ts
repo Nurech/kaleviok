@@ -4,15 +4,7 @@ import { catchError, filter, map, mergeMap, of } from 'rxjs';
 import { withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Account, UserMapper } from '../accounts/account.model';
-import {
-  autologin,
-  emailError,
-  emailStart,
-  emailSuccess,
-  gmailError,
-  gmailStart,
-  gmailSuccess,
-} from './auth.actions';
+import { autologin, emailError, emailStart, emailSuccess, gmailError, gmailStart, gmailSuccess } from './auth.actions';
 import { AuthService } from './auth.service';
 import { selectMySettings } from '../settings/settings.selectors';
 import { updateSettings } from '../settings/settings.actions';
