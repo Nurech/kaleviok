@@ -2,7 +2,7 @@
   @if (menuItems().length > 0) {
     <nav class="mt-2 flex h-full flex-col justify-start justify-items-start" [@listAnimation]="animationState()">
       @for (item of menuItems(); track $index) {
-        @if (item.component) {
+        @if (item.component && item.show) {
           <ng-container *ngComponentOutlet="item.component"></ng-container>
         } @else if (item.show) {
           <a

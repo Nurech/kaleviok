@@ -40,13 +40,31 @@ export function logState(reducer: any) {
   };
 }
 
+function deleteNestedProperty(obj: any, path: string): void {
+  const parts = path.split('.');
+  let current = obj;
+  while (parts.length > 1) {
+    const key = parts.shift()!;
+    if (!current[key]) return;
+    current = current[key];
+  }
+  delete current[parts[0]];
+}
+
 export function localStorageSyncReducer(reducer: any): any {
+  const exclude = ['auth.isAuthenticated'];
   return (state: any, action: any) => {
     if (state === undefined) {
-      console.error('State is undefined. Returning initial state');
       const storedState = localStorage.getItem(`${name}-state`);
-      return storedState ? JSON.parse(storedState) : reducer(state, action);
+      if (storedState) {
+        const parsed = JSON.parse(storedState) || {};
+        console.warn('State is undefined, initializing with localStorage: ', parsed);
+        exclude.forEach((prop) => deleteNestedProperty(parsed, prop));
+        return reducer(parsed, action);
+      }
+      return reducer(state, action);
     }
+
     const nextState = reducer(state, action);
     localStorage.setItem(`${name}-state`, JSON.stringify(nextState));
 
