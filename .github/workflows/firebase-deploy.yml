@@ -51,10 +51,15 @@ jobs:
           fi
 
       - name: Replace environment variables
-        run: npm run env:${{ env.DEPLOY_ENV }}
+        run: npm run env
 
       - name: Build application
-        run: npm run build:${{ env.DEPLOY_ENV }}
+        run: |
+          if [ "${{ env.DEPLOY_ENV }}" == "prod" ]; then
+            npm run build:prod
+          else
+            npm run build:dev
+          fi
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
