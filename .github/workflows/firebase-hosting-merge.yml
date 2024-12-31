@@ -17,9 +17,13 @@ jobs:
           if [[ "${{ github.ref }}" == "refs/heads/master" ]]; then
             echo "NODE_ENV=prod" >> $GITHUB_ENV
             echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KALEVIOK_PROD }}" > .env.prod
+            echo "PROJECT_ID=kaleviok-9aeb0" >> $GITHUB_ENV
+            echo "FIREBASE_SERVICE_ACCOUNT=${{ secrets.FIREBASE_SERVICE_ACCOUNT_KALEVIOK_PROD }}" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == "refs/heads/development" ]]; then
             echo "NODE_ENV=dev" >> $GITHUB_ENV
             echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KALEVIOK_DEV }}" > .env.dev
+            echo "PROJECT_ID=kaleviok-dev" >> $GITHUB_ENV
+            echo "FIREBASE_SERVICE_ACCOUNT=${{ secrets.FIREBASE_SERVICE_ACCOUNT_KALEVIOK_DEV }}" >> $GITHUB_ENV
           else
             echo "Unsupported branch for deployment."
             exit 1
@@ -38,6 +42,6 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KALEVIOK_${{ env.NODE_ENV | upper }} }}
+          firebaseServiceAccount: ${{ env.FIREBASE_SERVICE_ACCOUNT }}
           channelId: live
-          projectId: ${{ env.NODE_ENV == 'prod' && 'kaleviok-9aeb0' || 'kaleviok-dev' }}
+          projectId: ${{ env.PROJECT_ID }}
