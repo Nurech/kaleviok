@@ -8,6 +8,5 @@ export const environment = {
     authDomain: '$FIREBASE_AUTH_DOMAIN',
     messagingSenderId: '$FIREBASE_MESSAGING_SENDER_ID',
     measurementId: '$FIREBASE_MEASUREMENT_ID',
-    appName: '$FIREBASE_APP_NAME',
   },
 };
