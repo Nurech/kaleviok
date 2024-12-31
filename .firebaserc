@@ -7,6 +7,9 @@
       "hosting": {
         "prod": [
           "kaleviok-prod"
+        ],
+        "dev": [
+          "kaleviok-dev"
         ]
       }
     }
