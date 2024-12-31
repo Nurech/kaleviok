@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "scripts": {
     "ng": "ng",
     "build": "ng build",
@@ -10,8 +10,12 @@
     "env:dev": "cross-env NODE_ENV=dev node ./scripts/replace-env.js",
     "env:prod": "cross-env NODE_ENV=prod node ./scripts/replace-env.js",
     "start": "npm run env:dev && ng serve",
+    "start:prod": "npm run env:dev && ng serve --configuration production",
     "build:prod": "npm run env:prod && ng build --configuration production",
     "bump-version": "node ./scripts/bump-version.js",
+    "install:generate-store": "cd generate-store && npm install && npm run build && npm link && cd .. && npm i --save-dev ./generate-store",
+    "install:functions": "cd functions && npm install",
+    "postinstall": "npm run install:generate-store && npm run install:functions",
     "lint": "eslint \"**/*.{js,ts,html}\"",
     "format": "prettier --write \"**/*.{js,ts,html,json,css,scss,md}\""
   },
