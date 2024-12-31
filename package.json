@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "scripts": {
     "ng": "ng",
     "build": "ng build",
