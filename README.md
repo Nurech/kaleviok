@@ -1,32 +1,33 @@
 # KaleviOK project
 
 ## Environments
+
 ### dev
 
 ### prod
 
 ### Run locally
 
-Ensure .env (not in git - secret!) file is present in the root of the project. At build time we replace values from ``.env`` file to ``environment.ts`` file (dev or prod) based on the environment.
+Ensure .env (not in git - secret!) file is present in the root of the project. At build time we replace values from `.env` file to `environment.ts` file (dev or prod) based on the environment.
 
 Run the following command to start the project locally.
-````bash
+
+```bash
 npm install
 npm start
-````
+```
 
 Open browser at http://localhost:4200
 
 ### Project structure
 
-
-
 # Schematics
 
 Provide a way to generate feature modules with ngrx store, actions, effects, reducers, selectors and service. This helps to keep the codebase consistent and reduces the time to create new feature modules and keeps the codebase consistent.
 
-Located in `<root>/generate-store` they need to be installed first. If not already installed run ``npm install`` at project root, it should install and link the schematics package.
+Located in `<root>/generate-store` they need to be installed first. If not already installed run `npm install` at project root, it should install and link the schematics package.
 Manually it would look like this:
+
 ```bash
 cd generate-store
 npm install
@@ -52,7 +53,6 @@ ng g generate-store:generate-store foo
 ### Add upgrades to
 
 Edit source files in `<root>/generate-store`
-
 
 ## Helpful commands
 
