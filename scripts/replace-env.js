@@ -1,28 +1,37 @@
 const fs = require('fs');
 const path = require('path');
+
+// Define expected environment variables
+const envVars = [
+  'FIREBASE_PROJECT_ID',
+  'FIREBASE_APP_ID',
+  'FIREBASE_STORAGE_BUCKET',
+  'FIREBASE_API_KEY',
+  'FIREBASE_AUTH_DOMAIN',
+  'FIREBASE_MESSAGING_SENDER_ID',
+  'FIREBASE_MEASUREMENT_ID',
+];
+
+// Load local .env.prod file if available
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'dev'}` });
 
-const envFilesMap = {
-  dev: { template: './src/environments/environment.template.ts', output: './src/environments/environment.ts' },
-  prod: {
-    template: './src/environments/environment.prod.template.ts',
-    output: './src/environments/environment.prod.ts',
-  },
-  shared: { template: './src/environments/environment.template.ts', output: './src/environments/environment.ts' },
-};
+// Determine the environment
+const isProd = process.env.NODE_ENV === 'prod';
+const templateFile = isProd
+  ? './src/environments/environment.prod.template.ts'
+  : './src/environments/environment.template.ts';
+const outputFile = isProd ? './src/environments/environment.prod.ts' : './src/environments/environment.ts';
 
-const currentEnv = process.env.NODE_ENV || 'dev';
+// Read template and replace placeholders with environment variable values
+const template = fs.readFileSync(path.resolve(templateFile), 'utf-8');
+const replaced = template.replace(/\$(\w+)/g, (_, key) => {
+  if (!process.env[key]) {
+    console.error(`Missing environment variable: ${key}`);
+    process.exit(1);
+  }
+  return process.env[key];
+});
 
-// Generate environment file for the current environment
-if (envFilesMap[currentEnv]) {
-  const content = fs.readFileSync(path.resolve(envFilesMap[currentEnv].template), 'utf-8');
-  const replaced = content.replace(/\$(\w+)/g, (_, key) => process.env[key] || '');
-  fs.writeFileSync(path.resolve(envFilesMap[currentEnv].output), replaced, 'utf-8');
-  console.log(`Generated: ${envFilesMap[currentEnv].output}`);
-}
-
-// Ensure the default environment.ts is always generated
-const sharedContent = fs.readFileSync(path.resolve(envFilesMap.shared.template), 'utf-8');
-const sharedReplaced = sharedContent.replace(/\$(\w+)/g, (_, key) => process.env[key] || '');
-fs.writeFileSync(path.resolve(envFilesMap.shared.output), sharedReplaced, 'utf-8');
-console.log(`Generated: ${envFilesMap.shared.output}`);
+// Write the output environment file
+fs.writeFileSync(path.resolve(outputFile), replaced, 'utf-8');
+console.log(`Generated: ${outputFile}`);

@@ -1,17 +1,40 @@
-runConfig:
-  minInstances: 0
-
-env:
-  - variable: NODE_ENV
-    value: "prod"
-    availability:
-      - BUILD
 steps:
+  # Install dependencies
   - name: 'node:20'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
         npm install
+
+  # Fetch secrets from Google Secret Manager and set as environment variables
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        export NODE_ENV=prod
+        export FIREBASE_PROJECT_ID=$(gcloud secrets versions access latest --secret=FIREBASE_PROJECT_ID_prod)
+        export FIREBASE_APP_ID=$(gcloud secrets versions access latest --secret=FIREBASE_APP_ID_prod)
+        export FIREBASE_STORAGE_BUCKET=$(gcloud secrets versions access latest --secret=FIREBASE_STORAGE_BUCKET_prod)
+        export FIREBASE_API_KEY=$(gcloud secrets versions access latest --secret=FIREBASE_API_KEY_prod)
+        export FIREBASE_AUTH_DOMAIN=$(gcloud secrets versions access latest --secret=FIREBASE_AUTH_DOMAIN_prod)
+        export FIREBASE_MESSAGING_SENDER_ID=$(gcloud secrets versions access latest --secret=FIREBASE_MESSAGING_SENDER_ID_prod)
+        export FIREBASE_MEASUREMENT_ID=$(gcloud secrets versions access latest --secret=FIREBASE_MEASUREMENT_ID_prod)
         npm run env:prod
+
+  # Build application
+  - name: 'node:20'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
         npm run build:prod
+
+  # Deploy to Firebase Hosting
+  - name: 'gcr.io/firebase-ci/firebase-tools'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        firebase deploy --only hosting --project=${FIREBASE_PROJECT_ID}
