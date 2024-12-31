@@ -1,26 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
-// Define expected environment variables
-const envVars = [
-  'FIREBASE_PROJECT_ID',
-  'FIREBASE_APP_ID',
-  'FIREBASE_STORAGE_BUCKET',
-  'FIREBASE_API_KEY',
-  'FIREBASE_AUTH_DOMAIN',
-  'FIREBASE_MESSAGING_SENDER_ID',
-  'FIREBASE_MEASUREMENT_ID',
-];
-
-// Load local .env.prod file if available
+// Load local .env file based on the environment
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'dev'}` });
 
 // Determine the environment
-const isProd = process.env.NODE_ENV === 'prod';
-const templateFile = isProd
-  ? './src/environments/environment.prod.template.ts'
-  : './src/environments/environment.template.ts';
-const outputFile = isProd ? './src/environments/environment.prod.ts' : './src/environments/environment.ts';
+const templateFile = './src/environments/environment.template.ts';
+
+// Always generate `environment.ts`
+const outputFile = './src/environments/environment.ts';
 
 // Read template and replace placeholders with environment variable values
 const template = fs.readFileSync(path.resolve(templateFile), 'utf-8');
