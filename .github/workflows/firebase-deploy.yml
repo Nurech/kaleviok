@@ -56,6 +56,6 @@ jobs:
       - name: Deploy to Firebase Hosting
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:${{ env.DEPLOY_ENV }}  --project ${{ env.FIREBASE_PROJECT_ID }}
+          args: deploy --only hosting:${{ env.DEPLOY_ENV }} --project ${{ env.FIREBASE_PROJECT_ID }}
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
