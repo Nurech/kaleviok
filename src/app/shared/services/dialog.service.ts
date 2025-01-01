@@ -17,8 +17,19 @@ export class DialogService {
       return;
     }
 
+    // Set default autoFocus if not provided
+    if (!config.autoFocus) {
+      config.autoFocus = '[autofocus]';
+    }
+
     const dialogRef = this.dialog.open<T, D>(component, config);
     this.dialogRefs.set(key, dialogRef);
+
+    // Cleanup the dialog reference when it is closed or dismissed
+    dialogRef.afterClosed().subscribe(() => {
+      this.dialogRefs.delete(key);
+    });
+
     return dialogRef;
   }
 

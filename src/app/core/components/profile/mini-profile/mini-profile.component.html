@@ -1,4 +1,4 @@
-<mat-card class="mx-1 bg-transparent" appearance="outlined">
+<mat-card class="m-1 mb-2 bg-transparent" appearance="outlined">
   <mat-card-header class="flex justify-center p-1">
     <button
       mat-stroked-button
@@ -17,13 +17,13 @@
   </mat-card-content>
   <mat-card-actions class="flex justify-center">
     <button mat-icon-button>
-      <mat-icon class="mb-1">notifications</mat-icon>
+      <mat-icon class="mb-1" (click)="onNotifications()">notifications</mat-icon>
     </button>
     <button mat-icon-button>
-      <mat-icon class="mb-1">settings</mat-icon>
+      <mat-icon class="mb-1" (click)="onSettingsClick()">settings</mat-icon>
     </button>
     <button mat-icon-button>
-      <mat-icon class="mb-1">logout</mat-icon>
+      <mat-icon class="mb-1" (click)="onLogout()">logout</mat-icon>
     </button>
   </mat-card-actions>
 </mat-card>

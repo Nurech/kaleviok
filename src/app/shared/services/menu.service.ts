@@ -22,6 +22,7 @@ export interface MenuItem<T> {
 export class MenuService {
   private store$ = inject(Store);
   private sheetService = inject(SheetService);
+  isDrawerOpen = signal(true);
 
   isAuthenticated = signal(false);
 

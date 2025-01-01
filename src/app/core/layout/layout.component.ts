@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, ViewChild } from '@angular/core';
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -14,8 +14,8 @@ import { SidenavComponent } from '../components/sidenav/sidenav.component';
 import { DeviceService } from '../../shared/services/device.service';
 import { SnackbarService } from '../../shared/services/snackbar.service';
 import { SnackbarState, SnackbarType } from '../../shared/models';
-import { SheetService } from '../../shared/services/sheet.service';
 import { selectLoading } from '../../store/core/core.selectors';
+import { MenuService } from '../../shared/services/menu.service';
 
 @Component({
   selector: 'app-layout',
@@ -38,11 +38,20 @@ import { selectLoading } from '../../store/core/core.selectors';
   ],
 })
 export class LayoutComponent {
+  @ViewChild('drawer') drawer!: MatDrawer;
   private store$ = inject(Store);
   isHandheld = inject(DeviceService).isHandheld;
   snackbarService = inject(SnackbarService);
-  sheetService = inject(SheetService);
+  menuService = inject(MenuService);
   isLoading$ = this.store$.select(selectLoading);
+
+  constructor() {
+    effect(() => {
+      if (!this.menuService.isDrawerOpen()) {
+        this.drawer.close();
+      }
+    });
+  }
 
   opanSnackBar() {
     this.snackbarService.snack({

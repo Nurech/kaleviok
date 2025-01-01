@@ -4,18 +4,18 @@
     position="end"
     [attr.role]="'navigation'"
     [mode]="isHandheld() ? 'over' : 'side'"
-    [opened]="true"
-    (openedStart)="sidenav.isOpen.set(true)"
-    (closedStart)="sidenav.isOpen.set(false)"
+    [opened]="menuService.isDrawerOpen()"
+    (openedStart)="menuService.isDrawerOpen.set(true)"
+    (closedStart)="menuService.isDrawerOpen.set(false)"
     class="app-sidenav"
   >
-    <app-sidenav [attr.inert]="sheetService.isOpen() ? '' : null" #sidenav (closeDrawer)="drawer.close()"></app-sidenav>
+    <app-sidenav></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content class="app-sidenav-content">
     <ng-template [ngTemplateOutlet]="progressBar"></ng-template>
     @if (isHandheld()) {
       <button
-        [attr.aria-label]="sidenav.isOpen() ? ('close_menu' | translate) : ('open_menu' | translate)"
+        [attr.aria-label]="menuService.isDrawerOpen() ? ('close_menu' | translate) : ('open_menu' | translate)"
         mat-icon-button
         class="absolute right-0 top-0 z-10 m-2"
         (click)="drawer.open()"
