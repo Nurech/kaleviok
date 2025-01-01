@@ -33,6 +33,7 @@ export class SnackbarService {
       duration: snackbar.duration,
       horizontalPosition: 'center',
       verticalPosition: 'top',
+      panelClass: `snackbar-${snackbar.type?.toLowerCase()}`,
     });
   }
 }

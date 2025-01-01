@@ -1,0 +1,48 @@
+@use '@angular/material' as mat;
+
+// Define the colors for each snackbar type using your variables
+:root {
+  --snackbar-info-bg: var(--sys-primary);
+  --snackbar-info-text: var(--sys-on-primary);
+
+  --snackbar-success-bg: var(--sys-primary);
+  --snackbar-success-text: var(--sys-on-primary);
+
+  --snackbar-warn-bg: var(--sys-secondary);
+  --snackbar-warn-text: var(--sys-on-secondary);
+
+  --snackbar-error-bg: var(--sys-error);
+  --snackbar-error-text: var(--sys-on-error);
+}
+
+// Base Material Snackbar Style Overrides
+.mat-mdc-snack-bar-container {
+  border-radius: var(--mdc-snackbar-container-shape, var(--mat-app-corner-extra-small));
+
+  &.snackbar-info .mat-mdc-snackbar-surface {
+    background-color: var(--snackbar-info-bg);
+    color: var(--snackbar-info-text);
+    mat-icon {
+      color: var(--snackbar-info-text);
+    }
+  }
+
+  &.snackbar-success .mat-mdc-snackbar-surface {
+    background-color: var(--snackbar-success-bg);
+    color: var(--snackbar-success-text);
+  }
+
+  &.snackbar-warn .mat-mdc-snackbar-surface {
+    background-color: var(--snackbar-warn-bg);
+    color: var(--snackbar-warn-text);
+  }
+
+  &.snackbar-error .mat-mdc-snackbar-surface {
+    background-color: var(--snackbar-error-bg);
+    color: var(--snackbar-error-text);
+  }
+
+  .mat-icon {
+    color: inherit; // Inherit the text color for icons
+  }
+}
