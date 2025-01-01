@@ -48,6 +48,7 @@ jobs:
           else
             echo "Unsupported branch for deployment."
             exit 1
+          fi
 
       - name: Replace environment variables
         run: npm run env:${{ env.DEPLOY_ENV }}
