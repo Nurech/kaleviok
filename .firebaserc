@@ -1,7 +1,6 @@
 {
   "projects": {
-    "default": "kaleviok-9aeb0"
-    "dev": "kaleviok-dev"
+    "dev": "kaleviok-dev",
     "prod": "kaleviok-9aeb0"
   },
   "targets": {
@@ -12,12 +11,13 @@
         ]
       }
     },
-      "kaleviok-dev": {
-          "hosting": {
-            "dev": [
-              "kaleviok-dev"
-            ]
-          }
-        }
-  }
+    "kaleviok-dev": {
+      "hosting": {
+        "dev": [
+          "kaleviok-dev"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
