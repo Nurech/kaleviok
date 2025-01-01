@@ -1,18 +1,28 @@
-export enum SnackbarType {
-  AUTOLOGIN = 'autologin',
-}
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-export enum SnackbarState {
+export enum SnackbarType {
+  INFO = 'info',
   SUCCESS = 'success',
-  INDETERMINATE = 'indeterminate',
+  WARN = 'warn',
   ERROR = 'error',
 }
 
-export interface Snackbar {
-  name: SnackbarType;
-  show: boolean;
-  state: SnackbarState;
-  message: string;
+export enum SnackbarActions {
+  CLOSE = 'close',
+}
+
+export class Snackbar {
+  self?: MatSnackBar;
+  type?: SnackbarType = SnackbarType.INFO;
+  message?: string;
   action?: string;
-  type?: string;
+  duration?: number = 30000;
+
+  constructor(type?: SnackbarType, message?: string, duration?: number, self?: MatSnackBar, action?: string) {
+    this.message = message;
+    this.type = type;
+    this.duration = duration;
+    this.self = self;
+    this.action = action;
+  }
 }

@@ -12,8 +12,6 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { Store } from '@ngrx/store';
 import { SidenavComponent } from '../components/sidenav/sidenav.component';
 import { DeviceService } from '../../shared/services/device.service';
-import { SnackbarService } from '../../shared/services/snackbar.service';
-import { SnackbarState, SnackbarType } from '../../shared/models';
 import { selectLoading } from '../../store/core/core.selectors';
 import { MenuService } from '../../shared/services/menu.service';
 
@@ -41,7 +39,6 @@ export class LayoutComponent {
   @ViewChild('drawer') drawer!: MatDrawer;
   private store$ = inject(Store);
   isHandheld = inject(DeviceService).isHandheld;
-  snackbarService = inject(SnackbarService);
   menuService = inject(MenuService);
   isLoading$ = this.store$.select(selectLoading);
 
@@ -50,24 +47,6 @@ export class LayoutComponent {
       if (!this.menuService.isDrawerOpen()) {
         this.drawer.close();
       }
-    });
-  }
-
-  opanSnackBar() {
-    this.snackbarService.snack({
-      name: SnackbarType.AUTOLOGIN,
-      show: true,
-      state: SnackbarState.INDETERMINATE,
-      message: 'Logging in...',
-    });
-  }
-
-  opanSnackBarSuccess() {
-    this.snackbarService.snack({
-      name: SnackbarType.AUTOLOGIN,
-      show: true,
-      state: SnackbarState.SUCCESS,
-      message: 'Login successful!',
     });
   }
 }

@@ -12,12 +12,14 @@ import {
   googleError,
   googleStart,
   googleSuccess,
+  logout,
 } from './auth.actions';
 import { AuthService } from './auth.service';
 import { updateMySettings } from '../settings/settings.actions';
 import { LoginMethod } from '../settings/settings.model';
 import { LoginComponent } from '../../core/components/login/login.component';
 import { SheetService } from '../../shared/services/sheet.service';
+import { SnackbarService } from '../../shared/services/snackbar.service';
 
 @Injectable()
 export class AuthEffects {
@@ -25,6 +27,7 @@ export class AuthEffects {
   private store$ = inject(Store);
   private authService = inject(AuthService);
   private sheetService = inject(SheetService);
+  private snackbarService = inject(SnackbarService);
 
   loginWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
@@ -63,6 +66,18 @@ export class AuthEffects {
         ofType(manualLogin),
         tap(() => {
           this.sheetService.open(LoginComponent);
+        }),
+      ),
+    { dispatch: false },
+  );
+
+  onLogout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(logout),
+        tap(() => {
+          this.authService.logout();
+          this.snackbarService.open('you_have_been_logged_out');
         }),
       ),
     { dispatch: false },

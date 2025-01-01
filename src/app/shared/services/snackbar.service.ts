@@ -1,68 +1,38 @@
-import { Injectable, signal } from '@angular/core';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { inject, Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 import { SnackbarComponent } from '../components/snackbar/snackbar.component';
-import { Snackbar, SnackbarType } from '../models';
+import { Snackbar, SnackbarActions, SnackbarType } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SnackbarService {
-  private snackbars = signal<Snackbar[]>([]);
-  private openSnackbars: Record<string, MatSnackBarRef<SnackbarComponent>> = {};
+  private translate = inject(TranslateService);
+  private snackBar = inject(MatSnackBar);
 
-  constructor(private snackBar: MatSnackBar) {}
-
-  snack(newSnackbar: Snackbar) {
-    const existing = this.snackbars().find((snackbar: Snackbar) => snackbar.name === newSnackbar.name);
-
-    if (existing) {
-      this.updateSnackbar({ ...existing, ...newSnackbar });
+  open(obj: string | Snackbar) {
+    if (typeof obj === 'string') {
+      const defaultSnackbar = new Snackbar(SnackbarType.INFO, obj, 30000, this.snackBar, SnackbarActions.CLOSE);
+      this.snack(defaultSnackbar);
     } else {
-      this.snackbars.update((state: Snackbar[]) => [...state, newSnackbar]);
-      this.showSnackbar(newSnackbar);
+      this.snack(obj);
     }
   }
 
-  private updateSnackbar(updatedSnackbar: Snackbar) {
-    this.snackbars.update((state: Snackbar[]) =>
-      state.map((snackbar: Snackbar) => (snackbar.name === updatedSnackbar.name ? updatedSnackbar : snackbar)),
-    );
-
-    const snackbarRef = this.openSnackbars[updatedSnackbar.name];
-    if (snackbarRef) {
-      snackbarRef.instance.data = updatedSnackbar;
+  private snack(snackbar: Snackbar) {
+    // Translate the message if provided
+    if (snackbar.message) {
+      snackbar.message = this.translate.instant(snackbar.message);
     }
-  }
 
-  private showSnackbar(snackbar: Snackbar) {
-    this.closeSnackbar(snackbar.name);
+    snackbar.self = this.snackBar;
 
-    const ref: MatSnackBarRef<SnackbarComponent> = this.snackBar.openFromComponent(SnackbarComponent, {
+    this.snackBar.openFromComponent(SnackbarComponent, {
       data: snackbar,
-      duration: 3000,
+      duration: snackbar.duration,
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: snackbar.type ? `snackbar-${snackbar.type}` : undefined,
     });
-
-    this.openSnackbars[snackbar.name] = ref;
-
-    ref.afterDismissed().subscribe(() => {
-      this.removeSnackbar(snackbar.name);
-    });
-  }
-
-  private closeSnackbar(name: SnackbarType) {
-    const snackbarRef = this.openSnackbars[name];
-    if (snackbarRef) {
-      snackbarRef.dismiss();
-      delete this.openSnackbars[name];
-    }
-  }
-
-  private removeSnackbar(name: SnackbarType) {
-    this.snackbars.update((state: Snackbar[]) => state.filter((snackbar: Snackbar) => snackbar.name !== name));
-
-    delete this.openSnackbars[name];
   }
 }
