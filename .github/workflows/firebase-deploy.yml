@@ -25,7 +25,7 @@ jobs:
       - name: Determine Build and Deployment Environment
         run: |
           if [ "${{ github.ref_name }}" == "master" ]; then
-            echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+            echo "DEPLOY_ENV=PROD" >> $GITHUB_ENV
             echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID_PROD }}" >> $GITHUB_ENV
             echo "FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID_PROD }}" >> $GITHUB_ENV
             echo "FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET_PROD }}" >> $GITHUB_ENV
@@ -33,8 +33,9 @@ jobs:
             echo "FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN_PROD }}" >> $GITHUB_ENV
             echo "FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID_PROD }}" >> $GITHUB_ENV
             echo "FIREBASE_MEASUREMENT_ID=${{ secrets.FIREBASE_MEASUREMENT_ID_PROD }}" >> $GITHUB_ENV
+            echo "${{ secrets.GCP_SA_KEY_PROD }}" | base64 -d > gcp_key.json
           elif [ "${{ github.ref_name }}" == "develop" ]; then
-            echo "DEPLOY_ENV=dev" >> $GITHUB_ENV
+            echo "DEPLOY_ENV=DEV" >> $GITHUB_ENV
             echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID_DEV }}" >> $GITHUB_ENV
             echo "FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID_DEV }}" >> $GITHUB_ENV
             echo "FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET_DEV }}" >> $GITHUB_ENV
@@ -42,6 +43,7 @@ jobs:
             echo "FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN_DEV }}" >> $GITHUB_ENV
             echo "FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID_DEV }}" >> $GITHUB_ENV
             echo "FIREBASE_MEASUREMENT_ID=${{ secrets.FIREBASE_MEASUREMENT_ID_DEV }}" >> $GITHUB_ENV
+            echo "${{ secrets.GCP_SA_KEY_DEV }}" | base64 -d > gcp_key.json
           else
             echo "Unsupported branch for deployment."
             exit 1
@@ -58,4 +60,4 @@ jobs:
         with:
           args: deploy --only hosting:${{ env.DEPLOY_ENV }} --project ${{ env.FIREBASE_PROJECT_ID }}
         env:
-          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: gcp_key.json
