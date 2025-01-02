@@ -18,28 +18,27 @@ export class BackgroundIconDirective implements OnInit {
 
     try {
       const svgElement = await firstValueFrom(this.iconRegistry.getNamedSvgIcon(this.iconName));
-      const svgString = new XMLSerializer().serializeToString(svgElement);
-      const base64Svg = `data:image/svg+xml;base64,${btoa(svgString)}`;
+
+      const svgClone = svgElement.cloneNode(true) as SVGElement;
+
+      this.renderer.setStyle(svgClone, 'position', 'absolute');
+      this.renderer.setStyle(svgClone, 'top', '-25%');
+      this.renderer.setStyle(svgClone, 'left', '0');
+      this.renderer.setStyle(svgClone, 'width', '150%');
+      this.renderer.setStyle(svgClone, 'height', '150%');
+      this.renderer.setStyle(svgClone, 'opacity', '0.1');
+      this.renderer.setStyle(svgClone, 'transform', 'rotate(30deg)');
+      this.renderer.setStyle(svgClone, 'pointerEvents', 'none');
+      this.renderer.setStyle(svgClone, 'zIndex', '0');
+
+      this.renderer.setStyle(svgClone, 'fill', 'currentColor');
 
       this.renderer.setStyle(this.el.nativeElement, 'position', 'relative');
       this.renderer.setStyle(this.el.nativeElement, 'overflow', 'hidden');
 
-      const backgroundContainer = this.renderer.createElement('div');
-      this.renderer.setStyle(backgroundContainer, 'position', 'absolute');
-      this.renderer.setStyle(backgroundContainer, 'top', '-25%');
-      this.renderer.setStyle(backgroundContainer, 'zIndex', '0');
-      this.renderer.setStyle(backgroundContainer, 'pointerEvents', 'none');
-      this.renderer.setStyle(backgroundContainer, 'height', '150%');
-      this.renderer.setStyle(backgroundContainer, 'width', '150%');
-      this.renderer.setStyle(backgroundContainer, 'backgroundImage', `url('${base64Svg}')`);
-      this.renderer.setStyle(backgroundContainer, 'backgroundRepeat', 'no-repeat');
-      this.renderer.setStyle(backgroundContainer, 'backgroundPosition', 'center');
-      this.renderer.setStyle(backgroundContainer, 'opacity', '0.05');
-      this.renderer.setStyle(backgroundContainer, 'transform', 'rotate(30deg)');
-
-      this.renderer.appendChild(this.el.nativeElement, backgroundContainer);
+      this.renderer.appendChild(this.el.nativeElement, svgClone);
     } catch (error) {
-      console.error(`Error fetching icon "${this.iconName}":`, error);
+      console.warn(`Error fetching icon "${this.iconName}":`, error);
     }
   }
 }

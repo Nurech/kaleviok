@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.72",
+  "version": "0.0.73",
   "scripts": {
     "ng": "ng",
     "watch": "ng build --watch --configuration development",
