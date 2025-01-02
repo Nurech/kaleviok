@@ -45,13 +45,6 @@ export class MenuService {
       onClick: () => this.handleNavigation('/profile'),
     },
     {
-      label: 'notifications',
-      icon: 'notifications',
-      position: 'start',
-      show: true,
-      href: '/notifications',
-    },
-    {
       label: 'dashboard',
       icon: 'team_dashboard',
       position: 'start',
