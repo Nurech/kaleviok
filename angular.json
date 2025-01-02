@@ -28,6 +28,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/assets",
+              "src/firebase-messaging-sw.js",
               {
                 "glob": "**/*",
                 "input": "public"
@@ -91,6 +92,7 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/firebase-messaging-sw.js",
               {
                 "glob": "**/*",
                 "input": "public"

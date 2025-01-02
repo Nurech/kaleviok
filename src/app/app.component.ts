@@ -6,6 +6,7 @@ import { IconResolver, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LayoutComponent } from './core/layout/layout.component';
 import { DialogService } from './shared/services/dialog.service';
+import { NotificationService } from './shared/services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ import { DialogService } from './shared/services/dialog.service';
 export class AppComponent implements OnInit {
   private iconRegistry = inject(MatIconRegistry);
   private sanitizer = inject(DomSanitizer);
+  private notificationService = inject(NotificationService);
   private dialogService = inject(DialogService);
 
   ngOnInit(): void {

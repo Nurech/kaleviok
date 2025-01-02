@@ -1,3 +1,8 @@
+/**
+ * The following script reads the package.json file and increments the patch version by 1.
+ * For example if the current version is 1.0.0, the new version will be 1.0.1.
+ */
+
 const fs = require('fs');
 const path = require('path');
 

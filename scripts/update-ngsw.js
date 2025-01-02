@@ -1,3 +1,8 @@
+/**
+ * The following script reads the package.json file and updates the
+ * ngsw-config.json file with the version from the package.json file.
+ */
+
 const fs = require('fs');
 const path = require('path');
 
