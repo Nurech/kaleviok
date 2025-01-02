@@ -7,7 +7,9 @@ import { Messaging, getToken, onMessage } from '@angular/fire/messaging';
 export class NotificationService {
   private messaging = inject(Messaging);
 
-  constructor(private msg: Messaging) {
+  constructor() {
+    this.listen();
+
     Notification.requestPermission().then((notificationPermissions: NotificationPermission) => {
       if (notificationPermissions === 'granted') {
         console.log('Granted');
@@ -19,7 +21,7 @@ export class NotificationService {
     navigator.serviceWorker
       .register('/firebase-messaging-sw.js')
       .then((serviceWorkerRegistration) => {
-        getToken(this.msg, {
+        getToken(this.messaging, {
           serviceWorkerRegistration: serviceWorkerRegistration,
         }).then((x) => {
           console.log('FCM SW registration successful! FCM Token:', x);
@@ -36,9 +38,9 @@ export class NotificationService {
       const notificationTitle = payload.notification?.title || 'Default Title';
       const notificationOptions = {
         body: payload.notification?.body || 'Default Body',
-        icon: payload.notification?.icon || '/img/logo.svg',
+        icon: '/logo.svg', // Replace with your app's icon
         data: {
-          url: payload.data?.['click_action'] || 'https://default-link.com', // Default action
+          url: payload.data?.['click_action'] || 'https://your-default-link.com',
         },
       };
 

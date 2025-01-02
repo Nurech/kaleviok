@@ -19,9 +19,9 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.notification?.title || 'Default Title';
   const notificationOptions = {
     body: payload.notification?.body || 'Default Body',
-    icon: payload.notification?.icon || '/assets/default-icon.png',
+    icon: '/logo.svg',
     data: {
-      url: payload.data?.click_action || 'https://default-link.com', // Default action
+      url: payload.data?.click_action || 'http://localhost:4200/dashboard',
     },
   };
 
@@ -30,9 +30,21 @@ messaging.onBackgroundMessage((payload) => {
 
 // Handle notification click
 self.addEventListener('notificationclick', (event) => {
-  event.notification.close(); // Close the notification
+  event.notification.close();
   const url = event.notification.data.url;
   if (url) {
-    event.waitUntil(clients.openWindow(url)); // Navigate to the URL
+    event.waitUntil(clients.openWindow(url));
   }
+});
+
+self.addEventListener('install', (event) => {
+  console.log('Service Worker installed');
+  self.skipWaiting(); // Activate the new service worker immediately
+});
+
+self.addEventListener('activate', (event) => {
+  console.log('Service Worker activated');
+  event.waitUntil(
+    clients.claim(), // Take control of all open clients
+  );
 });
