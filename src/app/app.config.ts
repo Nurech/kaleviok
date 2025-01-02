@@ -2,7 +2,6 @@ import {
   APP_INITIALIZER,
   ApplicationConfig,
   importProvidersFrom,
-  isDevMode,
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -88,10 +87,6 @@ export const appConfig: ApplicationConfig = {
       deps: [TranslateService, PwaService],
       multi: true,
     },
-    provideServiceWorker('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000',
-    }),
   ],
 };
 
