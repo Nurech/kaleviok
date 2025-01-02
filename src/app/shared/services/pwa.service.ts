@@ -24,7 +24,7 @@ export class PwaService {
   isInstalled = signal(false);
   displayMode = signal('');
   currentVersion = signal<string>(packageJson.version || '');
-  newVersion = signal<string | null>('');
+  newVersion = signal<string>('');
 
   constructor() {
     this.detectPwaEnvironment();
@@ -120,12 +120,22 @@ export class PwaService {
   }
 
   private promptUserForUpdate() {
-    this.dialogService.open(PwaUpdateDialogComponent, {
-      data: {
-        currentVersion: this.currentVersion(),
-        newVersion: this.newVersion(),
-      },
-    });
+    const currentVersionNumber = this.versionToNumber(this.currentVersion());
+    const newVersionNumber = this.versionToNumber(this.newVersion());
+
+    if (newVersionNumber > currentVersionNumber) {
+      this.dialogService.open(PwaUpdateDialogComponent, {
+        data: {
+          currentVersion: this.currentVersion(),
+          newVersion: this.newVersion(),
+        },
+      });
+    }
+  }
+
+  private versionToNumber(version: string): number {
+    const [major, minor, patch] = version.split('.').map(Number);
+    return major * 1_000_000 + minor * 1_000 + patch;
   }
 
   private logVersionOnUpdate() {
