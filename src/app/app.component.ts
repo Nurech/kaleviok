@@ -6,7 +6,6 @@ import { IconResolver, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LayoutComponent } from './core/layout/layout.component';
 import { DialogService } from './shared/services/dialog.service';
-import { PwaUpdateDialogComponent } from './core/components/pwa-update-dialog/pwa-update-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -24,13 +23,6 @@ export class AppComponent implements OnInit {
     this.initializeIconRegistry();
     // this.sheetService.open(LoginComponent);
     // this.dialogService.open(PwaUpdateDialogComponent);
-
-    this.dialogService.open(PwaUpdateDialogComponent, {
-      data: {
-        currentVersion: '0.0.65',
-        newVersion: '0.0.66',
-      },
-    });
   }
 
   initializeIconRegistry() {
