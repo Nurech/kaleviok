@@ -2,6 +2,7 @@ import {
   APP_INITIALIZER,
   ApplicationConfig,
   importProvidersFrom,
+  isDevMode,
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -59,9 +60,9 @@ export const appConfig: ApplicationConfig = {
     provideRemoteConfig(() => getRemoteConfig()),
     provideRouterStore(),
     importProvidersFrom(RootStoreModule),
-    provideServiceWorker('/ngsw-worker.js', {
-      enabled: true,
-      registrationStrategy: 'registerImmediately',
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
     }),
     provideAnimationsAsync(),
     {
