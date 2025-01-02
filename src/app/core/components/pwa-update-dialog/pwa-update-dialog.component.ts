@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -20,10 +21,12 @@ import { DialogService } from '../../../shared/services/dialog.service';
     TranslatePipe,
   ],
   templateUrl: './pwa-update-dialog.component.html',
-  styleUrl: './pwa-update-dialog.component.scss',
+  styleUrls: ['./pwa-update-dialog.component.scss'],
 })
 export class PwaUpdateDialogComponent {
-  private dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
+  data: { currentVersion: string; newVersion: string } = inject(MAT_DIALOG_DATA);
+
   onReload(): void {
     window.location.reload();
   }

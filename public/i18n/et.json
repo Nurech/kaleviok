@@ -15,7 +15,7 @@
   "not_a_valid_email": "Vigane email",
   "remember_me": "Mäleta mind",
   "remember_me_info": "Järgmine kord logime sisse automaatselt. Seadeid saab ka hiljem muuta.",
-  "new_pwa_version_on_reload": "Uue versiooni laadimine võtab mõne hetke, toimub värskendus. Uuendada saab ka hiljem, lihtsalt sule rakendus ja ava uuesti.",
+  "new_pwa_version_on_reload": "Uue versiooni laadimine võtab aega mõne hetke",
   "refresh_now_for_updates": "Kas soovid kohe värskendada uuenduste saamiseks?",
   "update_available": "Uus versioon",
   "no": "Ei",

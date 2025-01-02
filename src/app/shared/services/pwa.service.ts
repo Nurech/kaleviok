@@ -6,6 +6,7 @@ import { DialogService } from './dialog.service';
 import { PwaUpdateDialogComponent } from '../../core/components/pwa-update-dialog/pwa-update-dialog.component';
 import { selectMySetting } from '../../store/settings/settings.selectors';
 import { InstallPwaComponent } from '../../core/components/install-pwa/install-pwa.component';
+import packageJson from '../../../../package.json';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,8 @@ export class PwaService {
   runningInPwa = signal(false);
   isInstalled = signal(false);
   displayMode = signal('');
-  private currentVersion: string | null = null;
+  currentVersion = signal<string>(packageJson.version || '');
+  newVersion = signal<string | null>('');
 
   constructor() {
     this.detectPwaEnvironment();
@@ -118,7 +120,12 @@ export class PwaService {
   }
 
   private promptUserForUpdate() {
-    this.dialogService.open(PwaUpdateDialogComponent);
+    this.dialogService.open(PwaUpdateDialogComponent, {
+      data: {
+        currentVersion: this.currentVersion(),
+        newVersion: this.newVersion(),
+      },
+    });
   }
 
   private logVersionOnUpdate() {
@@ -129,12 +136,13 @@ export class PwaService {
 
     this.swUpdate.versionUpdates.subscribe((event: VersionEvent) => {
       if (event.type === 'VERSION_READY') {
-        const versionReadyEvent = event as VersionReadyEvent;
-        const oldVersionHash = versionReadyEvent.currentVersion.hash;
-        const newVersionHash = versionReadyEvent.latestVersion.hash;
+        const readyEvent = event as VersionReadyEvent;
+        const version = (readyEvent.latestVersion?.appData as { version?: string })?.version;
+        this.newVersion.set(version || '');
 
-        console.log(`Old version hash: ${oldVersionHash}`);
-        console.log(`New version hash: ${newVersionHash}`);
+        console.log(`Current version: ${this.currentVersion()}`);
+        console.log(`New version: ${this.newVersion()}`);
+
         this.promptUserForUpdate();
       }
     });

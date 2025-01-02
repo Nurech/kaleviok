@@ -2,11 +2,18 @@
   {{ 'update_available' | translate }}
 </h2>
 
-<mat-dialog-content class="flex items-center pb-2">
-  <span
-    >{{ 'refresh_now_for_updates' | translate }}
+<mat-dialog-content class="flex flex-col items-start justify-start pb-2">
+  @if (data.currentVersion && data.newVersion) {
+    <div class="flex items-center rounded bg-green-550 px-2 text-black">
+      {{ data.currentVersion }}
+      <mat-icon>upgrade</mat-icon>
+      {{ data.newVersion }}
+    </div>
+  }
+  <div>
+    {{ 'refresh_now_for_updates' | translate }}
     <app-info class="inline-block" [text]="'new_pwa_version_on_reload' | translate"></app-info>
-  </span>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions class="pt-0">
   <button mat-button mat-dialog-close (click)="onDismiss()">
