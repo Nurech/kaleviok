@@ -22,6 +22,7 @@
   "ok": "Ok",
   "logout": "Logi välja",
   "logout_description": "Sind logitakse välja ja sinu sessioon lõpetatakse. Pärast välja logimist suunatakse sind tagasi avalehele.",
+  "no_more_autologin": "Automaatset sisselogimist ei toimu järgmisel korral",
   "dashboard": "Töölaud",
   "admin_panel_settings": "Admin seaded",
   "contact_support": "Abi",
