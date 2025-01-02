@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @layer utilities {
+  .icon-xxs {
+    font-size: 0.875rem; /* 14px */
+    height: 0.875rem; /* 14px */
+    width: 0.875rem; /* 14px */
+    line-height: 1;
+  }
+
   .icon-xs {
     font-size: 1rem; /* 16px */
     height: 1rem; /* 16px */

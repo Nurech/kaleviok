@@ -7,7 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { LayoutComponent } from './core/layout/layout.component';
 import { SheetService } from './shared/services/sheet.service';
 import { SnackbarService } from './shared/services/snackbar.service';
-import { Snackbar, SnackbarActions, SnackbarType } from './shared/models';
+import { DialogService } from './shared/services/dialog.service';
 
 @Component({
   selector: 'app-root',
@@ -21,12 +21,12 @@ export class AppComponent implements OnInit {
   private iconRegistry = inject(MatIconRegistry);
   private sanitizer = inject(DomSanitizer);
   private snackbarService = inject(SnackbarService);
+  private dialogService = inject(DialogService);
 
   ngOnInit(): void {
     this.initializeIconRegistry();
-    const snack = new Snackbar(SnackbarType.INFO, 'you_have_been_logged_out', 300000, undefined, SnackbarActions.CLOSE);
-    this.snackbarService.open(snack);
     // this.sheetService.open(LoginComponent);
+    // this.dialogService.open(PwaUpdateDialogComponent);
   }
 
   initializeIconRegistry() {

@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackbarComponent } from '../components/snackbar/snackbar.component';
-import { Snackbar, SnackbarActions, SnackbarType } from '../models';
+import { Snackbar, SnackbarType } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class SnackbarService {
 
   open(obj: string | Snackbar) {
     if (typeof obj === 'string') {
-      const defaultSnackbar = new Snackbar(SnackbarType.INFO, obj, 30000, this.snackBar, SnackbarActions.CLOSE);
+      const defaultSnackbar = new Snackbar(SnackbarType.INFO, obj, 3000);
       this.snack(defaultSnackbar);
     } else {
       this.snack(obj);

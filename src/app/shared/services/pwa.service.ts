@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, effect } from '@angular/core';
-import { SwUpdate } from '@angular/service-worker';
+import { SwUpdate, VersionEvent, VersionReadyEvent } from '@angular/service-worker';
 import { Store } from '@ngrx/store';
 import { SheetService } from './sheet.service';
 import { DialogService } from './dialog.service';
@@ -22,12 +22,14 @@ export class PwaService {
   runningInPwa = signal(false);
   isInstalled = signal(false);
   displayMode = signal('');
+  private currentVersion: string | null = null;
 
   constructor() {
     this.detectPwaEnvironment();
     this.listenForEvents();
     effect(() => this.handleInstallPromotion(), { allowSignalWrites: true });
     this.startUpdateCheck();
+    this.logVersionOnUpdate();
   }
 
   private detectPwaEnvironment() {
@@ -117,5 +119,24 @@ export class PwaService {
 
   private promptUserForUpdate() {
     this.dialogService.open(PwaUpdateDialogComponent);
+  }
+
+  private logVersionOnUpdate() {
+    if (!this.swUpdate.isEnabled) {
+      console.warn('Service worker updates are not enabled.');
+      return;
+    }
+
+    this.swUpdate.versionUpdates.subscribe((event: VersionEvent) => {
+      if (event.type === 'VERSION_READY') {
+        const versionReadyEvent = event as VersionReadyEvent;
+        const oldVersionHash = versionReadyEvent.currentVersion.hash;
+        const newVersionHash = versionReadyEvent.latestVersion.hash;
+
+        console.log(`Old version hash: ${oldVersionHash}`);
+        console.log(`New version hash: ${newVersionHash}`);
+        this.promptUserForUpdate();
+      }
+    });
   }
 }
