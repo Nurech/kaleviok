@@ -2,14 +2,18 @@
 
 ## Environments
 
-### dev 
+### dev
+
 ```bash
 npm run start:dev
 ```
+
 ### prod
+
 ```bash
 npm run start:prod
 ```
+
 ### Run locally
 
 Ensure .env (not in git - secret!) file is present in the root of the project. At build time we replace values from `.env` file to `environment.ts` file (dev or prod) based on the environment.

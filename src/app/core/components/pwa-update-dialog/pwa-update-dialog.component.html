@@ -1,25 +1,27 @@
-<h2 mat-dialog-title>
-  {{ 'update_available' | translate }}
-</h2>
+<div [appBackgroundIcon]="'system_update'">
+  <h2 mat-dialog-title>
+    {{ 'update_available' | translate }}
+  </h2>
 
-<mat-dialog-content class="flex flex-col items-start justify-start pb-2">
-  @if (data.currentVersion && data.newVersion) {
-    <div class="flex items-center rounded bg-green-550 px-2 mb-3 text-black">
-      {{ data.currentVersion }}
-      <mat-icon>upgrade</mat-icon>
-      {{ data.newVersion }}
+  <mat-dialog-content class="flex flex-col items-start justify-start pb-2">
+    @if (data.currentVersion && data.newVersion) {
+      <div class="mb-3 flex items-center rounded bg-green-550 px-2 text-black">
+        {{ data.currentVersion }}
+        <mat-icon inline>upgrade</mat-icon>
+        {{ data.newVersion }}
+      </div>
+    }
+    <div>
+      {{ 'refresh_now_for_updates' | translate }}
+      <app-info class="inline-block" [text]="'new_pwa_version_on_reload' | translate"></app-info>
     </div>
-  }
-  <div>
-    {{ 'refresh_now_for_updates' | translate }}
-    <app-info class="inline-block" [text]="'new_pwa_version_on_reload' | translate"></app-info>
-  </div>
-</mat-dialog-content>
-<mat-dialog-actions class="pt-0">
-  <button mat-button mat-dialog-close (click)="onDismiss()">
-    {{ 'no' | translate }}
-  </button>
-  <button mat-flat-button mat-dialog-close cdkFocusInitial (click)="onReload()">
-    {{ 'ok' | translate }}
-  </button>
-</mat-dialog-actions>
+  </mat-dialog-content>
+  <mat-dialog-actions class="pt-0">
+    <button mat-button mat-dialog-close (click)="onDismiss()">
+      {{ 'no' | translate }}
+    </button>
+    <button mat-flat-button mat-dialog-close cdkFocusInitial (click)="onReload()">
+      {{ 'ok' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

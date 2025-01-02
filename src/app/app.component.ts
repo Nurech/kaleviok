@@ -5,8 +5,8 @@ import { AsyncPipe } from '@angular/common';
 import { IconResolver, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LayoutComponent } from './core/layout/layout.component';
-import { SheetService } from './shared/services/sheet.service';
 import { DialogService } from './shared/services/dialog.service';
+import { PwaUpdateDialogComponent } from './core/components/pwa-update-dialog/pwa-update-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,6 @@ import { DialogService } from './shared/services/dialog.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  private sheetService = inject(SheetService);
   private iconRegistry = inject(MatIconRegistry);
   private sanitizer = inject(DomSanitizer);
   private dialogService = inject(DialogService);
@@ -25,6 +24,13 @@ export class AppComponent implements OnInit {
     this.initializeIconRegistry();
     // this.sheetService.open(LoginComponent);
     // this.dialogService.open(PwaUpdateDialogComponent);
+
+    this.dialogService.open(PwaUpdateDialogComponent, {
+      data: {
+        currentVersion: '0.0.65',
+        newVersion: '0.0.66',
+      },
+    });
   }
 
   initializeIconRegistry() {

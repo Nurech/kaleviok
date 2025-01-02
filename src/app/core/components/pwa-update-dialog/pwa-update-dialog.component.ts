@@ -6,6 +6,7 @@ import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { InfoComponent } from '../../../shared/components/info/info.component';
 import { DialogService } from '../../../shared/services/dialog.service';
+import { BackgroundIconDirective } from '../../../shared/directives/background-icon.directive';
 
 @Component({
   selector: 'app-pwa-update-dialog',
@@ -19,6 +20,7 @@ import { DialogService } from '../../../shared/services/dialog.service';
     MatIcon,
     InfoComponent,
     TranslatePipe,
+    BackgroundIconDirective,
   ],
   templateUrl: './pwa-update-dialog.component.html',
   styleUrls: ['./pwa-update-dialog.component.scss'],
