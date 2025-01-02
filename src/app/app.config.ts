@@ -1,9 +1,4 @@
-import {
-  APP_INITIALIZER,
-  ApplicationConfig,
-  importProvidersFrom,
-  provideZoneChangeDetection,
-} from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
@@ -61,7 +56,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(RootStoreModule),
     provideServiceWorker('ngsw-worker.js', {
       enabled: true,
-      registrationStrategy: 'registerWhenStable:30000',
+      registrationStrategy: 'registerImmediately',
     }),
     provideAnimationsAsync(),
     {
