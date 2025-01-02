@@ -22,34 +22,12 @@ export class NotificationService {
         getToken(this.msg, {
           serviceWorkerRegistration: serviceWorkerRegistration,
         }).then((x) => {
-          console.log('FCM Token:', x);
+          console.log('FCM SW registration successful! FCM Token:', x);
         });
       })
       .catch((error) => {
         console.error('Service Worker registration failed:', error);
       });
-  }
-
-  async requestPermission() {
-    try {
-      const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        console.log('Notification permission granted.');
-        const token = await getToken(this.messaging, {
-          vapidKey: 'YOUR_PUBLIC_VAPID_KEY',
-        });
-        if (token) {
-          console.log('FCM Token:', token);
-          // TODO: Send the token to your server to store it and use it to send notifications.
-        } else {
-          console.log('No registration token available. Request permission to generate one.');
-        }
-      } else {
-        console.log('Unable to get permission to notify.');
-      }
-    } catch (error) {
-      console.error('An error occurred while requesting permission or getting token.', error);
-    }
   }
 
   listen() {
@@ -58,10 +36,12 @@ export class NotificationService {
       const notificationTitle = payload.notification?.title || 'Default Title';
       const notificationOptions = {
         body: payload.notification?.body || 'Default Body',
-        icon: payload.notification?.icon || '/assets/default-icon.png',
+        icon: payload.notification?.icon || '/img/logo.svg',
+        data: {
+          url: payload.data?.['click_action'] || 'https://default-link.com', // Default action
+        },
       };
 
-      // Show notification using Service Worker
       if (Notification.permission === 'granted') {
         navigator.serviceWorker.getRegistration().then((registration) => {
           if (registration) {

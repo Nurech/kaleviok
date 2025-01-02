@@ -5,52 +5,40 @@
 const fs = require('fs');
 const path = require('path');
 
-// Load environment variables and sanitize them
-function loadAndSanitizeEnv(filePath) {
-  const envContent = fs.readFileSync(path.resolve(filePath), 'utf-8');
-  const sanitizedEnv = {};
+// Load local .env file based on the environment
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'dev'}` });
 
-  envContent
-    .split('\n')
-    .map((line) => line.trim()) // Remove leading/trailing spaces
-    .filter((line) => line && !line.startsWith('#')) // Remove empty lines and comments
-    .forEach((line) => {
-      const [key, value] = line.split('=');
-      sanitizedEnv[key.trim()] = value.trim();
+// Files to process
+const filesToProcess = [
+  {
+    templateFile: './src/environments/environment.template.ts',
+    outputFile: './src/environments/environment.ts',
+  },
+  {
+    templateFile: './src/firebase-messaging-sw.template.js',
+    outputFile: './src/firebase-messaging-sw.js',
+  },
+];
+
+// Function to process templates
+function replacePlaceholders({ templateFile, outputFile }) {
+  try {
+    const template = fs.readFileSync(path.resolve(templateFile), 'utf-8');
+    const replaced = template.replace(/\$(\w+)/g, (_, key) => {
+      if (!process.env[key]) {
+        console.error(`Missing environment variable: ${key}`);
+        process.exit(1);
+      }
+      return process.env[key];
     });
 
-  return sanitizedEnv;
+    fs.writeFileSync(path.resolve(outputFile), replaced, 'utf-8');
+    console.log(`Generated: ${outputFile}`);
+  } catch (error) {
+    console.error(`Failed to process file: ${templateFile}`, error);
+    process.exit(1);
+  }
 }
 
-// File to process and .env file
-const envFilePath = `.env.${process.env.NODE_ENV || 'dev'}`;
-const filesToReplace = ['./src/firebase-messaging-sw.js', './src/environments/environment.ts'];
-const envVariables = loadAndSanitizeEnv(envFilePath);
-
-// Function to replace key-value pairs in a file
-function replaceEnvVariables(filePath, envVariables) {
-  let content = fs.readFileSync(path.resolve(filePath), 'utf-8');
-  const lines = content.split('\n');
-
-  Object.entries(envVariables).forEach(([key, value]) => {
-    const regex = new RegExp(`\\s*${key}:\\s*['"].*?['"],?`); // Match existing key-value pairs
-    const formattedLine = `  ${key}: '${value}',`; // Properly formatted new line
-
-    const lineIndex = lines.findIndex((line) => regex.test(line));
-    if (lineIndex !== -1) {
-      // Replace the line if the key exists
-      lines[lineIndex] = formattedLine;
-    } else {
-      // Add the new line if the key doesn't exist
-      const insertIndex = lines.findIndex((line) => line.trim() === '}'); // Before the closing brace
-      lines.splice(insertIndex, 0, formattedLine);
-    }
-  });
-
-  content = lines.join('\n');
-  fs.writeFileSync(path.resolve(filePath), content, 'utf-8');
-  console.log(`Processed and updated keys in: ${filePath}`);
-}
-
-// Process each file
-filesToReplace.forEach((file) => replaceEnvVariables(file, envVariables));
+// Process all files
+filesToProcess.forEach(replacePlaceholders);
