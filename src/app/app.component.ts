@@ -6,7 +6,6 @@ import { IconResolver, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LayoutComponent } from './core/layout/layout.component';
 import { SheetService } from './shared/services/sheet.service';
-import { SnackbarService } from './shared/services/snackbar.service';
 import { DialogService } from './shared/services/dialog.service';
 
 @Component({
@@ -20,7 +19,6 @@ export class AppComponent implements OnInit {
   private sheetService = inject(SheetService);
   private iconRegistry = inject(MatIconRegistry);
   private sanitizer = inject(DomSanitizer);
-  private snackbarService = inject(SnackbarService);
   private dialogService = inject(DialogService);
 
   ngOnInit(): void {
