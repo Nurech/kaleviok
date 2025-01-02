@@ -55,7 +55,7 @@ export const appConfig: ApplicationConfig = {
     provideRouterStore(),
     importProvidersFrom(RootStoreModule),
     provideServiceWorker('ngsw-worker.js', {
-      enabled: false,
+      enabled: true,
       registrationStrategy: 'registerImmediately',
     }),
     provideAnimationsAsync(),
