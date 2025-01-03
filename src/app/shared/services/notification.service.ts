@@ -1,5 +1,5 @@
-import { inject, Injectable } from '@angular/core';
-import { getToken, Messaging, onMessage } from '@angular/fire/messaging';
+import { Injectable, inject } from '@angular/core';
+import { isSupported, getToken, Messaging, onMessage } from '@angular/fire/messaging';
 import { SwPush } from '@angular/service-worker';
 
 @Injectable({
@@ -7,11 +7,22 @@ import { SwPush } from '@angular/service-worker';
 })
 export class NotificationService {
   private messaging = inject(Messaging);
+  private swPush = inject(SwPush);
 
-  constructor(private swPush: SwPush) {
-    this.initializeFirebaseMessaging();
-    this.requestPermission();
-    this.listenToMessages();
+  async initializeService() {
+    try {
+      const supported = await isSupported();
+      if (!supported) {
+        console.warn('Firebase Messaging is not supported in this browser.');
+        return;
+      }
+
+      await this.initializeFirebaseMessaging();
+      await this.requestPermission();
+      this.listenToMessages();
+    } catch (error) {
+      console.error('Error initializing NotificationService:', error);
+    }
   }
 
   private async initializeFirebaseMessaging() {
@@ -22,9 +33,10 @@ export class NotificationService {
         return;
       }
 
-      // Get and log the FCM token
-      const token = await this.getFCMToken(registration);
-      console.log('FCM Token:', token);
+      if (this.messaging) {
+        const token = await this.getFCMToken(registration);
+        console.log('FCM Token:', token);
+      }
     } catch (error) {
       console.error('Error initializing Firebase Messaging:', error);
     }
@@ -45,9 +57,12 @@ export class NotificationService {
 
   private async getFCMToken(serviceWorkerRegistration: ServiceWorkerRegistration): Promise<string | null> {
     try {
-      return await getToken(this.messaging, {
-        serviceWorkerRegistration,
-      });
+      if (!this.messaging) {
+        console.error('Messaging is not initialized.');
+        return null;
+      }
+
+      return await getToken(this.messaging, { serviceWorkerRegistration });
     } catch (error) {
       console.error('Error fetching FCM token:', error);
       return null;
@@ -55,13 +70,18 @@ export class NotificationService {
   }
 
   private listenToMessages() {
+    if (!this.messaging) {
+      console.warn('Messaging is not supported. Skipping message listening.');
+      return;
+    }
+
     // Foreground message handling
     onMessage(this.messaging, (payload) => {
-      console.log('Foreground message received: ', payload);
+      console.log('Foreground message received:', payload);
       const notificationTitle = payload.notification?.title || 'Default Title';
       const notificationOptions = {
         body: payload.notification?.body || 'Default Body',
-        icon: '/assets/logo.svg', // Replace with your app's icon
+        icon: '/assets/logo.svg',
         data: {
           url: payload.data?.['click_action'] || 'https://your-default-link.com',
         },

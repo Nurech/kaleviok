@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeIconRegistry();
+    this.notificationService.initializeService();
     // this.sheetService.open(LoginComponent);
     // this.dialogService.open(PwaUpdateDialogComponent);
   }
