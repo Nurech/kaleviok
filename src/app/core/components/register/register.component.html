@@ -1,7 +1,7 @@
 <div class="flex w-full justify-center pb-3">
   <div class="max-w-xl flex-col">
     <div class="flex justify-center py-4 text-xl">
-      <h1>{{ 'login_to_your_account' | translate }}</h1>
+      <h1>{{ 'register_your_account' | translate }}</h1>
     </div>
 
     <div>
@@ -13,44 +13,43 @@
           <mat-error>{{ emailErrorMessage() }}</mat-error>
         }
       </mat-form-field>
+
       <mat-form-field class="w-full pb-1">
         <mat-label>{{ 'enter_your_password' | translate }}</mat-label>
-        <input matInput [formControl]="password" [type]="hide() ? 'password' : 'text'" required />
+        <input matInput [formControl]="password" [type]="hidePassword() ? 'password' : 'text'" required />
         <button
           mat-icon-button
           matSuffix
           (click)="togglePasswordVisibility()"
-          [attr.aria-label]="hide() ? 'Show password' : 'Hide password'"
+          [attr.aria-label]="hidePassword() ? 'Show password' : 'Hide password'"
         >
-          <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
         @if (password.invalid) {
           <mat-error>{{ passwordErrorMessage() }}</mat-error>
         }
       </mat-form-field>
-    </div>
 
-    <button mat-raised-button color="primary" class="w-full" (click)="loginWithEmail()">
-      {{ 'login' | translate }}
-    </button>
-
-    <div>
-      <div class="flex items-center justify-center">
-        <mat-checkbox
-          [labelPosition]="'after'"
-          [checked]="(mySettings$ | async)?.autologin"
-          (change)="rememberMe($event.checked)"
+      <mat-form-field class="w-full pb-1">
+        <mat-label>{{ 'confirm_your_password' | translate }}</mat-label>
+        <input matInput [formControl]="confirmPassword" [type]="hideConfirmPassword() ? 'password' : 'text'" required />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="toggleConfirmPasswordVisibility()"
+          [attr.aria-label]="hideConfirmPassword() ? 'Show password' : 'Hide password'"
         >
-          {{ 'remember_me' | translate }}
-        </mat-checkbox>
-        <app-info class="mx-1" [text]="'remember_me_info' | translate"></app-info>
-      </div>
-      <div class="flex items-center justify-center py-2">
-        <a [routerLink]="['/forgot-password']">{{ 'forgot_password' | translate }}</a>
-        <a class="pl-1" [routerLink]="['/register']">{{ 'register' | translate }}</a>
-        <app-info class="mx-1" [text]="'only_members_can_register' | translate"></app-info>
-      </div>
+          <mat-icon>{{ hideConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (confirmPassword.invalid || !passwordsMatch()) {
+          <mat-error>{{ confirmPasswordErrorMessage() }}</mat-error>
+        }
+      </mat-form-field>
     </div>
+
+    <button mat-raised-button color="primary" class="w-full" (click)="registerWithEmail()" [disabled]="!canRegister()">
+      {{ 'register' | translate }}
+    </button>
 
     <div class="flex flex-row items-center justify-center py-3">
       <mat-divider class="w-full"></mat-divider>
@@ -61,9 +60,9 @@
     </div>
 
     <div class="flex justify-center">
-      <button mat-raised-button color="primary" (click)="loginWithGoogle()">
+      <button mat-raised-button color="primary" (click)="registerWithGoogle()">
         <mat-icon svgIcon="google_logo"></mat-icon>
-        {{ 'login.google' | translate }}
+        {{ 'register_with_google' | translate }}
       </button>
     </div>
   </div>

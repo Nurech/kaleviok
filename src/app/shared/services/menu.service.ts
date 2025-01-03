@@ -22,7 +22,7 @@ export interface MenuItem<T> {
 export class MenuService {
   private store$ = inject(Store);
   private sheetService = inject(SheetService);
-  isDrawerOpen = signal(true);
+  isDrawerOpen = signal(false);
 
   isAuthenticated = signal(false);
 
@@ -45,6 +45,13 @@ export class MenuService {
       onClick: () => this.handleNavigation('/profile'),
     },
     {
+      label: 'login',
+      icon: 'login',
+      position: 'end',
+      show: !this.isAuthenticated(),
+      onClick: () => this.sheetService.open(LoginComponent),
+    },
+    {
       label: 'dashboard',
       icon: 'team_dashboard',
       position: 'start',
@@ -58,13 +65,7 @@ export class MenuService {
       show: true,
       href: '/users',
     },
-    {
-      label: 'login',
-      icon: 'login',
-      position: 'end',
-      show: !this.isAuthenticated(),
-      onClick: () => this.sheetService.open(LoginComponent),
-    },
+
     {
       label: 'admin_panel_settings',
       icon: 'admin_panel_settings',

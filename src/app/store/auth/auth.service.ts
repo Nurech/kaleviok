@@ -1,6 +1,7 @@
 import { inject, Injectable, signal, effect } from '@angular/core';
 import {
   Auth,
+  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -59,6 +60,10 @@ export class AuthService {
           this.store$.dispatch(manualLogin());
         }
       });
+  }
+
+  registerWithEmail(email: string, password: string) {
+    return from(createUserWithEmailAndPassword(this.auth, email, password));
   }
 
   loginWithGoogle() {
