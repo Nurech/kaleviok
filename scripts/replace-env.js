@@ -1,6 +1,6 @@
 /**
  * The following script reads the environment.template.ts file
- * and replaces the placeholders in environment.ts and firebase-messaging-sw.js
+ * and replaces the placeholders in environment.ts
  */
 const fs = require('fs');
 const path = require('path');
@@ -13,10 +13,6 @@ const filesToProcess = [
   {
     templateFile: './src/environments/environment.template.ts',
     outputFile: './src/environments/environment.ts',
-  },
-  {
-    templateFile: './src/firebase-messaging-sw.template.js',
-    outputFile: './src/firebase-messaging-sw.js',
   },
 ];
 

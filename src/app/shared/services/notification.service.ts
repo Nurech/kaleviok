@@ -1,5 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import { Messaging, getToken, onMessage } from '@angular/fire/messaging';
+import { inject, Injectable } from '@angular/core';
+import { getToken, Messaging, onMessage } from '@angular/fire/messaging';
+import { SwPush } from '@angular/service-worker';
 
 @Injectable({
   providedIn: 'root',
@@ -7,38 +8,60 @@ import { Messaging, getToken, onMessage } from '@angular/fire/messaging';
 export class NotificationService {
   private messaging = inject(Messaging);
 
-  constructor() {
-    this.listen();
-
-    Notification.requestPermission().then((notificationPermissions: NotificationPermission) => {
-      if (notificationPermissions === 'granted') {
-        console.log('Granted');
-      }
-      if (notificationPermissions === 'denied') {
-        console.log('Denied');
-      }
-    });
-    navigator.serviceWorker
-      .register('/firebase-messaging-sw.js')
-      .then((serviceWorkerRegistration) => {
-        getToken(this.messaging, {
-          serviceWorkerRegistration: serviceWorkerRegistration,
-        }).then((x) => {
-          console.log('FCM SW registration successful! FCM Token:', x);
-        });
-      })
-      .catch((error) => {
-        console.error('Service Worker registration failed:', error);
-      });
+  constructor(private swPush: SwPush) {
+    this.initializeFirebaseMessaging();
+    this.requestPermission();
+    this.listenToMessages();
   }
 
-  listen() {
+  private async initializeFirebaseMessaging() {
+    try {
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (!registration) {
+        console.error('Service worker registration not found.');
+        return;
+      }
+
+      // Get and log the FCM token
+      const token = await this.getFCMToken(registration);
+      console.log('FCM Token:', token);
+    } catch (error) {
+      console.error('Error initializing Firebase Messaging:', error);
+    }
+  }
+
+  private async requestPermission() {
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+      } else {
+        console.error('Notification permission denied.');
+      }
+    } catch (error) {
+      console.error('Error requesting notification permission:', error);
+    }
+  }
+
+  private async getFCMToken(serviceWorkerRegistration: ServiceWorkerRegistration): Promise<string | null> {
+    try {
+      return await getToken(this.messaging, {
+        serviceWorkerRegistration,
+      });
+    } catch (error) {
+      console.error('Error fetching FCM token:', error);
+      return null;
+    }
+  }
+
+  private listenToMessages() {
+    // Foreground message handling
     onMessage(this.messaging, (payload) => {
-      console.log('Message received. ', payload);
+      console.log('Foreground message received: ', payload);
       const notificationTitle = payload.notification?.title || 'Default Title';
       const notificationOptions = {
         body: payload.notification?.body || 'Default Body',
-        icon: '/logo.svg', // Replace with your app's icon
+        icon: '/assets/logo.svg', // Replace with your app's icon
         data: {
           url: payload.data?.['click_action'] || 'https://your-default-link.com',
         },
@@ -53,6 +76,11 @@ export class NotificationService {
           }
         });
       }
+    });
+
+    // Background message handling through SwPush
+    this.swPush.messages.subscribe((message) => {
+      console.log('Background message received via SwPush:', message);
     });
   }
 }
