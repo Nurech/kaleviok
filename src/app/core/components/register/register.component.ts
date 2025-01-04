@@ -79,14 +79,6 @@ export class RegisterComponent {
     });
   }
 
-  onSubmit() {
-    if (this.registerForm.valid) {
-      const { email, password } = this.registerForm.value;
-      console.log('Registration successful:', { email, password });
-      this.store$.dispatch(emailRegisterStart({ email, password }));
-    }
-  }
-
   emailErrorMessage(): string {
     const emailControl = this.registerForm.get('email');
     if (emailControl?.hasError('required')) {
@@ -123,6 +115,13 @@ export class RegisterComponent {
       return this.translate.instant('passwords_do_not_match');
     }
     return '';
+  }
+
+  onSubmit() {
+    if (this.registerForm.valid) {
+      const { email, password } = this.registerForm.value;
+      this.store$.dispatch(emailRegisterStart({ email, password }));
+    }
   }
 
   registerWithGoogle() {

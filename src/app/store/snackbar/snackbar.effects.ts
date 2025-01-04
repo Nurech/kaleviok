@@ -4,9 +4,9 @@ import { tap } from 'rxjs/operators';
 import { FirebaseError } from '@angular/fire/app';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackbarService } from './snackbar.service';
-import { emailRegisterError, logout } from '../auth/auth.actions';
+import { emailRegisterError } from '../auth/auth.actions';
 import { Snackbar } from './snackbar.model';
-import { closeAllSnackbars } from './snackbar.actions';
+import { closeAllSnackbars, openSnackbar } from './snackbar.actions';
 
 @Injectable()
 export class SnackbarEffects {
@@ -48,14 +48,15 @@ export class SnackbarEffects {
     { dispatch: false },
   );
 
-  showSnackbar = createEffect(
+  opanSnackbar = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(logout),
-        tap(() => {
-          console.log('Logging out');
-          const snack: Snackbar = { type: 'success', message: 'you_have_been_logged_out' };
-          this.snackbarService.open(snack);
+        ofType(openSnackbar),
+        tap(({ payload }) => {
+          if (!payload.duration) {
+            payload.duration = 5000;
+          }
+          this.snackbarService.open(payload);
         }),
       ),
     { dispatch: false },

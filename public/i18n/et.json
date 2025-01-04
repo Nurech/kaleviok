@@ -17,6 +17,7 @@
   "email_is_required": "Email on kohustuslik",
   "not_a_valid_email": "Vigane email",
   "remember_me": "Mäleta mind",
+  "register_email_account_success": "Konto on edukalt loodud. Kontrolli oma emaili kinnitamiseks.",
   "remember_me_info": "Järgmine kord logime sisse automaatselt. Seadeid saab ka hiljem muuta.",
   "new_pwa_version_on_reload": "Uue versiooni laadimine võtab aega mõne hetke",
   "refresh_now_for_updates": "Kas soovid kohe värskendada uuenduste saamiseks?",

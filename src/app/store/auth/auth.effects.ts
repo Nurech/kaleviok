@@ -23,6 +23,7 @@ import { LoginMethod } from '../settings/settings.model';
 import { LoginComponent } from '../../core/components/login/login.component';
 import { SheetService } from '../../shared/services/sheet.service';
 import { SnackbarService } from '../snackbar/snackbar.service';
+import { openSnackbar } from '../snackbar/snackbar.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -80,6 +81,7 @@ export class AuthEffects {
         ofType(logout),
         tap(() => {
           this.authService.logout();
+          this.store$.dispatch(openSnackbar({ payload: { type: 'success', message: 'you_have_been_logged_out' } }));
         }),
       ),
     { dispatch: false },
@@ -92,6 +94,9 @@ export class AuthEffects {
         this.authService.registerWithEmail(email, password).pipe(
           map((response) => {
             const payload: Account = UserMapper.mapUserCredentialToUser(response);
+            this.store$.dispatch(
+              openSnackbar({ payload: { type: 'success', message: 'register_email_account_success' } }),
+            );
             return emailRegisterSuccess({ payload });
           }),
           catchError((error) => of(emailRegisterError({ error }))),
