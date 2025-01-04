@@ -42,5 +42,12 @@
   "open_menu": "Ava menüü",
   "dont_show_this_again": "Ära näita seda enam",
   "checking_will_prevent": "Rohkem ei näidata sulle installi juhiseid. Rakendust saab siiski ka hiljem installida.",
-  "users": "Kasutajad"
+  "users": "Kasutajad",
+  "email_required": "E-post on kohustuslik",
+  "invalid_email": "Vigane e-post",
+  "password_required": "Parool on kohustuslik",
+  "password_minlength": "Parool pole {{min}} tähemärki pikk",
+  "confirm_password_required": "Kinnita parool on kohustuslik",
+  "auth/email-already-in-use": "Email on juba kasutusel",
+  "passwords_do_not_match": "Paroolid ei ühti"
 }

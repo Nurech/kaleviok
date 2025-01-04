@@ -1,26 +1,31 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
-import { MatButton, MatIconButton } from '@angular/material/button';
-import { NgClass, NgIf } from '@angular/common';
-import { state } from '@angular/animations';
+import { Component, inject, Inject } from '@angular/core';
+import { MAT_SNACK_BAR_DATA, MatSnackBarAction } from '@angular/material/snack-bar';
+import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
+import { NgClass } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
-import { Snackbar, SnackbarActions, SnackbarType } from '../../models';
+import { Router, RouterLink } from '@angular/router';
+import { Snackbar, SnackbarType } from '../../models/snackbar-model';
 
 @Component({
   selector: 'app-snackbar',
   standalone: true,
-  imports: [MatButton, NgIf, MatProgressSpinner, MatIcon, MatIconButton, NgClass],
+  imports: [MatButton, MatProgressSpinner, MatIcon, MatIconButton, NgClass, MatAnchor, RouterLink, MatSnackBarAction],
   templateUrl: './snackbar.component.html',
   styleUrl: './snackbar.component.scss',
 })
 export class SnackbarComponent {
+  router = inject(Router);
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: Snackbar) {}
-  protected readonly state = state;
-  protected readonly SnackbarState = SnackbarType;
-  protected readonly SnackbarActions = SnackbarActions;
 
   onClose() {
     this.data.self?.dismiss();
   }
+
+  navigateToLink() {
+    console.log('Navigating to link', this.data);
+    this.router.navigate([this.data.action?.link]);
+  }
+
+  protected readonly SnackbarType = SnackbarType;
 }

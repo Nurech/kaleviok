@@ -1,10 +1,20 @@
 <div class="flex flex-row items-center justify-center space-x-4">
+  <div>
+    @if (data.type === SnackbarType.WARN) {
+      <mat-icon>warning</mat-icon>
+    }
+  </div>
   <span class="flex items-center justify-center">{{ data.message }}</span>
 
   @if (data.action) {
-    @if (data.action === SnackbarActions.CLOSE) {
+    @if (data.action.type === 'close') {
       <button mat-icon-button class="ml-4" (click)="onClose()">
         <mat-icon>close</mat-icon>
+      </button>
+    }
+    @if (data.action.type === 'link') {
+      <button matSnackBarAction mat-flat-button (click)="navigateToLink()" class="ml-2">
+        {{ data.action.buttonText }}
       </button>
     }
   }

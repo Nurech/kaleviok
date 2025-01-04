@@ -13,6 +13,9 @@ import {
   googleStart,
   googleSuccess,
   logout,
+  emailRegisterStart,
+  emailRegisterSuccess,
+  emailRegisterError,
 } from './auth.actions';
 import { AuthService } from './auth.service';
 import { updateMySettings } from '../settings/settings.actions';
@@ -81,5 +84,20 @@ export class AuthEffects {
         }),
       ),
     { dispatch: false },
+  );
+
+  registerWithEmailAndPassword$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(emailRegisterStart),
+      mergeMap(({ email, password }) =>
+        this.authService.registerWithEmail(email, password).pipe(
+          map((response) => {
+            const payload: Account = UserMapper.mapUserCredentialToUser(response);
+            return emailRegisterSuccess({ payload });
+          }),
+          catchError((error) => of(emailRegisterError({ error }))),
+        ),
+      ),
+    ),
   );
 }

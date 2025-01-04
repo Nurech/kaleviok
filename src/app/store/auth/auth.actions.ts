@@ -12,3 +12,10 @@ export const emailError = createAction('[Auth] Email Password Error', props<{ er
 export const logout = createAction('[Auth] Logout');
 export const startAutoLogin = createAction('[Auth] Start Auto Login');
 export const manualLogin = createAction('[Auth] Manual Login');
+
+export const emailRegisterStart = createAction(
+  '[Auth] Email Register Start',
+  props<{ email: string; password: string }>(),
+);
+export const emailRegisterSuccess = createAction('[Auth] Email Register Success', props<{ payload: Account }>());
+export const emailRegisterError = createAction('[Auth] Email Register Error', props<{ error: Error }>());

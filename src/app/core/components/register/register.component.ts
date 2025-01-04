@@ -1,16 +1,20 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, computed, inject, signal, Signal } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDivider } from '@angular/material/divider';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../../store/auth/auth.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { debounceTime, of } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { InfoComponent } from '../../../shared/components/info/info.component';
+import { CustomValidators } from '../../../shared/validators/custom-validators';
+import { emailRegisterStart } from '../../../store/auth/auth.actions';
 
 @Component({
   selector: 'app-register',
@@ -19,8 +23,6 @@ import { InfoComponent } from '../../../shared/components/info/info.component';
   imports: [
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatButton,
     MatIcon,
     TranslatePipe,
@@ -30,71 +32,100 @@ import { InfoComponent } from '../../../shared/components/info/info.component';
     RouterLink,
     InfoComponent,
     AsyncPipe,
+    NgIf,
+    ReactiveFormsModule,
   ],
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  authService = inject(AuthService);
+  fb = inject(FormBuilder);
+  translate = inject(TranslateService);
+  store$ = inject(Store);
 
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required, Validators.minLength(6)]);
-  confirmPassword = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  registerForm: FormGroup = this.fb.group(
+    {
+      email: new FormControl<string>('partsjoosep@gmail.com', [Validators.required, Validators.email]),
+      password: new FormControl<string>('123123', [Validators.required, Validators.minLength(6)]),
+      confirmPassword: new FormControl<string>('123123', [Validators.required, Validators.minLength(6)]),
+    },
+    { validators: CustomValidators.match('password', 'confirmPassword') },
+  );
+
+  emailSignal: Signal<string | null>;
+  passwordSignal: Signal<string | null>;
+  confirmPasswordSignal: Signal<string | null>;
+  passwordsMatchSignal: Signal<boolean>;
   hidePassword = signal(true);
-  hideConfirmPassword = signal(true);
-  passwordsMatch = computed(
-    () => this.password.value === this.confirmPassword.value && !!this.password.value && !!this.confirmPassword.value,
-  );
-  canRegister = computed(
-    () => this.email.valid && this.password.valid && this.confirmPassword.valid && this.passwordsMatch(),
-  );
 
   constructor() {
-    effect(() => {
-      if (this.password.value && this.confirmPassword.value) {
-        console.log(`Passwords match: ${this.passwordsMatch()}`);
-      }
+    this.emailSignal = toSignal(this.registerForm.get('email')?.valueChanges.pipe(debounceTime(300)) ?? of(null), {
+      initialValue: this.registerForm.get('email')?.value ?? null,
+    });
+
+    this.passwordSignal = toSignal(
+      this.registerForm.get('password')?.valueChanges.pipe(debounceTime(300)) ?? of(null),
+      { initialValue: this.registerForm.get('password')?.value ?? null },
+    );
+
+    this.confirmPasswordSignal = toSignal(
+      this.registerForm.get('confirmPassword')?.valueChanges.pipe(debounceTime(300)) ?? of(null),
+      { initialValue: this.registerForm.get('confirmPassword')?.value ?? null },
+    );
+
+    this.passwordsMatchSignal = computed(() => {
+      const password = this.registerForm.get('password')?.value;
+      const confirmPassword = this.registerForm.get('confirmPassword')?.value;
+      return password === confirmPassword && !!password && !!confirmPassword;
     });
   }
 
-  togglePasswordVisibility() {
-    this.hidePassword.set(!this.hidePassword());
-  }
-
-  toggleConfirmPasswordVisibility() {
-    this.hideConfirmPassword.set(!this.hideConfirmPassword());
+  onSubmit() {
+    if (this.registerForm.valid) {
+      const { email, password } = this.registerForm.value;
+      console.log('Registration successful:', { email, password });
+      this.store$.dispatch(emailRegisterStart({ email, password }));
+    }
   }
 
   emailErrorMessage(): string {
-    if (this.email.hasError('required')) return 'Email is required';
-    if (this.email.hasError('email')) return 'Invalid email';
+    const emailControl = this.registerForm.get('email');
+    if (emailControl?.hasError('required')) {
+      return this.translate.instant('email_required');
+    }
+    if (emailControl?.hasError('email')) {
+      return this.translate.instant('invalid_email');
+    }
     return '';
   }
 
   passwordErrorMessage(): string {
-    if (this.password.hasError('required')) return 'Password is required';
-    if (this.password.hasError('minlength')) return 'Password must be at least 6 characters';
+    const passwordControl = this.registerForm.get('password');
+    if (passwordControl?.hasError('required')) {
+      return this.translate.instant('password_required');
+    }
+    if (passwordControl?.hasError('minlength')) {
+      const requiredLength = passwordControl.errors?.['minlength']?.requiredLength;
+      return this.translate.instant('password_minlength', { min: requiredLength });
+    }
     return '';
   }
 
   confirmPasswordErrorMessage(): string {
-    if (this.confirmPassword.hasError('required')) return 'Please confirm your password';
-    if (!this.passwordsMatch()) return 'Passwords do not match';
+    const confirmPasswordControl = this.registerForm.get('confirmPassword');
+    if (confirmPasswordControl?.hasError('required')) {
+      return this.translate.instant('confirm_password_required');
+    }
+    if (confirmPasswordControl?.hasError('minlength')) {
+      const requiredLength = confirmPasswordControl.errors?.['minlength']?.requiredLength;
+      return this.translate.instant('password_minlength', { min: requiredLength });
+    }
+    if (!this.passwordsMatchSignal()) {
+      return this.translate.instant('passwords_do_not_match');
+    }
     return '';
   }
 
-  registerWithEmail() {
-    if (this.canRegister()) {
-      this.authService.registerWithEmail(this.email.value!, this.password.value!).subscribe(
-        () => console.log('Registration successful'),
-        (error) => console.error('Registration error:', error),
-      );
-    }
-  }
-
   registerWithGoogle() {
-    this.authService.loginWithGoogle().subscribe(
-      () => console.log('Google registration successful'),
-      (error) => console.error('Google registration error:', error),
-    );
+    console.log('Registering with Google...');
   }
 }

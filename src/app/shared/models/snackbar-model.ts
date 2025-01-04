@@ -7,18 +7,20 @@ export enum SnackbarType {
   ERROR = 'error',
 }
 
-export enum SnackbarActions {
-  CLOSE = 'close',
+export interface SnackbarAction {
+  type: string;
+  link: string;
+  buttonText: string;
 }
 
 export class Snackbar {
   self?: MatSnackBar;
   type?: SnackbarType = SnackbarType.INFO;
   message?: string;
-  action?: string;
+  action?: SnackbarAction;
   duration?: number = 30000;
 
-  constructor(type?: SnackbarType, message?: string, duration?: number, self?: MatSnackBar, action?: string) {
+  constructor(type?: SnackbarType, message?: string, duration?: number, self?: MatSnackBar, action?: SnackbarAction) {
     this.message = message;
     this.type = type;
     this.duration = duration;

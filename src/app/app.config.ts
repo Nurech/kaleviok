@@ -14,7 +14,7 @@ import { provideRouterStore } from '@ngrx/router-store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
-import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {
   MissingTranslationHandler,
   provideTranslateService,
@@ -46,6 +46,7 @@ export const appConfig: ApplicationConfig = {
     provideAnalytics(() => getAnalytics()),
     ScreenTrackingService,
     UserTrackingService,
+    provideHttpClient(withInterceptorsFromDi()),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => getFunctions()),
     provideMessaging(() => getMessaging()),
@@ -63,7 +64,6 @@ export const appConfig: ApplicationConfig = {
       provide: MAT_ICON_DEFAULT_OPTIONS,
       useValue: { fontSet: 'material-symbols-outlined' },
     },
-    provideHttpClient(withFetch()),
     provideTranslateService({
       missingTranslationHandler: {
         provide: MissingTranslationHandler,
