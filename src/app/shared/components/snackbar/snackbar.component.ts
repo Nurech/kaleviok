@@ -1,11 +1,13 @@
-import { Component, inject, Inject } from '@angular/core';
+import { Component, inject, HostListener, ElementRef } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBarAction } from '@angular/material/snack-bar';
 import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
 import { NgClass } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
-import { Snackbar, SnackbarType } from '../../../store/snackbar/snackbar.model';
+import { Store } from '@ngrx/store';
+import { Snackbar } from '../../../store/snackbar/snackbar.model';
+import { closeAllSnackbars } from '../../../store/snackbar/snackbar.actions';
 
 @Component({
   selector: 'app-snackbar',
@@ -15,11 +17,13 @@ import { Snackbar, SnackbarType } from '../../../store/snackbar/snackbar.model';
   styleUrl: './snackbar.component.scss',
 })
 export class SnackbarComponent {
-  router = inject(Router);
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: Snackbar) {}
+  private router = inject(Router);
+  private store$ = inject(Store);
+  private elementRef = inject(ElementRef);
+  data: Snackbar = inject(MAT_SNACK_BAR_DATA);
 
   onClose() {
-    this.data.self?.dismiss();
+    this.store$.dispatch(closeAllSnackbars());
   }
 
   navigateToLink() {
@@ -27,5 +31,11 @@ export class SnackbarComponent {
     this.router.navigate([this.data.action?.link]);
   }
 
-  protected readonly SnackbarType = SnackbarType;
+  @HostListener('document:click', ['$event'])
+  handleOutsideClick(event: Event) {
+    const target = event.target as Node;
+    if (!this.elementRef.nativeElement.contains(target)) {
+      this.onClose();
+    }
+  }
 }

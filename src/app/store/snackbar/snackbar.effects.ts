@@ -5,7 +5,8 @@ import { FirebaseError } from '@angular/fire/app';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackbarService } from './snackbar.service';
 import { emailRegisterError, logout } from '../auth/auth.actions';
-import { Snackbar, SnackbarType } from './snackbar.model';
+import { Snackbar } from './snackbar.model';
+import { closeAllSnackbars } from './snackbar.actions';
 
 @Injectable()
 export class SnackbarEffects {
@@ -28,16 +29,16 @@ export class SnackbarEffects {
         ofType(emailRegisterError),
         tap((action) => {
           if (this.isFirebaseError(action.error)) {
-            const snack = new Snackbar();
-            snack.type = SnackbarType.WARN;
-            snack.message = this.translate.instant(action.error.code);
-            snack.duration = 5000;
-            snack.action = { type: 'close' };
+            const snack: Snackbar = {
+              type: 'warn',
+              message: this.translate.instant(action.error.code),
+              duration: 5000,
+              action: 'link',
+              link: '/forgot-password',
+            };
 
             if (action.error.code === 'auth/email-already-in-use') {
-              snack.action.type = 'link';
-              snack.action.link = '/forgot-password';
-              snack.action.buttonText = this.translate.instant('forgot_password');
+              snack.actionText = this.translate.instant('forgot_password');
             }
 
             this.snackbarService.open(snack);
@@ -53,9 +54,19 @@ export class SnackbarEffects {
         ofType(logout),
         tap(() => {
           console.log('Logging out');
-          this.snackbarService.open(
-            new Snackbar(SnackbarType.SUCCESS, this.translate.instant('you_have_been_logged_out')),
-          );
+          const snack: Snackbar = { type: 'success', message: 'you_have_been_logged_out' };
+          this.snackbarService.open(snack);
+        }),
+      ),
+    { dispatch: false },
+  );
+
+  closeAllSnackbars$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(closeAllSnackbars),
+        tap(() => {
+          this.snackbarService.closeAll();
         }),
       ),
     { dispatch: false },

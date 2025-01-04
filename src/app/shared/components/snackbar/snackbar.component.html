@@ -1,32 +1,26 @@
 <div class="flex flex-row items-center justify-center space-x-4">
   <div>
-    @if (data.type === SnackbarType.WARN) {
+    @if (data.type === 'warn') {
       <mat-icon>warning</mat-icon>
-    }
-    else
-    @if (data.type === SnackbarType.SUCCESS) {
+    } @else if (data.type === 'success') {
       <mat-icon>success</mat-icon>
-    }
-    else
-    @if (data.type === SnackbarType.ERROR) {
+    } @else if (data.type === 'error') {
       <mat-icon>error</mat-icon>
-    }
-    else
-    @if (data.type === SnackbarType.INFO) {
+    } @else if (data.type === 'info') {
       <mat-icon>info</mat-icon>
     }
   </div>
   <span class="flex items-center justify-center">{{ data.message }}</span>
 
   @if (data.action) {
-    @if (data.action.type === 'close') {
+    @if (data.action === 'close') {
       <button mat-icon-button class="ml-4" (click)="onClose()">
         <mat-icon>close</mat-icon>
       </button>
     }
-    @if (data.action.type === 'link') {
+    @if (data.action === 'link') {
       <button matSnackBarAction mat-flat-button (click)="navigateToLink()" class="ml-2">
-        {{ data.action.buttonText }}
+        {{ data.actionText }}
       </button>
     }
   }
