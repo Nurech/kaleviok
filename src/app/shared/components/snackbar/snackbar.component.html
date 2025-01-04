@@ -3,6 +3,18 @@
     @if (data.type === SnackbarType.WARN) {
       <mat-icon>warning</mat-icon>
     }
+    else
+    @if (data.type === SnackbarType.SUCCESS) {
+      <mat-icon>success</mat-icon>
+    }
+    else
+    @if (data.type === SnackbarType.ERROR) {
+      <mat-icon>error</mat-icon>
+    }
+    else
+    @if (data.type === SnackbarType.INFO) {
+      <mat-icon>info</mat-icon>
+    }
   </div>
   <span class="flex items-center justify-center">{{ data.message }}</span>
 

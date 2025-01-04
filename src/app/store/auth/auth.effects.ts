@@ -22,7 +22,7 @@ import { updateMySettings } from '../settings/settings.actions';
 import { LoginMethod } from '../settings/settings.model';
 import { LoginComponent } from '../../core/components/login/login.component';
 import { SheetService } from '../../shared/services/sheet.service';
-import { SnackbarService } from '../../shared/services/snackbar.service';
+import { SnackbarService } from '../snackbar/snackbar.service';
 
 @Injectable()
 export class AuthEffects {
@@ -80,7 +80,6 @@ export class AuthEffects {
         ofType(logout),
         tap(() => {
           this.authService.logout();
-          this.snackbarService.open('you_have_been_logged_out');
         }),
       ),
     { dispatch: false },

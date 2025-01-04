@@ -8,9 +8,9 @@ export enum SnackbarType {
 }
 
 export interface SnackbarAction {
-  type: string;
-  link: string;
-  buttonText: string;
+  type: 'link' | 'close';
+  link?: string;
+  buttonText?: string;
 }
 
 export class Snackbar {

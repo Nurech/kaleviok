@@ -5,7 +5,7 @@ import { NgClass } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
-import { Snackbar, SnackbarType } from '../../models/snackbar-model';
+import { Snackbar, SnackbarType } from '../../../store/snackbar/snackbar.model';
 
 @Component({
   selector: 'app-snackbar',

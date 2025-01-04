@@ -4,8 +4,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { CommonModule } from '@angular/common';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer } from '@ngrx/router-store';
-import { errorFeature } from './error/error.reducer';
-import { ErrorStoreModule } from './error/error.module';
+import { snackbarFeature } from './snackbar/snackbar.reducer';
+import { SnackbarStoreModule } from './snackbar/snackbar.module';
 import { coreFeature } from './core/core.reducer';
 import { settingsFeature } from './settings/settings.reducer';
 import { SettingsStoreModule } from './settings/settings.module';
@@ -54,7 +54,7 @@ function deleteNestedProperty(obj: any, path: string): void {
 }
 
 export function localStorageSyncReducer(reducer: any): any {
-  const exclude = ['auth.isAuthenticated'];
+  const exclude = ['auth.isAuthenticated', 'snackbar'];
   return (state: any, action: any) => {
     if (state === undefined) {
       const storedState = localStorage.getItem(`${name}-state`);
@@ -78,7 +78,7 @@ export const metaReducers: MetaReducer[] = [logState, localStorageSyncReducer];
 
 // Feature reducers
 const rootReducers = {
-  error: errorFeature.reducer,
+  snackbar: snackbarFeature.reducer,
   core: coreFeature.reducer,
   settings: settingsFeature.reducer,
   router: routerReducer,
@@ -88,7 +88,7 @@ const rootReducers = {
 
 // Feature modules
 const featureModules = [
-  ErrorStoreModule,
+  SnackbarStoreModule,
   CoreStoreModule,
   SettingsStoreModule,
   RouterStoreModule,
