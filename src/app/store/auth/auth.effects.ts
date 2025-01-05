@@ -17,6 +17,8 @@ import {
   emailRegisterStart,
   emailRegisterSuccess,
   emailRegisterError,
+  authChanged,
+  firebaseSuccess,
 } from './auth.actions';
 import { AuthService } from './auth.service';
 import { LoginComponent } from '../../core/components/login/login.component';
@@ -38,12 +40,32 @@ export class AuthEffects {
         this.authService.loginWithGoogle().pipe(
           map((response) => {
             const account: Account = UserMapper.mapUserCredentialToUser(response);
-            return googleSuccess({ account });
+            return googleSuccess({ payload: account });
           }),
           catchError((error) => of(googleError({ error }))),
         ),
       ),
     ),
+  );
+
+  onAuthChanged$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(authChanged),
+        tap(({ payload }) => {
+          if (payload) {
+            const provider = payload.providerId;
+            if (provider === 'google.com') {
+              this.store$.dispatch(googleSuccess({ payload }));
+            } else if (provider === 'email') {
+              this.store$.dispatch(emailSuccess({ payload }));
+            } else if (provider === 'firebase') {
+              this.store$.dispatch(firebaseSuccess({ payload }));
+            }
+          }
+        }),
+      ),
+    { dispatch: false },
   );
 
   loginWithEmailAndPassword$ = createEffect(() =>

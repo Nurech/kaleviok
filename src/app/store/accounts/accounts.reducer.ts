@@ -19,7 +19,7 @@ export const initialState: State = adapter.getInitialState({
 
 export const reducer = createReducer(
   initialState,
-  on(saveAccountSuccess, updateAccountSuccess, (state, action) => adapter.upsertOne(action.account, state)),
+  on(saveAccountSuccess, updateAccountSuccess, (state, action) => adapter.upsertOne(action.payload, state)),
 );
 
 export const accountsFeature = createFeature({

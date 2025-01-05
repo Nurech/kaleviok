@@ -11,6 +11,8 @@ import {
 } from '@angular/fire/auth';
 import { from } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { authChanged } from './auth.actions';
+import { UserMapper } from '../accounts/account.model';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +30,11 @@ export class AuthService {
   private initialize() {
     onAuthStateChanged(this.auth, (user) => {
       console.log('Auth state changed', user);
-      this.authState.set(user);
+      if (user) {
+        this.setAuthState(user);
+      } else {
+        this.setAuthState(null);
+      }
     });
   }
 
@@ -51,5 +57,12 @@ export class AuthService {
 
   getAuthState() {
     return this.authState();
+  }
+
+  setAuthState(user: User | null) {
+    this.authState.set(user);
+    if (user) {
+      this.store$.dispatch(authChanged({ payload: UserMapper.mapFirebaseUserToUser(user) }));
+    }
   }
 }

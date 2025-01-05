@@ -1,6 +1,6 @@
 export interface Setting {
   autologin: boolean;
-  loginMethod: 'email' | 'google' | null;
+  loginMethod: 'email' | 'google.com' | 'firebase' | null;
   colorMode: 'light' | 'dark' | 'auto';
   showPwaPopup: boolean;
 }
