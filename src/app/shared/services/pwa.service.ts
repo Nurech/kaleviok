@@ -1,12 +1,13 @@
 import { inject, Injectable, signal, effect } from '@angular/core';
 import { SwUpdate, VersionEvent, VersionReadyEvent } from '@angular/service-worker';
 import { Store } from '@ngrx/store';
+import { firstValueFrom } from 'rxjs';
 import { SheetService } from './sheet.service';
 import { DialogService } from './dialog.service';
 import { PwaUpdateDialogComponent } from '../../core/components/pwa-update-dialog/pwa-update-dialog.component';
-import { selectMySetting } from '../../store/settings/settings.selectors';
 import { InstallPwaComponent } from '../../core/components/install-pwa/install-pwa.component';
 import packageJson from '../../../../package.json';
+import { selectSettings } from '../../store/settings/settings.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -91,14 +92,13 @@ export class PwaService {
     }
   }
 
-  private handleInstallPromotion() {
-    this.store$.select(selectMySetting('showPwaPopup')).subscribe((showPwaPopup) => {
-      if (showPwaPopup) {
-        if (showPwaPopup && this.canInstall() && !this.runningInPwa()) {
-          this.sheetService.open(InstallPwaComponent);
-        }
+  private async handleInstallPromotion() {
+    const settings = await firstValueFrom(this.store$.select(selectSettings));
+    if (settings.showPwaPopup) {
+      if (this.canInstall() && !this.runningInPwa()) {
+        this.sheetService.open(InstallPwaComponent);
       }
-    });
+    }
   }
 
   private startUpdateCheck() {

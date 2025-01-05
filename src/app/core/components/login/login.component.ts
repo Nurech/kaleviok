@@ -12,8 +12,8 @@ import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { InfoComponent } from '../../../shared/components/info/info.component';
 import { emailStart, googleStart } from '../../../store/auth/auth.actions';
-import { selectMySettings } from '../../../store/settings/settings.selectors';
-import { updateMySettings } from '../../../store/settings/settings.actions';
+import { selectSettings } from '../../../store/settings/settings.selectors';
+import { updateSettings } from '../../../store/settings/settings.actions';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +38,7 @@ import { updateMySettings } from '../../../store/settings/settings.actions';
 })
 export class LoginComponent {
   store$ = inject(Store);
-  mySettings$ = this.store$.select(selectMySettings);
+  settings$ = this.store$.select(selectSettings);
   private translate = inject(TranslateService);
 
   readonly email = new FormControl('', [Validators.required, Validators.email]);
@@ -78,7 +78,7 @@ export class LoginComponent {
     this.hide.set(!this.hide());
   }
 
-  rememberMe(checked: boolean) {
-    this.store$.dispatch(updateMySettings({ changes: { autologin: checked } }));
+  autologin(checked: boolean) {
+    this.store$.dispatch(updateSettings({ changes: { autologin: checked } }));
   }
 }

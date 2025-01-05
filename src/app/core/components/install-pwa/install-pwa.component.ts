@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { InfoComponent } from '../../../shared/components/info/info.component';
 import { BrowserType, DeviceService, PlatformType } from '../../../shared/services/device.service';
 import { PwaService } from '../../../shared/services/pwa.service';
-import { updateMySettings } from '../../../store/settings/settings.actions';
+import { updateSettings } from '../../../store/settings/settings.actions';
 
 @Component({
   selector: 'app-install-pwa',
@@ -54,6 +54,6 @@ export class InstallPwaComponent implements OnInit {
   }
 
   dontShowAgain(checked: boolean) {
-    this.store$.dispatch(updateMySettings({ changes: { showPwaPopup: !checked } }));
+    this.store$.dispatch(updateSettings({ changes: { showPwaPopup: !checked } }));
   }
 }

@@ -19,8 +19,6 @@ import {
   emailRegisterError,
 } from './auth.actions';
 import { AuthService } from './auth.service';
-import { updateMySettings } from '../settings/settings.actions';
-import { LoginMethod } from '../settings/settings.model';
 import { LoginComponent } from '../../core/components/login/login.component';
 import { SheetService } from '../../shared/services/sheet.service';
 import { openSnackbar } from '../snackbar/snackbar.actions';
@@ -40,7 +38,6 @@ export class AuthEffects {
         this.authService.loginWithGoogle().pipe(
           map((response) => {
             const account: Account = UserMapper.mapUserCredentialToUser(response);
-            this.store$.dispatch(updateMySettings({ changes: { loginMethod: LoginMethod.Google } }));
             return googleSuccess({ account });
           }),
           catchError((error) => of(googleError({ error }))),

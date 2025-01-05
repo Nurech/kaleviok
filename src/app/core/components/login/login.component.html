@@ -38,8 +38,8 @@
       <div class="flex items-center justify-center">
         <mat-checkbox
           [labelPosition]="'after'"
-          [checked]="(mySettings$ | async)?.autologin"
-          (change)="rememberMe($event.checked)"
+          [checked]="(settings$ | async)?.autologin"
+          (change)="autologin($event.checked)"
         >
           {{ 'remember_me' | translate }}
         </mat-checkbox>

@@ -8,8 +8,8 @@ import {
 } from '@material/material-color-utilities';
 import { Store } from '@ngrx/store';
 import { firstValueFrom } from 'rxjs';
-import { updateMySettings } from '../../store/settings/settings.actions';
-import { selectMySetting } from '../../store/settings/settings.selectors';
+import { selectSettings } from '../../store/settings/settings.selectors';
+import { updateSettings } from '../../store/settings/settings.actions';
 
 export const DEFAULT_THEME_COLORS: ThemePalette = {
   primary: '#2879c6',
@@ -43,12 +43,12 @@ export class ThemeChangerService {
   }
 
   private async getStoredThemeMode() {
-    const storedMode = await firstValueFrom(this.store$.select(selectMySetting('colorMode')));
-    this.colorMode.set(storedMode);
+    const settings = await firstValueFrom(this.store$.select(selectSettings));
+    this.colorMode.set(settings.colorMode);
   }
 
   private saveThemeMode(mode: ColorMode): void {
-    this.store$.dispatch(updateMySettings({ changes: { colorMode: mode } }));
+    this.store$.dispatch(updateSettings({ changes: { colorMode: mode } }));
   }
 
   applyColorThemeListeners() {

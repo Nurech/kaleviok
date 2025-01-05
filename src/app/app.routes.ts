@@ -14,6 +14,11 @@ const libRoutes: Routes = [
     title: () => translateKey('login'),
   },
   {
+    path: 'users',
+    loadComponent: () => import('./core/components/users/users.component').then((c) => c.UsersComponent),
+    title: () => translateKey('users'),
+  },
+  {
     path: 'register',
     loadComponent: () => import('./core/components/register/register.component').then((c) => c.RegisterComponent),
     title: () => translateKey('register'),

@@ -42,26 +42,13 @@ export function logState(reducer: any) {
   };
 }
 
-function deleteNestedProperty(obj: any, path: string): void {
-  const parts = path.split('.');
-  let current = obj;
-  while (parts.length > 1) {
-    const key = parts.shift()!;
-    if (!current[key]) return;
-    current = current[key];
-  }
-  delete current[parts[0]];
-}
-
 export function localStorageSyncReducer(reducer: any): any {
-  const exclude = ['auth.isAuthenticated', 'snackbar'];
   return (state: any, action: any) => {
     if (state === undefined) {
       const storedState = localStorage.getItem(`${name}-state`);
       if (storedState) {
         const parsed = JSON.parse(storedState) || {};
         console.warn('State is undefined, initializing with localStorage: ', parsed);
-        exclude.forEach((prop) => deleteNestedProperty(parsed, prop));
         return reducer(parsed, action);
       }
       return reducer(state, action);

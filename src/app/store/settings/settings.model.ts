@@ -1,22 +1,6 @@
-import { ColorMode } from '../../shared/services/theme-changer.service';
-
-export enum LoginMethod {
-  Email = 'email',
-  Google = 'google.com',
-}
-
-export class Setting {
-  uid: string;
+export interface Setting {
   autologin: boolean;
-  loginMethod: LoginMethod | null;
-  colorMode: ColorMode;
+  loginMethod: 'email' | 'google' | null;
+  colorMode: 'light' | 'dark' | 'auto';
   showPwaPopup: boolean;
-
-  constructor(data?: Partial<Setting>) {
-    this.uid = data?.uid || '';
-    this.autologin = data?.autologin ?? false;
-    this.loginMethod = data?.loginMethod || null;
-    this.colorMode = data?.colorMode || 'auto';
-    this.showPwaPopup = data?.showPwaPopup ?? true;
-  }
 }
