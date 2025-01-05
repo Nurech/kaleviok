@@ -30,6 +30,7 @@
   "dashboard": "Töölaud",
   "admin_panel_settings": "Admin seaded",
   "contact_support": "Abi",
+  "accounts": "Kontod",
   "snackbar.autologin.start": "Login sisse...",
   "snackbar.autologin.success": "Sisse logitud!",
   "snackbar.autologin.error": "Tekkis viga: {{error}}",

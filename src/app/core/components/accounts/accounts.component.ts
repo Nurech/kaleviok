@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-users',
   standalone: true,
   imports: [],
-  templateUrl: './users.component.html',
-  styleUrl: './users.component.scss',
+  templateUrl: './accounts.component.html',
+  styleUrl: './accounts.component.scss',
 })
-export class UsersComponent {}
+export class AccountsComponent {}

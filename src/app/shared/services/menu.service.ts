@@ -59,13 +59,12 @@ export class MenuService {
       href: '/dashboard',
     },
     {
-      label: 'users',
+      label: 'accounts',
       icon: 'group',
       position: 'start',
       show: true,
-      href: '/users',
+      href: '/accounts',
     },
-
     {
       label: 'admin_panel_settings',
       icon: 'admin_panel_settings',

@@ -5,6 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { logout } from '../../../store/auth/auth.actions';
 import { InfoComponent } from '../../../shared/components/info/info.component';
+import { BackgroundIconDirective } from '../../../shared/directives/background-icon.directive';
 
 @Component({
   selector: 'app-logout-dialog',
@@ -17,6 +18,7 @@ import { InfoComponent } from '../../../shared/components/info/info.component';
     MatDialogClose,
     TranslatePipe,
     InfoComponent,
+    BackgroundIconDirective,
   ],
   templateUrl: './logout-dialog.component.html',
   styles: ``,
