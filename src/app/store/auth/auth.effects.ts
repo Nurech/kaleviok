@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { Account, UserMapper } from '../accounts/account.model';
 import {
   manualLogin,
@@ -22,7 +23,6 @@ import { updateMySettings } from '../settings/settings.actions';
 import { LoginMethod } from '../settings/settings.model';
 import { LoginComponent } from '../../core/components/login/login.component';
 import { SheetService } from '../../shared/services/sheet.service';
-import { SnackbarService } from '../snackbar/snackbar.service';
 import { openSnackbar } from '../snackbar/snackbar.actions';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class AuthEffects {
   private store$ = inject(Store);
   private authService = inject(AuthService);
   private sheetService = inject(SheetService);
-  private snackbarService = inject(SnackbarService);
+  private translate = inject(TranslateService);
 
   loginWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
@@ -81,7 +81,9 @@ export class AuthEffects {
         ofType(logout),
         tap(() => {
           this.authService.logout();
-          this.store$.dispatch(openSnackbar({ payload: { type: 'success', message: 'you_have_been_logged_out' } }));
+          this.store$.dispatch(
+            openSnackbar({ payload: { type: 'success', message: this.translate.instant('you_have_been_logged_out') } }),
+          );
         }),
       ),
     { dispatch: false },
@@ -95,7 +97,9 @@ export class AuthEffects {
           map((response) => {
             const payload: Account = UserMapper.mapUserCredentialToUser(response);
             this.store$.dispatch(
-              openSnackbar({ payload: { type: 'success', message: 'register_email_account_success' } }),
+              openSnackbar({
+                payload: { type: 'success', message: this.translate.instant('register_email_account_success') },
+              }),
             );
             return emailRegisterSuccess({ payload });
           }),

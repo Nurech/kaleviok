@@ -1,4 +1,4 @@
-import { inject, Injectable, signal, effect } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -9,11 +9,8 @@ import {
   signOut,
   User,
 } from '@angular/fire/auth';
-import { from, take } from 'rxjs';
+import { from } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { manualLogin, googleSuccess, startAutoLogin } from './auth.actions';
-import { selectMySettings } from '../settings/settings.selectors';
-import { UserMapper } from '../accounts/account.model';
 
 @Injectable({
   providedIn: 'root',
@@ -29,37 +26,10 @@ export class AuthService {
   }
 
   private initialize() {
-    this.store$
-      .select(selectMySettings)
-      .pipe(take(1))
-      .subscribe((settings) => {
-        if (settings.autologin) {
-          onAuthStateChanged(this.auth, (user) => {
-            this.authState.set(user);
-          });
-
-          effect(
-            () => {
-              const user = this.authState();
-              if (user === undefined) {
-                console.log('Auth state is loading');
-                this.store$.dispatch(startAutoLogin());
-                return;
-              }
-
-              if (user) {
-                console.log('User authenticated:', user);
-                const account = UserMapper.mapFirebaseUserToUser(user);
-                this.store$.dispatch(googleSuccess({ account }));
-              }
-            },
-            { allowSignalWrites: true },
-          );
-        } else {
-          console.log('No authenticated user, dispatching manual login');
-          this.store$.dispatch(manualLogin());
-        }
-      });
+    onAuthStateChanged(this.auth, (user) => {
+      console.log('Auth state changed', user);
+      this.authState.set(user);
+    });
   }
 
   registerWithEmail(email: string, password: string) {
