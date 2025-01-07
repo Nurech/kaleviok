@@ -11,3 +11,6 @@ export const updateAccountFailure = createAction('[Account] Update Account Failu
 export const loadAccounts = createAction('[Accounts] Load Accounts');
 export const loadAccountsSuccess = createAction('[Accounts] Load Accounts Success', props<{ accounts: Account[] }>());
 export const loadAccountsFailure = createAction('[Accounts] Load Accounts Failure', props<{ error: any }>());
+
+export const startAccountsListener = createAction('[Accounts] Start Accounts Listener');
+export const stopAccountsListener = createAction('[Accounts] Stop Accounts Listener');

@@ -6,6 +6,8 @@ import { emailSuccess, firebaseSuccess, googleSuccess } from '../auth/auth.actio
 import {
   saveAccountFailure,
   saveAccountSuccess,
+  startAccountsListener,
+  stopAccountsListener,
 } from './accounts.actions';
 import { LoginComponent } from '../../core/components/login/login.component';
 import { SheetService } from '../../shared/services/sheet.service';
@@ -34,5 +36,23 @@ export class AccountsEffects {
         ),
       ),
     ),
+  );
+
+  startListener$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(startAccountsListener),
+        map(() => this.accountsService.startListen()),
+      ),
+    { dispatch: false },
+  );
+
+  stopListener$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(stopAccountsListener),
+        map(() => this.accountsService.stopListen()),
+      ),
+    { dispatch: false },
   );
 }
