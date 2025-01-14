@@ -3,5 +3,9 @@
   "singleQuote": true,
   "trailingComma": "all",
   "printWidth": 120,
+  "tabWidth": 4,
+  "trailingComma": "none",
+  "bracketSameLine": true,
+  "quoteProps": "consistent",
   "plugins": ["prettier-plugin-tailwindcss"]
 }
