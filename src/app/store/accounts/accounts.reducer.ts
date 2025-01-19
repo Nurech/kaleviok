@@ -1,6 +1,7 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import {
+  accountAdded,
   accountDeleted,
   accountModified,
   loadAccountsSuccess,
@@ -29,6 +30,7 @@ export const reducer = createReducer(
   on(loadAccountsSuccess, (state, { accounts }) => adapter.upsertMany(accounts, state)),
   on(accountModified, (state, { payload }) => adapter.upsertOne(payload, state)),
   on(accountDeleted, (state, { payload }) => adapter.removeOne(payload.uid, state)),
+  on(accountAdded, (state, { payload }) => adapter.addOne(payload, state)),
 );
 
 export const accountsFeature = createFeature({

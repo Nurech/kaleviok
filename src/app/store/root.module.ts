@@ -15,7 +15,6 @@ import { authFeature } from './auth/auth.reducer';
 import { AuthStoreModule } from './auth/auth.module';
 import { UsersStoreModule } from './accounts/accounts.module';
 import { RouterStoreModule } from './router/router-store.module';
-import { name } from '../../../package.json';
 import { CoreStoreModule } from './core/core.module';
 
 function calculateLocalStorageUsage(): string {
@@ -42,26 +41,37 @@ export function logState(reducer: any) {
   };
 }
 
-export function localStorageSyncReducer(reducer: any): any {
+export function hydrateReducer(reducer: any): any {
+  const keysToPersist = ['settings'];
+
   return (state: any, action: any) => {
     if (state === undefined) {
-      const storedState = localStorage.getItem(`${name}-state`);
-      if (storedState) {
-        const parsed = JSON.parse(storedState) || {};
-        console.warn('State is undefined, initializing with localStorage: ', parsed);
-        return reducer(parsed, action);
-      }
-      return reducer(state, action);
+      const restoredState: any = {};
+
+      keysToPersist.forEach((key) => {
+        const storedValue = localStorage.getItem(`${key}-state`);
+        if (storedValue) {
+          restoredState[key] = JSON.parse(storedValue);
+          console.warn(`Rehydrating ${key} from localStorage: `, restoredState[key]);
+        }
+      });
+
+      return reducer({ ...state, ...restoredState }, action);
     }
 
     const nextState = reducer(state, action);
-    localStorage.setItem(`${name}-state`, JSON.stringify(nextState));
+
+    keysToPersist.forEach((key) => {
+      if (nextState?.[key] !== undefined) {
+        localStorage.setItem(`${key}-state`, JSON.stringify(nextState[key]));
+      }
+    });
 
     return nextState;
   };
 }
 
-export const metaReducers: MetaReducer[] = [logState, localStorageSyncReducer];
+export const metaReducers: MetaReducer[] = [logState, hydrateReducer];
 
 // Feature reducers
 const rootReducers = {

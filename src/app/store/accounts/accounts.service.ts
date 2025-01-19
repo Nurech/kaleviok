@@ -4,7 +4,7 @@ import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Account } from './account.model';
-import { accountDeleted, accountModified, loadAccountsSuccess } from './accounts.actions';
+import { accountAdded, accountDeleted, accountModified } from './accounts.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -57,20 +57,14 @@ export class AccountsService {
 
         switch (change.type) {
           case 'added':
-            console.log(`${this.collectionName} Document added:`, docData);
-            this.store$.dispatch(loadAccountsSuccess({ accounts: [docData] }));
+            this.store$.dispatch(accountAdded({ payload: docData }));
             break;
-
           case 'modified':
-            console.log(`${this.collectionName} Document modified:`, docData);
             this.store$.dispatch(accountModified({ payload: docData }));
             break;
-
           case 'removed':
-            console.log(`${this.collectionName} Document removed:`, docData);
             this.store$.dispatch(accountDeleted({ payload: docData }));
             break;
-
           default:
             console.log(`${this.collectionName} Document default:`, docData);
         }

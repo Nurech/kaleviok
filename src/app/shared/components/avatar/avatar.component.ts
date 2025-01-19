@@ -30,16 +30,14 @@ export class AvatarComponent implements OnInit {
 
   private generateColors(): void {
     if (!this.initials) {
-      this.backgroundColor = '#aaa'; // Default grey
+      this.backgroundColor = '#aaa';
       this.textColor = '#fff';
       return;
     }
 
     const charCodeSum = this.initials.charCodeAt(0) + (this.initials.charCodeAt(1) || 0);
-    const hue = (charCodeSum * 37) % 360; // Spread colors across the spectrum
+    const hue = (charCodeSum * 37) % 360;
     this.backgroundColor = `hsl(${hue}, 70%, 50%)`;
-
-    // Ensure text contrast (black for light backgrounds, white for dark)
     this.textColor = hue > 180 ? '#fff' : '#000';
   }
 }
