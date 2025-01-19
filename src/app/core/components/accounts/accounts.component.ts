@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgIf, NgStyle } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 import { Account } from '../../../store/accounts/account.model';
 import { selectAllAccounts } from '../../../store/accounts/accounts.selectors';
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
@@ -25,13 +27,15 @@ import { AvatarComponent } from '../../../shared/components/avatar/avatar.compon
         NgStyle,
         MatIcon,
         NgIf,
-        AvatarComponent
+        AvatarComponent,
+        MatIconButton,
+        RouterLink
     ],
     standalone: true
 })
 export class AccountsComponent implements OnInit {
-    displayedColumns: string[] = ['photoUrl', 'firstName', 'lastName', 'email'];
-    dataSource = new MatTableDataSource<Account>();
+    displayedColumns: string[] = ['photoUrl', 'firstName', 'lastName', 'edit'];
+    dataSource: MatTableDataSource<Account> = new MatTableDataSource<Account>([]);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
