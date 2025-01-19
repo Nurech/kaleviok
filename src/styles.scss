@@ -70,3 +70,8 @@ label {
 app-bottom-sheet {
   @apply flex items-center justify-center;
 }
+
+.mat-mdc-dialog-surface {
+  @apply border-4 border-solid;
+  border-color: var(--sys-on-surface);
+}

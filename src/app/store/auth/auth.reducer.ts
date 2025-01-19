@@ -21,7 +21,7 @@ export const reducer = createReducer(
   on(googleSuccess, emailSuccess, firebaseSuccess, (state, payload) => ({
     ...state,
     loading: false,
-    payload: payload,
+    account: payload.payload,
   })),
   on(logout, () => initialState),
 );

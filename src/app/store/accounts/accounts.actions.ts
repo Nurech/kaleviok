@@ -14,3 +14,6 @@ export const loadAccountsFailure = createAction('[Accounts] Load Accounts Failur
 
 export const startAccountsListener = createAction('[Accounts] Start Accounts Listener');
 export const stopAccountsListener = createAction('[Accounts] Stop Accounts Listener');
+
+export const accountModified = createAction('[Accounts] Account Modified', props<{ payload: Account }>());
+export const accountDeleted = createAction('[Accounts] Account Deleted', props<{ payload: Account }>());

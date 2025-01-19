@@ -6,18 +6,31 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { ViewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { NgIf, NgStyle } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 import { Account } from '../../../store/accounts/account.model';
 import { selectAllAccounts } from '../../../store/accounts/accounts.selectors';
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss'],
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    NgStyle,
+    MatIcon,
+    NgIf,
+    AvatarComponent,
+  ],
   standalone: true,
 })
 export class AccountsComponent implements OnInit {
-  displayedColumns: string[] = ['uid', 'firstName', 'lastName', 'email'];
+  displayedColumns: string[] = ['photoUrl', 'firstName', 'lastName', 'email'];
   dataSource = new MatTableDataSource<Account>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
