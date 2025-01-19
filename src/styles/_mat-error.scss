@@ -1,0 +1,7 @@
+mat-error {
+    @apply flex items-center #{!important};
+
+    mat-icon {
+        @apply mr-1;
+    }
+}

@@ -3,94 +3,101 @@
 @tailwind utilities;
 
 @layer utilities {
-  .icon-xs {
-    font-size: 1rem; /* 16px */
-    height: 1rem; /* 16px */
-    width: 1rem; /* 16px */
-    line-height: 1;
-  }
+    .icon-xxs {
+        font-size: 0.875rem; /* 14px */
+        height: 0.875rem; /* 14px */
+        width: 0.875rem; /* 14px */
+        line-height: 1;
+    }
 
-  .icon-sm {
-    font-size: 1.25rem; /* 20px */
-    height: 1.25rem; /* 20px */
-    width: 1.25rem; /* 20px */
-    line-height: 1;
-  }
+    .icon-xs {
+        font-size: 1rem; /* 16px */
+        height: 1rem; /* 16px */
+        width: 1rem; /* 16px */
+        line-height: 1;
+    }
 
-  .icon-base {
-    font-size: 1.5rem; /* 24px */
-    height: 1.5rem; /* 24px */
-    width: 1.5rem; /* 24px */
-    line-height: 1;
-  }
+    .icon-sm {
+        font-size: 1.25rem; /* 20px */
+        height: 1.25rem; /* 20px */
+        width: 1.25rem; /* 20px */
+        line-height: 1;
+    }
 
-  .icon-lg {
-    font-size: 2rem; /* 32px */
-    height: 2rem; /* 32px */
-    width: 2rem; /* 32px */
-    line-height: 1;
-  }
+    .icon-base {
+        font-size: 1.5rem; /* 24px */
+        height: 1.5rem; /* 24px */
+        width: 1.5rem; /* 24px */
+        line-height: 1;
+    }
 
-  .icon-xl {
-    font-size: 2.5rem; /* 40px */
-    height: 2.5rem; /* 40px */
-    width: 2.5rem; /* 40px */
-    line-height: 1;
-  }
+    .icon-lg {
+        font-size: 2rem; /* 32px */
+        height: 2rem; /* 32px */
+        width: 2rem; /* 32px */
+        line-height: 1;
+    }
 
-  .icon-2xl {
-    font-size: 3rem; /* 48px */
-    height: 3rem; /* 48px */
-    width: 3rem; /* 48px */
-    line-height: 1;
-  }
+    .icon-xl {
+        font-size: 2.5rem; /* 40px */
+        height: 2.5rem; /* 40px */
+        width: 2.5rem; /* 40px */
+        line-height: 1;
+    }
 
-  .icon-3xl {
-    font-size: 3.75rem; /* 60px */
-    height: 3.75rem; /* 60px */
-    width: 3.75rem; /* 60px */
-    line-height: 1;
-  }
+    .icon-2xl {
+        font-size: 3rem; /* 48px */
+        height: 3rem; /* 48px */
+        width: 3rem; /* 48px */
+        line-height: 1;
+    }
 
-  .icon-4xl {
-    font-size: 4.5rem; /* 72px */
-    height: 4.5rem; /* 72px */
-    width: 4.5rem; /* 72px */
-    line-height: 1;
-  }
+    .icon-3xl {
+        font-size: 3.75rem; /* 60px */
+        height: 3.75rem; /* 60px */
+        width: 3.75rem; /* 60px */
+        line-height: 1;
+    }
 
-  .icon-5xl {
-    font-size: 6rem; /* 96px */
-    height: 6rem; /* 96px */
-    width: 6rem; /* 96px */
-    line-height: 1;
-  }
+    .icon-4xl {
+        font-size: 4.5rem; /* 72px */
+        height: 4.5rem; /* 72px */
+        width: 4.5rem; /* 72px */
+        line-height: 1;
+    }
 
-  .icon-6xl {
-    font-size: 8rem; /* 128px */
-    height: 8rem; /* 128px */
-    width: 8rem; /* 128px */
-    line-height: 1;
-  }
+    .icon-5xl {
+        font-size: 6rem; /* 96px */
+        height: 6rem; /* 96px */
+        width: 6rem; /* 96px */
+        line-height: 1;
+    }
 
-  .icon-7xl {
-    font-size: 10rem; /* 160px */
-    height: 10rem; /* 160px */
-    width: 10rem; /* 160px */
-    line-height: 1;
-  }
+    .icon-6xl {
+        font-size: 8rem; /* 128px */
+        height: 8rem; /* 128px */
+        width: 8rem; /* 128px */
+        line-height: 1;
+    }
 
-  .icon-8xl {
-    font-size: 12rem; /* 192px */
-    height: 12rem; /* 192px */
-    width: 12rem; /* 192px */
-    line-height: 1;
-  }
+    .icon-7xl {
+        font-size: 10rem; /* 160px */
+        height: 10rem; /* 160px */
+        width: 10rem; /* 160px */
+        line-height: 1;
+    }
 
-  .icon-9xl {
-    font-size: 16rem; /* 256px */
-    height: 16rem; /* 256px */
-    width: 16rem; /* 256px */
-    line-height: 1;
-  }
+    .icon-8xl {
+        font-size: 12rem; /* 192px */
+        height: 12rem; /* 192px */
+        width: 12rem; /* 192px */
+        line-height: 1;
+    }
+
+    .icon-9xl {
+        font-size: 16rem; /* 256px */
+        height: 16rem; /* 256px */
+        width: 16rem; /* 256px */
+        line-height: 1;
+    }
 }

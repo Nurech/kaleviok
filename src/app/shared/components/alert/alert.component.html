@@ -1,34 +1,34 @@
 <div class="alert" role="alert">
-  @if (headingDir || heading) {
-    <div class="alertHeading">
-      <mat-icon class="me-2">{{ icon }}</mat-icon>
-      @if (heading) {
-        <span [innerHTML]="heading"></span>
-      } @else {
-        <ng-content select="[alertHeading]"></ng-content>
-      }
-    </div>
-  }
-  @if (closeable) {
-    <button mat-icon-button aria-label="Close" class="alert-close">
-      <mat-icon>close</mat-icon>
-    </button>
-  }
-  <p class="alert-message">
-    @if (message) {
-      <span [innerHTML]="message"></span>
-    } @else {
-      <ng-content></ng-content>
+    @if (headingDir || heading) {
+        <div class="alertHeading">
+            <mat-icon class="me-2">{{ icon }}</mat-icon>
+            @if (heading) {
+                <span [innerHTML]="heading"></span>
+            } @else {
+                <ng-content select="[alertHeading]"></ng-content>
+            }
+        </div>
     }
-  </p>
-  @if (footerDir || footer) {
-    <hr />
-    <p class="alertFooter">
-      @if (footer) {
-        <span [innerHTML]="footer"></span>
-      } @else {
-        <ng-content select="[alertFooter]"></ng-content>
-      }
+    @if (closeable) {
+        <button mat-icon-button aria-label="Close" class="alert-close">
+            <mat-icon>close</mat-icon>
+        </button>
+    }
+    <p class="alert-message">
+        @if (message) {
+            <span [innerHTML]="message"></span>
+        } @else {
+            <ng-content></ng-content>
+        }
     </p>
-  }
+    @if (footerDir || footer) {
+        <hr />
+        <p class="alertFooter">
+            @if (footer) {
+                <span [innerHTML]="footer"></span>
+            } @else {
+                <ng-content select="[alertFooter]"></ng-content>
+            }
+        </p>
+    }
 </div>

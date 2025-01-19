@@ -1,40 +1,36 @@
 <mat-sidenav-container class="app-sidenav-container">
-  <mat-sidenav
-    #drawer
-    position="end"
-    [attr.role]="'navigation'"
-    [mode]="isHandheld() ? 'over' : 'side'"
-    [opened]="true"
-    (openedStart)="sidenav.isOpen.set(true)"
-    (closedStart)="sidenav.isOpen.set(false)"
-    class="app-sidenav"
-  >
-    <app-sidenav [attr.inert]="sheetService.isOpen() ? '' : null" #sidenav (closeDrawer)="drawer.close()"></app-sidenav>
-  </mat-sidenav>
-  <mat-sidenav-content class="app-sidenav-content">
-    <ng-template [ngTemplateOutlet]="progressBar"></ng-template>
-    @if (isHandheld()) {
-      <button
-        [attr.aria-label]="sidenav.isOpen() ? ('close_menu' | translate) : ('open_menu' | translate)"
-        mat-icon-button
-        class="absolute right-0 top-0 z-10 m-2"
-        (click)="drawer.open()"
-      >
-        <mat-icon class="mb-1">menu</mat-icon>
-      </button>
-    }
-    <button mat-button (click)="opanSnackBar()">open snack</button>
-    <button mat-button (click)="opanSnackBarSuccess()">snack success</button>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
+    <mat-sidenav
+        #drawer
+        position="end"
+        [attr.role]="'navigation'"
+        [mode]="isHandheld() ? 'over' : 'side'"
+        [opened]="menuService.isDrawerOpen()"
+        (openedStart)="menuService.isDrawerOpen.set(true)"
+        (closedStart)="menuService.isDrawerOpen.set(false)"
+        class="app-sidenav">
+        <app-sidenav></app-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content class="app-sidenav-content">
+        <ng-template [ngTemplateOutlet]="progressBar"></ng-template>
+        @if (isHandheld()) {
+            <button
+                [attr.aria-label]="menuService.isDrawerOpen() ? ('close_menu' | translate) : ('open_menu' | translate)"
+                mat-icon-button
+                class="absolute right-0 top-0 z-10 m-2"
+                (click)="drawer.open()">
+                <mat-icon class="mb-1">menu</mat-icon>
+            </button>
+        }
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
 </mat-sidenav-container>
 
 <ng-template #progressBar>
-  <div class="absolute top-0 w-full">
-    @if (isLoading$ | async) {
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    } @else {
-      <div class="h-[4px]"></div>
-    }
-  </div>
+    <div class="absolute top-0 w-full">
+        @if (isLoading$ | async) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        } @else {
+            <div class="h-[4px]"></div>
+        }
+    </div>
 </ng-template>

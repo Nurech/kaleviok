@@ -1,58 +1,58 @@
 @use '@angular/material' as mat;
 
 @mixin theme($theme) {
-  .left-content,
-  .right-content {
-    @media (pointer: fine) {
-      &::-webkit-scrollbar-thumb {
-        background-color: mat.get-theme-color($theme, primary);
-      }
-    }
-  }
-  .app-sidenav {
-    background-color: mat.get-theme-color($theme, surface-container-low);
-
-    .section-link {
-      color: mat.get-theme-color($theme, on-surface);
-
-      &:focus-visible,
-      &:hover:focus-visible {
-        border: 2px solid mat.get-theme-color($theme, on-surface);
-        box-shadow: inset 0 0 0 2px mat.get-theme-color($theme, on-primary-container);
-      }
-
-      &:active {
-        mat-icon {
-          background: mat.get-theme-color($theme, primary-container);
+    .left-content,
+    .right-content {
+        @media (pointer: fine) {
+            &::-webkit-scrollbar-thumb {
+                background-color: mat.get-theme-color($theme, primary);
+            }
         }
-      }
+    }
+    .app-sidenav {
+        background-color: mat.get-theme-color($theme, surface-container-low);
 
-      &:hover,
-      &.sub-menu-opened {
-        color: mat.get-theme-color($theme, on-primary-container);
+        .section-link {
+            color: mat.get-theme-color($theme, on-surface);
 
-        mat-icon {
-          background: mat.get-theme-color($theme, primary-container);
+            &:focus-visible,
+            &:hover:focus-visible {
+                border: 2px solid mat.get-theme-color($theme, on-surface);
+                box-shadow: inset 0 0 0 2px mat.get-theme-color($theme, on-primary-container);
+            }
+
+            &:active {
+                mat-icon {
+                    background: mat.get-theme-color($theme, primary-container);
+                }
+            }
+
+            &:hover,
+            &.sub-menu-opened {
+                color: mat.get-theme-color($theme, on-primary-container);
+
+                mat-icon {
+                    background: mat.get-theme-color($theme, primary-container);
+                }
+            }
+
+            &.active {
+                color: mat.get-theme-color($theme, primary);
+            }
+
+            mat-icon {
+                &::before {
+                    background: mat.get-theme-color($theme, primary-container);
+                }
+            }
         }
-      }
 
-      &.active {
-        color: mat.get-theme-color($theme, primary);
-      }
-
-      mat-icon {
-        &::before {
-          background: mat.get-theme-color($theme, primary-container);
+        .main-toolbar {
+            background: mat.get-theme-color($theme, surface-container);
         }
-      }
-    }
 
-    .main-toolbar {
-      background: mat.get-theme-color($theme, surface-container);
+        .mdc-list-item--activated {
+            background: mat.get-theme-color($theme, primary-container);
+        }
     }
-
-    .mdc-list-item--activated {
-      background: mat.get-theme-color($theme, primary-container);
-    }
-  }
 }

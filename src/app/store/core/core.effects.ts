@@ -4,6 +4,6 @@ import { CoreService } from './core.service';
 
 @Injectable()
 export class CoreEffects {
-  private actions$ = inject(Actions);
-  private coreService = inject(CoreService);
+    private actions$ = inject(Actions);
+    private coreService = inject(CoreService);
 }

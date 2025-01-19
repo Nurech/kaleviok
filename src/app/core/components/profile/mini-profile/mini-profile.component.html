@@ -1,29 +1,28 @@
-<mat-card class="mx-1 bg-transparent" appearance="outlined">
-  <mat-card-header class="flex justify-center p-1">
-    <button
-      mat-stroked-button
-      [routerLink]="['/profile']"
-      class="m-1 size-16 rounded-full bg-cover bg-center p-0"
-      [attr.aria-label]="'your_profile' | translate"
-      [ngStyle]="{
-        'background-image': (account$ | async)?.photoURL ? 'url(' + (account$ | async)?.photoURL + ')' : '',
-      }"
-    >
-      <mat-icon class="icon-2xl m-0" *ngIf="!(account$ | async)?.photoURL">face</mat-icon>
-    </button>
-  </mat-card-header>
-  <mat-card-content>
-    <p>{{ (account$ | async)?.firstName }} {{ (account$ | async)?.lastName }}</p>
-  </mat-card-content>
-  <mat-card-actions class="flex justify-center">
-    <button mat-icon-button>
-      <mat-icon class="mb-1">notifications</mat-icon>
-    </button>
-    <button mat-icon-button>
-      <mat-icon class="mb-1">settings</mat-icon>
-    </button>
-    <button mat-icon-button>
-      <mat-icon class="mb-1">logout</mat-icon>
-    </button>
-  </mat-card-actions>
+<mat-card class="m-1 mb-2 bg-transparent" appearance="outlined">
+    <mat-card-header class="flex justify-center p-1">
+        <button
+            mat-stroked-button
+            [routerLink]="['/profile']"
+            class="m-1 size-16 rounded-full bg-cover bg-center p-0"
+            [attr.aria-label]="'your_profile' | translate"
+            [ngStyle]="{
+                'background-image': (account$ | async)?.photoURL ? 'url(' + (account$ | async)?.photoURL + ')' : ''
+            }">
+            <mat-icon class="icon-2xl m-0" *ngIf="!(account$ | async)?.photoURL">face</mat-icon>
+        </button>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ (account$ | async)?.firstName }} {{ (account$ | async)?.lastName }}</p>
+    </mat-card-content>
+    <mat-card-actions class="flex justify-center">
+        <button mat-icon-button>
+            <mat-icon class="mb-1" (click)="onNotifications()">notifications</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon class="mb-1" (click)="onSettingsClick()">settings</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon class="mb-1" (click)="onLogout()">logout</mat-icon>
+        </button>
+    </mat-card-actions>
 </mat-card>

@@ -5,6 +5,6 @@ import { routerReducer } from '@ngrx/router-store';
 import { RouterEffects } from './router.effects';
 
 @NgModule({
-  imports: [StoreModule.forFeature('router', routerReducer), EffectsModule.forFeature([RouterEffects])],
+    imports: [StoreModule.forFeature('router', routerReducer), EffectsModule.forFeature([RouterEffects])]
 })
 export class RouterStoreModule {}

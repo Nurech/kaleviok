@@ -4,7 +4,15 @@
 
 ### dev
 
+```bash
+npm run start:dev
+```
+
 ### prod
+
+```bash
+npm run start:prod
+```
 
 ### Run locally
 

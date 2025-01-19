@@ -6,33 +6,33 @@ import { navigateTo, navigateBack, navigateForward } from './router.actions';
 
 @Injectable()
 export class RouterEffects {
-  private actions$ = inject(Actions);
-  private router = inject(Router);
+    private actions$ = inject(Actions);
+    private router = inject(Router);
 
-  navigateTo$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(navigateTo),
-        tap(({ path }) => this.router.navigate([path])),
-      ),
-    { dispatch: false },
-  );
+    navigateTo$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(navigateTo),
+                tap(({ path }) => this.router.navigate([path]))
+            ),
+        { dispatch: false }
+    );
 
-  navigateBack$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(navigateBack),
-        tap(() => this.router.navigate(['../'])),
-      ),
-    { dispatch: false },
-  );
+    navigateBack$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(navigateBack),
+                tap(() => this.router.navigate(['../']))
+            ),
+        { dispatch: false }
+    );
 
-  navigateForward$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(navigateForward),
-        tap(() => window.history.forward()),
-      ),
-    { dispatch: false },
-  );
+    navigateForward$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(navigateForward),
+                tap(() => window.history.forward())
+            ),
+        { dispatch: false }
+    );
 }

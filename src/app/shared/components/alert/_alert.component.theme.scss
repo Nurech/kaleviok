@@ -4,32 +4,32 @@
 @use '../../../../../node_modules/@angular/material/index' as mat;
 
 @mixin color($theme) {
-  .alert {
-    color: mat.get-theme-color($theme, on-primary-container);
-    background: mat.get-theme-color($theme, primary-container);
-    border-color: mat.get-theme-color($theme, primary);
+    .alert {
+        color: mat.get-theme-color($theme, on-primary-container);
+        background: mat.get-theme-color($theme, primary-container);
+        border-color: mat.get-theme-color($theme, primary);
 
-    .alert-link {
-      color: mat.get-theme-color($theme, on-primary);
+        .alert-link {
+            color: mat.get-theme-color($theme, on-primary);
+        }
     }
-  }
 }
 
 @mixin typography($theme) {
-  .alert {
-    font: mat.get-theme-typography($theme, 'body-medium', 'font');
+    .alert {
+        font: mat.get-theme-typography($theme, 'body-medium', 'font');
 
-    .alertHeading {
-      font: mat.get-theme-typography($theme, 'body-large', 'font');
-    }
+        .alertHeading {
+            font: mat.get-theme-typography($theme, 'body-large', 'font');
+        }
 
-    .alertFooter {
-      font: mat.get-theme-typography($theme, 'label-small', 'font');
+        .alertFooter {
+            font: mat.get-theme-typography($theme, 'label-small', 'font');
+        }
     }
-  }
 }
 
 @mixin theme($theme) {
-  @include color($theme);
-  @include typography($theme);
+    @include color($theme);
+    @include typography($theme);
 }

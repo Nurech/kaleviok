@@ -6,7 +6,7 @@ import { featureKey, reducer } from './accounts.reducer';
 import { AccountsEffects } from './accounts.effects';
 
 @NgModule({
-  imports: [CommonModule, StoreModule.forFeature(featureKey, reducer), EffectsModule.forFeature([AccountsEffects])],
-  declarations: [],
+    imports: [CommonModule, StoreModule.forFeature(featureKey, reducer), EffectsModule.forFeature([AccountsEffects])],
+    declarations: []
 })
 export class UsersStoreModule {}

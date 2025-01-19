@@ -1,0 +1,78 @@
+@use '@angular/material' as mat;
+
+:root {
+    --snackbar-info-bg: rgb(29, 142, 255);
+    --snackbar-info-text: var(--sys-on-primary);
+
+    --snackbar-success-bg: rgb(112, 255, 29);
+    --snackbar-success-text: var(--sys-on-primary);
+
+    --snackbar-warn-bg: rgb(255, 209, 29);
+    --snackbar-warn-text: var(--sys-on-primary);
+
+    --snackbar-error-bg: rgb(255, 29, 48);
+    --snackbar-error-text: var(--sys-on-error);
+
+    --snackbar-mix: var(--sys-on-surface);
+    --snackbar-mix-opacity: 30%;
+}
+
+.mat-mdc-snack-bar-container {
+    border-radius: var(--mdc-snackbar-container-shape, var(--mat-app-corner-extra-small));
+
+    &.snackbar-info .mat-mdc-snackbar-surface {
+        background-color: var(--snackbar-info-bg);
+        color: var(--snackbar-info-text);
+
+        .mat-mdc-snack-bar-label {
+            background-color: color-mix(
+                in srgb,
+                var(--snackbar-info-bg) var(--snackbar-mix-opacity),
+                var(--snackbar-mix)
+            );
+        }
+    }
+
+    &.snackbar-success .mat-mdc-snackbar-surface {
+        background-color: var(--snackbar-success-bg);
+        color: var(--snackbar-success-text);
+
+        .mat-mdc-snack-bar-label {
+            background-color: color-mix(
+                in srgb,
+                var(--snackbar-success-bg) var(--snackbar-mix-opacity),
+                var(--snackbar-mix)
+            );
+        }
+    }
+
+    &.snackbar-warn .mat-mdc-snackbar-surface {
+        background-color: var(--snackbar-warn-bg);
+        color: var(--snackbar-warn-text);
+
+        .mat-mdc-snack-bar-label {
+            background-color: color-mix(
+                in srgb,
+                var(--snackbar-warn-bg) var(--snackbar-mix-opacity),
+                var(--snackbar-mix)
+            );
+        }
+    }
+
+    &.snackbar-error .mat-mdc-snackbar-surface {
+        background-color: var(--snackbar-error-bg);
+        color: var(--snackbar-error-text);
+
+        .mat-mdc-snack-bar-label {
+            background-color: color-mix(
+                in srgb,
+                var(--snackbar-error-bg) var(--snackbar-mix-opacity),
+                var(--snackbar-mix)
+            );
+        }
+    }
+
+    .mat-icon {
+        color: inherit;
+    }
+}

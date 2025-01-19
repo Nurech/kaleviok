@@ -1,10 +1,4 @@
-import {
-  APP_INITIALIZER,
-  ApplicationConfig,
-  importProvidersFrom,
-  isDevMode,
-  provideZoneChangeDetection,
-} from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
@@ -20,12 +14,12 @@ import { provideRouterStore } from '@ngrx/router-store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
-import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {
-  MissingTranslationHandler,
-  provideTranslateService,
-  TranslateLoader,
-  TranslateService,
+    MissingTranslationHandler,
+    provideTranslateService,
+    TranslateLoader,
+    TranslateService
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { firstValueFrom } from 'rxjs';
@@ -36,67 +30,63 @@ import { routes } from './app.routes';
 import { RootStoreModule } from './store/root.module';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
-  new TranslateHttpLoader(http, './i18n/', '.json');
+    new TranslateHttpLoader(http, './i18n/', '.json');
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideStoreDevtools({
-      maxAge: 25,
-      traceLimit: 75,
-      connectInZone: true,
-    }),
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideAnalytics(() => getAnalytics()),
-    ScreenTrackingService,
-    UserTrackingService,
-    provideFirestore(() => getFirestore()),
-    provideFunctions(() => getFunctions()),
-    provideMessaging(() => getMessaging()),
-    providePerformance(() => getPerformance()),
-    provideStorage(() => getStorage()),
-    provideRemoteConfig(() => getRemoteConfig()),
-    provideRouterStore(),
-    importProvidersFrom(RootStoreModule),
-    provideServiceWorker('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000',
-    }),
-    provideAnimationsAsync(),
-    {
-      provide: MAT_ICON_DEFAULT_OPTIONS,
-      useValue: { fontSet: 'material-symbols-outlined' },
-    },
-    provideHttpClient(withFetch()),
-    provideTranslateService({
-      missingTranslationHandler: {
-        provide: MissingTranslationHandler,
-        useClass: MissingTranslationService,
-      },
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpLoaderFactory,
-        deps: [HttpClient],
-      },
-      defaultLanguage: 'et',
-    }),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializerFactory,
-      deps: [TranslateService, PwaService],
-      multi: true,
-    },
-    provideServiceWorker('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000',
-    }),
-  ],
+    providers: [
+        provideStoreDevtools({
+            maxAge: 25,
+            traceLimit: 75,
+            connectInZone: true
+        }),
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideRouter(routes),
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideFirestore(() => getFirestore()),
+        provideAuth(() => getAuth()),
+        provideAnalytics(() => getAnalytics()),
+        ScreenTrackingService,
+        UserTrackingService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideFunctions(() => getFunctions()),
+        provideMessaging(() => getMessaging()),
+        providePerformance(() => getPerformance()),
+        provideStorage(() => getStorage()),
+        provideRemoteConfig(() => getRemoteConfig()),
+        provideRouterStore(),
+        importProvidersFrom(RootStoreModule),
+        provideServiceWorker('ngsw-worker.js', {
+            enabled: false,
+            registrationStrategy: 'registerImmediately'
+        }),
+        provideAnimationsAsync(),
+        {
+            provide: MAT_ICON_DEFAULT_OPTIONS,
+            useValue: { fontSet: 'material-symbols-outlined' }
+        },
+        provideTranslateService({
+            missingTranslationHandler: {
+                provide: MissingTranslationHandler,
+                useClass: MissingTranslationService
+            },
+            loader: {
+                provide: TranslateLoader,
+                useFactory: httpLoaderFactory,
+                deps: [HttpClient]
+            },
+            defaultLanguage: 'et'
+        }),
+        {
+            provide: APP_INITIALIZER,
+            useFactory: appInitializerFactory,
+            deps: [TranslateService, PwaService],
+            multi: true
+        }
+    ]
 };
 
 export function appInitializerFactory(translateService: TranslateService): () => Promise<void> {
-  return async () => {
-    await firstValueFrom(translateService.use('en'));
-  };
+    return async () => {
+        await firstValueFrom(translateService.use('en'));
+    };
 }

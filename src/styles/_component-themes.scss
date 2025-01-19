@@ -3,7 +3,7 @@
 @use 'styles/theme-changer' as theme-changer;
 
 @mixin theme($theme) {
-  @include layout-theme.theme($theme);
-  @include theme-changer.alert-theme($theme);
-  @include dark-mode-switch-theme.theme($theme);
+    @include layout-theme.theme($theme);
+    @include theme-changer.alert-theme($theme);
+    @include dark-mode-switch-theme.theme($theme);
 }

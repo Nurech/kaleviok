@@ -4,21 +4,21 @@ import { loadCore } from './core.actions';
 export const featureKey = 'core';
 
 export interface State {
-  loading: boolean;
-  error: any;
+    loading: boolean;
+    error: any;
 }
 
 export const initialState: State = {
-  loading: false,
-  error: null,
+    loading: false,
+    error: null
 };
 
 const coreReducer = createReducer(
-  initialState,
-  on(loadCore, (state) => ({ ...state })),
+    initialState,
+    on(loadCore, (state) => ({ ...state }))
 );
 
 export const coreFeature = createFeature({
-  name: featureKey,
-  reducer: coreReducer,
+    name: featureKey,
+    reducer: coreReducer
 });

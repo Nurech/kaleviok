@@ -9,41 +9,41 @@ import { DarkModeSwitchComponent } from '../../../shared/components/dark-mode-sw
 import { MenuService } from '../../../shared/services/menu.service';
 
 @Component({
-  selector: 'app-sidenav',
-  standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    MatIconModule,
-    AsyncPipe,
-    DarkModeSwitchComponent,
-    TranslatePipe,
-    NgClass,
-    NgOptimizedImage,
-    NgComponentOutlet,
-    JsonPipe,
-  ],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss',
-  animations: [
-    trigger('listAnimation', [
-      transition('* => open', [
-        query(
-          'a',
-          [
-            style({ opacity: 0, transform: 'translateX(30px)' }),
-            stagger(40, [animate('150ms ease-out', style({ opacity: 1, transform: 'translateX(0)' }))]),
-          ],
-          { optional: true },
-        ),
-      ]),
-    ]),
-  ],
+    selector: 'app-sidenav',
+    standalone: true,
+    imports: [
+        RouterLink,
+        RouterLinkActive,
+        MatIconModule,
+        AsyncPipe,
+        DarkModeSwitchComponent,
+        TranslatePipe,
+        NgClass,
+        NgOptimizedImage,
+        NgComponentOutlet,
+        JsonPipe
+    ],
+    templateUrl: './sidenav.component.html',
+    styleUrl: './sidenav.component.scss',
+    animations: [
+        trigger('listAnimation', [
+            transition('* => open', [
+                query(
+                    'a',
+                    [
+                        style({ opacity: 0, transform: 'translateX(30px)' }),
+                        stagger(40, [animate('150ms ease-out', style({ opacity: 1, transform: 'translateX(0)' }))])
+                    ],
+                    { optional: true }
+                )
+            ])
+        ])
+    ]
 })
 export class SidenavComponent {
-  store$ = inject(Store);
-  closeDrawer = output();
-  menuItems = inject(MenuService).rootMenuItems;
-  public isOpen = signal(false);
-  animationState = computed(() => (this.isOpen() ? 'open' : ''));
+    store$ = inject(Store);
+    closeDrawer = output();
+    menuItems = inject(MenuService).rootMenuItems;
+    public isOpen = signal(false);
+    animationState = computed(() => (this.isOpen() ? 'open' : ''));
 }

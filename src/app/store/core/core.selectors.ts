@@ -5,5 +5,5 @@ import { selectAuthState } from '../auth/auth.selectors';
 export const selectCoreState = coreFeature.selectCoreState;
 
 export const selectLoading = createSelector(selectCoreState, selectAuthState, (coreState, authState) => {
-  return coreState.loading || authState.loading;
+    return coreState.loading || authState.loading;
 });

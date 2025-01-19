@@ -6,6 +6,6 @@ import { coreFeature } from './core.reducer';
 import { CoreEffects } from './core.effects';
 
 @NgModule({
-  imports: [CommonModule, StoreModule.forFeature(coreFeature), EffectsModule.forFeature([CoreEffects])],
+    imports: [CommonModule, StoreModule.forFeature(coreFeature), EffectsModule.forFeature([CoreEffects])]
 })
 export class CoreStoreModule {}

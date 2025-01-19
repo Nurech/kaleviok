@@ -3,12 +3,12 @@ import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root'
 })
 export class SettingsService {
-  private store$ = inject(Store);
+    private store$ = inject(Store);
 
-  getAll(): Observable<any> {
-    return of({});
-  }
+    getAll(): Observable<any> {
+        return of({});
+    }
 }

@@ -3,34 +3,34 @@ import { Directive, inject, input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Directive({
-  selector: '[appCopyToClipboard]',
-  standalone: true,
-  hostDirectives: [
-    {
-      directive: CdkCopyToClipboard,
-      inputs: ['cdkCopyToClipboard:libCopyToClipboard'],
-      outputs: ['cdkCopyToClipboardCopied:libCopyToClipboardCopied'],
-    },
-  ],
+    selector: '[appCopyToClipboard]',
+    standalone: true,
+    hostDirectives: [
+        {
+            directive: CdkCopyToClipboard,
+            inputs: ['cdkCopyToClipboard:libCopyToClipboard'],
+            outputs: ['cdkCopyToClipboardCopied:libCopyToClipboardCopied']
+        }
+    ]
 })
 export class CopyToClipboardDirective {
-  libCopyToClipboard = input.required<string>();
-  snackBarText = input<string>('');
+    libCopyToClipboard = input.required<string>();
+    snackBarText = input<string>('');
 
-  private cdkCopyToClipboard = inject(CdkCopyToClipboard);
-  private snackbar = inject(MatSnackBar);
+    private cdkCopyToClipboard = inject(CdkCopyToClipboard);
+    private snackbar = inject(MatSnackBar);
 
-  constructor() {
-    this.cdkCopyToClipboard.copied.subscribe((copied) => {
-      if (copied) {
-        this.snackbar.open(
-          `Copied ${this.snackBarText() ? this.snackBarText() : this.libCopyToClipboard()} to clipboard!`,
-          undefined,
-          { duration: 3000 },
-        );
-      } else {
-        this.snackbar.open('Please try after some time');
-      }
-    });
-  }
+    constructor() {
+        this.cdkCopyToClipboard.copied.subscribe((copied) => {
+            if (copied) {
+                this.snackbar.open(
+                    `Copied ${this.snackBarText() ? this.snackBarText() : this.libCopyToClipboard()} to clipboard!`,
+                    undefined,
+                    { duration: 3000 }
+                );
+            } else {
+                this.snackbar.open('Please try after some time');
+            }
+        });
+    }
 }

@@ -1,3 +1,3 @@
 export interface Core {
-  loading: boolean;
+    loading: boolean;
 }

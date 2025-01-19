@@ -1,21 +1,41 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
-import { MatButton } from '@angular/material/button';
-import { NgIf } from '@angular/common';
-import { state } from '@angular/animations';
+import { Component, inject, HostListener, ElementRef } from '@angular/core';
+import { MAT_SNACK_BAR_DATA, MatSnackBarAction } from '@angular/material/snack-bar';
+import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
+import { NgClass } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
-import { Snackbar, SnackbarState } from '../../models';
+import { Router, RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Snackbar } from '../../../store/snackbar/snackbar.model';
+import { closeAllSnackbars } from '../../../store/snackbar/snackbar.actions';
 
 @Component({
-  selector: 'app-snackbar',
-  standalone: true,
-  imports: [MatButton, NgIf, MatProgressSpinner, MatIcon],
-  templateUrl: './snackbar.component.html',
-  styleUrl: './snackbar.component.scss',
+    selector: 'app-snackbar',
+    standalone: true,
+    imports: [MatButton, MatProgressSpinner, MatIcon, MatIconButton, NgClass, MatAnchor, RouterLink, MatSnackBarAction],
+    templateUrl: './snackbar.component.html',
+    styleUrl: './snackbar.component.scss'
 })
 export class SnackbarComponent {
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: Snackbar) {}
-  protected readonly state = state;
-  protected readonly SnackbarState = SnackbarState;
+    private router = inject(Router);
+    private store$ = inject(Store);
+    private elementRef = inject(ElementRef);
+    data: Snackbar = inject(MAT_SNACK_BAR_DATA);
+
+    onClose() {
+        this.store$.dispatch(closeAllSnackbars());
+    }
+
+    navigateToLink() {
+        console.log('Navigating to link', this.data);
+        this.router.navigate([this.data.action?.link]);
+    }
+
+    @HostListener('document:click', ['$event'])
+    handleOutsideClick(event: Event) {
+        const target = event.target as Node;
+        if (!this.elementRef.nativeElement.contains(target)) {
+            this.onClose();
+        }
+    }
 }

@@ -6,6 +6,6 @@ import { settingsFeature } from './settings.reducer';
 import { SettingsEffects } from './settings.effects';
 
 @NgModule({
-  imports: [CommonModule, StoreModule.forFeature(settingsFeature), EffectsModule.forFeature([SettingsEffects])],
+    imports: [CommonModule, StoreModule.forFeature(settingsFeature), EffectsModule.forFeature([SettingsEffects])]
 })
 export class SettingsStoreModule {}

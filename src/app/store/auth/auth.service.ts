@@ -1,80 +1,68 @@
-import { inject, Injectable, signal, effect } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import {
-  Auth,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  User,
+    Auth,
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signOut,
+    User
 } from '@angular/fire/auth';
-import { from, take } from 'rxjs';
+import { from } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { manualLogin, googleSuccess, startAutoLogin } from './auth.actions';
-import { selectMySettings } from '../settings/settings.selectors';
+import { authChanged } from './auth.actions';
 import { UserMapper } from '../accounts/account.model';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root'
 })
 export class AuthService {
-  private auth = inject(Auth);
-  private store$ = inject(Store);
+    private auth = inject(Auth);
+    private store$ = inject(Store);
 
-  private authState = signal<User | null | undefined>(undefined);
+    private authState = signal<User | null | undefined>(undefined);
 
-  constructor() {
-    this.initialize();
-  }
+    constructor() {
+        this.initialize();
+    }
 
-  private initialize() {
-    this.store$
-      .select(selectMySettings)
-      .pipe(take(1))
-      .subscribe((settings) => {
-        if (settings.autologin) {
-          onAuthStateChanged(this.auth, (user) => {
-            this.authState.set(user);
-          });
+    private initialize() {
+        onAuthStateChanged(this.auth, (user) => {
+            console.log('Auth state changed', user);
+            if (user) {
+                this.setAuthState(user);
+            } else {
+                this.setAuthState(null);
+            }
+        });
+    }
 
-          effect(
-            () => {
-              const user = this.authState();
-              if (user === undefined) {
-                console.log('Auth state is loading');
-                this.store$.dispatch(startAutoLogin());
-                return;
-              }
+    registerWithEmail(email: string, password: string) {
+        return from(createUserWithEmailAndPassword(this.auth, email, password));
+    }
 
-              if (user) {
-                console.log('User authenticated:', user);
-                const account = UserMapper.mapFirebaseUserToUser(user);
-                this.store$.dispatch(googleSuccess({ account }));
-              }
-            },
-            { allowSignalWrites: true },
-          );
-        } else {
-          console.log('No authenticated user, dispatching manual login');
-          this.store$.dispatch(manualLogin());
+    loginWithGoogle() {
+        const provider = new GoogleAuthProvider();
+        return from(signInWithPopup(this.auth, provider));
+    }
+
+    loginWithEmail(email: string, password: string) {
+        return from(signInWithEmailAndPassword(this.auth, email, password));
+    }
+
+    logout() {
+        return from(signOut(this.auth));
+    }
+
+    getAuthState() {
+        return this.authState();
+    }
+
+    setAuthState(user: User | null) {
+        this.authState.set(user);
+        if (user) {
+            this.store$.dispatch(authChanged({ payload: UserMapper.mapFirebaseUserToUser(user) }));
         }
-      });
-  }
-
-  loginWithGoogle() {
-    const provider = new GoogleAuthProvider();
-    return from(signInWithPopup(this.auth, provider));
-  }
-
-  loginWithEmail(email: string, password: string) {
-    return from(signInWithEmailAndPassword(this.auth, email, password));
-  }
-
-  logout() {
-    return from(signOut(this.auth));
-  }
-
-  getAuthState() {
-    return this.authState();
-  }
+    }
 }
