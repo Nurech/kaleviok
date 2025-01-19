@@ -31,7 +31,11 @@
         <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef>Edit</th>
             <td mat-cell *matCellDef="let account">
-                <button mat-icon-button [routerLink]="['/account/edit', account.uid]">
+                <button
+                    mat-icon-button
+                    [routerLink]="['/account']"
+                    [queryParams]="{ id: account.uid }"
+                    fragment="profile">
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>

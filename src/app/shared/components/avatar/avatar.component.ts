@@ -19,7 +19,7 @@ export class AvatarComponent implements OnInit {
 
     ngOnInit(): void {
         this.extractInitials();
-        this.generateColors();
+        this.generateColorsFromUID();
     }
 
     private extractInitials(): void {
@@ -28,15 +28,19 @@ export class AvatarComponent implements OnInit {
         this.initials = (firstInitial + lastInitial).toUpperCase();
     }
 
-    private generateColors(): void {
-        if (!this.initials) {
+    private generateColorsFromUID(): void {
+        if (!this.account?.uid) {
             this.backgroundColor = '#aaa';
             this.textColor = '#fff';
             return;
         }
 
-        const charCodeSum = this.initials.charCodeAt(0) + (this.initials.charCodeAt(1) || 0);
-        const hue = (charCodeSum * 37) % 360;
+        const uidString = this.account.uid;
+        let hash = 0;
+        for (let i = 0; i < uidString.length; i++) {
+            hash = uidString.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const hue = Math.abs(hash % 360);
         this.backgroundColor = `hsl(${hue}, 70%, 50%)`;
         this.textColor = hue > 180 ? '#fff' : '#000';
     }

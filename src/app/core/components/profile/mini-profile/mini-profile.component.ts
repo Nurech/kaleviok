@@ -6,6 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { AsyncPipe, NgIf, NgStyle } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { selectAuthAccount } from '../../../../store/auth/auth.selectors';
 import { MenuService } from '../../../../shared/services/menu.service';
 import { LogoutDialogComponent } from '../../logout-dialog/logout-dialog.component';
@@ -40,9 +41,16 @@ export class MiniProfileComponent {
         this.dialogService.open(LogoutDialogComponent);
     }
 
-    onSettingsClick() {
+    async onSettingsClick() {
         this.menuService.isDrawerOpen.set(false);
-        // this.router.navigate(['/settings']);
+        const account = await firstValueFrom(this.account$);
+        if (account?.uid) {
+            await this.router.navigate(['/account'], {
+                queryParams: {
+                    id: account.uid
+                }
+            });
+        }
     }
 
     onNotifications() {

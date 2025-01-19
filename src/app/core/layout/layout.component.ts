@@ -14,6 +14,7 @@ import { SidenavComponent } from '../components/sidenav/sidenav.component';
 import { DeviceService } from '../../shared/services/device.service';
 import { selectLoading } from '../../store/core/core.selectors';
 import { MenuService } from '../../shared/services/menu.service';
+import { BreadcrumbsComponent } from '../../shared/components/breadcrumbs/breadcrumbs.component';
 
 @Component({
     selector: 'app-layout',
@@ -32,7 +33,8 @@ import { MenuService } from '../../shared/services/menu.service';
         NgTemplateOutlet,
         RouterOutlet,
         TranslatePipe,
-        MatProgressBar
+        MatProgressBar,
+        BreadcrumbsComponent
     ]
 })
 export class LayoutComponent {
