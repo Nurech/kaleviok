@@ -1,77 +1,45 @@
-@use '../m3-theme';
 @use '@angular/material' as mat;
-@use 'styles/component-themes';
-@use 'styles/sidenav';
-@use 'styles/switch';
-@use 'styles/utils';
-@use 'styles/scroll';
-@use 'styles/tabs';
-@use 'styles/variables';
-@use 'styles/material-override';
-@use 'styles/icon-sizes';
-@use 'styles/snackbar';
-@use 'styles/mat-error';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@include mat.core();
+html, body {
+  height: 100%;
+}
 
-$theme: m3-theme.$light-theme;
-$dark-theme: m3-theme.$dark-theme;
+$light-theme: mat.define-theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+        use-system-variables: true,
+      ),
+      typography: (
+        use-system-variables: true,
+      )
+    )
+);
+
+$dark-theme: mat.define-theme(
+    (
+      color: (
+        theme-type: dark,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+        use-system-variables: true,
+      ),
+      typography: (
+        use-system-variables: true,
+      )
+    )
+);
 
 :root {
-    @include mat.all-component-themes($theme);
-    @include component-themes.theme($theme);
-    @include mat.color-variants-backwards-compatibility($theme);
-    @include mat.system-level-colors($theme);
-    @include mat.system-level-typography($theme);
-
-    @media (prefers-color-scheme: dark) {
-        @include mat.all-component-colors($dark-theme);
-        @include component-themes.theme($dark-theme);
-        @include mat.color-variants-backwards-compatibility($dark-theme);
-        @include mat.system-level-colors($dark-theme);
-    }
+  @include mat.all-component-themes($light-theme);
+  @include mat.system-level-colors($light-theme);
+  @include mat.system-level-typography($light-theme);
 }
 
-html,
-body {
-    height: 100%;
-    font-size: 16px;
-}
-
-body {
-    margin: 0;
-    font-family: #{variables.$regular-font-family};
-    font-size: #{variables.$text-font-size};
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:focus {
-    transition:
-        background-color 0s 600000s,
-        color 0s 600000s !important;
-}
-
-a {
-    @apply text-sm hover:underline;
-    color: var(--sys-primary) !important;
-}
-
-label {
-    @apply text-sm;
-}
-
-.cdk-overlay-connected-position-bounding-box {
-    @apply text-center;
-}
-
-app-bottom-sheet {
-    @apply flex items-center justify-center;
-}
-
-.mat-mdc-dialog-surface {
-    @apply border-4 border-solid;
-    border-color: var(--sys-on-surface);
+.dark {
+  @include mat.all-component-themes($dark-theme);
+  @include mat.system-level-colors($dark-theme);
+  @include mat.system-level-typography($dark-theme);
 }
