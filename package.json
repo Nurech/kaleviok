@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.114",
+  "version": "0.0.115",
   "scripts": {
     "ng": "ng",
     "watch": "ng build --watch --configuration development",
@@ -34,16 +34,16 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.1.1",
-    "@angular/cdk": "^19.0.0",
+    "@angular/cdk": "^19.1.0",
     "@angular/common": "^19.1.1",
     "@angular/compiler": "^19.1.1",
     "@angular/core": "^19.1.1",
     "@angular/fire": "^19.0.0",
     "@angular/forms": "^19.1.1",
-    "@angular/material": "^19.0.0",
+    "@angular/material": "^19.1.0",
     "@angular/platform-browser": "^19.1.1",
     "@angular/platform-browser-dynamic": "^19.1.1",
-    "@angular/pwa": "^19.0.0",
+    "@angular/pwa": "^19.1.2",
     "@angular/router": "^19.1.1",
     "@angular/service-worker": "^19.1.1",
     "@material/material-color-utilities": "^0.3.0",
@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.0.0",
-    "@angular/cli": "^19.0.0",
+    "@angular/cli": "^19.1.2",
     "@angular/compiler-cli": "^19.1.1",
     "@ngrx/schematics": "^19.0.0",
     "@types/jasmine": "~5.1.0",
