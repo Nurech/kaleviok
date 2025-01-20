@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, viewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { ViewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
@@ -34,16 +33,16 @@ export class AccountsComponent implements OnInit {
     displayedColumns: string[] = ['photoUrl', 'firstName', 'lastName', 'edit'];
     dataSource: MatTableDataSource<Account> = new MatTableDataSource<Account>([]);
 
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort!: MatSort;
+    readonly paginator = viewChild.required(MatPaginator);
+    readonly sort = viewChild.required(MatSort);
 
     constructor(private store: Store) {}
 
     ngOnInit() {
         this.store.select(selectAllAccounts).subscribe((accounts) => {
             this.dataSource.data = accounts;
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator();
+            this.dataSource.sort = this.sort();
         });
     }
 

@@ -1,7 +1,7 @@
 <div class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full">
     <img
-        *ngIf="account.photoURL; else fallback"
-        [src]="account.photoURL"
+        *ngIf="account().photoURL; else fallback"
+        [src]="account().photoURL"
         alt="Profile"
         class="h-full w-full object-cover" />
     <ng-template #fallback>

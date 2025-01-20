@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, viewChild } from '@angular/core';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatButton } from '@angular/material/button';
 import { NgTemplateOutlet } from '@angular/common';
@@ -17,11 +17,11 @@ import { updateSettings } from '../../../store/settings/settings.actions';
     standalone: true
 })
 export class InstallPwaComponent implements OnInit {
-    @ViewChild('chromeWeb', { static: true }) chromeWeb!: TemplateRef<any>;
-    @ViewChild('chromeAndroid', { static: true }) chromeAndroid!: TemplateRef<any>;
-    @ViewChild('chromeIos', { static: true }) chromeIos!: TemplateRef<any>;
-    @ViewChild('safariIos', { static: true }) safariIos!: TemplateRef<any>;
-    @ViewChild('other', { static: true }) other!: TemplateRef<any>;
+    readonly chromeWeb = viewChild.required<TemplateRef<any>>('chromeWeb');
+    readonly chromeAndroid = viewChild.required<TemplateRef<any>>('chromeAndroid');
+    readonly chromeIos = viewChild.required<TemplateRef<any>>('chromeIos');
+    readonly safariIos = viewChild.required<TemplateRef<any>>('safariIos');
+    readonly other = viewChild.required<TemplateRef<any>>('other');
 
     deviceService = inject(DeviceService);
     pwaService = inject(PwaService);
@@ -39,16 +39,16 @@ export class InstallPwaComponent implements OnInit {
 
         if (browser === BrowserType.CHROME) {
             if (platform === PlatformType.ANDROID) {
-                this.currentTemplate = this.chromeAndroid;
+                this.currentTemplate = this.chromeAndroid();
             } else if (platform === PlatformType.IOS) {
-                this.currentTemplate = this.chromeIos;
+                this.currentTemplate = this.chromeIos();
             } else {
-                this.currentTemplate = this.chromeWeb;
+                this.currentTemplate = this.chromeWeb();
             }
         } else if (browser === BrowserType.SAFARI && platform === PlatformType.IOS) {
-            this.currentTemplate = this.safariIos;
+            this.currentTemplate = this.safariIos();
         } else {
-            this.currentTemplate = this.other;
+            this.currentTemplate = this.other();
         }
     }
 

@@ -11,15 +11,12 @@ export class DeviceService {
     platform = signal<PlatformType>(this.detectPlatform());
 
     constructor() {
-        effect(
-            () => {
-                this.breakpointObserver
-                    .observe([Breakpoints.XSmall, Breakpoints.Small])
-                    .pipe(map((result) => result.matches))
-                    .subscribe((isHandheld) => this.isHandheld.set(isHandheld));
-            },
-            { allowSignalWrites: true }
-        );
+        effect(() => {
+            this.breakpointObserver
+                .observe([Breakpoints.XSmall, Breakpoints.Small])
+                .pipe(map((result) => result.matches))
+                .subscribe((isHandheld) => this.isHandheld.set(isHandheld));
+        });
     }
 
     private detectBrowser(): BrowserType {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { NgIf, NgStyle } from '@angular/common';
 import { Account } from '../../../store/accounts/account.model';
 
@@ -10,7 +10,7 @@ import { Account } from '../../../store/accounts/account.model';
     styleUrl: './avatar.component.scss'
 })
 export class AvatarComponent implements OnInit {
-    @Input() account!: Account;
+    readonly account = input.required<Account>();
 
     initials = '';
     backgroundColor = '';
@@ -22,19 +22,20 @@ export class AvatarComponent implements OnInit {
     }
 
     private extractInitials(): void {
-        const firstInitial = this.account?.firstName?.charAt(0) || '';
-        const lastInitial = this.account?.lastName?.charAt(0) || '';
+        const firstInitial = this.account()?.firstName?.charAt(0) || '';
+        const lastInitial = this.account()?.lastName?.charAt(0) || '';
         this.initials = (firstInitial + lastInitial).toUpperCase();
     }
 
     private generateColorsFromUID(): void {
-        if (!this.account?.uid) {
+        const account = this.account();
+        if (!account?.uid) {
             this.backgroundColor = '#aaa';
             this.textColor = '#fff';
             return;
         }
 
-        const uidString = this.account.uid;
+        const uidString = account.uid;
         let hash = 0;
         for (let i = 0; i < uidString.length; i++) {
             hash = uidString.charCodeAt(i) + ((hash << 5) - hash);

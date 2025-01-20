@@ -1,8 +1,8 @@
-import { Component, effect, inject, ViewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -38,17 +38,8 @@ import { BreadcrumbsComponent } from '../../shared/components/breadcrumbs/breadc
     ]
 })
 export class LayoutComponent {
-    @ViewChild('drawer') drawer!: MatDrawer;
     private store$ = inject(Store);
     isHandheld = inject(DeviceService).isHandheld;
     menuService = inject(MenuService);
     isLoading$ = this.store$.select(selectLoading);
-
-    constructor() {
-        effect(() => {
-            if (!this.menuService.isDrawerOpen()) {
-                this.drawer.close();
-            }
-        });
-    }
 }
