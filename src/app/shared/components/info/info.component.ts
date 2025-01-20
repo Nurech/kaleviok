@@ -1,5 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { MatIconButton } from '@angular/material/button';
+import { Component, input, viewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatRipple } from '@angular/material/core';
@@ -8,14 +7,14 @@ import { TranslatePipe } from '@ngx-translate/core';
 @Component({
     selector: 'app-info',
     standalone: true,
-    imports: [MatIconButton, MatIcon, MatTooltip, MatRipple, TranslatePipe],
+    imports: [MatTooltip, MatRipple, TranslatePipe, MatIcon],
     templateUrl: './info.component.html'
 })
 export class InfoComponent {
-    @ViewChild(MatTooltip, { static: true }) tooltip!: MatTooltip;
-    @Input() text = '[MISSING]';
+    readonly tooltip = viewChild.required(MatTooltip);
+    readonly text = input('[MISSING]');
 
     toggle() {
-        this.tooltip.show();
+        this.tooltip().show();
     }
 }

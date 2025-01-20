@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe } from '@angular/common';
 import { IconResolver, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LayoutComponent } from './core/layout/layout.component';
@@ -11,7 +10,7 @@ import { NotificationService } from './shared/services/notification.service';
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [LayoutComponent, MatCardModule, MatButtonModule, AsyncPipe],
+    imports: [LayoutComponent, MatCardModule, MatButtonModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })

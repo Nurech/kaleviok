@@ -9,7 +9,7 @@
             role="button"
             tabindex="0">
             <mat-icon>dark_mode</mat-icon>
-            @if (variant === 'full') {
+            @if (variant() === 'full') {
                 Switch to dark mode
             }
         </div>
@@ -22,7 +22,7 @@
             role="button"
             tabindex="0">
             <mat-icon>brightness_medium</mat-icon>
-            @if (variant === 'full') {
+            @if (variant() === 'full') {
                 Switch to auto mode
             }
         </div>
@@ -35,7 +35,7 @@
             role="button"
             tabindex="0">
             <mat-icon>light_mode</mat-icon>
-            @if (variant === 'full') {
+            @if (variant() === 'full') {
                 Switch to light mode
             }
         </div>

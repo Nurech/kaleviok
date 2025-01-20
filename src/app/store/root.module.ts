@@ -52,7 +52,7 @@ export function hydrateReducer(reducer: any): any {
                 const storedValue = localStorage.getItem(`${key}-state`);
                 if (storedValue) {
                     restoredState[key] = JSON.parse(storedValue);
-                    console.warn(`Rehydrating ${key} from localStorage: `, restoredState[key]);
+                    console.log(`Rehydrating ${key} from localStorage: `, restoredState[key]);
                 }
             });
 

@@ -30,7 +30,7 @@ export class PwaService {
     constructor() {
         this.detectPwaEnvironment();
         this.listenForEvents();
-        effect(() => this.handleInstallPromotion(), { allowSignalWrites: true });
+        effect(() => this.handleInstallPromotion());
         this.startUpdateCheck();
         this.logVersionOnUpdate();
     }

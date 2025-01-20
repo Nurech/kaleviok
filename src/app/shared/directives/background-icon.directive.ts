@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer2, Input, OnInit, inject } from '@angular/core';
+import { Directive, ElementRef, Renderer2, OnInit, inject, input } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { firstValueFrom } from 'rxjs';
 
@@ -7,17 +7,18 @@ import { firstValueFrom } from 'rxjs';
     selector: '[appBackgroundIcon]'
 })
 export class BackgroundIconDirective implements OnInit {
-    @Input('appBackgroundIcon') iconName = '';
+    readonly iconName = input('', { alias: 'appBackgroundIcon' });
 
     private el = inject(ElementRef);
     private renderer = inject(Renderer2);
     private iconRegistry = inject(MatIconRegistry);
 
     async ngOnInit(): Promise<void> {
-        if (!this.iconName) return;
+        const iconName = this.iconName();
+        if (!iconName) return;
 
         try {
-            const svgElement = await firstValueFrom(this.iconRegistry.getNamedSvgIcon(this.iconName));
+            const svgElement = await firstValueFrom(this.iconRegistry.getNamedSvgIcon(iconName));
 
             const svgClone = svgElement.cloneNode(true) as SVGElement;
 
@@ -38,7 +39,7 @@ export class BackgroundIconDirective implements OnInit {
 
             this.renderer.appendChild(this.el.nativeElement, svgClone);
         } catch (error) {
-            console.warn(`Error fetching icon "${this.iconName}":`, error);
+            console.warn(`Error fetching icon "${iconName}":`, error);
         }
     }
 }

@@ -1,8 +1,8 @@
-import { Component, effect, inject, ViewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -14,6 +14,7 @@ import { SidenavComponent } from '../components/sidenav/sidenav.component';
 import { DeviceService } from '../../shared/services/device.service';
 import { selectLoading } from '../../store/core/core.selectors';
 import { MenuService } from '../../shared/services/menu.service';
+import { BreadcrumbsComponent } from '../../shared/components/breadcrumbs/breadcrumbs.component';
 
 @Component({
     selector: 'app-layout',
@@ -32,21 +33,13 @@ import { MenuService } from '../../shared/services/menu.service';
         NgTemplateOutlet,
         RouterOutlet,
         TranslatePipe,
-        MatProgressBar
+        MatProgressBar,
+        BreadcrumbsComponent
     ]
 })
 export class LayoutComponent {
-    @ViewChild('drawer') drawer!: MatDrawer;
     private store$ = inject(Store);
     isHandheld = inject(DeviceService).isHandheld;
     menuService = inject(MenuService);
     isLoading$ = this.store$.select(selectLoading);
-
-    constructor() {
-        effect(() => {
-            if (!this.menuService.isDrawerOpen()) {
-                this.drawer.close();
-            }
-        });
-    }
 }
