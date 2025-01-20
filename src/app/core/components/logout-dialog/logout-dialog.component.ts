@@ -4,7 +4,6 @@ import { MatButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { logout } from '../../../store/auth/auth.actions';
-import { InfoComponent } from '../../../shared/components/info/info.component';
 import { BackgroundIconDirective } from '../../../shared/directives/background-icon.directive';
 
 @Component({
@@ -17,7 +16,6 @@ import { BackgroundIconDirective } from '../../../shared/directives/background-i
         MatButton,
         MatDialogClose,
         TranslatePipe,
-        InfoComponent,
         BackgroundIconDirective
     ],
     templateUrl: './logout-dialog.component.html',

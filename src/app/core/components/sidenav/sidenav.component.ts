@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe, NgClass, NgComponentOutlet, NgOptimizedImage } from '@angular/common';
+import { NgComponentOutlet } from '@angular/common';
 import { Component, computed, inject, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -11,18 +11,7 @@ import { MenuService } from '../../../shared/services/menu.service';
 @Component({
     selector: 'app-sidenav',
     standalone: true,
-    imports: [
-        RouterLink,
-        RouterLinkActive,
-        MatIconModule,
-        AsyncPipe,
-        DarkModeSwitchComponent,
-        TranslatePipe,
-        NgClass,
-        NgOptimizedImage,
-        NgComponentOutlet,
-        JsonPipe
-    ],
+    imports: [RouterLink, RouterLinkActive, MatIconModule, DarkModeSwitchComponent, TranslatePipe, NgComponentOutlet],
     templateUrl: './sidenav.component.html',
     styleUrl: './sidenav.component.scss',
     animations: [

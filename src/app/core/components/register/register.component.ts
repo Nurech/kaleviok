@@ -6,13 +6,10 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AsyncPipe, NgIf } from '@angular/common';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { RouterLink } from '@angular/router';
+import { NgIf } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { InfoComponent } from '../../../shared/components/info/info.component';
 import { CustomValidators } from '../../../shared/validators/custom-validators';
 import { emailRegisterStart } from '../../../store/auth/auth.actions';
 
@@ -27,11 +24,7 @@ import { emailRegisterStart } from '../../../store/auth/auth.actions';
         MatIcon,
         TranslatePipe,
         MatDivider,
-        MatCheckbox,
         MatIconButton,
-        RouterLink,
-        InfoComponent,
-        AsyncPipe,
         NgIf,
         ReactiveFormsModule
     ],

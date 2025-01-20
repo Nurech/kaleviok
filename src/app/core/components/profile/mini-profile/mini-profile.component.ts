@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
@@ -15,18 +15,7 @@ import { DialogService } from '../../../../shared/services/dialog.service';
 @Component({
     selector: 'app-mini-profile',
     standalone: true,
-    imports: [
-        MatCardModule,
-        MatButton,
-        MatIcon,
-        MatFabButton,
-        TranslatePipe,
-        MatIconButton,
-        AsyncPipe,
-        NgStyle,
-        NgIf,
-        RouterLink
-    ],
+    imports: [MatCardModule, MatButton, MatIcon, TranslatePipe, MatIconButton, AsyncPipe, NgStyle, NgIf, RouterLink],
     templateUrl: './mini-profile.component.html',
     styleUrl: './mini-profile.component.scss'
 })

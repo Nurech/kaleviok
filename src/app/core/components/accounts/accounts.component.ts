@@ -6,7 +6,6 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { ViewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NgIf, NgStyle } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
@@ -24,9 +23,7 @@ import { AvatarComponent } from '../../../shared/components/avatar/avatar.compon
         MatTableModule,
         MatSortModule,
         MatPaginatorModule,
-        NgStyle,
         MatIcon,
-        NgIf,
         AvatarComponent,
         MatIconButton,
         RouterLink

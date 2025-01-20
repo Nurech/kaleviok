@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.110",
+  "version": "0.0.111",
   "scripts": {
     "ng": "ng",
     "watch": "ng build --watch --configuration development",
@@ -17,13 +17,17 @@
     "install:generate-store": "cd generate-store && npm install && npm run build && npm link && cd .. && npm i --save-dev ./generate-store",
     "install:functions": "cd functions && npm install",
     "postinstall": "npm run install:generate-store && npm run install:functions",
+    "cleanup:imports": "ng generate @angular/core:cleanup-unused-imports",
+    "remove:standalone": "ng generate @angular/core:standalone --remove-standalone-flag",
+    "migrate:signal-inputs": "ng generate @angular/core:signal-input-migration",
+    "migrate:signal-outputs": "ng generate @angular/core:signal-output-migration",
     "lint": "eslint \"**/*.{js,ts,html}\"",
     "format": "prettier --write \"**/*.{js,ts,html,json,css,scss,md}\""
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
-      "prettier --write \"**/*.{js,ts,html,json,css,scss,md}\"",
-      "eslint \"**/*.{js,ts,html}\" --fix"
+      "npm run format",
+      "npm run lint -- --fix"
     ]
   },
   "private": true,

@@ -1,12 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 import { NgIf, NgStyle } from '@angular/common';
 import { Account } from '../../../store/accounts/account.model';
 
 @Component({
     selector: 'app-avatar',
     standalone: true,
-    imports: [MatIcon, NgIf, NgStyle],
+    imports: [NgIf, NgStyle],
     templateUrl: './avatar.component.html',
     styleUrl: './avatar.component.scss'
 })
