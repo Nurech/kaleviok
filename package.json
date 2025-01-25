@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.118",
+  "version": "0.0.119",
   "scripts": {
     "ng": "ng",
     "watch": "ng build --watch --configuration development",
@@ -22,13 +22,12 @@
     "migrate:signal-inputs": "ng g @angular/core:signal-input-migration",
     "migrate:output-migration": "ng g @angular/core:output-migration",
     "migrate:signal-queries-migration": "ng g @angular/core:signal-queries-migration",
-    "lint": "eslint \"**/*.{js,ts,html}\"",
+    "lint": "eslint --cache \"**/*.{js,ts,html}\"",
     "format": "prettier --write \"**/*.{js,ts,html,json,css,scss,md}\""
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
-      "npm run format",
-      "npm run lint -- --fix"
+      "npm run format && npm run lint -- --fix"
     ]
   },
   "private": true,
