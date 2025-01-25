@@ -1,41 +1,18 @@
 <mat-sidenav-container class="app-sidenav-container">
     <mat-sidenav
-        #drawer
         position="end"
         [attr.role]="'navigation'"
         [mode]="isHandheld() ? 'over' : 'side'"
-        [opened]="menuService.isDrawerOpen()"
-        (openedStart)="menuService.isDrawerOpen.set(true)"
-        (closedStart)="menuService.isDrawerOpen.set(false)"
+        [opened]="drawerService.isOpen()"
+        (openedStart)="drawerService.isOpen.set(true)"
+        (closedStart)="drawerService.isOpen.set(false)"
         class="app-sidenav">
         <app-sidenav></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content class="app-sidenav-content">
-        <div class="p-2">
-            <ng-template [ngTemplateOutlet]="progressBar"></ng-template>
-            <div class="flex flex-row items-center justify-between">
-                <app-breadcrumbs></app-breadcrumbs>
-                <button
-                    [attr.aria-label]="
-                        menuService.isDrawerOpen() ? ('close_menu' | translate) : ('open_menu' | translate)
-                    "
-                    mat-icon-button
-                    class="right-0 top-0 z-10 m-2"
-                    (click)="drawer.open()">
-                    <mat-icon class="mb-1">menu</mat-icon>
-                </button>
-            </div>
+        <div class="p-2 flex flex-col">
+            <app-header></app-header>
             <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
-
-<ng-template #progressBar>
-    <div class="absolute top-0 w-full">
-        @if (isLoading$ | async) {
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        } @else {
-            <div class="h-[4px]"></div>
-        }
-    </div>
-</ng-template>

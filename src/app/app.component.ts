@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { LayoutComponent } from './core/layout/layout.component';
 import { DialogService } from './shared/services/dialog.service';
 import { NotificationService } from './shared/services/notification.service';
+import { DrawerService } from './shared/services/drawer.service';
 
 @Component({
     selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
     private sanitizer = inject(DomSanitizer);
     private notificationService = inject(NotificationService);
     private dialogService = inject(DialogService);
+    private drawerService = inject(DrawerService);
 
     ngOnInit(): void {
         this.initializeIconRegistry();
