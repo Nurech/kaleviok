@@ -52,7 +52,7 @@ export class SnackbarEffects {
                 ofType(openSnackbar),
                 tap(({ payload }) => {
                     if (!payload.duration) {
-                        payload = { ...payload, duration: 5000 };
+                        payload = { ...payload, duration: 6000 };
                     }
                     this.snackbarService.open(payload);
                 })
