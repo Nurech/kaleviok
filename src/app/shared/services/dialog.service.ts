@@ -22,6 +22,9 @@ export class DialogService {
             config.autoFocus = '[autofocus]';
         }
 
+        // Ensure panelClass exists and apply the Tailwind border class
+        config.panelClass = [...(config.panelClass || [])];
+
         const dialogRef = this.dialog.open<T, D>(component, config);
         this.dialogRefs.set(key, dialogRef);
 

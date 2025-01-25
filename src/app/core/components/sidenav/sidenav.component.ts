@@ -12,7 +12,6 @@ import { MenuService } from '../../../shared/services/menu.service';
     standalone: true,
     imports: [RouterLink, RouterLinkActive, MatIconModule, DarkModeSwitchComponent, TranslatePipe, NgComponentOutlet],
     templateUrl: './sidenav.component.html',
-    styleUrl: './sidenav.component.scss',
     animations: [
         trigger('listAnimation', [
             transition('* => open', [

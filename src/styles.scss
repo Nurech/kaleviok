@@ -1,4 +1,7 @@
 @use '@angular/material' as mat;
+@forward 'styles/sidenav';
+@forward 'styles/dialogue';
+@forward 'styles/icon-sizes';
 
 body,
 html {
@@ -35,4 +38,8 @@ html {
 html.dark {
     color-scheme: dark;
     @include mat.theme($dark-theme);
+}
+
+.link {
+    @apply underline decoration-2 underline-offset-1 #{!important};
 }

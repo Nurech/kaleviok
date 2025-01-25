@@ -32,9 +32,7 @@ export class SnackbarEffects {
                         const snack: Snackbar = {
                             type: 'warn',
                             message: this.translate.instant(action.error.code),
-                            duration: 5000,
-                            action: 'link',
-                            link: '/forgot-password'
+                            duration: 50000
                         };
 
                         if (action.error.code === 'auth/email-already-in-use') {
