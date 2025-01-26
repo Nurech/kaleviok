@@ -1,9 +1,5 @@
-export interface Settings {
-    uid: string;
-    userSettings: Setting[];
-}
-
 export interface Setting {
+    uid: string;
     key: string;
     value: string;
     description: string;

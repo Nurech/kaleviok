@@ -1,7 +1,7 @@
 import { Component, effect, inject, Signal } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AsyncPipe, NgForOf } from '@angular/common';
+import { AsyncPipe, JsonPipe, NgForOf } from '@angular/common';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
 import { Observable } from 'rxjs';
@@ -17,7 +17,16 @@ import { selectUserSettings } from '../../../store/settings/settings.selectors';
 @Component({
     selector: 'app-account',
     standalone: true,
-    imports: [AvatarComponent, AsyncPipe, ClipboardComponent, MatSlideToggle, MatIcon, NgForOf, TranslatePipe],
+    imports: [
+        AvatarComponent,
+        AsyncPipe,
+        ClipboardComponent,
+        MatSlideToggle,
+        MatIcon,
+        NgForOf,
+        TranslatePipe,
+        JsonPipe
+    ],
     templateUrl: './account.component.html',
     styleUrl: './account.component.scss'
 })

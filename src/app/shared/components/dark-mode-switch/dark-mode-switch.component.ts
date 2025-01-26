@@ -15,7 +15,7 @@ export class DarkModeSwitchComponent {
     private themeChanger = inject(ThemeChangerService);
     colorMode = this.themeChanger.colorMode;
 
-    changeTheme(mode: string) {
-        this.themeChanger.changeColorMode(mode as ColorMode);
+    changeTheme(mode: ColorMode) {
+        this.themeChanger.applyTheme(mode);
     }
 }

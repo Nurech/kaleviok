@@ -6,14 +6,9 @@ import { debounceTime, of } from 'rxjs';
 import { SettingsService } from './settings.service';
 import {
     getUserSettings,
-    getUserSettingsSuccess,
-    getUserSettingsFailure,
     updateSetting,
-    settingsUpdateSuccess,
-    settingsUpdateFailure,
-    updateUserSettings,
-    updateUserSettingsSuccess,
-    updateUserSettingsFailure
+    updateSettingSuccess,
+    updateSettingFailure
 } from './settings.actions';
 import { selectAuthenticatedAccount } from '../auth/auth.selectors';
 import { emailSuccess, firebaseSuccess, googleSuccess } from '../auth/auth.actions';
@@ -28,26 +23,9 @@ export class SettingsEffects {
         this.actions$.pipe(
             ofType(googleSuccess, emailSuccess, firebaseSuccess),
             debounceTime(100),
-            map(() => getUserSettings())
-        )
-    );
-
-    // Load user settings when authenticated
-    getUserSettings$ = createEffect(() =>
-        this.store$.pipe(
-            select(selectAuthenticatedAccount),
-            switchMap((user) => {
-                if (!user) return of(getUserSettingsFailure({ error: 'User not authenticated' }));
-
-                return this.settingsService.getUserSettings().pipe(
-                    switchMap((settings) => {
-                        if (!settings?.uid) {
-                            return of(getUserSettingsFailure({ error: 'No settings found for user' }));
-                        }
-                        return of(getUserSettingsSuccess({ settings }));
-                    }),
-                    catchError((error) => of(getUserSettingsFailure({ error })))
-                );
+            map(() => {
+                console.warn('Loading user settings');
+                return getUserSettings();
             })
         )
     );
@@ -58,27 +36,11 @@ export class SettingsEffects {
             ofType(updateSetting),
             withLatestFrom(this.store$.pipe(select(selectAuthenticatedAccount))),
             switchMap(([{ changes }, user]) => {
-                if (!user) return of(settingsUpdateFailure({ error: 'User not authenticated' }));
+                if (!user) return of(updateSettingFailure({ error: 'User not authenticated' }));
 
-                return this.settingsService.updateSetting(user.uid, changes).pipe(
-                    map(() => settingsUpdateSuccess({ changes })),
-                    catchError((error) => of(settingsUpdateFailure({ error })))
-                );
-            })
-        )
-    );
-
-    // Update all settings
-    updateUserSettings$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(updateUserSettings),
-            withLatestFrom(this.store$.pipe(select(selectAuthenticatedAccount))),
-            switchMap(([{ settings }, user]) => {
-                if (!user) return of(updateUserSettingsFailure({ error: 'User not authenticated' }));
-
-                return this.settingsService.updateUserSettings(user.uid, settings).pipe(
-                    map(() => updateUserSettingsSuccess({ settings })),
-                    catchError((error) => of(updateUserSettingsFailure({ error })))
+                return this.settingsService.upsert(user.uid, changes).pipe(
+                    map(() => updateSettingSuccess({ changes })),
+                    catchError((error) => of(updateSettingFailure({ error })))
                 );
             })
         )
