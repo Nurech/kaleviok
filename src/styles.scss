@@ -43,3 +43,8 @@ html.dark {
 .link {
     @apply underline decoration-2 underline-offset-1 #{!important};
 }
+
+app-avatar {
+  height: inherit;
+  width: inherit;
+}

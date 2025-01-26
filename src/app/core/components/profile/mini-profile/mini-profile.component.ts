@@ -1,29 +1,27 @@
 import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { TranslatePipe } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
-import { AsyncPipe, NgIf, NgStyle } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { selectAuthAccount } from '../../../../store/auth/auth.selectors';
-import { MenuService } from '../../../../shared/services/menu.service';
 import { LogoutDialogComponent } from '../../logout-dialog/logout-dialog.component';
 import { DialogService } from '../../../../shared/services/dialog.service';
 import { DrawerService } from '../../../../shared/services/drawer.service';
+import { AvatarComponent } from '../../../../shared/components/avatar/avatar.component';
 
 @Component({
     selector: 'app-mini-profile',
     standalone: true,
-    imports: [MatCardModule, MatButton, MatIcon, TranslatePipe, MatIconButton, AsyncPipe, NgStyle, NgIf, RouterLink],
+    imports: [MatCardModule, MatIcon, MatIconButton, AsyncPipe, AvatarComponent],
     templateUrl: './mini-profile.component.html',
     styleUrl: './mini-profile.component.scss'
 })
 export class MiniProfileComponent {
     store$ = inject(Store);
     router = inject(Router);
-    menuService = inject(MenuService);
     dialogService = inject(DialogService);
     account$ = this.store$.select(selectAuthAccount);
     drawerService = inject(DrawerService);
