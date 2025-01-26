@@ -36,7 +36,7 @@ export class MiniProfileComponent {
         if (account?.uid) {
             await this.router.navigate(['/account'], {
                 queryParams: {
-                    id: account.uid
+                    accountId: account.uid
                 }
             });
         }

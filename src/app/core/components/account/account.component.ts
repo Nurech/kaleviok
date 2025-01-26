@@ -2,17 +2,34 @@ import { Component, effect, inject, Signal } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatCard, MatCardContent } from '@angular/material/card';
+import { AsyncPipe } from '@angular/common';
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { selectAccountId, selectEditMode, selectFragment } from '../../../store/router/router.selectors';
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
+import { selectAuthAccount } from '../../../store/auth/auth.selectors';
+import { ClipboardComponent } from '../../../shared/components/clipboard/clipboard.component';
 
 @Component({
     selector: 'app-account',
     standalone: true,
-    imports: [MatCard, MatCardContent],
+    imports: [
+        MatCard,
+        MatCardContent,
+        AvatarComponent,
+        AsyncPipe,
+        ClipboardComponent,
+        MatTabGroup,
+        MatTab,
+        MatSlideToggle
+    ],
     templateUrl: './account.component.html',
     styleUrl: './account.component.scss'
 })
 export class AccountComponent {
     private store$ = inject(Store);
+    account$ = this.store$.select(selectAuthAccount);
+
     editMode: Signal<boolean>;
     accountId: Signal<string | null>;
     section: Signal<string | null | undefined>;

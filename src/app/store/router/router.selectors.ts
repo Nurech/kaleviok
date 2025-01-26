@@ -17,7 +17,7 @@ export const {
 } = getRouterSelectors(selectRouter);
 
 export const selectEditMode = createSelector(selectQueryParams, (queryParams) => queryParams['edit'] === 'true');
-export const selectAccountId = createSelector(selectQueryParams, (queryParams) => queryParams['id'] || null);
+export const selectAccountId = createSelector(selectQueryParams, (queryParams) => queryParams['accountId'] || null);
 
 export const selectBreadcrumbs = createSelector(selectRouter, (routerState) => {
     const state = routerState?.state?.root;

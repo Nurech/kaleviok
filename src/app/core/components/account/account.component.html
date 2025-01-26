@@ -1,3 +1,24 @@
+<div class="flex flex-col">
+  <div class="flex flex-row items-center justify-center">
+    <div class="size-16 relative">
+      <app-avatar [account]="(account$ | async)"></app-avatar>
+    </div>
+    <div class="pl-4 flex flex-col">
+      <p class="font-bold">{{ (account$ | async)?.firstName }} {{ (account$ | async)?.lastName }}</p>
+      <div class="flex flex-row items-center">
+        <p>{{ (account$ | async)?.email }} </p>
+        <app-clipboard [value]="(account$ | async)?.email"></app-clipboard>
+      </div>
+    </div>
+  </div>
+</div>
 <mat-card appearance="outlined">
-    <mat-card-content>Simple card</mat-card-content>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="First">
+        <mat-slide-toggle></mat-slide-toggle>
+      </mat-tab>
+      <mat-tab label="Second"> Content 2 </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
 </mat-card>
