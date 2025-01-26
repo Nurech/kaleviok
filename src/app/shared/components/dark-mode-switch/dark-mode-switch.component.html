@@ -2,42 +2,19 @@
     <div [class.is-auto-mode]="colorMode() === 'auto'" [class.is-dark-mode]="colorMode() === 'dark'" class="track">
         <div
             (click)="changeTheme('dark')"
-            (keydown.enter)="changeTheme('dark')"
-            (keydown.space)="changeTheme('dark')"
             class="dark-mode switch"
             matTooltip="Switch to dark mode"
             role="button"
             tabindex="0">
             <mat-icon>dark_mode</mat-icon>
-            @if (variant() === 'full') {
-                Switch to dark mode
-            }
-        </div>
-        <div
-            (click)="changeTheme('auto')"
-            (keydown.enter)="changeTheme('auto')"
-            (keydown.space)="changeTheme('auto')"
-            class="auto-mode switch"
-            matTooltip="Switch to auto mode"
-            role="button"
-            tabindex="0">
-            <mat-icon>brightness_medium</mat-icon>
-            @if (variant() === 'full') {
-                Switch to auto mode
-            }
         </div>
         <div
             (click)="changeTheme('light')"
-            (keydown.enter)="changeTheme('light')"
-            (keydown.space)="changeTheme('light')"
             class="light-mode switch"
             matTooltip="Switch to light mode"
             role="button"
             tabindex="0">
             <mat-icon>light_mode</mat-icon>
-            @if (variant() === 'full') {
-                Switch to light mode
-            }
         </div>
     </div>
 </div>

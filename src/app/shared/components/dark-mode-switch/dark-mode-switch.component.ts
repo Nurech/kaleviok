@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ColorMode, ThemeChangerService } from '../../services/theme-changer.service';
@@ -11,11 +11,10 @@ import { ColorMode, ThemeChangerService } from '../../services/theme-changer.ser
     styleUrls: ['./dark-mode-switch.component.scss']
 })
 export class DarkModeSwitchComponent {
-    readonly variant = input<'compact' | 'full'>('compact');
     private themeChanger = inject(ThemeChangerService);
     colorMode = this.themeChanger.colorMode;
 
     changeTheme(mode: ColorMode) {
-        this.themeChanger.applyTheme(mode);
+        this.themeChanger.toggleTheme(mode);
     }
 }

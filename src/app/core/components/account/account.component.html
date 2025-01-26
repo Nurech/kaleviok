@@ -23,7 +23,8 @@
           {{ setting.description  | translate }}
         }
       </p>
-      <mat-slide-toggle (change)="onChangeSetting($event.checked, setting)"></mat-slide-toggle>
+      <mat-slide-toggle [checked]="setting.value" (toggleChange)="onChangeSetting(setting)"></mat-slide-toggle>
+
     </div>
   </div>
 </div>

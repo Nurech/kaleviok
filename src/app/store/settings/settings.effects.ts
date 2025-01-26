@@ -4,12 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { debounceTime, of } from 'rxjs';
 import { SettingsService } from './settings.service';
-import {
-    getUserSettings,
-    updateSetting,
-    updateSettingSuccess,
-    updateSettingFailure
-} from './settings.actions';
+import { getUserSettings, updateSetting, updateSettingSuccess, updateSettingFailure } from './settings.actions';
 import { selectAuthenticatedAccount } from '../auth/auth.selectors';
 import { emailSuccess, firebaseSuccess, googleSuccess } from '../auth/auth.actions';
 
@@ -34,6 +29,7 @@ export class SettingsEffects {
     updateSetting$ = createEffect(() =>
         this.actions$.pipe(
             ofType(updateSetting),
+            debounceTime(500),
             withLatestFrom(this.store$.pipe(select(selectAuthenticatedAccount))),
             switchMap(([{ changes }, user]) => {
                 if (!user) return of(updateSettingFailure({ error: 'User not authenticated' }));

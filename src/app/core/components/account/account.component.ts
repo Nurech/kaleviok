@@ -4,8 +4,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AsyncPipe, JsonPipe, NgForOf } from '@angular/common';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 import { selectAccountId, selectEditMode, selectFragment } from '../../../store/router/router.selectors';
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 import { selectAuthenticatedAccount } from '../../../store/auth/auth.selectors';
@@ -25,19 +26,21 @@ import { selectUserSettings } from '../../../store/settings/settings.selectors';
         MatIcon,
         NgForOf,
         TranslatePipe,
-        JsonPipe
+        JsonPipe,
+        FormsModule
     ],
     templateUrl: './account.component.html',
     styleUrl: './account.component.scss'
 })
 export class AccountComponent {
     private store$ = inject(Store);
-    settings$: Observable<Setting[]> = this.store$.select(selectUserSettings);
+    settings$: Observable<Setting[]> = this.store$.select(selectUserSettings).pipe(map((settings) => [...settings]));
     account$ = this.store$.select(selectAuthenticatedAccount);
 
     editMode: Signal<boolean>;
     accountId: Signal<string | null>;
     section: Signal<string | null | undefined>;
+    settingModel: Record<string, boolean> = {};
 
     constructor() {
         // Convert NgRx selectors to Signals
@@ -63,11 +66,9 @@ export class AccountComponent {
         }, 100);
     }
 
-    onChangeSetting(checked: boolean, setting: Setting): void {
-        console.log('Setting changed', checked, setting);
+    onChangeSetting(setting: Setting): void {
+        const value = !setting.value;
 
-        if (setting.key === 'color_mode') {
-            this.store$.dispatch(updateSetting({ changes: { ...setting, value: checked ? 'dark' : 'light' } }));
-        }
+        this.store$.dispatch(updateSetting({ changes: { ...setting, value } }));
     }
 }

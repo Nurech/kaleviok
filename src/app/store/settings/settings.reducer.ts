@@ -15,7 +15,7 @@ export const initialState: State = {
         {
             uid: '',
             key: 'color_mode',
-            value: 'auto',
+            value: true,
             description: 'dark_mode',
             icon: 'dark_mode'
         }
