@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { selectAuthAccount } from '../../../../store/auth/auth.selectors';
+import { selectAuthenticatedAccount } from '../../../../store/auth/auth.selectors';
 import { LogoutDialogComponent } from '../../logout-dialog/logout-dialog.component';
 import { DialogService } from '../../../../shared/services/dialog.service';
 import { DrawerService } from '../../../../shared/services/drawer.service';
@@ -23,7 +23,7 @@ export class MiniProfileComponent {
     store$ = inject(Store);
     router = inject(Router);
     dialogService = inject(DialogService);
-    account$ = this.store$.select(selectAuthAccount);
+    account$ = this.store$.select(selectAuthenticatedAccount);
     drawerService = inject(DrawerService);
 
     onLogout() {

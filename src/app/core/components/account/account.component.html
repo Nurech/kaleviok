@@ -1,4 +1,4 @@
-<div class="flex flex-col">
+<div class="flex flex-col p-2">
   <div class="flex flex-row items-center justify-center">
     <div class="size-16 relative">
       <app-avatar [account]="(account$ | async)"></app-avatar>
@@ -6,19 +6,23 @@
     <div class="pl-4 flex flex-col">
       <p class="font-bold">{{ (account$ | async)?.firstName }} {{ (account$ | async)?.lastName }}</p>
       <div class="flex flex-row items-center">
-        <p>{{ (account$ | async)?.email }} </p>
+        <p>{{ (account$ | async)?.email }}</p>
         <app-clipboard [value]="(account$ | async)?.email"></app-clipboard>
       </div>
     </div>
   </div>
+  <div class="mt-2 overflow-y-auto h-full">
+    <div *ngFor="let setting of (settings$ | async)"
+         class="flex flex-row justify-between items-center py-1">
+      <p class="flex items-center">
+        @if (setting?.icon) {
+          <mat-icon class="mr-1">{{ setting.icon }}</mat-icon>
+        }
+        @if (setting.description) {
+          {{ setting.description  | translate }}
+        }
+      </p>
+      <mat-slide-toggle (change)="onChangeSetting($event.checked, setting)"></mat-slide-toggle>
+    </div>
+  </div>
 </div>
-<mat-card appearance="outlined">
-  <mat-card-content>
-    <mat-tab-group>
-      <mat-tab label="First">
-        <mat-slide-toggle></mat-slide-toggle>
-      </mat-tab>
-      <mat-tab label="Second"> Content 2 </mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-</mat-card>

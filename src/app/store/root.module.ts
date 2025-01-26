@@ -42,7 +42,7 @@ export function logState(reducer: any) {
 }
 
 export function hydrateReducer(reducer: any): any {
-    const keysToPersist = ['settings'];
+    const keysToPersist = [''];
 
     return (state: any, action: any) => {
         if (state === undefined) {

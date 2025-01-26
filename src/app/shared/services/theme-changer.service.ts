@@ -8,8 +8,9 @@ import {
 } from '@material/material-color-utilities';
 import { Store } from '@ngrx/store';
 import { firstValueFrom } from 'rxjs';
-import { selectSettings } from '../../store/settings/settings.selectors';
-import { updateSettings } from '../../store/settings/settings.actions';
+import { selectUserSettingByKey } from '../../store/settings/settings.selectors';
+import { Setting } from '../../store/settings/settings.model';
+import { updateSetting } from '../../store/settings/settings.actions';
 
 export const DEFAULT_THEME_COLORS: ThemePalette = {
     'primary': '#2879c6',
@@ -43,12 +44,21 @@ export class ThemeChangerService {
     }
 
     private async getStoredThemeMode() {
-        const settings = await firstValueFrom(this.store$.select(selectSettings));
-        this.colorMode.set(settings.colorMode);
+        const setting: Setting | undefined = await firstValueFrom(
+            this.store$.select(selectUserSettingByKey('color_mode'))
+        );
+        if (setting) {
+            if (setting.value === 'auto' || setting.value === 'light' || setting.value === 'dark') {
+                this.colorMode.set(setting.value);
+            } else {
+                console.warn('Invalid color mode value in settings, falling back to auto');
+                this.colorMode.set('auto');
+            }
+        }
     }
 
     private saveThemeMode(mode: ColorMode): void {
-        this.store$.dispatch(updateSettings({ changes: { colorMode: mode } }));
+        this.store$.dispatch(updateSetting({ changes: { description: 'dark_mode', key: 'color_mode', value: mode } }));
     }
 
     applyColorThemeListeners() {

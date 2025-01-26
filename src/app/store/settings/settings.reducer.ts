@@ -1,21 +1,26 @@
 import { createReducer, on, createFeature } from '@ngrx/store';
-import { loadSettings, updateSettings } from './settings.actions';
-import { Setting } from './settings.model';
+import { getUserSettings, getUserSettingsSuccess, updateSetting } from './settings.actions';
+import { Settings } from './settings.model';
 
 export const featureKey = 'settings';
 
 export interface State {
-    settings: Setting;
+    settings: Settings;
     loading: boolean;
     error: any;
 }
 
 export const initialState: State = {
     settings: {
-        autologin: false,
-        colorMode: 'auto',
-        loginMethod: null,
-        showPwaPopup: true
+        uid: '',
+        userSettings: [
+            {
+                key: 'color_mode',
+                value: 'auto',
+                description: 'dark_mode',
+                icon: 'dark_mode'
+            }
+        ]
     },
     loading: false,
     error: null
@@ -23,8 +28,17 @@ export const initialState: State = {
 
 const settingsReducer = createReducer(
     initialState,
-    on(loadSettings, (state) => ({ ...state, loading: true })),
-    on(updateSettings, (state, { changes }) => ({ ...state, settings: { ...state.settings, ...changes } }))
+    on(getUserSettings, (state) => ({ ...state, loading: true })),
+    on(getUserSettingsSuccess, (state, { settings }) => ({ ...state, settings, loading: false })),
+    on(updateSetting, (state, { changes }) => ({
+        ...state,
+        settings: {
+            ...state.settings,
+            settings: state.settings.userSettings.map((setting) =>
+                setting.key === changes.key ? { ...setting, ...changes } : setting
+            )
+        }
+    }))
 );
 
 export const settingsFeature = createFeature({

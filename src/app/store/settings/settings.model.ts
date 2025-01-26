@@ -1,6 +1,11 @@
+export interface Settings {
+    uid: string;
+    userSettings: Setting[];
+}
+
 export interface Setting {
-    autologin: boolean;
-    loginMethod: 'email' | 'google.com' | 'firebase' | null;
-    colorMode: 'light' | 'dark' | 'auto';
-    showPwaPopup: boolean;
+    key: string;
+    value: string;
+    description: string;
+    icon?: string;
 }

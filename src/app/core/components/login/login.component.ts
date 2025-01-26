@@ -6,14 +6,11 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { MatDivider } from '@angular/material/divider';
-import { MatCheckbox } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { InfoComponent } from '../../../shared/components/info/info.component';
 import { emailStart, googleStart } from '../../../store/auth/auth.actions';
-import { selectSettings } from '../../../store/settings/settings.selectors';
-import { updateSettings } from '../../../store/settings/settings.actions';
+import { selectUserSettings } from '../../../store/settings/settings.selectors';
 
 @Component({
     selector: 'app-login',
@@ -27,18 +24,16 @@ import { updateSettings } from '../../../store/settings/settings.actions';
         MatIcon,
         TranslatePipe,
         MatDivider,
-        MatCheckbox,
         MatIconButton,
         RouterLink,
-        InfoComponent,
-        AsyncPipe
+        InfoComponent
     ],
     templateUrl: './login.component.html',
     styles: ``
 })
 export class LoginComponent {
     store$ = inject(Store);
-    settings$ = this.store$.select(selectSettings);
+    settings$ = this.store$.select(selectUserSettings);
     private translate = inject(TranslateService);
 
     readonly email = new FormControl('', [Validators.required, Validators.email]);
@@ -78,7 +73,8 @@ export class LoginComponent {
         this.hide.set(!this.hide());
     }
 
-    autologin(checked: boolean) {
-        this.store$.dispatch(updateSettings({ changes: { autologin: checked } }));
+    autologin() {
+        //TODO
+        //   this.store$.dispatch(updateSettings({ changes: { autologin: checked } }));
     }
 }
