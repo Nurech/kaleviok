@@ -6,6 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { DarkModeSwitchComponent } from '../../../shared/components/dark-mode-switch/dark-mode-switch.component';
 import { MenuService } from '../../../shared/services/menu.service';
+import { DrawerService } from '../../../shared/services/drawer.service';
 
 @Component({
     selector: 'app-sidenav',
@@ -29,6 +30,11 @@ import { MenuService } from '../../../shared/services/menu.service';
 })
 export class SidenavComponent {
     private menuService = inject(MenuService);
+    private drawerService = inject(DrawerService);
     menuItems = this.menuService.rootMenuItems;
-    animationState = computed(() => (this.menuService.isDrawerOpen() ? 'open' : ''));
+    animationState = computed(() => (this.drawerService.isOpen() ? 'open' : ''));
+
+    onClick() {
+        this.drawerService.close();
+    }
 }

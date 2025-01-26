@@ -2,9 +2,7 @@
 <div class="flex flex-row items-center justify-between">
   <app-breadcrumbs></app-breadcrumbs>
   <button
-    [attr.aria-label]="
-                        menuService.isDrawerOpen() ? ('close_menu' | translate) : ('open_menu' | translate)
-                    "
+    [attr.aria-label]="drawerService.isOpen() ? ('close_menu' | translate) : ('open_menu' | translate)"
     mat-icon-button
     class="right-0 top-0 z-10 m-2"
     (click)="drawerService.open()">

@@ -21,7 +21,10 @@ export class DrawerService {
     }
 
     close() {
+        console.log('drawer close');
+
         if (this.drawer) {
+            console.log('drawer close');
             this.drawer.close().then(() => this.isOpen.set(false));
         }
     }

@@ -11,6 +11,7 @@ import { selectAuthAccount } from '../../../../store/auth/auth.selectors';
 import { MenuService } from '../../../../shared/services/menu.service';
 import { LogoutDialogComponent } from '../../logout-dialog/logout-dialog.component';
 import { DialogService } from '../../../../shared/services/dialog.service';
+import { DrawerService } from '../../../../shared/services/drawer.service';
 
 @Component({
     selector: 'app-mini-profile',
@@ -25,13 +26,14 @@ export class MiniProfileComponent {
     menuService = inject(MenuService);
     dialogService = inject(DialogService);
     account$ = this.store$.select(selectAuthAccount);
+    drawerService = inject(DrawerService);
 
     onLogout() {
         this.dialogService.open(LogoutDialogComponent);
     }
 
     async onSettingsClick() {
-        this.menuService.isDrawerOpen.set(false);
+        this.drawerService.close();
         const account = await firstValueFrom(this.account$);
         if (account?.uid) {
             await this.router.navigate(['/account'], {
@@ -43,6 +45,7 @@ export class MiniProfileComponent {
     }
 
     onNotifications() {
+        this.drawerService.close();
         this.router.navigate(['/notifications']);
     }
 }

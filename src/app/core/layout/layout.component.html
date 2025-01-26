@@ -1,4 +1,4 @@
-<mat-sidenav-container class="app-sidenav-container">
+<mat-sidenav-container class="h-full">
     <mat-sidenav
         position="end"
         [attr.role]="'navigation'"
@@ -9,10 +9,12 @@
         class="app-sidenav">
         <app-sidenav></app-sidenav>
     </mat-sidenav>
-    <mat-sidenav-content class="app-sidenav-content">
-        <div class="p-2 flex flex-col">
+    <mat-sidenav-content class="h-full">
+        <div class="flex flex-col">
             <app-header></app-header>
+          <div class="p-2">
             <router-outlet></router-outlet>
+          </div>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
