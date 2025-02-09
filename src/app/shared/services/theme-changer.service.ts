@@ -1,8 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { firstValueFrom } from 'rxjs';
 import { selectUserSettingByKey } from '../../store/settings/settings.selectors';
-import { updateSetting } from '../../store/settings/settings.actions';
 
 export type ColorMode = 'light' | 'dark' | 'auto';
 
@@ -17,6 +15,7 @@ export class ThemeChangerService {
 
     private init() {
         this.store$.select(selectUserSettingByKey('color_mode')).subscribe((setting) => {
+            console.warn('setting', setting);
             if (setting) {
                 this.colorMode.set(setting.value ? 'dark' : 'light');
                 this.applyTheme();
@@ -32,15 +31,6 @@ export class ThemeChangerService {
                 ? 'dark'
                 : 'light'
             : this.colorMode();
-    }
-
-    async toggleTheme(mode: ColorMode) {
-        this.colorMode.set(mode);
-        const setting = await firstValueFrom(this.store$.select(selectUserSettingByKey('color_mode')));
-        if (setting) {
-            this.store$.dispatch(updateSetting({ changes: { ...setting, value: mode === 'dark' } }));
-        }
-        this.applyTheme();
     }
 
     async applyTheme() {

@@ -28,6 +28,7 @@ import { PwaService } from './shared/services/pwa.service';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { RootStoreModule } from './store/root.module';
+import { ThemeChangerService } from './shared/services/theme-changer.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
     new TranslateHttpLoader(http, './i18n/', '.json');
@@ -79,7 +80,7 @@ export const appConfig: ApplicationConfig = {
         {
             provide: APP_INITIALIZER,
             useFactory: appInitializerFactory,
-            deps: [TranslateService, PwaService],
+            deps: [TranslateService, PwaService, ThemeChangerService],
             multi: true
         }
     ]

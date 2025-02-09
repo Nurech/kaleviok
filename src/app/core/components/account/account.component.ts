@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AsyncPipe, JsonPipe, NgForOf } from '@angular/common';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { selectAccountId, selectEditMode, selectFragment } from '../../../store/router/router.selectors';
@@ -12,8 +12,8 @@ import { AvatarComponent } from '../../../shared/components/avatar/avatar.compon
 import { selectAuthenticatedAccount } from '../../../store/auth/auth.selectors';
 import { ClipboardComponent } from '../../../shared/components/clipboard/clipboard.component';
 import { Setting } from '../../../store/settings/settings.model';
-import { updateSetting } from '../../../store/settings/settings.actions';
 import { selectUserSettings } from '../../../store/settings/settings.selectors';
+import { updateSetting } from '../../../store/settings/settings.actions';
 
 @Component({
     selector: 'app-account',
@@ -34,7 +34,7 @@ import { selectUserSettings } from '../../../store/settings/settings.selectors';
 })
 export class AccountComponent {
     private store$ = inject(Store);
-    settings$: Observable<Setting[]> = this.store$.select(selectUserSettings).pipe(map((settings) => [...settings]));
+    settings$: Observable<Setting[]> = this.store$.select(selectUserSettings);
     account$ = this.store$.select(selectAuthenticatedAccount);
 
     editMode: Signal<boolean>;
@@ -68,7 +68,7 @@ export class AccountComponent {
 
     onChangeSetting(setting: Setting): void {
         const value = !setting.value;
-
+        console.warn('Updating setting', setting.key, 'to', value);
         this.store$.dispatch(updateSetting({ changes: { ...setting, value } }));
     }
 }

@@ -4,14 +4,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
-import { DarkModeSwitchComponent } from '../../../shared/components/dark-mode-switch/dark-mode-switch.component';
 import { MenuService } from '../../../shared/services/menu.service';
 import { DrawerService } from '../../../shared/services/drawer.service';
 
 @Component({
     selector: 'app-sidenav',
     standalone: true,
-    imports: [RouterLink, RouterLinkActive, MatIconModule, DarkModeSwitchComponent, TranslatePipe, NgComponentOutlet],
+    imports: [RouterLink, RouterLinkActive, MatIconModule, TranslatePipe, NgComponentOutlet],
     templateUrl: './sidenav.component.html',
     animations: [
         trigger('listAnimation', [
