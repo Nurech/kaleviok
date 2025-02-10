@@ -15,7 +15,6 @@ export class ThemeChangerService {
 
     private init() {
         this.store$.select(selectUserSettingByKey('color_mode')).subscribe((setting) => {
-            console.warn('setting', setting);
             if (setting) {
                 this.colorMode.set(setting.value ? 'dark' : 'light');
                 this.applyTheme();

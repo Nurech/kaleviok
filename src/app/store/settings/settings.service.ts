@@ -32,10 +32,9 @@ export class SettingsService {
     startListen(): void {
         this.store$.pipe(select(selectAuthenticatedAccount)).subscribe((user) => {
             if (!user) {
-                console.log('No authenticated user found, listener not started yet.');
                 return;
             }
-            console.log('Authenticated user found, starting listener...');
+            console.log(`Settings listener started for user: ${user.uid}`);
 
             const settingsQuery = query(this.collection, where('uid', '==', user.uid));
             this.listener = onSnapshot(settingsQuery, (snapshot) => {
@@ -57,8 +56,6 @@ export class SettingsService {
                     }
                 });
             });
-
-            console.log(`Settings listener started for user: ${user.uid}`);
         });
     }
 

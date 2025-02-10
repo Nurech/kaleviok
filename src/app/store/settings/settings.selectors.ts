@@ -10,7 +10,6 @@ export const selectUserSettings = selectAll;
 // Memoized selector factory
 export const selectUserSettingByKey = (key: string) =>
     createSelector(selectEntities, (settings) => {
-        console.log('Entities in selector:', settings); // Check what's in the entities
         return settings[key];
     });
 export const selectSettingEntities = selectEntities;

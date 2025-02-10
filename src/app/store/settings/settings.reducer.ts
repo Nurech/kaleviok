@@ -33,9 +33,17 @@ export const initialState: State = settingsAdapter.addMany(
     })
 );
 
+const updateIfChanged = (state: any, changes: any) => {
+    const currentSetting = state.entities[changes.key];
+    if (currentSetting && currentSetting.value === changes.value) {
+        // Return state unchanged if no actual change
+    }
+    return settingsAdapter.updateOne({ id: changes.key, changes }, state);
+};
+
 const settingsReducer = createReducer(
     initialState,
-    on(updateSetting, (state, { changes }) => settingsAdapter.updateOne({ id: changes.key, changes }, state)),
+    on(updateSetting, (state, { changes }) => updateIfChanged(state, changes)),
     on(settingAdded, (state, { payload }) => settingsAdapter.upsertOne(payload, state)),
     on(settingModified, (state, { payload }) => settingsAdapter.upsertOne(payload, state)),
     on(settingDeleted, (state, { payload }) => settingsAdapter.removeOne(payload.key, state))

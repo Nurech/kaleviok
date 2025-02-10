@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AsyncPipe, JsonPipe, NgForOf } from '@angular/common';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { selectAccountId, selectEditMode, selectFragment } from '../../../store/router/router.selectors';
@@ -34,13 +34,15 @@ import { updateSetting } from '../../../store/settings/settings.actions';
 })
 export class AccountComponent {
     private store$ = inject(Store);
-    settings$: Observable<Setting[]> = this.store$.select(selectUserSettings);
+    settings$: Observable<Setting[]> = this.store$
+        .select(selectUserSettings)
+        .pipe(map((settings) => settings.map((setting) => ({ ...setting }))));
+
     account$ = this.store$.select(selectAuthenticatedAccount);
 
     editMode: Signal<boolean>;
     accountId: Signal<string | null>;
     section: Signal<string | null | undefined>;
-    settingModel: Record<string, boolean> = {};
 
     constructor() {
         // Convert NgRx selectors to Signals
@@ -67,8 +69,6 @@ export class AccountComponent {
     }
 
     onChangeSetting(setting: Setting): void {
-        const value = !setting.value;
-        console.warn('Updating setting', setting.key, 'to', value);
-        this.store$.dispatch(updateSetting({ changes: { ...setting, value } }));
+        this.store$.dispatch(updateSetting({ changes: setting }));
     }
 }
