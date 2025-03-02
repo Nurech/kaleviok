@@ -50,4 +50,5 @@ export const isAtPastEvents = createSelector(selectCurrentUrl, (url) => url === 
 export const isAtCreatedEvents = createSelector(selectCurrentUrl, (url) => url === '/events/created');
 export const isCreatingEvent = createSelector(selectCurrentUrl, (url) => url === '/events/create');
 export const isAtEvent = createSelector(selectCurrentUrl, (url) => /^\/event\/[^/]+$/.test(url));
+export const selectCurrentEventId = createSelector(selectRouteParams, (params) => params['id'] || null);
 // prettier-ignore-end

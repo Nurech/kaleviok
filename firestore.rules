@@ -1,11 +1,22 @@
 rules_version = '2';
 
 service cloud.firestore {
-  match /databases/{database}/documents {
-    // Match all documents
-    match /{document=**} {
-      // Allow read and write access for authenticated users
-      allow read, write: if request.auth != null;
+    match /databases/{database}/documents {
+        // Match all documents
+        match /{document=**} {
+            allow read, write: if request.auth != null;
+        }
+
+        // 🔒 EVENTS
+        // Restrict access to a specific event
+        match /events/{eventId} {
+            allow read: if resource.data.public == true || request.auth != null;
+            allow write: if request.auth != null && request.auth.uid == resource.data.createdBy;
+        }
+
+        // Restrict querying the `events` collection
+        match /events {
+            allow list: if request.auth != null || resource.data.public == true;
+        }
     }
-  }
 }

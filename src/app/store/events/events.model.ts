@@ -1,6 +1,9 @@
+import { Account } from '../accounts/account.model';
+
 export interface Event {
     id: string;
     title?: string;
+    description?: string;
     createdBy?: string;
     createdAt?: Date;
     modifiedBy?: string;
@@ -9,4 +12,9 @@ export interface Event {
     startTime?: Date;
     endDate?: Date;
     endTime?: Date;
+}
+
+export interface EventVM {
+    event: Event;
+    createdBy: Account | null;
 }

@@ -1,1 +1,19 @@
-<p>event works!</p>
+<mat-card class="p-2" *ngIf="event$ | async as vm">
+    <h2 class="text-2xl font-bold mb-4">{{ vm.event.title || 'Untitled Event' }}</h2>
+    <div>
+        <p><strong>Date:</strong> {{ vm.event.startDate | date: 'fullDate' }} {{ vm.event.startTime | date: 'shortTime' }} -
+            {{ vm.event.endDate | date: 'fullDate' }} {{ vm.event.endTime | date: 'shortTime' }}</p>
+
+        <mat-chip-set *ngIf="vm?.createdBy">
+            <mat-chip>
+                <img
+                        matChipAvatar
+                        [attr.src]="vm.createdBy?.photoURL"
+                        alt="Created by"
+                />
+                {{ vm.createdBy?.firstName }} {{ vm.createdBy?.lastName }}
+            </mat-chip>
+        </mat-chip-set>
+
+    </div>
+</mat-card>
