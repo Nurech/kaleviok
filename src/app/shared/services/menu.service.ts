@@ -58,11 +58,11 @@ export class MenuService {
             href: '/accounts'
         },
         {
-            label: 'admin_panel_settings',
-            icon: 'admin_panel_settings',
+            label: 'events',
+            icon: 'event',
             position: 'end',
             show: this.isAuthenticated(),
-            href: '/admin-panel-settings'
+            href: '/events'
         },
         {
             label: 'contact_support',

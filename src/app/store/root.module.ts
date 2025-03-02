@@ -4,6 +4,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { CommonModule } from '@angular/common';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer } from '@ngrx/router-store';
+import { eventsFeature } from './events/events.reducer';
+import { EventsStoreModule } from './events/events.module';
 import { snackbarFeature } from './snackbar/snackbar.reducer';
 import { SnackbarStoreModule } from './snackbar/snackbar.module';
 import { coreFeature } from './core/core.reducer';
@@ -31,9 +33,9 @@ export function logState(reducer: any) {
         if (isDevMode()) {
             const localStorageUsage = calculateLocalStorageUsage();
             if (action?.error) {
-                console.error(`Used: [${localStorageUsage}] State: `, nextState, action);
+                console.error(`Used: [${localStorageUsage}] Action/State: `, action, nextState);
             } else {
-                console.log(`Used: [${localStorageUsage}] State: `, nextState, action);
+                console.log(`Used: [${localStorageUsage}] Action/State: `, action, nextState);
             }
         }
 
@@ -42,17 +44,25 @@ export function logState(reducer: any) {
 }
 
 export function hydrateReducer(reducer: any): any {
-    const keysToPersist = [''];
+    // Define keys to persist (e.g., 'events.tempEvent')
+    const keysToPersist = ['events.tempEvent'];
 
     return (state: any, action: any) => {
         if (state === undefined) {
             const restoredState: any = {};
 
-            keysToPersist.forEach((key) => {
-                const storedValue = localStorage.getItem(`${key}-state`);
+            keysToPersist.forEach((keyPath) => {
+                const storedValue = localStorage.getItem(`${keyPath}-state`);
                 if (storedValue) {
-                    restoredState[key] = JSON.parse(storedValue);
-                    console.log(`Rehydrating ${key} from localStorage: `, restoredState[key]);
+                    const parsedValue = JSON.parse(storedValue);
+                    console.log(`Rehydrating ${keyPath} from localStorage: `, parsedValue);
+
+                    // Deep merge into state
+                    const [rootKey, subKey] = keyPath.split('.');
+                    restoredState[rootKey] = {
+                        ...restoredState[rootKey],
+                        [subKey]: parsedValue
+                    };
                 }
             });
 
@@ -61,9 +71,10 @@ export function hydrateReducer(reducer: any): any {
 
         const nextState = reducer(state, action);
 
-        keysToPersist.forEach((key) => {
-            if (nextState?.[key] !== undefined) {
-                localStorage.setItem(`${key}-state`, JSON.stringify(nextState[key]));
+        keysToPersist.forEach((keyPath) => {
+            const [rootKey, subKey] = keyPath.split('.');
+            if (nextState?.[rootKey]?.[subKey] !== undefined) {
+                localStorage.setItem(`${keyPath}-state`, JSON.stringify(nextState[rootKey][subKey]));
             }
         });
 
@@ -75,6 +86,7 @@ export const metaReducers: MetaReducer[] = [logState, hydrateReducer];
 
 // Feature reducers
 const rootReducers = {
+    events: eventsFeature.reducer,
     snackbar: snackbarFeature.reducer,
     core: coreFeature.reducer,
     settings: settingsFeature.reducer,
@@ -85,6 +97,7 @@ const rootReducers = {
 
 // Feature modules
 const featureModules = [
+    EventsStoreModule,
     SnackbarStoreModule,
     CoreStoreModule,
     SettingsStoreModule,

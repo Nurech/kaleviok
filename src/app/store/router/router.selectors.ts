@@ -42,3 +42,11 @@ export const selectBreadcrumbs = createSelector(selectRouter, (routerState) => {
 
     return segments;
 });
+
+// prettier-ignore-start
+export const selectCurrentUrl = createSelector(selectRouter, (router) => router?.state?.url || '');
+export const isUpcoming = createSelector(selectCurrentUrl, (url) => url === '/events/upcoming');
+export const isPast = createSelector(selectCurrentUrl, (url) => url === '/events/past');
+export const isCreated = createSelector(selectCurrentUrl, (url) => url === '/events/created');
+export const isCreating = createSelector(selectCurrentUrl, (url) => url === '/events/create');
+// prettier-ignore-end

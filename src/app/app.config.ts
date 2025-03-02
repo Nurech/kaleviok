@@ -23,6 +23,8 @@ import {
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { firstValueFrom } from 'rxjs';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { MissingTranslationService } from './shared/services/missing-translation.service';
 import { PwaService } from './shared/services/pwa.service';
 import { environment } from '../environments/environment';
@@ -33,8 +35,27 @@ import { ThemeChangerService } from './shared/services/theme-changer.service';
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
     new TranslateHttpLoader(http, './i18n/', '.json');
 
+const LUXON_DATE_FORMATS = {
+    parse: {
+        dateInput: 'yyyy-MM-dd',
+        timeInput: 'HH:mm'
+    },
+    display: {
+        dateInput: 'yyyy-MM-dd',
+        timeInput: 'HH:mm',
+        timeOptionLabel: 'HH:mm',
+        monthYearLabel: 'MMM yyyy',
+        dateA11yLabel: 'EEEE, MMMM d, yyyy',
+        timeA11yLabel: 'HH:mm'
+    }
+};
+
 export const appConfig: ApplicationConfig = {
     providers: [
+        provideLuxonDateAdapter(),
+        { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+        { provide: MAT_DATE_FORMATS, useValue: LUXON_DATE_FORMATS },
+        importProvidersFrom(MatNativeDateModule),
         provideStoreDevtools({
             maxAge: 25,
             traceLimit: 75,

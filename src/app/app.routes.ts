@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { EventsComponent } from './core/components/events/events.component';
+import { CreateEventComponent } from './core/components/events/create-event/create-event.component';
 
 export function translateKey(key: string, params?: object) {
     const translate = inject(TranslateService);
@@ -39,6 +41,18 @@ const libRoutes: Routes = [
         loadComponent: () =>
             import('./core/components/notifications/notifications.component').then((c) => c.NotificationsComponent),
         title: () => translateKey('notifications')
+    },
+    {
+        path: 'events',
+        component: EventsComponent,
+        title: () => translateKey('events'),
+        children: [
+            { path: 'upcoming', component: EventsComponent },
+            { path: 'past', component: EventsComponent },
+            { path: 'created', component: EventsComponent },
+            { path: 'create', component: CreateEventComponent },
+            { path: '', redirectTo: 'upcoming', pathMatch: 'full' }
+        ]
     }
 ];
 

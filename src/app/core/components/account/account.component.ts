@@ -1,7 +1,7 @@
 import { Component, effect, inject, Signal } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AsyncPipe, JsonPipe, NgForOf } from '@angular/common';
+import { AsyncPipe, NgForOf } from '@angular/common';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
 import { map, Observable } from 'rxjs';
@@ -26,7 +26,6 @@ import { updateSetting } from '../../../store/settings/settings.actions';
         MatIcon,
         NgForOf,
         TranslatePipe,
-        JsonPipe,
         FormsModule
     ],
     templateUrl: './account.component.html',
