@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, doc, setDoc, query, where, onSnapshot, getDocs } from '@angular/fire/firestore';
-import { Observable, from } from 'rxjs';
+import { Firestore, collection, doc, setDoc, query, where, onSnapshot, getDocs, getDoc } from '@angular/fire/firestore';
+import { Observable, from, map } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { Event } from './events.model';
 import { selectAuthenticatedAccount } from '../auth/auth.selectors';
@@ -20,22 +20,20 @@ export class EventsService {
         this.startListen();
     }
 
+    getEventById(eventId: string): Observable<Event | null> {
+        const eventDocRef = doc(this.firestore, `events/${eventId}`);
+        return from(getDoc(eventDocRef)).pipe(
+            map((docSnapshot) => (docSnapshot.exists() ? (docSnapshot.data() as Event) : null))
+        );
+    }
+
     // Save or Update Event
     upsert(event: Partial<Event>): Observable<void> {
         const eventId = event.id || doc(collection(this.firestore, this.collectionName)).id;
+        event.id = eventId;
         const eventDocRef = doc(this.firestore, `${this.collectionName}/${eventId}`);
-        const eventData: Event = {
-            id: eventId,
-            title: event.title || '',
-            createdAt: event.createdAt || new Date(),
-            lastModified: new Date(),
-            createdBy: event.createdBy || '',
-            startDate: event.startDate || new Date(),
-            startTime: event.startTime || new Date(),
-            endDate: event.endDate || new Date(),
-            endTime: event.endTime || new Date()
-        };
-        return from(setDoc(eventDocRef, eventData, { merge: true }));
+        console.warn('saving event', event);
+        return from(setDoc(eventDocRef, event, { merge: true }));
     }
 
     // Start Listener for Events
@@ -53,7 +51,7 @@ export class EventsService {
                     events.push({ id: doc.id, ...doc.data() } as Event);
                 });
 
-                this.store$.dispatch(loadEventsSuccess({ data: events }));
+                this.store$.dispatch(loadEventsSuccess({ payload: events }));
             });
         });
     }

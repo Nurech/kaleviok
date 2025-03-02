@@ -1,23 +1,21 @@
 import { createSelector } from '@ngrx/store';
-import { eventsFeature } from './events.reducer';
-import { Event } from './events.model'; // Import Event type
+import { eventsFeature, eventAdapter } from './events.reducer';
 
 export const selectEventsState = eventsFeature.selectEventsState;
-export const selectAllEvents = createSelector(selectEventsState, (state) => state.data);
+export const { selectAll: selectAllEvents, selectEntities: selectEventEntities } =
+    eventAdapter.getSelectors(selectEventsState);
+export const selectAllEventIds = createSelector(selectAllEvents, (events) => events.map((event) => event.id));
+export const selectEventById = (eventId: string) =>
+    createSelector(selectEventEntities, (entities) => (entities ? (entities[eventId] ?? null) : null));
 
-export const selectUpcomingEvents = createSelector(selectAllEvents, (events: Event[] | null) =>
-    events ? events.filter((event: Event) => new Date(event.startDate) >= new Date()) : []
+export const selectUpcomingEvents = createSelector(selectAllEvents, (events) =>
+    events.filter((event) => new Date(event?.startDate || 0) >= new Date())
 );
-
-export const selectPastEvents = createSelector(selectAllEvents, (events: Event[] | null) =>
-    events ? events.filter((event: Event) => new Date(event.endDate) < new Date()) : []
+export const selectPastEvents = createSelector(selectAllEvents, (events) =>
+    events.filter((event) => new Date(event?.endDate || 0) < new Date())
 );
-
 export const selectUserCreatedEvents = (userId: string) =>
-    createSelector(selectAllEvents, (events: Event[] | null) =>
-        events ? events.filter((event: Event) => event.createdBy === userId) : []
-    );
-
+    createSelector(selectAllEvents, (events) => events.filter((event) => event.createdBy === userId));
 export const selectLoading = createSelector(selectEventsState, (state) => state.loading);
 export const selectError = createSelector(selectEventsState, (state) => state.error);
 export const selectTempEvent = createSelector(selectEventsState, (state) => state.tempEvent);

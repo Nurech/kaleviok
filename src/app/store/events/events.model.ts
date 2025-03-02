@@ -1,11 +1,12 @@
 export interface Event {
     id: string;
-    title: string;
-    createdAt: Date;
-    lastModified: Date;
-    createdBy: string;
-    startDate: Date;
-    startTime: Date;
-    endDate: Date;
-    endTime: Date;
+    title?: string;
+    createdBy?: string;
+    createdAt?: Date;
+    modifiedBy?: string;
+    modifiedAt?: Date;
+    startDate?: Date;
+    startTime?: Date;
+    endDate?: Date;
+    endTime?: Date;
 }

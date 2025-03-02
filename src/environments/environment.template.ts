@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+    ignoreUndefinedProperties: true,
     firebase: {
         projectId: '$FIREBASE_PROJECT_ID',
         appId: '$FIREBASE_APP_ID',

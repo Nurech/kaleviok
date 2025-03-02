@@ -1,7 +1,7 @@
 <mat-card class="p-6 max-w-lg mx-auto shadow-lg">
   <h2 class="text-2xl font-bold mb-4">Create Event</h2>
 
-  <form [formGroup]="eventForm" class="flex flex-col" (ngSubmit)="publish()">
+  <form [formGroup]="eventForm" class="flex flex-col">
     <mat-form-field class="w-full">
       <mat-label>Event Title</mat-label>
       <input matInput formControlName="title" placeholder="Enter event title">

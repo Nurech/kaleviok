@@ -45,8 +45,9 @@ export const selectBreadcrumbs = createSelector(selectRouter, (routerState) => {
 
 // prettier-ignore-start
 export const selectCurrentUrl = createSelector(selectRouter, (router) => router?.state?.url || '');
-export const isUpcoming = createSelector(selectCurrentUrl, (url) => url === '/events/upcoming');
-export const isPast = createSelector(selectCurrentUrl, (url) => url === '/events/past');
-export const isCreated = createSelector(selectCurrentUrl, (url) => url === '/events/created');
-export const isCreating = createSelector(selectCurrentUrl, (url) => url === '/events/create');
+export const isAtUpcomingEvents = createSelector(selectCurrentUrl, (url) => url === '/events/upcoming');
+export const isAtPastEvents = createSelector(selectCurrentUrl, (url) => url === '/events/past');
+export const isAtCreatedEvents = createSelector(selectCurrentUrl, (url) => url === '/events/created');
+export const isCreatingEvent = createSelector(selectCurrentUrl, (url) => url === '/events/create');
+export const isAtEvent = createSelector(selectCurrentUrl, (url) => /^\/event\/[^/]+$/.test(url));
 // prettier-ignore-end

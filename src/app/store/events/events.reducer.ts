@@ -1,29 +1,42 @@
 import { createReducer, on, createFeature } from '@ngrx/store';
-import { loadEvents, loadEventsSuccess, loadEventsFailure, saveTempEvent, clearTempEvent } from './events.actions';
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
+import {
+    loadEvents,
+    loadEventsSuccess,
+    loadEventsFailure,
+    saveTempEvent,
+    clearTempEvent,
+    getEventSuccess
+} from './events.actions';
 import { Event } from './events.model';
 
 export const featureKey = 'events';
 
-export interface State {
-    data: Event[] | null;
+export const eventAdapter = createEntityAdapter<Event>({
+    selectId: (event) => event.id
+});
+
+export interface State extends EntityState<Event> {
+    events: Event[];
     tempEvent: Partial<Event> | null;
     loading: boolean;
     error: any;
 }
 
-export const initialState: State = {
-    data: null,
+export const initialState: State = eventAdapter.getInitialState({
+    events: [],
     tempEvent: null,
     loading: false,
     error: null
-};
+});
 
 const eventsReducer = createReducer(
     initialState,
     on(loadEvents, (state) => ({ ...state, loading: true })),
-    on(loadEventsSuccess, (state, { data }) => ({ ...state, loading: false, data })),
+    on(loadEventsSuccess, (state, { payload }) => eventAdapter.upsertMany(payload, { ...state, loading: false })),
     on(loadEventsFailure, (state, { error }) => ({ ...state, loading: false, error })),
-    on(saveTempEvent, (state, { event }) => ({ ...state, tempEvent: event })),
+    on(getEventSuccess, (state, { payload }) => eventAdapter.upsertOne(payload, state)),
+    on(saveTempEvent, (state, { payload }) => ({ ...state, tempEvent: payload })),
     on(clearTempEvent, (state) => ({ ...state, tempEvent: null }))
 );
 

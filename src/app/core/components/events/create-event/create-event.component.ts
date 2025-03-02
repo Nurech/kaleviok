@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { selectTempEvent } from '../../../../store/events/events.selectors';
-import { clearTempEvent, saveTempEvent } from '../../../../store/events/events.actions';
+import { clearTempEvent, publishEvent, saveTempEvent } from '../../../../store/events/events.actions';
 
 @Component({
     selector: 'app-create-event',
@@ -35,7 +35,7 @@ import { clearTempEvent, saveTempEvent } from '../../../../store/events/events.a
 })
 export class CreateEventComponent implements OnInit, OnDestroy {
     private fb = inject(FormBuilder);
-    private store = inject(Store);
+    private store$ = inject(Store);
     private formSubscription?: Subscription;
 
     eventForm: FormGroup;
@@ -43,7 +43,7 @@ export class CreateEventComponent implements OnInit, OnDestroy {
     constructor() {
         this.eventForm = this.fb.group({
             title: ['', Validators.required],
-            startDate: ['', Validators.required],
+            startDate: [new Date(), Validators.required],
             startTime: ['', Validators.required],
             endDate: ['', Validators.required],
             endTime: ['', Validators.required],
@@ -53,7 +53,7 @@ export class CreateEventComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.store.pipe(select(selectTempEvent)).subscribe((tempEvent) => {
+        this.store$.pipe(select(selectTempEvent)).subscribe((tempEvent) => {
             if (tempEvent) {
                 this.eventForm.patchValue(tempEvent, { emitEvent: false });
             }
@@ -62,7 +62,7 @@ export class CreateEventComponent implements OnInit, OnDestroy {
         this.formSubscription = this.eventForm.valueChanges
             .pipe(distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)))
             .subscribe((value) => {
-                this.store.dispatch(saveTempEvent({ event: value }));
+                this.store$.dispatch(saveTempEvent({ payload: value }));
             });
     }
 
@@ -73,7 +73,7 @@ export class CreateEventComponent implements OnInit, OnDestroy {
     }
 
     clear(): void {
-        this.store.dispatch(clearTempEvent());
+        this.store$.dispatch(clearTempEvent());
         this.eventForm.reset();
     }
 
@@ -91,5 +91,6 @@ export class CreateEventComponent implements OnInit, OnDestroy {
 
     publish() {
         console.log('Publish event:', this.eventForm.value);
+        this.store$.dispatch(publishEvent({ payload: this.eventForm.value }));
     }
 }

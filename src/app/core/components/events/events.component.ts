@@ -8,7 +8,13 @@ import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButton } from '@angular/material/button';
-import { isCreated, isCreating, isPast, isUpcoming } from '../../../store/router/router.selectors';
+import {
+    isAtCreatedEvents,
+    isCreatingEvent,
+    isAtPastEvents,
+    isAtUpcomingEvents,
+    isAtEvent
+} from '../../../store/router/router.selectors';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { EventsCalendarComponent } from './events-calendar/events-calendar.component';
 
@@ -20,14 +26,15 @@ import { EventsCalendarComponent } from './events-calendar/events-calendar.compo
     styleUrl: './events.component.scss'
 })
 export class EventsComponent {
-    private store = inject(Store);
+    private store$ = inject(Store);
     private router = inject(Router);
     private dialogService = inject(DialogService);
 
-    isUpcoming$: Observable<boolean> = this.store.pipe(select(isUpcoming));
-    isPast$: Observable<boolean> = this.store.pipe(select(isPast));
-    isCreated$: Observable<boolean> = this.store.pipe(select(isCreated));
-    isCreating$: Observable<boolean> = this.store.pipe(select(isCreating));
+    isUpcoming$: Observable<boolean> = this.store$.pipe(select(isAtUpcomingEvents));
+    isPast$: Observable<boolean> = this.store$.pipe(select(isAtPastEvents));
+    isCreated$: Observable<boolean> = this.store$.pipe(select(isAtCreatedEvents));
+    isCreating$: Observable<boolean> = this.store$.pipe(select(isCreatingEvent));
+    isEvent$: Observable<boolean> = this.store$.pipe(select(isAtEvent));
 
     selectedIndex$: Observable<number> = combineLatest([this.isUpcoming$, this.isPast$, this.isCreated$]).pipe(
         map(([upcoming, past, created]) => {

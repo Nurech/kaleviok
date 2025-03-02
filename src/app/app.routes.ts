@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
 import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { EventComponent } from './core/components/events/event/event.component';
 import { EventsComponent } from './core/components/events/events.component';
 import { CreateEventComponent } from './core/components/events/create-event/create-event.component';
+import { EventExistsGuard } from './shared/guards/event-exists.guard';
 
 export function translateKey(key: string, params?: object) {
     const translate = inject(TranslateService);
@@ -52,6 +54,15 @@ const libRoutes: Routes = [
             { path: 'created', component: EventsComponent },
             { path: 'create', component: CreateEventComponent },
             { path: '', redirectTo: 'upcoming', pathMatch: 'full' }
+        ]
+    },
+    {
+        path: 'event',
+        component: EventComponent,
+        title: () => translateKey('event'),
+        children: [
+            { path: ':id', component: EventComponent, canActivate: [EventExistsGuard] },
+            { path: '', redirectTo: 'events', pathMatch: 'full' }
         ]
     }
 ];

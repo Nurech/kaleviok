@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.135",
+  "version": "0.0.137",
   "scripts": {
     "ng": "ng",
     "watch": "ng build --watch --configuration development",
@@ -58,6 +58,7 @@
     "@ngx-translate/http-loader": "^16.0.1",
     "dotenv": "^16.4.7",
     "firebase": "^11.1.0",
+    "ngrx-store-localstorage": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

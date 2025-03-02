@@ -1,9 +1,10 @@
 import { isDevMode, NgModule } from '@angular/core';
-import { MetaReducer, StoreModule } from '@ngrx/store';
+import { MetaReducer, StoreModule, ActionReducer, ActionReducerMap } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { CommonModule } from '@angular/common';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer } from '@ngrx/router-store';
+import { localStorageSync } from 'ngrx-store-localstorage';
 import { eventsFeature } from './events/events.reducer';
 import { EventsStoreModule } from './events/events.module';
 import { snackbarFeature } from './snackbar/snackbar.reducer';
@@ -43,49 +44,18 @@ export function logState(reducer: any) {
     };
 }
 
-export function hydrateReducer(reducer: any): any {
-    // Define keys to persist (e.g., 'events.tempEvent')
-    const keysToPersist = ['events.tempEvent'];
-
-    return (state: any, action: any) => {
-        if (state === undefined) {
-            const restoredState: any = {};
-
-            keysToPersist.forEach((keyPath) => {
-                const storedValue = localStorage.getItem(`${keyPath}-state`);
-                if (storedValue) {
-                    const parsedValue = JSON.parse(storedValue);
-                    console.log(`Rehydrating ${keyPath} from localStorage: `, parsedValue);
-
-                    // Deep merge into state
-                    const [rootKey, subKey] = keyPath.split('.');
-                    restoredState[rootKey] = {
-                        ...restoredState[rootKey],
-                        [subKey]: parsedValue
-                    };
-                }
-            });
-
-            return reducer({ ...state, ...restoredState }, action);
-        }
-
-        const nextState = reducer(state, action);
-
-        keysToPersist.forEach((keyPath) => {
-            const [rootKey, subKey] = keyPath.split('.');
-            if (nextState?.[rootKey]?.[subKey] !== undefined) {
-                localStorage.setItem(`${keyPath}-state`, JSON.stringify(nextState[rootKey][subKey]));
-            }
-        });
-
-        return nextState;
-    };
+export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+    return localStorageSync({
+        keys: ['events'],
+        rehydrate: true,
+        removeOnUndefined: true,
+        storageKeySerializer: (key) => `app_${key}`
+    })(reducer);
 }
 
-export const metaReducers: MetaReducer[] = [logState, hydrateReducer];
+export const metaReducers: MetaReducer[] = [logState, localStorageSyncReducer];
 
-// Feature reducers
-const rootReducers = {
+const rootReducers: ActionReducerMap<any> = {
     events: eventsFeature.reducer,
     snackbar: snackbarFeature.reducer,
     core: coreFeature.reducer,
@@ -95,7 +65,6 @@ const rootReducers = {
     accounts: accountsFeature.reducer
 };
 
-// Feature modules
 const featureModules = [
     EventsStoreModule,
     SnackbarStoreModule,
