@@ -7,7 +7,40 @@ const prettier = require('eslint-config-prettier');
 
 module.exports = tseslint.config(
     {
-        ignores: ['.angular/', '**/__*', 'dist/', 'node_modules/']
+        ignores: [
+            'dist/',
+            'tmp/',
+            'out-tsc/',
+            'bazel-out/',
+            'node_modules/',
+            'npm-debug.log',
+            'yarn-error.log',
+            '.idea/',
+            '.project',
+            '.classpath',
+            '.c9/',
+            '*.launch',
+            '.settings/',
+            '*.sublime-workspace',
+            '.vscode/',
+            '.angular/cache',
+            '.sass-cache/',
+            'connect.lock',
+            'coverage/',
+            'libpeerconnection.log',
+            'testem.log',
+            'typings/',
+            '.DS_Store',
+            'Thumbs.db',
+            '.firebase/',
+            '*-debug.log',
+            '.runtimeconfig.json',
+            'src/environments/environment.ts',
+            'src/environments/environment.prod.ts',
+            '.env.prod',
+            '.env.dev',
+            '.env.*'
+        ]
     },
     {
         files: ['**/*.ts'],
