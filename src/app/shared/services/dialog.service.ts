@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 import { ComponentType } from '@angular/cdk/overlay';
+import { take } from 'rxjs';
+import { GenericDialogComponent } from '../../core/components/generic-dialog/generic-dialog.component';
 
 @Injectable({
     providedIn: 'root'
@@ -9,12 +11,12 @@ export class DialogService {
     private dialog = inject(MatDialog);
     private dialogRefs = new Map<string, MatDialogRef<any>>();
 
-    open<T, D = any>(component: ComponentType<T>, config: MatDialogConfig<D> = {}): MatDialogRef<T, D> | undefined {
+    open<T, D = any>(component: ComponentType<T>, config: MatDialogConfig<D> = {}): MatDialogRef<T, D> {
         const key = component.name;
 
         if (this.dialogRefs.has(key)) {
             console.warn(`Dialog with key "${key}" is already open.`);
-            return;
+            return this.dialogRefs.get(key) as MatDialogRef<T, D>;
         }
 
         // Set default autoFocus if not provided
@@ -34,6 +36,22 @@ export class DialogService {
         });
 
         return dialogRef;
+    }
+
+    openGenericDialog(title: string, content: string, callback: () => void): void {
+        const dialogRef = this.open(GenericDialogComponent, {
+            data: { title, content, result: false }
+        });
+
+        dialogRef
+            ?.afterClosed()
+            .pipe(take(1))
+            .subscribe((res) => {
+                console.warn('Dialog result:', res);
+                if (res?.result) {
+                    callback();
+                }
+            });
     }
 
     close<T>(component: ComponentType<T>): void {
