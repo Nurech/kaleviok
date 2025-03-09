@@ -1,7 +1,7 @@
 <mat-card class="p-6 max-w-lg mx-auto shadow-lg relative">
     <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold">Create Event</h2>
-        <button mat-icon-button aria-label="Close" (click)="onCloseCreateForm()">
+        <button mat-icon-button aria-label="Close" (click)="save()">
             <mat-icon class="mb-1">close</mat-icon>
         </button>
     </div>
@@ -80,14 +80,12 @@
       <button  mat-icon-button (click)="clear()">
         <mat-icon class="mb-2">cancel</mat-icon>
       </button>
-      <button  mat-icon-button (click)="delete()">
-        <mat-icon class="mb-2">delete_forever</mat-icon>
+      <button  mat-stroked-button (click)="delete()" [color]="'warn'">
+          Delete
+          <mat-icon>Delete</mat-icon>
       </button>
-      <button  mat-icon-button (click)="save()">
-        <mat-icon class="mb-2">save</mat-icon>
-      </button>
-      <button mat-stroked-button (click)="publish()" [disabled]="eventForm.invalid">
-        Publish
+      <button mat-stroked-button (click)="sendToReview()" [disabled]="eventForm.invalid">
+        Saada
         <mat-icon>send</mat-icon>
       </button>
     </div>

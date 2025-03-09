@@ -46,7 +46,7 @@ export function logState(reducer: any) {
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
     return localStorageSync({
-        keys: ['events'],
+        keys: [''],
         rehydrate: true,
         removeOnUndefined: true,
         storageKeySerializer: (key) => `app_${key}`

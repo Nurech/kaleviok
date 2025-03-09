@@ -33,9 +33,9 @@
 
   </div>
 
-  <div class="flex flex-row gap-2 justify-center">
+  <div class="flex flex-row gap-2 justify-center mt-2">
     @if (!(isCreating$ | async)) {
-      <button mat-stroked-button [routerLink]="['/events/create']">
+      <button mat-stroked-button (click)="onCreate()">
         <mat-icon>add_circle</mat-icon>
         Loo üritus
       </button>

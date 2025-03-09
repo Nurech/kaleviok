@@ -38,7 +38,7 @@ export class DialogService {
         return dialogRef;
     }
 
-    openGenericDialog(title: string, content: string, callback: () => void): void {
+    openGenericDialog(title: string, content: string, callback: (result: boolean) => void): void {
         const dialogRef = this.open(GenericDialogComponent, {
             data: { title, content, result: false }
         });
@@ -49,7 +49,9 @@ export class DialogService {
             .subscribe((res) => {
                 console.warn('Dialog result:', res);
                 if (res?.result) {
-                    callback();
+                    callback(res?.result);
+                } else {
+                    callback(false);
                 }
             });
     }

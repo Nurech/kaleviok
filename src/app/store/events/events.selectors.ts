@@ -22,14 +22,13 @@ export const selectUserCreatedEvents = (userId: string) =>
 
 export const selectLoading = createSelector(selectEventsState, (state) => state.loading);
 export const selectError = createSelector(selectEventsState, (state) => state.error);
-export const selectTempEvent = createSelector(selectEventsState, (state) => state.tempEvent);
 
 export const selectEvents = createSelector(
     isAtCreatedEvents,
     selectPastEvents,
     selectUpcomingEvents,
     selectAuthenticatedAccount,
-    selectAllEvents, // All events to filter created events
+    selectAllEvents,
     (atCreated, past, upcoming, user, allEvents) => {
         if (atCreated && user?.uid) {
             console.warn(
@@ -42,18 +41,20 @@ export const selectEvents = createSelector(
     }
 );
 
-export const selectCurrentEventVM = createSelector(
+export const selectCurrentEvent = createSelector(
     selectCurrentEventId,
     selectEventEntities,
+    (eventId, entities) => entities[eventId] ?? null
+);
+
+export const selectCurrentEventVM = createSelector(
+    selectCurrentEvent,
+    selectEventEntities,
     selectAllAccounts,
-    (eventId, entities, accounts) => {
-        const event = entities[eventId];
-        if (!event) {
-            return null;
-        }
+    (event, entities, accounts) => {
         return {
             event,
-            createdBy: accounts.find((account) => account.uid === event.createdBy) || null
+            createdBy: accounts?.find((account) => account?.uid === event?.createdBy)
         };
     }
 );

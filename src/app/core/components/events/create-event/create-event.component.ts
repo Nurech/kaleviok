@@ -7,14 +7,17 @@ import { MatInputModule } from '@angular/material/input';
 import { NgIf } from '@angular/common';
 import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
 import { Store, select } from '@ngrx/store';
-import { distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatTimepickerModule } from '@angular/material/timepicker';
-import { selectTempEvent } from '../../../../store/events/events.selectors';
-import { clearTempEvent, publishEvent, saveTempEvent } from '../../../../store/events/events.actions';
+import {
+    deleteEvent,
+    sendToReview,
+    saveEvent
+} from '../../../../store/events/events.actions';
 import { DialogService } from '../../../../shared/services/dialog.service';
 import { navigateBack } from '../../../../store/router/router.actions';
+import { selectCurrentEvent } from '../../../../store/events/events.selectors';
 
 @Component({
     selector: 'app-create-event',
@@ -45,6 +48,7 @@ export class CreateEventComponent implements OnInit, OnDestroy {
 
     constructor() {
         this.eventForm = this.fb.group({
+            id: '',
             title: ['', Validators.required],
             startDate: [new Date(), Validators.required],
             startTime: ['', Validators.required],
@@ -56,17 +60,11 @@ export class CreateEventComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.store$.pipe(select(selectTempEvent)).subscribe((tempEvent) => {
-            if (tempEvent) {
-                this.eventForm.patchValue(tempEvent, { emitEvent: false });
+        this.store$.pipe(select(selectCurrentEvent)).subscribe((event) => {
+            if (event) {
+                this.eventForm.patchValue(event, { emitEvent: false });
             }
         });
-
-        this.formSubscription = this.eventForm.valueChanges
-            .pipe(distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)))
-            .subscribe((value) => {
-                this.store$.dispatch(saveTempEvent({ payload: value }));
-            });
     }
 
     ngOnDestroy(): void {
@@ -77,40 +75,34 @@ export class CreateEventComponent implements OnInit, OnDestroy {
 
     clear(): void {
         this.dialogService.openGenericDialog('Clear Form', 'Are you sure you want to clear the form?', () => {
-            this.store$.dispatch(clearTempEvent());
             this.eventForm.reset();
         });
     }
 
     delete(): void {
         this.dialogService.openGenericDialog('Delete Event', 'Are you sure you want to delete this event?', () => {
-            console.log('Delete event:', this.eventForm.value);
+            this.store$.dispatch(deleteEvent({ payload: this.eventForm.value.id }));
         });
     }
 
     save(): void {
-        if (this.eventForm.valid) {
-            this.dialogService.openGenericDialog('Save Event', 'Do you want to save this event as a draft?', () => {
-                console.log('Event saved as draft:', this.eventForm.value);
-                this.store$.dispatch(saveTempEvent({ payload: this.eventForm.value }));
-                this.store$.dispatch(navigateBack());
-            });
-        } else {
-            console.log('Form is invalid');
-        }
+        this.dialogService.openGenericDialog(
+            'Save Event',
+            'Do you want to save this event as a draft?',
+            (confirmed) => {
+                if (confirmed) {
+                    console.log('Event saved as draft:', this.eventForm.value);
+                    this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
+                }
+                this.store$.dispatch(navigateBack()); // ✅ Always navigate back regardless of confirmation
+            }
+        );
     }
 
-    publish(): void {
+    sendToReview(): void {
         this.dialogService.openGenericDialog('Publish Event', 'Are you sure you want to publish this event?', () => {
             console.log('Publish event:', this.eventForm.value);
-            this.store$.dispatch(publishEvent({ payload: this.eventForm.value }));
-            this.store$.dispatch(navigateBack());
-        });
-    }
-
-    onCloseCreateForm() {
-        this.dialogService.openGenericDialog('Publish Event', 'Close and save event?', () => {
-            this.store$.dispatch(publishEvent({ payload: this.eventForm.value }));
+            this.store$.dispatch(sendToReview({ payload: this.eventForm.value }));
             this.store$.dispatch(navigateBack());
         });
     }

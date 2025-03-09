@@ -1,7 +1,15 @@
 import { Account } from '../accounts/account.model';
 
+export enum EventStatus {
+    DRAFT = 'draft',
+    REVIEW = 'review',
+    PUBLISHED = 'published',
+    REJECTED = 'rejected'
+}
+
 export interface IEvent {
     id: string;
+    status: EventStatus;
     title?: string;
     description?: string;
     createdBy?: string;
@@ -12,11 +20,9 @@ export interface IEvent {
     startTime?: string;
     endDate?: string;
     endTime?: string;
-    published: boolean;
-    publishedAt?: string;
 }
 
 export interface EventVM {
-    event: IEvent;
+    event: IEvent | null;
     createdBy: Account | null;
 }

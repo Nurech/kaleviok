@@ -4,7 +4,7 @@ import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { IEvent } from '../../../../store/events/events.model';
+import { EventStatus, IEvent } from '../../../../store/events/events.model';
 @Component({
     selector: 'app-event-mini',
     imports: [MatCard, DatePipe, MatIcon, MatIconButton],
@@ -19,4 +19,6 @@ export class EventMiniComponent {
     viewEvent() {
         this.router.navigate(['/events', this.event.id]);
     }
+
+    protected readonly EventStatus = EventStatus;
 }

@@ -4,10 +4,10 @@ import {
     loadEvents,
     loadEventsSuccess,
     loadEventsFailure,
-    saveTempEvent,
-    clearTempEvent,
     getEventSuccess,
-    deleteEventSuccess
+    deleteEventSuccess,
+    createEventSuccess,
+    updateEventSuccess
 } from './events.actions';
 import { IEvent } from './events.model';
 
@@ -19,14 +19,12 @@ export const eventAdapter = createEntityAdapter<IEvent>({
 
 export interface State extends EntityState<IEvent> {
     events: IEvent[];
-    tempEvent: Partial<IEvent> | null;
     loading: boolean;
     error: any;
 }
 
 export const initialState: State = eventAdapter.getInitialState({
     events: [],
-    tempEvent: null,
     loading: false,
     error: null
 });
@@ -37,8 +35,14 @@ const eventsReducer = createReducer(
     on(loadEventsSuccess, (state, { payload }) => eventAdapter.upsertMany(payload, { ...state, loading: false })),
     on(loadEventsFailure, (state, { error }) => ({ ...state, loading: false, error })),
     on(getEventSuccess, (state, { payload }) => eventAdapter.upsertOne(payload, state)),
-    on(saveTempEvent, (state, { payload }) => ({ ...state, tempEvent: payload })),
-    on(clearTempEvent, (state) => ({ ...state, tempEvent: null })),
+    on(createEventSuccess, (state, { payload }) => eventAdapter.addOne(payload, state)),
+    on(updateEventSuccess, (state, { payload }) => {
+        if (!payload.id) {
+            console.error('updateEventSuccess received a payload without an ID:', payload);
+            return state; // Prevent state corruption
+        }
+        return eventAdapter.updateOne({ id: payload.id, changes: payload }, state);
+    }),
     on(deleteEventSuccess, (state, { payload }) => eventAdapter.removeOne(payload, state))
 );
 

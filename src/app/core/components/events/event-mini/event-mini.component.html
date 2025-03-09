@@ -2,11 +2,32 @@
     <div>
         <p>{{ event.title || 'Untitled Event' }}</p>
         <p>{{ event.startTime | date: 'shortTime' }} - {{ event.endTime | date: 'shortTime' }}</p>
+
+        @if (event.status === EventStatus.DRAFT) {
+            <p class="items-center flex gap-2">
+                Visand
+                <mat-icon class="icon-sm text-gray-600">cloud</mat-icon>
+            </p>
+        } @else if (event.status === EventStatus.REVIEW) {
+            <p class="items-center flex gap-2">
+                Kinnitamisel
+                <mat-icon class="icon-sm text-green-600">hourglass_empty</mat-icon>
+            </p>
+        } @else if (event.status === EventStatus.PUBLISHED) {
+            <p class="items-center flex gap-2">
+                Avalikustatud
+                <mat-icon class="icon-sm text-green-600">done_all</mat-icon>
+            </p>
+        } @else if (event.status === EventStatus.REJECTED) {
+            <p class="items-center flex gap-2">
+                Avalikustatud
+                <mat-icon class="icon-sm text-red-600">block</mat-icon>
+            </p>
+        }
     </div>
-    @if (!event.published) {
+    <div class="flex flex-row">
         <button mat-icon-button (click)="viewEvent()">
             <mat-icon class="mb-1">visibility</mat-icon>
         </button>
-    }
-
+    </div>
 </mat-card>

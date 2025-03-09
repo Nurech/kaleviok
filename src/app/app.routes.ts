@@ -46,23 +46,15 @@ const libRoutes: Routes = [
     },
     {
         path: 'events',
-        component: EventsComponent,
         title: () => translateKey('events'),
         children: [
             { path: 'upcoming', component: EventsComponent },
             { path: 'past', component: EventsComponent },
             { path: 'created', component: EventsComponent },
-            { path: 'create', component: CreateEventComponent },
-            { path: '', redirectTo: 'upcoming', pathMatch: 'full' }
-        ]
-    },
-    {
-        path: 'events',
-        component: EventComponent,
-        title: () => translateKey('event'),
-        children: [
+            { path: 'create/:id', component: CreateEventComponent },
+            { path: 'edit/:id', component: CreateEventComponent },
             { path: ':id', component: EventComponent, canActivate: [EventExistsGuard] },
-            { path: '', redirectTo: 'events', pathMatch: 'full' }
+            { path: '', redirectTo: 'upcoming', pathMatch: 'full' }
         ]
     }
 ];

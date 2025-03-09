@@ -3,7 +3,6 @@ import {
     Firestore,
     collection,
     doc,
-    setDoc,
     query,
     where,
     onSnapshot,
@@ -16,6 +15,7 @@ import { Store, select } from '@ngrx/store';
 import { IEvent } from './events.model';
 import { selectAuthenticatedAccount } from '../auth/auth.selectors';
 import { loadEventsSuccess } from './events.actions';
+import { cleanSetDoc } from '../../shared/interceptors/firebase-utils';
 
 @Injectable({
     providedIn: 'root'
@@ -51,13 +51,14 @@ export class EventsService {
         });
     }
 
-    // Save or Update Event
-    upsert(event: Partial<IEvent>): Observable<void> {
-        const eventId = event.id || doc(collection(this.firestore, this.collectionName)).id;
-        event.id = eventId;
-        const eventDocRef = doc(this.firestore, `${this.collectionName}/${eventId}`);
-        console.warn('saving event', event);
-        return from(setDoc(eventDocRef, event, { merge: true }));
+    upsert(event: Partial<IEvent>): Observable<IEvent> {
+        const eventId = event.id || doc(this.collectionRef).id; // Generate ID if missing
+        const updatedEvent = { ...event, id: eventId }; // ✅ Create a mutable copy
+        const eventDocRef = doc(this.firestore, `events/${eventId}`);
+        console.warn('Saving event:', updatedEvent);
+        return from(cleanSetDoc(eventDocRef, updatedEvent, { merge: true })).pipe(
+            map(() => updatedEvent as IEvent) // ✅ Return event with ID
+        );
     }
 
     private convertTimestampsToISO(event: any): IEvent {
@@ -102,15 +103,6 @@ export class EventsService {
         const pastQuery = query(this.collectionRef, where('endDate', '<', now));
         return from(
             getDocs(pastQuery).then((snapshot) =>
-                snapshot.docs.map((doc) => this.convertTimestampsToISO({ id: doc.id, ...doc.data() }))
-            )
-        );
-    }
-
-    getUserCreated(userId: string): Observable<IEvent[]> {
-        const userQuery = query(this.collectionRef, where('createdBy', '==', userId));
-        return from(
-            getDocs(userQuery).then((snapshot) =>
                 snapshot.docs.map((doc) => this.convertTimestampsToISO({ id: doc.id, ...doc.data() }))
             )
         );

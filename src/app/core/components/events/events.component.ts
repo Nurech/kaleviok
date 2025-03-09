@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,6 +18,7 @@ import {
 import { DialogService } from '../../../shared/services/dialog.service';
 import { EventsCalendarComponent } from './events-calendar/events-calendar.component';
 import { EventsListComponent } from './events-list/events-list.component';
+import { createEvent } from '../../../store/events/events.actions';
 
 @Component({
     selector: 'app-events',
@@ -32,7 +33,6 @@ import { EventsListComponent } from './events-list/events-list.component';
         TranslatePipe,
         RouterOutlet,
         MatButton,
-        RouterLink,
         EventsListComponent
     ],
     styleUrl: './events.component.scss'
@@ -64,5 +64,9 @@ export class EventsComponent {
 
     openEventsCalendar() {
         this.dialogService.open(EventsCalendarComponent);
+    }
+
+    onCreate() {
+        this.store$.dispatch(createEvent({}));
     }
 }
