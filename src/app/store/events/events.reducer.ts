@@ -6,19 +6,20 @@ import {
     loadEventsFailure,
     saveTempEvent,
     clearTempEvent,
-    getEventSuccess
+    getEventSuccess,
+    deleteEventSuccess
 } from './events.actions';
-import { Event } from './events.model';
+import { IEvent } from './events.model';
 
 export const featureKey = 'events';
 
-export const eventAdapter = createEntityAdapter<Event>({
+export const eventAdapter = createEntityAdapter<IEvent>({
     selectId: (event) => event.id
 });
 
-export interface State extends EntityState<Event> {
-    events: Event[];
-    tempEvent: Partial<Event> | null;
+export interface State extends EntityState<IEvent> {
+    events: IEvent[];
+    tempEvent: Partial<IEvent> | null;
     loading: boolean;
     error: any;
 }
@@ -37,7 +38,8 @@ const eventsReducer = createReducer(
     on(loadEventsFailure, (state, { error }) => ({ ...state, loading: false, error })),
     on(getEventSuccess, (state, { payload }) => eventAdapter.upsertOne(payload, state)),
     on(saveTempEvent, (state, { payload }) => ({ ...state, tempEvent: payload })),
-    on(clearTempEvent, (state) => ({ ...state, tempEvent: null }))
+    on(clearTempEvent, (state) => ({ ...state, tempEvent: null })),
+    on(deleteEventSuccess, (state, { payload }) => eventAdapter.removeOne(payload, state))
 );
 
 export const eventsFeature = createFeature({

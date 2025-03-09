@@ -1,19 +1,14 @@
 <nav class="flex items-center justify-center space-x-2 text-sm text-gray-600">
-    <a [routerLink]="'/'">
-        <mat-icon>home</mat-icon>
-    </a>
+    @if( isAtRoot$()){
 
-    <span *ngFor="let crumb of breadcrumbs(); let last = last" class="flex items-center">
-        <mat-icon>chevron_right</mat-icon>
+        <a [routerLink]="'/'">
+            <mat-icon>home</mat-icon>
+        </a>
+    } @else {
 
-        <ng-container *ngIf="crumb.label === '...'">
-            <span class="">...</span>
-        </ng-container>
+        <a (click)="onNavigateBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </a>
+    }
 
-        <ng-container *ngIf="crumb.label !== '...'">
-            <a [routerLink]="crumb.url" class="pl-2 mb-auto">
-                {{ crumb.label }}
-            </a>
-        </ng-container>
-    </span>
 </nav>

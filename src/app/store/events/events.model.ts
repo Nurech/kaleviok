@@ -1,20 +1,22 @@
 import { Account } from '../accounts/account.model';
 
-export interface Event {
+export interface IEvent {
     id: string;
     title?: string;
     description?: string;
     createdBy?: string;
-    createdAt?: Date;
+    createdAt?: string;
     modifiedBy?: string;
-    modifiedAt?: Date;
-    startDate?: Date;
-    startTime?: Date;
-    endDate?: Date;
-    endTime?: Date;
+    modifiedAt?: string;
+    startDate?: string;
+    startTime?: string;
+    endDate?: string;
+    endTime?: string;
+    published: boolean;
+    publishedAt?: string;
 }
 
 export interface EventVM {
-    event: Event;
+    event: IEvent;
     createdBy: Account | null;
 }

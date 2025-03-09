@@ -1,1 +1,12 @@
-<p>event-mini works!</p>
+<mat-card class="m-2 p-2 flex flex-row justify-between items-center">
+    <div>
+        <p>{{ event.title || 'Untitled Event' }}</p>
+        <p>{{ event.startTime | date: 'shortTime' }} - {{ event.endTime | date: 'shortTime' }}</p>
+    </div>
+    @if (!event.published) {
+        <button mat-icon-button (click)="viewEvent()">
+            <mat-icon class="mb-1">visibility</mat-icon>
+        </button>
+    }
+
+</mat-card>

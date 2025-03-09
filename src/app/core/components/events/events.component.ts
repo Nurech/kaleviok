@@ -17,12 +17,24 @@ import {
 } from '../../../store/router/router.selectors';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { EventsCalendarComponent } from './events-calendar/events-calendar.component';
+import { EventsListComponent } from './events-list/events-list.component';
 
 @Component({
     selector: 'app-events',
     templateUrl: './events.component.html',
     standalone: true,
-    imports: [MatTabGroup, NgIf, MatIcon, AsyncPipe, MatTab, TranslatePipe, RouterOutlet, MatButton, RouterLink],
+    imports: [
+        MatTabGroup,
+        NgIf,
+        MatIcon,
+        AsyncPipe,
+        MatTab,
+        TranslatePipe,
+        RouterOutlet,
+        MatButton,
+        RouterLink,
+        EventsListComponent
+    ],
     styleUrl: './events.component.scss'
 })
 export class EventsComponent {

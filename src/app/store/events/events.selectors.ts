@@ -1,7 +1,8 @@
 import { createSelector } from '@ngrx/store';
 import { eventsFeature, eventAdapter } from './events.reducer';
-import { selectCurrentEventId } from '../router/router.selectors';
+import { isAtCreatedEvents, selectCurrentEventId } from '../router/router.selectors';
 import { selectAllAccounts } from '../accounts/accounts.selectors';
+import { selectAuthenticatedAccount } from '../auth/auth.selectors';
 
 export const selectEventsState = eventsFeature.selectEventsState;
 export const { selectAll: selectAllEvents, selectEntities: selectEventEntities } =
@@ -18,9 +19,28 @@ export const selectPastEvents = createSelector(selectAllEvents, (events) =>
 );
 export const selectUserCreatedEvents = (userId: string) =>
     createSelector(selectAllEvents, (events) => events.filter((event) => event.createdBy === userId));
+
 export const selectLoading = createSelector(selectEventsState, (state) => state.loading);
 export const selectError = createSelector(selectEventsState, (state) => state.error);
 export const selectTempEvent = createSelector(selectEventsState, (state) => state.tempEvent);
+
+export const selectEvents = createSelector(
+    isAtCreatedEvents,
+    selectPastEvents,
+    selectUpcomingEvents,
+    selectAuthenticatedAccount,
+    selectAllEvents, // All events to filter created events
+    (atCreated, past, upcoming, user, allEvents) => {
+        if (atCreated && user?.uid) {
+            console.warn(
+                'events',
+                allEvents.filter((event) => event.createdBy === user.uid)
+            );
+            return allEvents.filter((event) => event.createdBy === user.uid);
+        }
+        return [];
+    }
+);
 
 export const selectCurrentEventVM = createSelector(
     selectCurrentEventId,

@@ -1,4 +1,5 @@
-<mat-card class="p-2" *ngIf="event$ | async as vm">
+<ng-container *ngIf="event$ | async as vm">
+<mat-card class="p-2">
     <h2 class="text-2xl font-bold mb-4">{{ vm.event.title || 'Untitled Event' }}</h2>
     <div>
         <p><strong>Date:</strong> {{ vm.event.startDate | date: 'fullDate' }} {{ vm.event.startTime | date: 'shortTime' }} -
@@ -17,3 +18,12 @@
 
     </div>
 </mat-card>
+
+<div class="flex flex-row gap-2 justify-center mt-2">
+    <button mat-stroked-button [color]="'warn'" (click)="onDelete(vm.event.id)">
+        <mat-icon>delete_forever</mat-icon>
+        Kustuta
+    </button>
+
+</div>
+</ng-container>

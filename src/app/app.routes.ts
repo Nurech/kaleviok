@@ -57,7 +57,7 @@ const libRoutes: Routes = [
         ]
     },
     {
-        path: 'event',
+        path: 'events',
         component: EventComponent,
         title: () => translateKey('event'),
         children: [

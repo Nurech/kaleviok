@@ -9,6 +9,11 @@
 @forward "styles/mat-error";
 @forward "styles/material-override";
 
+$theme: mat.define-theme();
+
+html {
+  @include mat.color-variants-backwards-compatibility($theme);
+}
 html {
   @include mat.theme(
       (

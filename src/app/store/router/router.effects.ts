@@ -2,11 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 import { navigateTo, navigateBack, navigateForward } from './router.actions';
 
 @Injectable()
 export class RouterEffects {
     private actions$ = inject(Actions);
+    private store$ = inject(Store);
     private router = inject(Router);
 
     navigateTo$ = createEffect(
@@ -22,7 +24,15 @@ export class RouterEffects {
         () =>
             this.actions$.pipe(
                 ofType(navigateBack),
-                tap(() => this.router.navigate(['../']))
+                tap(() => {
+                    if (window.history.length > 1) {
+                        // If there is a browser history, use it
+                        window.history.back();
+                    } else {
+                        // If no browser history, fallback to Angular router
+                        this.router.navigate(['/']); // Default to root if no history
+                    }
+                })
             ),
         { dispatch: false }
     );
