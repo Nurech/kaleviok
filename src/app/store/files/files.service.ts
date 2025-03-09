@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, doc, getDoc, deleteDoc, collection } from '@angular/fire/firestore';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, getMetadata } from '@angular/fire/storage';
-import { Observable, from, map } from 'rxjs';
+import { Observable, from, map, firstValueFrom } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppFile, FileStatus } from './files.model';
 import { setDocClean } from '../../shared/interceptors/firebase-utils';
@@ -43,7 +43,7 @@ export class FilesService {
                 (error) => observer.error(error),
                 async () => {
                     try {
-                        const account = await this.store$.select(selectAuthenticatedAccount).pipe().toPromise();
+                        const account = await firstValueFrom(this.store$.select(selectAuthenticatedAccount));
                         console.warn('account', account);
                         if (!account?.uid) throw new Error('User not authenticated');
 
@@ -63,7 +63,7 @@ export class FilesService {
 
                         this.store$.dispatch(updateFileStatus({ fileId: generatedUid, status: FileStatus.UPLOADED }));
 
-                        await this.upsert(uploadedFile).toPromise();
+                        await firstValueFrom(this.upsert(uploadedFile));
                         observer.next(uploadedFile);
                         observer.complete();
                     } catch (error) {
