@@ -3,6 +3,8 @@ import { eventsFeature, eventAdapter } from './events.reducer';
 import { isAtCreatedEvents, selectCurrentEventId } from '../router/router.selectors';
 import { selectAllAccounts } from '../accounts/accounts.selectors';
 import { selectAuthenticatedAccount } from '../auth/auth.selectors';
+import { selectAllFiles } from '../files/files.selectors';
+import { EventVM } from './events.model';
 
 export const selectEventsState = eventsFeature.selectEventsState;
 export const { selectAll: selectAllEvents, selectEntities: selectEventEntities } =
@@ -44,17 +46,25 @@ export const selectEvents = createSelector(
 export const selectCurrentEvent = createSelector(
     selectCurrentEventId,
     selectEventEntities,
-    (eventId, entities) => entities[eventId] ?? null
+    (eventId, entities) => entities[eventId]
 );
 
 export const selectCurrentEventVM = createSelector(
     selectCurrentEvent,
     selectEventEntities,
     selectAllAccounts,
-    (event, entities, accounts) => {
+    selectAllFiles,
+    (event, entities, accounts, allFiles) => {
+        const files = allFiles?.filter((file) => file.eventId === event?.id);
+        console.warn('files', files, {
+            event,
+            files,
+            createdBy: accounts?.find((account) => account?.uid === event?.createdBy)
+        });
         return {
             event,
+            files,
             createdBy: accounts?.find((account) => account?.uid === event?.createdBy)
-        };
+        } as EventVM;
     }
 );

@@ -48,5 +48,3 @@ export const filesFeature = createFeature({
     name: featureKey,
     reducer: filesReducer
 });
-
-export const { selectAll, selectEntities, selectIds, selectTotal } = adapter.getSelectors();

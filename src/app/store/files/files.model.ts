@@ -20,4 +20,5 @@ export interface AppFile {
     blob: Blob;
     metadata: FullMetadata;
     progress: number;
+    eventId: string;
 }

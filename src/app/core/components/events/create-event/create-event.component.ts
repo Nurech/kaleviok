@@ -41,7 +41,6 @@ export class CreateEventComponent implements OnInit, OnDestroy {
     private store$ = inject(Store);
     private dialogService = inject(DialogService);
     private formSubscription?: Subscription;
-
     eventForm: FormGroup;
 
     constructor() {

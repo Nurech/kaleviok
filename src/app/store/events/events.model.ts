@@ -1,4 +1,5 @@
 import { Account } from '../accounts/account.model';
+import { AppFile } from '../files/files.model';
 
 export enum EventStatus {
     DRAFT = 'draft',
@@ -24,5 +25,6 @@ export interface IEvent {
 
 export interface EventVM {
     event: IEvent | null;
+    files: AppFile[] | [];
     createdBy: Account | null;
 }

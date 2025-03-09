@@ -18,13 +18,11 @@ export const eventAdapter = createEntityAdapter<IEvent>({
 });
 
 export interface State extends EntityState<IEvent> {
-    events: IEvent[];
     loading: boolean;
     error: any;
 }
 
 export const initialState: State = eventAdapter.getInitialState({
-    events: [],
     loading: false,
     error: null
 });

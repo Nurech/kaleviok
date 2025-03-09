@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MatIcon } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
@@ -16,6 +16,7 @@ import { AppFile } from '../../../../store/files/files.model';
 export class DropZoneComponent {
     store$ = inject(Store);
     isHovering = false;
+    eventId = input<string>();
 
     onDragOver(event: DragEvent) {
         event.preventDefault();
@@ -53,6 +54,10 @@ export class DropZoneComponent {
                     name: file.name,
                     blob: fileBlob
                 } as AppFile;
+
+                if (this.eventId()) {
+                    appFile.eventId = this.eventId() as string;
+                }
 
                 console.log('File:', appFile.name, file.size, file.type, appFile.blob);
                 this.store$.dispatch(uploadFile({ payload: appFile }));
