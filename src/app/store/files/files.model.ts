@@ -19,4 +19,5 @@ export interface AppFile {
     status: FileStatus;
     blob: Blob;
     metadata: FullMetadata;
+    progress: number;
 }

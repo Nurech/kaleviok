@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, doc, getDoc, deleteDoc, collection } from '@angular/fire/firestore';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, getMetadata } from '@angular/fire/storage';
-import { Observable, from, switchMap, map, throwError } from 'rxjs';
-import { withLatestFrom } from 'rxjs/operators';
+import { Observable, from, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppFile, FileStatus } from './files.model';
 import { setDocClean } from '../../shared/interceptors/firebase-utils';
 import { selectAuthenticatedAccount } from '../auth/auth.selectors';
+import { addFile, updateFileProgress, updateFileStatus } from './files.actions';
 
 @Injectable({
     providedIn: 'root'
@@ -24,35 +24,53 @@ export class FilesService {
         const fileRef = ref(this.storage, filePath);
         const uploadTask = uploadBytesResumable(fileRef, file.blob);
 
-        return from(
-            new Promise<void>((resolve, reject) => {
-                uploadTask.on('state_changed', undefined, reject, resolve);
-            })
-        ).pipe(
-            withLatestFrom(this.store$.select(selectAuthenticatedAccount)),
-            switchMap(([, account]) => {
-                if (!account?.uid) {
-                    return throwError(() => new Error('User not authenticated'));
-                }
-                return from(getDownloadURL(fileRef)).pipe(map((url) => ({ url, accountId: account.uid })));
-            }),
-            switchMap(({ url, accountId }) =>
-                from(getMetadata(fileRef)).pipe(map((metadata) => ({ url, metadata, accountId })))
-            ),
-            switchMap(({ url, metadata, accountId }) => {
-                const uploadedFile: Partial<AppFile> = {
-                    uid: generatedUid,
-                    createdBy: accountId,
-                    name: file.name,
-                    status: FileStatus.UPLOADED,
-                    thumbnail: url,
-                    createdAt: new Date(metadata.timeCreated).toISOString(),
-                    metadata
-                };
+        const initialFileState: AppFile = {
+            ...file,
+            uid: generatedUid,
+            progress: 0,
+            status: FileStatus.UPLOADING
+        };
 
-                return this.upsert(uploadedFile as AppFile).pipe(map(() => uploadedFile as AppFile));
-            })
-        );
+        this.store$.dispatch(addFile({ payload: initialFileState }));
+
+        return new Observable<AppFile>((observer) => {
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    this.store$.dispatch(updateFileProgress({ fileId: generatedUid, progress }));
+                },
+                (error) => observer.error(error),
+                async () => {
+                    try {
+                        const account = await this.store$.select(selectAuthenticatedAccount).pipe().toPromise();
+                        if (!account?.uid) throw new Error('User not authenticated');
+
+                        const url = await getDownloadURL(fileRef);
+                        const metadata = await getMetadata(fileRef);
+
+                        const uploadedFile: AppFile = {
+                            ...initialFileState,
+                            createdBy: account.uid,
+                            name: file.name,
+                            status: FileStatus.UPLOADED,
+                            thumbnail: url,
+                            createdAt: new Date(metadata.timeCreated).toISOString(),
+                            metadata,
+                            progress: 100
+                        };
+
+                        this.store$.dispatch(updateFileStatus({ fileId: generatedUid, status: FileStatus.UPLOADED }));
+
+                        await this.upsert(uploadedFile).toPromise();
+                        observer.next(uploadedFile);
+                        observer.complete();
+                    } catch (error) {
+                        observer.error(error);
+                    }
+                }
+            );
+        });
     }
 
     upsert(file: AppFile): Observable<AppFile> {

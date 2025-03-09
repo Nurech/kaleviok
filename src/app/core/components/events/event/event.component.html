@@ -6,14 +6,14 @@
                 <p><strong>Date:</strong> {{ vm.event?.startDate | date: 'fullDate' }} {{ vm.event?.startTime | date: 'shortTime' }} -
                     {{ vm.event?.endDate | date: 'fullDate' }} {{ vm.event?.endTime | date: 'shortTime' }}</p>
 
-                <mat-chip-set *ngIf="vm?.createdBy">
+                <mat-chip-set *ngIf="vm.createdBy">
                     <mat-chip>
                         <img
                                 matChipAvatar
-                                [attr.src]="vm.createdBy?.photoURL"
+                                [attr.src]="vm.createdBy.photoURL"
                                 alt="Created by"
                         />
-                        {{ vm.createdBy?.firstName }} {{ vm.createdBy?.lastName }}
+                        {{ vm.createdBy.firstName }} {{ vm.createdBy.lastName }}
                     </mat-chip>
                 </mat-chip-set>
             </div>

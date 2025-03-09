@@ -34,7 +34,14 @@ const filesReducer = createReducer(
 
     on(FileActions.downloadFile, (state) => ({ ...state, loading: true })),
     on(FileActions.downloadFileSuccess, (state) => ({ ...state, loading: false })),
-    on(FileActions.downloadFileFailure, (state, { error }) => ({ ...state, loading: false, error }))
+    on(FileActions.downloadFileFailure, (state, { error }) => ({ ...state, loading: false, error })),
+    on(FileActions.addFile, (state, { payload }) => adapter.addOne(payload, state)),
+    on(FileActions.updateFileProgress, (state, { fileId, progress }) =>
+        adapter.updateOne({ id: fileId, changes: { progress } }, state)
+    ),
+    on(FileActions.updateFileStatus, (state, { fileId, status }) =>
+        adapter.updateOne({ id: fileId, changes: { status } }, state)
+    )
 );
 
 export const filesFeature = createFeature({
