@@ -5,7 +5,7 @@ import {
     LOCALE_ID,
     provideZoneChangeDetection
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, TitleStrategy } from '@angular/router';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
@@ -40,6 +40,7 @@ import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { RootStoreModule } from './store/root.module';
 import { ThemeChangerService } from './shared/services/theme-changer.service';
+import { TitleService } from './shared/services/title.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
     new TranslateHttpLoader(http, './i18n/', '.json');
@@ -90,6 +91,7 @@ export const appConfig: ApplicationConfig = {
         provideRemoteConfig(() => getRemoteConfig()),
         provideRouterStore(),
         importProvidersFrom(RootStoreModule),
+        { provide: TitleStrategy, useClass: TitleService },
         provideServiceWorker('ngsw-worker.js', {
             enabled: false,
             registrationStrategy: 'registerImmediately'
