@@ -15,7 +15,7 @@ import { Store, select } from '@ngrx/store';
 import { IEvent } from './events.model';
 import { selectAuthenticatedAccount } from '../auth/auth.selectors';
 import { loadEventsSuccess } from './events.actions';
-import { cleanSetDoc } from '../../shared/interceptors/firebase-utils';
+import { setDocClean } from '../../shared/interceptors/firebase-utils';
 
 @Injectable({
     providedIn: 'root'
@@ -56,7 +56,7 @@ export class EventsService {
         const updatedEvent = { ...event, id: eventId }; // ✅ Create a mutable copy
         const eventDocRef = doc(this.firestore, `events/${eventId}`);
         console.warn('Saving event:', updatedEvent);
-        return from(cleanSetDoc(eventDocRef, updatedEvent, { merge: true })).pipe(
+        return from(setDocClean(eventDocRef, updatedEvent, { merge: true })).pipe(
             map(() => updatedEvent as IEvent) // ✅ Return event with ID
         );
     }

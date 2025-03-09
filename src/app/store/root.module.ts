@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer } from '@ngrx/router-store';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { FilesStoreModule } from './files/files.module';
 import { eventsFeature } from './events/events.reducer';
 import { EventsStoreModule } from './events/events.module';
 import { snackbarFeature } from './snackbar/snackbar.reducer';
@@ -19,6 +20,7 @@ import { AuthStoreModule } from './auth/auth.module';
 import { UsersStoreModule } from './accounts/accounts.module';
 import { RouterStoreModule } from './router/router-store.module';
 import { CoreStoreModule } from './core/core.module';
+import { filesFeature } from './files/files.reducer';
 
 function calculateLocalStorageUsage(): string {
     const totalSize = new TextEncoder().encode(JSON.stringify(localStorage)).length;
@@ -62,10 +64,12 @@ const rootReducers: ActionReducerMap<any> = {
     settings: settingsFeature.reducer,
     router: routerReducer,
     auth: authFeature.reducer,
-    accounts: accountsFeature.reducer
+    accounts: accountsFeature.reducer,
+    files: filesFeature.reducer
 };
 
 const featureModules = [
+    FilesStoreModule,
     EventsStoreModule,
     SnackbarStoreModule,
     CoreStoreModule,

@@ -10,14 +10,11 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatTimepickerModule } from '@angular/material/timepicker';
-import {
-    deleteEvent,
-    sendToReview,
-    saveEvent
-} from '../../../../store/events/events.actions';
+import { deleteEvent, sendToReview, saveEvent } from '../../../../store/events/events.actions';
 import { DialogService } from '../../../../shared/services/dialog.service';
 import { navigateBack } from '../../../../store/router/router.actions';
 import { selectCurrentEvent } from '../../../../store/events/events.selectors';
+import { DropZoneComponent } from '../../files/drop-zone/drop-zone.component';
 
 @Component({
     selector: 'app-create-event',
@@ -35,7 +32,8 @@ import { selectCurrentEvent } from '../../../../store/events/events.selectors';
         MatDatepicker,
         MatDatepickerToggle,
         MatDatepickerInput,
-        MatIcon
+        MatIcon,
+        DropZoneComponent
     ]
 })
 export class CreateEventComponent implements OnInit, OnDestroy {

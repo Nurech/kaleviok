@@ -77,6 +77,7 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes),
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideFirestore(() => getFirestore()),
+        provideStorage(() => getStorage()),
         provideAuth(() => getAuth()),
         provideAnalytics(() => getAnalytics()),
         ScreenTrackingService,
