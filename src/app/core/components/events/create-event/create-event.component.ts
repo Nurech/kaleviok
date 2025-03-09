@@ -1,20 +1,23 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, Signal, effect } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NgIf } from '@angular/common';
+import { JsonPipe, NgIf } from '@angular/common';
 import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatTimepickerModule } from '@angular/material/timepicker';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { deleteEvent, sendToReview, saveEvent } from '../../../../store/events/events.actions';
 import { DialogService } from '../../../../shared/services/dialog.service';
 import { navigateBack } from '../../../../store/router/router.actions';
 import { selectCurrentEvent } from '../../../../store/events/events.selectors';
 import { DropZoneComponent } from '../../files/drop-zone/drop-zone.component';
+import { selectAllEventFiles } from '../../../../store/files/files.selectors';
+import { FilesListComponent } from '../../files/files-list/files-list.component';
 
 @Component({
     selector: 'app-create-event',
@@ -33,15 +36,19 @@ import { DropZoneComponent } from '../../files/drop-zone/drop-zone.component';
         MatDatepickerToggle,
         MatDatepickerInput,
         MatIcon,
-        DropZoneComponent
+        DropZoneComponent,
+        FilesListComponent,
+        JsonPipe
     ]
 })
-export class CreateEventComponent implements OnInit, OnDestroy {
+export class CreateEventComponent {
     private fb = inject(FormBuilder);
     private store$ = inject(Store);
     private dialogService = inject(DialogService);
     private formSubscription?: Subscription;
     eventForm: FormGroup;
+    event$: Signal<any> = toSignal(this.store$.pipe(select(selectCurrentEvent)));
+    eventFiles$: Signal<any> = toSignal(this.store$.pipe(select(selectAllEventFiles)));
 
     constructor() {
         this.eventForm = this.fb.group({
@@ -54,20 +61,13 @@ export class CreateEventComponent implements OnInit, OnDestroy {
             description: ['', [Validators.required, Validators.minLength(10)]],
             location: ['', Validators.required]
         });
-    }
 
-    ngOnInit(): void {
-        this.store$.pipe(select(selectCurrentEvent)).subscribe((event) => {
+        effect(() => {
+            const event = this.event$();
             if (event) {
                 this.eventForm.patchValue(event, { emitEvent: false });
             }
         });
-    }
-
-    ngOnDestroy(): void {
-        if (this.formSubscription) {
-            this.formSubscription.unsubscribe();
-        }
     }
 
     clear(): void {

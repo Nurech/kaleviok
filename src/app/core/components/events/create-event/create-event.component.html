@@ -78,7 +78,9 @@
     </mat-form-field>
 
       <div>
-          <app-drop-zone></app-drop-zone>
+          <app-drop-zone [eventId]="event$()?.id"></app-drop-zone>
+          {{eventFiles$() | json}}
+          <app-files-list [files]="eventFiles$()"></app-files-list>
       </div>
 
     <div class="flex justify-center gap-2 mt-4">

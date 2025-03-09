@@ -44,6 +44,7 @@ export class FilesService {
                 async () => {
                     try {
                         const account = await this.store$.select(selectAuthenticatedAccount).pipe().toPromise();
+                        console.warn('account', account);
                         if (!account?.uid) throw new Error('User not authenticated');
 
                         const url = await getDownloadURL(fileRef);
