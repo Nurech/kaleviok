@@ -1,13 +1,16 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "CommonJS",
         "noImplicitReturns": true,
         "noUnusedLocals": true,
-        "outDir": "lib",
         "sourceMap": true,
         "strict": true,
-        "target": "es2017"
+        "outDir": "lib", // <-- Correct output directory for compiled JS
+        "rootDir": "src", // <-- Ensure source files are inside src/
+        "target": "ES2022"
     },
     "compileOnSave": true,
-    "include": ["src"]
+    "include": [
+        "src/**/*.ts" // <-- Ensure TypeScript files are included
+    ]
 }

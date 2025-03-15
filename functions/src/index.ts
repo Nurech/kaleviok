@@ -1,19 +1,50 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+import { getApps, initializeApp, applicationDefault } from 'firebase-admin/app';
+import { Storage } from '@google-cloud/storage';
+import { logger } from 'firebase-functions';
+import { onDocumentDeleted } from 'firebase-functions/v2/firestore';
 
-import { onRequest } from 'firebase-functions/v2/https';
-import * as logger from 'firebase-functions/logger';
+if (!getApps().length) {
+    initializeApp({
+        credential: applicationDefault()
+    });
+}
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+const gcs = new Storage();
 
-export const helloWorld = onRequest((request, response) => {
-    logger.info('Hello logs!', { structuredData: true });
-    response.send('Hello from Firebase!');
+async function findFileAndDelete(filePath: string) {
+    try {
+        const [buckets] = await gcs.getBuckets();
+
+        for (const bucketInfo of buckets) {
+            const bucket = gcs.bucket(bucketInfo.name);
+            const file = bucket.file(filePath);
+
+            const [exists] = await file.exists();
+            if (exists) {
+                await file.delete();
+                logger.info(`Deleted file: ${filePath} from bucket: ${bucketInfo.name}`);
+                return;
+            }
+        }
+
+        logger.warn(`File not found in any bucket: ${filePath}`);
+    } catch (error) {
+        logger.error(`Error scanning buckets for file: ${filePath}`, error);
+    }
+}
+
+export const deleteFileOnReferenceDeletion = onDocumentDeleted('files/{fileId}', async (event) => {
+    const deletedData = event.data?.data();
+    if (!deletedData) {
+        logger.warn(`Deleted document does not contain any data.`);
+        return;
+    }
+
+    const filePath = deletedData?.metadata?.fullPath;
+    if (!filePath) {
+        logger.warn(`No file path found for deleted file ID: ${event.params.fileId}`);
+        return;
+    }
+
+    await findFileAndDelete(filePath);
 });
