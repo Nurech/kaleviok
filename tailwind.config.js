@@ -3,7 +3,7 @@ module.exports = {
     darkMode: 'class',
     mode: 'jit',
     important: true,
-    content: ['./dist/**/*.{js,ts,jsx,tsx,html,css,scss}', './src/**/*.{js,ts,jsx,tsx,html,css,scss}'],
+    content: ['./src/**/*.{html,ts}', './dist/**/*.{js,ts,jsx,tsx,html,css,scss}', './src/**/*.{js,ts,jsx,tsx,html,css,scss}'],
     theme: {
         extend: {
             opacity: {

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, doc, getDoc, deleteDoc, collection } from '@angular/fire/firestore';
+import { Firestore, doc, getDoc, deleteDoc, collection, getDocs, where, query } from '@angular/fire/firestore';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, getMetadata } from '@angular/fire/storage';
 import { Observable, from, map, firstValueFrom } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -81,13 +81,18 @@ export class FilesService {
 
     getFileById(fileId: string): Observable<AppFile | null> {
         const fileDocRef = doc(this.firestore, `${this.collectionName}/${fileId}`);
-        return from(getDoc(fileDocRef)).pipe(
-            map((docSnapshot) => (docSnapshot.exists() ? (docSnapshot.data() as AppFile) : null))
-        );
+        return from(getDoc(fileDocRef)).pipe(map((docSnapshot) => (docSnapshot.exists() ? (docSnapshot.data() as AppFile) : null)));
     }
 
     deleteFile(fileId: string): Observable<void> {
         const fileDocRef = doc(this.firestore, `${this.collectionName}/${fileId}`);
         return from(deleteDoc(fileDocRef));
+    }
+
+    downloadFilesByEventId(eventId: string): Observable<AppFile[]> {
+        const filesCollectionRef = collection(this.firestore, this.collectionName);
+        const filesQuery = query(filesCollectionRef, where('eventId', '==', eventId));
+
+        return from(getDocs(filesQuery)).pipe(map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as AppFile)));
     }
 }

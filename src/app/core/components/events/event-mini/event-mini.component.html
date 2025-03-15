@@ -5,23 +5,24 @@
 
         @if (event.status === EventStatus.DRAFT) {
             <p class="items-center flex gap-2">
-                Visand
                 <mat-icon class="icon-sm text-gray-600">cloud</mat-icon>
+                <app-info [text]="'Visand'"></app-info>
             </p>
         } @else if (event.status === EventStatus.REVIEW) {
             <p class="items-center flex gap-2">
-                Kinnitamisel
+
                 <mat-icon class="icon-sm text-green-600">hourglass_empty</mat-icon>
+                <app-info [text]="'Kinnitamisel'"></app-info>
             </p>
         } @else if (event.status === EventStatus.PUBLISHED) {
             <p class="items-center flex gap-2">
-                Avalikustatud
                 <mat-icon class="icon-sm text-green-600">done_all</mat-icon>
+                <app-info [text]="'Avalikustatud'"></app-info>
             </p>
         } @else if (event.status === EventStatus.REJECTED) {
             <p class="items-center flex gap-2">
-                Avalikustatud
                 <mat-icon class="icon-sm text-red-600">block</mat-icon>
+                <app-info [text]="'Tagasilükatud'"></app-info>
             </p>
         }
     </div>

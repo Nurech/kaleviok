@@ -4,10 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { JsonPipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
 import { Store, select } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -18,6 +17,7 @@ import { selectCurrentEvent } from '../../../../store/events/events.selectors';
 import { DropZoneComponent } from '../../files/drop-zone/drop-zone.component';
 import { selectAllEventFiles } from '../../../../store/files/files.selectors';
 import { FilesListComponent } from '../../files/files-list/files-list.component';
+import { downloadFilesByEventId } from '../../../../store/files/files.actions';
 
 @Component({
     selector: 'app-create-event',
@@ -37,15 +37,13 @@ import { FilesListComponent } from '../../files/files-list/files-list.component'
         MatDatepickerInput,
         MatIcon,
         DropZoneComponent,
-        FilesListComponent,
-        JsonPipe
+        FilesListComponent
     ]
 })
 export class CreateEventComponent {
     private fb = inject(FormBuilder);
     private store$ = inject(Store);
     private dialogService = inject(DialogService);
-    private formSubscription?: Subscription;
     eventForm: FormGroup;
     event$: Signal<any> = toSignal(this.store$.pipe(select(selectCurrentEvent)));
     eventFiles$: Signal<any> = toSignal(this.store$.pipe(select(selectAllEventFiles)));
@@ -66,6 +64,7 @@ export class CreateEventComponent {
             const event = this.event$();
             if (event) {
                 this.eventForm.patchValue(event, { emitEvent: false });
+                this.store$.dispatch(downloadFilesByEventId({ eventId: event.id }));
             }
         });
     }
@@ -83,17 +82,13 @@ export class CreateEventComponent {
     }
 
     save(): void {
-        this.dialogService.openGenericDialog(
-            'Save Event',
-            'Do you want to save this event as a draft?',
-            (confirmed) => {
-                if (confirmed) {
-                    console.log('Event saved as draft:', this.eventForm.value);
-                    this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
-                }
-                this.store$.dispatch(navigateBack()); // ✅ Always navigate back regardless of confirmation
+        this.dialogService.openGenericDialog('Save Event', 'Do you want to save this event as a draft?', (confirmed) => {
+            if (confirmed) {
+                console.log('Event saved as draft:', this.eventForm.value);
+                this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
             }
-        );
+            this.store$.dispatch(navigateBack());
+        });
     }
 
     sendToReview(): void {

@@ -5,9 +5,10 @@ import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { EventStatus, IEvent } from '../../../../store/events/events.model';
+import { InfoComponent } from '../../../../shared/components/info/info.component';
 @Component({
     selector: 'app-event-mini',
-    imports: [MatCard, DatePipe, MatIcon, MatIconButton],
+    imports: [MatCard, DatePipe, MatIcon, MatIconButton, InfoComponent],
     templateUrl: './event-mini.component.html',
     standalone: true,
     styleUrl: './event-mini.component.scss'

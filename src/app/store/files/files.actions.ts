@@ -6,14 +6,8 @@ export const uploadFileSuccess = createAction('[Files] Upload File Success', pro
 export const uploadFileFailure = createAction('[Files] Upload File Failure', props<{ error: Error }>());
 
 export const addFile = createAction('[Files] Add File', props<{ payload: AppFile }>());
-export const updateFileProgress = createAction(
-    '[Files] Update File Progress',
-    props<{ fileId: string; progress: number }>()
-);
-export const updateFileStatus = createAction(
-    '[Files] Update File Status',
-    props<{ fileId: string; status: FileStatus }>()
-);
+export const updateFileProgress = createAction('[Files] Update File Progress', props<{ fileId: string; progress: number }>());
+export const updateFileStatus = createAction('[Files] Update File Status', props<{ fileId: string; status: FileStatus }>());
 
 export const deleteFile = createAction('[Files] Delete File', props<{ payload: AppFile }>());
 export const deleteFileSuccess = createAction('[Files] Delete File Success', props<{ payload: AppFile }>());
@@ -22,3 +16,7 @@ export const deleteFileFailure = createAction('[Files] Delete File Failure', pro
 export const downloadFile = createAction('[Files] Download File', props<{ payload: AppFile }>());
 export const downloadFileSuccess = createAction('[Files] Download File Success', props<{ payload: AppFile }>());
 export const downloadFileFailure = createAction('[Files] Download File Failure', props<{ error: Error }>());
+
+export const downloadFilesByEventId = createAction('[Files] Download Files By Event Id', props<{ eventId: string }>());
+export const downloadFilesByEventIdSuccess = createAction('[Files] Download Files By Event Id Success', props<{ payload: AppFile[] }>());
+export const downloadFilesByEventIdFailure = createAction('[Files] Download Files By Event Id Failure', props<{ error: Error }>());

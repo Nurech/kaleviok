@@ -5,6 +5,7 @@ import { NgClass } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { uploadFile } from '../../../../store/files/files.actions';
 import { AppFile } from '../../../../store/files/files.model';
+import { DeviceService } from '../../../../shared/services/device.service';
 
 @Component({
     selector: 'app-drop-zone',
@@ -16,6 +17,7 @@ import { AppFile } from '../../../../store/files/files.model';
 export class DropZoneComponent {
     store$ = inject(Store);
     isHovering = false;
+    deviceService = inject(DeviceService);
     eventId = input<string>();
 
     onDragOver(event: DragEvent) {

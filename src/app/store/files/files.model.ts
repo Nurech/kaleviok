@@ -18,7 +18,7 @@ export interface AppFile {
     thumbnail: string;
     status: FileStatus;
     blob: Blob;
-    metadata: FullMetadata;
+    metadata?: FullMetadata;
     progress: number;
     eventId: string;
 }

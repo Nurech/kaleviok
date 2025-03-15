@@ -7,8 +7,10 @@
         (drop)="onDrop($event)"
 >
     <mat-icon class="text-gray-500">cloud_upload</mat-icon>
-    <p class="text-gray-500">Drag & Drop files here</p>
-    <p class="text-sm text-gray-400">or</p>
+    @if (!deviceService.isHandheld()) {
+        <p class="text-gray-500">Drag & Drop files here</p>
+        <p class="text-sm text-gray-400">or</p>
+    }
     <button mat-button color="primary" (click)="fileInput.click()">Select Files</button>
-    <input type="file" #fileInput multiple class="hidden" (change)="onFileSelect($event)" />
+    <input type="file" #fileInput multiple class="hidden" (change)="onFileSelect($event)"/>
 </div>

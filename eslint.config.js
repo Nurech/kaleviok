@@ -48,13 +48,7 @@ module.exports = tseslint.config(
             'unused-imports': unusedImports,
             'import': imports
         },
-        extends: [
-            eslint.configs.recommended,
-            ...tseslint.configs.recommended,
-            ...tseslint.configs.stylistic,
-            ...angular.configs.tsRecommended,
-            prettier
-        ],
+        extends: [eslint.configs.recommended, ...tseslint.configs.recommended, ...tseslint.configs.stylistic, ...angular.configs.tsRecommended, prettier],
         processor: angular.processInlineTemplates,
         rules: {
             'import/order': [
@@ -90,7 +84,8 @@ module.exports = tseslint.config(
                     args: 'after-used',
                     argsIgnorePattern: '^_'
                 }
-            ]
+            ],
+            'semi': ['error', 'always']
         }
     },
     {

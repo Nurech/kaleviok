@@ -1,9 +1,9 @@
 import { Component, input } from '@angular/core';
-import { FileComponent } from '../file/file.component';
+import { ListFileComponent } from '../list-file/list-file.component';
 
 @Component({
     selector: 'app-files-list',
-    imports: [FileComponent],
+    imports: [ListFileComponent],
     templateUrl: './files-list.component.html',
     standalone: true,
     styleUrl: './files-list.component.scss'
