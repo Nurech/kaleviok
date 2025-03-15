@@ -5,7 +5,7 @@ import { onDocumentDeleted } from 'firebase-functions/v2/firestore';
 
 if (!getApps().length) {
     initializeApp({
-        credential: applicationDefault()
+        credential: applicationDefault() //test
     });
 }
 
