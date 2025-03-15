@@ -36,4 +36,13 @@ export class ValidatorsCustom {
         const allUploaded = files.every((file) => file.status === FileStatus.UPLOADED);
         return allUploaded ? null : { notAllUploaded: true };
     };
+
+    static maxItems(maxItems: number): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            if (!(control instanceof FormArray)) {
+                return null;
+            }
+            return control.length > maxItems ? { maxFilesExceeded: true } : null;
+        };
+    }
 }

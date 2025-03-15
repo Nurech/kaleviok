@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
 import { Store, select } from '@ngrx/store';
 import { MatIcon } from '@angular/material/icon';
@@ -20,6 +20,7 @@ import { FilesListComponent } from '../../files/files-list/files-list.component'
 import { deleteFile, downloadFilesByEventId } from '../../../../store/files/files.actions';
 import { AppFile } from '../../../../store/files/files.model';
 import { ValidatorsCustom } from '../../../../shared/validators/validators-custom';
+import { selectMaxFilesAllowedWhenCreateEvent } from '../../../../store/app-settings/app-settings.selectors';
 
 @Component({
     selector: 'app-create-event',
@@ -39,28 +40,37 @@ import { ValidatorsCustom } from '../../../../shared/validators/validators-custo
         MatDatepickerInput,
         MatIcon,
         DropZoneComponent,
-        FilesListComponent
+        FilesListComponent,
+        NgClass
     ]
 })
 export class CreateEventComponent {
     private fb = inject(FormBuilder);
     private store$ = inject(Store);
     private dialogService = inject(DialogService);
-    eventForm: FormGroup;
+    maxFilesAllowed$: Signal<number> = toSignal(this.store$.select(selectMaxFilesAllowedWhenCreateEvent), { initialValue: 10 });
     event$: Signal<any> = toSignal(this.store$.pipe(select(selectCurrentEvent)));
     eventFiles$: Signal<AppFile[]> = toSignal(this.store$.pipe(select(selectAllEventFiles)), { initialValue: [] });
 
+    eventForm: FormGroup = this.fb.group({
+        id: '',
+        title: ['', Validators.required],
+        startDate: ['', Validators.required],
+        startTime: ['', Validators.required],
+        endDate: ['', Validators.required],
+        endTime: ['', Validators.required],
+        description: ['', [Validators.required, Validators.minLength(10)]],
+        location: ['', Validators.required]
+    });
+
+    filesForm: FormGroup = this.fb.group({
+        files: this.fb.array([], [ValidatorsCustom.validateFilesAllUploaded, ValidatorsCustom.maxItems(this.maxFilesAllowed$())])
+    });
+
     constructor() {
-        this.eventForm = this.fb.group({
-            id: '',
-            title: ['', Validators.required],
-            startDate: [new Date(), Validators.required],
-            startTime: ['', Validators.required],
-            endDate: ['', Validators.required],
-            endTime: ['', Validators.required],
-            description: ['', [Validators.required, Validators.minLength(10)]],
-            location: ['', Validators.required],
-            files: this.fb.array([], [ValidatorsCustom.validateFilesAllUploaded])
+        effect(() => {
+            const maxFiles = this.maxFilesAllowed$(); // Reactive update
+            this.filesForm.setControl('files', this.fb.array([], [ValidatorsCustom.validateFilesAllUploaded, ValidatorsCustom.maxItems(maxFiles)]));
         });
 
         effect(() => {
@@ -73,17 +83,20 @@ export class CreateEventComponent {
 
         effect(() => {
             this.syncFilesWithForm();
+            this.eventForm.updateValueAndValidity();
         });
     }
 
     private syncFilesWithForm(): void {
-        const fileArray = this.eventForm.get('files') as FormArray;
+        const fileArray = this.filesForm.get('files') as FormArray;
         fileArray.clear();
 
         const files = this.eventFiles$();
         files.forEach((file) => {
             fileArray.push(this.fb.control(file));
         });
+
+        this.filesForm.updateValueAndValidity(); // Force validation update
     }
 
     clear(): void {
@@ -113,7 +126,8 @@ export class CreateEventComponent {
     }
 
     sendToReview(): void {
-        if (this.eventForm.invalid) {
+        if (this.eventForm.invalid || this.filesForm.invalid) {
+            this.dialogService.openGenericDialog('Invalid Form', 'Please fill in all required fields before publishing.', () => {});
             return;
         }
 

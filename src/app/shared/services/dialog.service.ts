@@ -44,15 +44,11 @@ export class DialogService {
         });
 
         dialogRef
-            ?.afterClosed()
+            .afterClosed()
             .pipe(take(1))
             .subscribe((res) => {
                 console.warn('Dialog result:', res);
-                if (res?.result) {
-                    callback(res?.result);
-                } else {
-                    callback(false);
-                }
+                callback(res?.result ?? false);
             });
     }
 

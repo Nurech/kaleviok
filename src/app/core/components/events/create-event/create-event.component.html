@@ -70,7 +70,11 @@
             </div>
             <app-files-list [files]="eventFiles$()"></app-files-list>
             <p class="flex justify-end text-xs font-bold">
-                <mat-hint>{{ eventFiles$().length }} / 10 files allowed</mat-hint>
+                <mat-hint>
+                    <span [ngClass]="filesForm.hasError('maxFilesExceeded', 'files') ? 'text-red-500' : ''">
+                        {{ eventFiles$().length }} / {{ maxFilesAllowed$() }} files allowed
+                    </span>
+                </mat-hint>
             </p>
         </div>
 
@@ -82,7 +86,7 @@
                 Delete
                 <mat-icon>Delete</mat-icon>
             </button>
-            <button mat-stroked-button (click)="sendToReview()" [disabled]="eventForm.invalid">
+            <button mat-stroked-button (click)="sendToReview()" [disabled]="eventForm.invalid || filesForm.invalid">
                 Ülevaatusele
                 <mat-icon>send</mat-icon>
             </button>
