@@ -10,11 +10,11 @@ export class AppSettingsEffects {
 
     loadAll$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(AppSettingsActions.loadAll),
+            ofType(AppSettingsActions.load),
             mergeMap(() =>
                 this.service.getAll().pipe(
-                    map((data) => AppSettingsActions.loadAllSuccess({ payload: data })),
-                    catchError((error) => of(AppSettingsActions.loadAllFailure({ error })))
+                    map((data) => AppSettingsActions.loadSuccess({ payload: data })),
+                    catchError((error) => of(AppSettingsActions.loadFailure({ error })))
                 )
             )
         )

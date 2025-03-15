@@ -10,11 +10,11 @@ export class <%= classify(name) %>Effects {
 
     loadAll$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(<%= classify(name) %>Actions.loadAll),
+            ofType(<%= classify(name) %>Actions.load),
             mergeMap(() =>
                 this.service.getAll().pipe(
-                    map((data) => <%= classify(name) %>Actions.loadAllSuccess({ payload: data })),
-                    catchError((error) => of(<%= classify(name) %>Actions.loadAllFailure({ error })))
+                    map((data) => <%= classify(name) %>Actions.loadSuccess({ payload: data })),
+                    catchError((error) => of(<%= classify(name) %>Actions.loadFailure({ error })))
                 )
             )
         )
