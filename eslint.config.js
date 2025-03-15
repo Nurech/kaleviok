@@ -68,7 +68,6 @@ module.exports = tseslint.config(
                     style: 'camelCase'
                 }
             ],
-            '@typescript-eslint/no-empty-function': 'warn',
             '@angular-eslint/component-selector': [
                 'error',
                 {
