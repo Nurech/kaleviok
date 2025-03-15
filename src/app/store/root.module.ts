@@ -1,4 +1,6 @@
 import { isDevMode, NgModule } from '@angular/core';
+import { AppSettingsStoreModule } from './app-settings/app-settings.module';
+import { appSettingsFeature } from './app-settings/app-settings.reducer';
 import { MetaReducer, StoreModule, ActionReducer, ActionReducerMap } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { CommonModule } from '@angular/common';
@@ -58,6 +60,7 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
 export const metaReducers: MetaReducer[] = [logState, localStorageSyncReducer];
 
 const rootReducers: ActionReducerMap<any> = {
+    appSettings: appSettingsFeature.reducer,
     events: eventsFeature.reducer,
     snackbar: snackbarFeature.reducer,
     core: coreFeature.reducer,
@@ -69,6 +72,7 @@ const rootReducers: ActionReducerMap<any> = {
 };
 
 const featureModules = [
+  AppSettingsStoreModule,
     FilesStoreModule,
     EventsStoreModule,
     SnackbarStoreModule,
