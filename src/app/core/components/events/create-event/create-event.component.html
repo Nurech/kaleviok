@@ -65,7 +65,9 @@
         </mat-form-field>
 
         <div>
-            <app-drop-zone [eventId]="event$()?.id"></app-drop-zone>
+            <div class="mb-4">
+                <app-drop-zone [eventId]="event$()?.id"></app-drop-zone>
+            </div>
             <app-files-list [files]="eventFiles$()"></app-files-list>
         </div>
 

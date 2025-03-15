@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppFile, FileStatus } from './files.model';
 import { setDocClean } from '../../shared/interceptors/firebase-utils';
 import { selectAuthenticatedAccount } from '../auth/auth.selectors';
-import { addFile, updateFileProgress, updateFileStatus } from './files.actions';
+import { addFile, updateFile } from './files.actions';
 
 @Injectable({
     providedIn: 'root'
@@ -38,20 +38,18 @@ export class FilesService {
                 'state_changed',
                 (snapshot) => {
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    this.store$.dispatch(updateFileProgress({ fileId: generatedUid, progress }));
+                    this.store$.dispatch(updateFile({ fileId: generatedUid, changes: { progress } }));
                 },
                 (error) => observer.error(error),
                 async () => {
                     try {
                         const account = await firstValueFrom(this.store$.select(selectAuthenticatedAccount));
-                        console.warn('account', account);
                         if (!account?.uid) throw new Error('User not authenticated');
 
                         const url = await getDownloadURL(fileRef);
                         const metadata = await getMetadata(fileRef);
 
-                        const uploadedFile: AppFile = {
-                            ...initialFileState,
+                        const uploadedFile: Partial<AppFile> = {
                             createdBy: account.uid,
                             name: file.name,
                             status: FileStatus.UPLOADED,
@@ -61,10 +59,10 @@ export class FilesService {
                             progress: 100
                         };
 
-                        this.store$.dispatch(updateFileStatus({ fileId: generatedUid, status: FileStatus.UPLOADED }));
+                        this.store$.dispatch(updateFile({ fileId: generatedUid, changes: uploadedFile }));
 
-                        await firstValueFrom(this.upsert(uploadedFile));
-                        observer.next(uploadedFile);
+                        await firstValueFrom(this.upsert({ ...initialFileState, ...uploadedFile }));
+                        observer.next({ ...initialFileState, ...uploadedFile });
                         observer.complete();
                     } catch (error) {
                         observer.error(error);
