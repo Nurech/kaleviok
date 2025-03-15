@@ -4,7 +4,7 @@ import { isAtCreatedEvents, selectCurrentEventId } from '../router/router.select
 import { selectAllAccounts } from '../accounts/accounts.selectors';
 import { selectAuthenticatedAccount } from '../auth/auth.selectors';
 import { selectAllFiles } from '../files/files.selectors';
-import { EventVM } from './events.model';
+import { EventVM, IEvent } from './events.model';
 
 export const selectEventsState = eventsFeature.selectEventsState;
 export const { selectAll: selectAllEvents, selectEntities: selectEventEntities } = eventAdapter.getSelectors(selectEventsState);
@@ -36,7 +36,7 @@ export const selectEvents = createSelector(
     }
 );
 
-export const selectCurrentEvent = createSelector(selectCurrentEventId, selectEventEntities, (eventId, entities) => entities[eventId]);
+export const selectCurrentEvent = createSelector(selectCurrentEventId, selectEventEntities, (eventId, entities) => entities[eventId] || ({} as IEvent));
 
 export const selectCurrentEventVM = createSelector(
     selectCurrentEvent,

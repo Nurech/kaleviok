@@ -10,7 +10,7 @@ import { Store, select } from '@ngrx/store';
 import { MatIcon } from '@angular/material/icon';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { deleteEvent, sendToReview, saveEvent } from '../../../../store/events/events.actions';
+import { deleteEvent, saveEvent } from '../../../../store/events/events.actions';
 import { DialogService } from '../../../../shared/services/dialog.service';
 import { navigateBack } from '../../../../store/router/router.actions';
 import { selectCurrentEvent } from '../../../../store/events/events.selectors';
@@ -21,6 +21,7 @@ import { deleteFile, downloadFilesByEventId } from '../../../../store/files/file
 import { AppFile } from '../../../../store/files/files.model';
 import { ValidatorsCustom } from '../../../../shared/validators/validators-custom';
 import { selectMaxFilesAllowedWhenCreateEvent } from '../../../../store/app-settings/app-settings.selectors';
+import { EventStatus, IEvent } from '../../../../store/events/events.model';
 
 @Component({
     selector: 'app-create-event',
@@ -49,11 +50,12 @@ export class CreateEventComponent {
     private store$ = inject(Store);
     private dialogService = inject(DialogService);
     maxFilesAllowed$: Signal<number> = toSignal(this.store$.select(selectMaxFilesAllowedWhenCreateEvent), { initialValue: 10 });
-    event$: Signal<any> = toSignal(this.store$.pipe(select(selectCurrentEvent)));
+    event$: Signal<IEvent> = toSignal(this.store$.pipe(select(selectCurrentEvent)), { initialValue: {} as IEvent });
     eventFiles$: Signal<AppFile[]> = toSignal(this.store$.pipe(select(selectAllEventFiles)), { initialValue: [] });
 
     eventForm: FormGroup = this.fb.group({
         id: '',
+        status: null,
         title: ['', Validators.required],
         startDate: ['', Validators.required],
         startTime: ['', Validators.required],
@@ -115,26 +117,46 @@ export class CreateEventComponent {
         });
     }
 
-    save(): void {
-        this.dialogService.openGenericDialog('Save Event', 'Do you want to save this event as a draft?', (confirmed) => {
-            if (confirmed) {
-                console.log('Event saved as draft:', this.eventForm.value);
-                this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
+    save(isClose?: boolean): void {
+        const eventStatus = this.eventForm.value.status;
+        console.warn('eventStatus', eventStatus);
+        if (isClose) {
+            if (eventStatus === EventStatus.DRAFT) {
+                this.dialogService.openGenericDialog('Update event', 'Do you wish to update draft?', (confirmed) => {
+                    if (confirmed) {
+                        this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
+                    }
+                    this.store$.dispatch(navigateBack());
+                });
+            } else if (eventStatus === EventStatus.REVIEW) {
+                this.dialogService.openGenericDialog('Update event', 'Do you wish to update?', (confirmed) => {
+                    if (confirmed) {
+                        this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
+                    }
+                    this.store$.dispatch(navigateBack());
+                });
+            } else {
+                this.dialogService.openGenericDialog('Save event', 'Do you want to save this event as a draft?', (confirmed) => {
+                    if (confirmed) {
+                        this.eventForm.value.status = EventStatus.DRAFT;
+                        this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
+                    }
+                    this.store$.dispatch(navigateBack());
+                });
             }
-            this.store$.dispatch(navigateBack());
-        });
-    }
+        } else {
+            if (this.eventForm.invalid || this.filesForm.invalid) {
+                this.dialogService.openGenericDialog('Invalid Form', 'Please fill in all required fields before publishing.', () => {
+                    return;
+                });
+            }
 
-    sendToReview(): void {
-        if (this.eventForm.invalid || this.filesForm.invalid) {
-            this.dialogService.openGenericDialog('Invalid Form', 'Please fill in all required fields before publishing.', () => {});
-            return;
+            this.dialogService.openGenericDialog('Publish Event', 'Are you sure you want to publish this event?', () => {
+                this.eventForm.value.status = EventStatus.REVIEW;
+                console.log('Publish event:', this.eventForm.value);
+                this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
+                this.store$.dispatch(navigateBack());
+            });
         }
-
-        this.dialogService.openGenericDialog('Publish Event', 'Are you sure you want to publish this event?', () => {
-            console.log('Publish event:', this.eventForm.value);
-            this.store$.dispatch(sendToReview({ payload: this.eventForm.value }));
-            this.store$.dispatch(navigateBack());
-        });
     }
 }

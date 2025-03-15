@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SnackbarService } from './snackbar.service';
 import { emailRegisterError } from '../auth/auth.actions';
 import { Snackbar } from './snackbar.model';
-import { closeAllSnackbars, openSnackbar } from './snackbar.actions';
+import { closeAllSnackbars, genericSnack, openSnackbar } from './snackbar.actions';
 
 @Injectable()
 export class SnackbarEffects {
@@ -49,6 +49,22 @@ export class SnackbarEffects {
                     if (!payload.duration) {
                         payload = { ...payload, duration: 6000 };
                     }
+                    this.snackbarService.open(payload);
+                })
+            ),
+        { dispatch: false }
+    );
+
+    genericSnack = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(genericSnack),
+                tap(({ message }) => {
+                    const payload: Snackbar = {
+                        type: 'info',
+                        message: message,
+                        duration: 5000
+                    };
                     this.snackbarService.open(payload);
                 })
             ),

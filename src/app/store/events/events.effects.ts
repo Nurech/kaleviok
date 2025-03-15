@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
@@ -9,9 +9,6 @@ import {
     loadEvents,
     loadEventsSuccess,
     loadEventsFailure,
-    sendToReview,
-    sendToReviewSuccess,
-    sendToReviewError,
     deleteEvent,
     deleteEventSuccess,
     deleteEventError,
@@ -46,48 +43,6 @@ export class EventsEffects {
                     catchError((error) => of(loadEventsFailure({ error })))
                 )
             )
-        )
-    );
-
-    sendToReview$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(sendToReview),
-            withLatestFrom(this.store$.select(selectAuthenticatedAccount)), // Get authenticated account
-            mergeMap(([{ payload: saveEvent }, account]) => {
-                const event = {
-                    ...saveEvent,
-                    publishedAt: new Date().toISOString(),
-                    status: EventStatus.REVIEW,
-                    startDate: saveEvent.startDate ? new Date(saveEvent.startDate).toISOString() : saveEvent.startDate,
-                    startTime: saveEvent.startTime ? new Date(saveEvent.startTime).toISOString() : saveEvent.startTime,
-                    endDate: saveEvent.endDate ? new Date(saveEvent.endDate).toISOString() : saveEvent.endDate,
-                    endTime: saveEvent.endTime ? new Date(saveEvent.endTime).toISOString() : saveEvent.endTime,
-                    createdBy: saveEvent.id ? saveEvent.createdBy : account?.uid || '', // Preserve createdBy if editing
-                    modifiedBy: saveEvent.id ? account?.uid || '' : saveEvent.modifiedBy // Add modifiedBy only if updating
-                };
-                console.warn('Publishing event:', event);
-
-                // If createdAt is not set, set it to the current date
-                if (!event.createdAt) {
-                    event.createdAt = new Date().toISOString();
-                }
-
-                // If this is a modification, set modifiedAt to the current date
-                if (saveEvent.id) {
-                    event.modifiedAt = new Date().toISOString();
-                } else {
-                    delete event.modifiedAt;
-                    delete event.modifiedBy;
-                }
-
-                return this.eventsService.upsert(event).pipe(
-                    map(() => {
-                        this.router.navigate([`/events/${event.id}`]);
-                        return sendToReviewSuccess({ payload: event });
-                    }),
-                    catchError((error) => of(sendToReviewError({ error })))
-                );
-            })
         )
     );
 
@@ -148,14 +103,18 @@ export class EventsEffects {
                 this.store$.pipe(
                     select(selectAuthenticatedAccount),
                     mergeMap((account) => {
-                        const updatedEvent = {
+                        const event = {
                             ...payload,
-                            createdBy: account?.uid,
-                            createdAt: new Date().toISOString(),
-                            status: EventStatus.DRAFT
+                            status: payload.status ?? EventStatus.DRAFT,
+                            startDate: payload.startDate ? new Date(payload.startDate).toISOString() : payload.startDate,
+                            startTime: payload.startTime ? new Date(payload.startTime).toISOString() : payload.startTime,
+                            endDate: payload.endDate ? new Date(payload.endDate).toISOString() : payload.endDate,
+                            endTime: payload.endTime ? new Date(payload.endTime).toISOString() : payload.endTime,
+                            createdBy: payload.id ? payload.createdBy : account?.uid || '', // Preserve createdBy if editing
+                            modifiedBy: payload.id ? account?.uid || '' : payload.modifiedBy // Add modifiedBy only if updating
                         };
 
-                        return this.eventsService.upsert(updatedEvent).pipe(
+                        return this.eventsService.upsert(event).pipe(
                             map((createdEvent) => {
                                 this.store$.dispatch(navigateBack());
                                 return saveEventSuccess({ payload: createdEvent });

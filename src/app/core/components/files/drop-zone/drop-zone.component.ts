@@ -3,9 +3,12 @@ import { Store } from '@ngrx/store';
 import { MatIcon } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
 import { MatButton } from '@angular/material/button';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { uploadFile } from '../../../../store/files/files.actions';
 import { AppFile } from '../../../../store/files/files.model';
 import { DeviceService } from '../../../../shared/services/device.service';
+import { selectAllowedFileTypes } from '../../../../store/app-settings/app-settings.selectors';
+import { genericSnack } from '../../../../store/snackbar/snackbar.actions';
 
 @Component({
     selector: 'app-drop-zone',
@@ -19,6 +22,7 @@ export class DropZoneComponent {
     isHovering = false;
     deviceService = inject(DeviceService);
     eventId = input<string>();
+    allowedFileTypes$ = toSignal(this.store$.select(selectAllowedFileTypes), { initialValue: [] });
 
     onDragOver(event: DragEvent) {
         event.preventDefault();
@@ -47,8 +51,12 @@ export class DropZoneComponent {
 
     handleFiles(files: FileList) {
         Array.from(files).forEach((file) => {
-            const reader = new FileReader();
+            if (!this.allowedFileTypes$().includes(file.type)) {
+                this.store$.dispatch(genericSnack({ message: `Faili ${file?.name} formaat pole lubatud: ${file?.type}` }));
+                return;
+            }
 
+            const reader = new FileReader();
             reader.onload = () => {
                 const fileBlob = new Blob([reader.result as ArrayBuffer], { type: file.type });
 

@@ -7,10 +7,6 @@ export const loadEvents = createAction('[Events] Load Events');
 export const loadEventsSuccess = createAction('[Events] Load Events Success', props<{ payload: IEvent[] }>());
 export const loadEventsFailure = createAction('[Events] Load Events Failure', props<{ error: Error }>());
 
-export const sendToReview = createAction('[Events] Send to review', props<{ payload: IEvent }>());
-export const sendToReviewSuccess = createAction('[Events] Send to review Success', props<{ payload: IEvent }>());
-export const sendToReviewError = createAction('[Events] Send to review Error', props<{ error: Error }>());
-
 export const deleteEvent = createAction('[Events] Delete Event', props<{ payload: string }>());
 export const deleteEventSuccess = createAction('[Events] Delete Event Success', props<{ payload: string }>());
 export const deleteEventError = createAction('[Events] Delete Event Error', props<{ error: Error }>());
