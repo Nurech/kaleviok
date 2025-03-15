@@ -31,8 +31,6 @@ export class ValidatorsCustom {
 
         if (!files || files.length === 0) return null;
 
-        console.warn('files', files);
-
         const allUploaded = files.every((file) => file.status === FileStatus.UPLOADED);
         return allUploaded ? null : { notAllUploaded: true };
     };

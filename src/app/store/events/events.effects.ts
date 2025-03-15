@@ -58,6 +58,10 @@ export class EventsEffects {
                     ...saveEvent,
                     publishedAt: new Date().toISOString(),
                     status: EventStatus.REVIEW,
+                    startDate: saveEvent.startDate ? new Date(saveEvent.startDate).toISOString() : saveEvent.startDate,
+                    startTime: saveEvent.startTime ? new Date(saveEvent.startTime).toISOString() : saveEvent.startTime,
+                    endDate: saveEvent.endDate ? new Date(saveEvent.endDate).toISOString() : saveEvent.endDate,
+                    endTime: saveEvent.endTime ? new Date(saveEvent.endTime).toISOString() : saveEvent.endTime,
                     createdBy: saveEvent.id ? saveEvent.createdBy : account?.uid || '', // Preserve createdBy if editing
                     modifiedBy: saveEvent.id ? account?.uid || '' : saveEvent.modifiedBy // Add modifiedBy only if updating
                 };
