@@ -4,6 +4,7 @@ import { AppFile } from '../files/files.model';
 export enum EventStatus {
     DRAFT = 'draft',
     REVIEW = 'review',
+    REVIEW_OK = 'review_ok',
     PUBLISHED = 'published',
     REJECTED = 'rejected'
 }

@@ -79,16 +79,20 @@
         </div>
 
         <div class="mt-4 flex justify-center gap-2">
-            <button mat-icon-button (click)="clear()">
-                <mat-icon class="mb-2">cancel</mat-icon>
-            </button>
             <button mat-stroked-button (click)="delete()" [color]="'warn'">
                 Delete
                 <mat-icon>Delete</mat-icon>
             </button>
-            <button mat-stroked-button (click)="save()" [disabled]="eventForm.invalid || filesForm.invalid">
-                Ülevaatusele
-                <mat-icon>send</mat-icon>
+            <button
+                mat-stroked-button
+                (click)="save()"
+                [disabled]="eventForm.invalid || filesForm.invalid || event$().status === EventStatus.REVIEW || event$().status === EventStatus.REJECTED">
+                Saada
+                @if (event$().status === EventStatus.REVIEW_OK) {
+                    <mat-icon>add</mat-icon>
+                } @else {
+                    <mat-icon>group</mat-icon>
+                }
             </button>
         </div>
     </form>

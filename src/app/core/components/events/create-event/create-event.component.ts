@@ -17,7 +17,7 @@ import { selectCurrentEvent } from '../../../../store/events/events.selectors';
 import { DropZoneComponent } from '../../files/drop-zone/drop-zone.component';
 import { selectAllEventFiles } from '../../../../store/files/files.selectors';
 import { FilesListComponent } from '../../files/files-list/files-list.component';
-import { deleteFile, downloadFilesByEventId } from '../../../../store/files/files.actions';
+import { downloadFilesByEventId } from '../../../../store/files/files.actions';
 import { AppFile } from '../../../../store/files/files.model';
 import { ValidatorsCustom } from '../../../../shared/validators/validators-custom';
 import { selectMaxFilesAllowedWhenCreateEvent } from '../../../../store/app-settings/app-settings.selectors';
@@ -98,22 +98,15 @@ export class CreateEventComponent {
             fileArray.push(this.fb.control(file));
         });
 
-        this.filesForm.updateValueAndValidity(); // Force validation update
-    }
-
-    clear(): void {
-        this.dialogService.openGenericDialog('Clear Form', 'Are you sure you want to clear the form?', () => {
-            this.eventForm.get('files')?.value.forEach((file: AppFile) => {
-                this.store$.dispatch(deleteFile({ payload: file }));
-            });
-            (this.eventForm.get('files') as FormArray).clear();
-            this.eventForm.reset();
-        });
+        this.filesForm.updateValueAndValidity();
     }
 
     delete(): void {
-        this.dialogService.openGenericDialog('Delete Event', 'Are you sure you want to delete this event?', () => {
-            this.store$.dispatch(deleteEvent({ payload: this.eventForm.value.id }));
+        this.dialogService.openGenericDialog('Delete Event', 'Are you sure you want to delete this event?', (confirm) => {
+            if (confirm) {
+                this.store$.dispatch(deleteEvent({ payload: this.eventForm.value.id }));
+                this.store$.dispatch(navigateBack());
+            }
         });
     }
 
@@ -146,17 +139,36 @@ export class CreateEventComponent {
             }
         } else {
             if (this.eventForm.invalid || this.filesForm.invalid) {
-                this.dialogService.openGenericDialog('Invalid Form', 'Please fill in all required fields before publishing.', () => {
+                this.dialogService.openGenericDialog('Invalid Form', 'Please fill in all required fields.', () => {
                     return;
                 });
             }
 
-            this.dialogService.openGenericDialog('Publish Event', 'Are you sure you want to publish this event?', () => {
-                this.eventForm.value.status = EventStatus.REVIEW;
-                console.log('Publish event:', this.eventForm.value);
-                this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
-                this.store$.dispatch(navigateBack());
-            });
+            if (eventStatus === EventStatus.REVIEW_OK) {
+                this.dialogService.openGenericDialog(
+                    'Publish Event',
+                    'Are you sure you want to publish this event? This will send notification to all members',
+                    () => {
+                        this.eventForm.value.status = EventStatus.PUBLISHED;
+                        console.log('Publish event:', this.eventForm.value);
+                        this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
+                        this.store$.dispatch(navigateBack());
+                    }
+                );
+            } else if (eventStatus === EventStatus.DRAFT) {
+                this.dialogService.openGenericDialog(
+                    'Publish Event',
+                    'Saada üritus ülevaatusele? See saadab ürituse juhatuse liikmetele kooskõlastusringile. Peale kooskõlastust saad tavituse ja saad ürituse edasi saata kõigile.',
+                    () => {
+                        this.eventForm.value.status = EventStatus.REVIEW;
+                        console.log('Publish event:', this.eventForm.value);
+                        this.store$.dispatch(saveEvent({ payload: this.eventForm.value }));
+                        this.store$.dispatch(navigateBack());
+                    }
+                );
+            }
         }
     }
+
+    protected readonly EventStatus = EventStatus;
 }

@@ -4,8 +4,10 @@ import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { EventStatus, IEvent } from '../../../../store/events/events.model';
 import { InfoComponent } from '../../../../shared/components/info/info.component';
+import { editEvent } from '../../../../store/events/events.actions';
 @Component({
     selector: 'app-event-mini',
     imports: [MatCard, DatePipe, MatIcon, MatIconButton, InfoComponent],
@@ -16,10 +18,15 @@ import { InfoComponent } from '../../../../shared/components/info/info.component
 export class EventMiniComponent {
     @Input() event!: IEvent;
     router = inject(Router);
+    store$ = inject(Store);
 
     viewEvent() {
         this.router.navigate(['/events', this.event.id]);
     }
 
     protected readonly EventStatus = EventStatus;
+
+    onEditEvent() {
+        this.store$.dispatch(editEvent({ payload: this.event.id }));
+    }
 }

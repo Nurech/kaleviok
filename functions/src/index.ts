@@ -133,3 +133,45 @@ export const deleteFileOnReferenceDeletion = onDocumentDeleted('files/{fileId}',
     }
     await findFileAndDelete(filePath);
 });
+
+export const deleteFilesOnEventDeletion = onDocumentDeleted('events/{eventId}', async (event) => {
+    const deletedEventData = event.data?.data();
+    if (!deletedEventData) {
+        logger.warn(`[deleteFilesOnEventDeletion] Deleted event document does not contain any data.`);
+        return;
+    }
+
+    const eventId = event.params.eventId;
+    if (!eventId) {
+        logger.warn(`[deleteFilesOnEventDeletion] No event ID found for deleted event.`);
+        return;
+    }
+
+    try {
+        const filesCollection = firestore.collection('files');
+        const fileRefs = await filesCollection.where('eventId', '==', eventId).get();
+
+        if (fileRefs.empty) {
+            logger.info(`[deleteFilesOnEventDeletion] No files found for deleted event ID: ${eventId}`);
+            return;
+        }
+
+        // Delete all file references associated with the event
+        const deletePromises = fileRefs.docs.map(async (doc) => {
+            const fileData = doc.data();
+            const filePath = fileData.metadata?.fullPath;
+
+            if (filePath) {
+                await findFileAndDelete(filePath);
+            }
+
+            await doc.ref.delete();
+            logger.info(`[deleteFilesOnEventDeletion] Deleted file reference: ${doc.id} for event ID: ${eventId}`);
+        });
+
+        await Promise.all(deletePromises);
+        logger.info(`[deleteFilesOnEventDeletion] Successfully deleted all file references for event ID: ${eventId}`);
+    } catch (error) {
+        logger.error(`[deleteFilesOnEventDeletion] Error deleting file references for event ID: ${eventId}`, error);
+    }
+});
