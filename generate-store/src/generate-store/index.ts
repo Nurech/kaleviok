@@ -33,7 +33,7 @@ function insertToFile(tree: Tree, filePath: string, searchPattern: RegExp, inser
 // Add reducer and module
 function updateRootModule(tree: Tree, name: string): void {
     const dashedName = strings.dasherize(name);
-    const reducerImport = `import { ${name}Feature } from './${dashedName}/${dashedName}.reducer';`;
+    const reducerImport = `import { ${strings.camelize(name)}Feature } from './${dashedName}/${dashedName}.reducer';`;
     const moduleImport = `import { ${strings.classify(name)}StoreModule } from './${dashedName}/${dashedName}.module';`;
 
     const reducerEntry = `  ${strings.camelize(name)}: ${name}Feature.reducer,`;
@@ -44,7 +44,7 @@ function updateRootModule(tree: Tree, name: string): void {
     insertToFile(tree, './src/app/store/root.module.ts', /import.*?;/, moduleImport, `${name}StoreModule`);
 
     // Add to rootReducers
-    insertToFile(tree, './src/app/store/root.module.ts', /const rootReducers = {/, reducerEntry, reducerEntry.trim());
+    insertToFile(tree, './src/app/store/root.module.ts', /const rootReducers: ActionReducerMap<any> = {/, reducerEntry, reducerEntry.trim());
 
     // Add to featureModules
     insertToFile(tree, './src/app/store/root.module.ts', /const featureModules = \[/, moduleEntry, moduleEntry.trim());
