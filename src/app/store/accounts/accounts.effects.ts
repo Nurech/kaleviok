@@ -3,12 +3,7 @@ import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { map, catchError, mergeMap, of } from 'rxjs';
 import { AccountsService } from './accounts.service';
 import { emailSuccess, firebaseSuccess, googleSuccess } from '../auth/auth.actions';
-import {
-    saveAccountFailure,
-    saveAccountSuccess,
-    startAccountsListener,
-    stopAccountsListener
-} from './accounts.actions';
+import { saveAccountFailure, saveAccountSuccess, startAccountsListener, stopAccountsListener } from './accounts.actions';
 import { LoginComponent } from '../../core/components/login/login.component';
 import { SheetService } from '../../shared/services/sheet.service';
 

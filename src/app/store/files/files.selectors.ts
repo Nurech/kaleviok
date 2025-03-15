@@ -13,6 +13,4 @@ export const {
 
 export const selectFileById = (id: string) => createSelector(selectFileEntities, (files) => files[id]);
 export const selectAllFiles = createSelector(selectAll, (files) => files);
-export const selectAllEventFiles = createSelector(selectAllFiles, selectCurrentEventId, (files, eventId) =>
-    files.filter((file) => file.eventId === eventId)
-);
+export const selectAllEventFiles = createSelector(selectAllFiles, selectCurrentEventId, (files, eventId) => files.filter((file) => file.eventId === eventId));

@@ -1,9 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { settingsFeature, settingsAdapter } from './settings.reducer';
 
-const { selectAll, selectEntities, selectIds, selectTotal } = settingsAdapter.getSelectors(
-    settingsFeature.selectSettingsState
-);
+const { selectAll, selectEntities, selectIds, selectTotal } = settingsAdapter.getSelectors(settingsFeature.selectSettingsState);
 
 export const selectUserSettings = selectAll;
 

@@ -17,17 +17,7 @@ import { emailRegisterStart } from '../../../store/auth/auth.actions';
     selector: 'app-register',
     templateUrl: './register.component.html',
     standalone: true,
-    imports: [
-        MatFormFieldModule,
-        MatInputModule,
-        MatButton,
-        MatIcon,
-        TranslatePipe,
-        MatDivider,
-        MatIconButton,
-        NgIf,
-        ReactiveFormsModule
-    ],
+    imports: [MatFormFieldModule, MatInputModule, MatButton, MatIcon, TranslatePipe, MatDivider, MatIconButton, NgIf, ReactiveFormsModule],
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
@@ -55,15 +45,13 @@ export class RegisterComponent {
             initialValue: this.registerForm.get('email')?.value ?? null
         });
 
-        this.passwordSignal = toSignal(
-            this.registerForm.get('password')?.valueChanges.pipe(debounceTime(300)) ?? of(null),
-            { initialValue: this.registerForm.get('password')?.value ?? null }
-        );
+        this.passwordSignal = toSignal(this.registerForm.get('password')?.valueChanges.pipe(debounceTime(300)) ?? of(null), {
+            initialValue: this.registerForm.get('password')?.value ?? null
+        });
 
-        this.confirmPasswordSignal = toSignal(
-            this.registerForm.get('confirmPassword')?.valueChanges.pipe(debounceTime(300)) ?? of(null),
-            { initialValue: this.registerForm.get('confirmPassword')?.value ?? null }
-        );
+        this.confirmPasswordSignal = toSignal(this.registerForm.get('confirmPassword')?.valueChanges.pipe(debounceTime(300)) ?? of(null), {
+            initialValue: this.registerForm.get('confirmPassword')?.value ?? null
+        });
 
         this.passwordsMatchSignal = computed(() => {
             const password = this.registerForm.get('password')?.value;

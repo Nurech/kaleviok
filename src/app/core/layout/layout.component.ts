@@ -16,17 +16,7 @@ import { DrawerService } from '../../shared/services/drawer.service';
     templateUrl: './layout.component.html',
     styleUrl: './layout.component.scss',
     standalone: true,
-    imports: [
-        MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatListModule,
-        MatIconModule,
-        SidenavComponent,
-        MatTabsModule,
-        RouterOutlet,
-        HeaderComponent
-    ]
+    imports: [MatToolbarModule, MatButtonModule, MatSidenavModule, MatListModule, MatIconModule, SidenavComponent, MatTabsModule, RouterOutlet, HeaderComponent]
 })
 export class LayoutComponent implements AfterViewInit {
     readonly drawer = viewChild.required(MatSidenav);

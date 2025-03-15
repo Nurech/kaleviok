@@ -11,17 +11,7 @@ import { BackgroundIconDirective } from '../../../shared/directives/background-i
 @Component({
     selector: 'app-pwa-update-dialog',
     standalone: true,
-    imports: [
-        MatDialogTitle,
-        MatDialogContent,
-        MatDialogActions,
-        MatButton,
-        MatDialogClose,
-        MatIcon,
-        InfoComponent,
-        TranslatePipe,
-        BackgroundIconDirective
-    ],
+    imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatButton, MatDialogClose, MatIcon, InfoComponent, TranslatePipe, BackgroundIconDirective],
     templateUrl: './pwa-update-dialog.component.html',
     styleUrls: ['./pwa-update-dialog.component.scss']
 })

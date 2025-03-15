@@ -1,10 +1,4 @@
-import {
-    APP_INITIALIZER,
-    ApplicationConfig,
-    importProvidersFrom,
-    LOCALE_ID,
-    provideZoneChangeDetection
-} from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, TitleStrategy } from '@angular/router';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
@@ -21,12 +15,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import {
-    MissingTranslationHandler,
-    provideTranslateService,
-    TranslateLoader,
-    TranslateService
-} from '@ngx-translate/core';
+import { MissingTranslationHandler, provideTranslateService, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { firstValueFrom } from 'rxjs';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
@@ -42,8 +31,7 @@ import { RootStoreModule } from './store/root.module';
 import { ThemeChangerService } from './shared/services/theme-changer.service';
 import { TitleService } from './shared/services/title.service';
 
-const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
-    new TranslateHttpLoader(http, './i18n/', '.json');
+const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) => new TranslateHttpLoader(http, './i18n/', '.json');
 
 const LUXON_DATE_FORMATS = {
     parse: {

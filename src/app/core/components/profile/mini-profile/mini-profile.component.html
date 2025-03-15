@@ -1,6 +1,6 @@
 <mat-card class="m-1 mb-2 bg-transparent" appearance="outlined">
-    <mat-card-header class="flex justify-center self-center p-0 m-1 items-center size-16">
-      <app-avatar [account]="(account$ | async)"></app-avatar>
+    <mat-card-header class="m-1 flex size-16 items-center justify-center self-center p-0">
+        <app-avatar [account]="account$ | async"></app-avatar>
     </mat-card-header>
     <mat-card-content>
         <p>{{ (account$ | async)?.firstName }} {{ (account$ | async)?.lastName }}</p>

@@ -15,12 +15,7 @@ export class SnackbarEffects {
     private translate = inject(TranslateService);
 
     isFirebaseError(error: unknown): error is FirebaseError {
-        return (
-            typeof error === 'object' &&
-            error !== null &&
-            'name' in error &&
-            (error as { name: unknown }).name === 'FirebaseError'
-        );
+        return typeof error === 'object' && error !== null && 'name' in error && (error as { name: unknown }).name === 'FirebaseError';
     }
 
     interceptError$ = createEffect(

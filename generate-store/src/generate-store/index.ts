@@ -1,15 +1,4 @@
-import {
-    apply,
-    chain,
-    MergeStrategy,
-    mergeWith,
-    move,
-    Rule,
-    SchematicContext,
-    template,
-    Tree,
-    url
-} from '@angular-devkit/schematics';
+import { apply, chain, MergeStrategy, mergeWith, move, Rule, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
 
 interface GenerateStoreSchema {
@@ -25,13 +14,7 @@ function singular(name: string): string {
 }
 
 // Helper function to insert content into a file
-function insertToFile(
-    tree: Tree,
-    filePath: string,
-    searchPattern: RegExp,
-    insertContent: string,
-    marker: string
-): void {
+function insertToFile(tree: Tree, filePath: string, searchPattern: RegExp, insertContent: string, marker: string): void {
     const buffer = tree.read(filePath);
     if (!buffer) {
         throw new Error(`File ${filePath} does not exist.`);
@@ -72,10 +55,7 @@ export function generateStore(options: GenerateStoreSchema): Rule {
     return (tree: Tree, _context: SchematicContext) => {
         const folderName = strings.dasherize(options.name);
 
-        const templateSource = apply(url('./files'), [
-            template({ ...strings, ...options, singular }),
-            move(`./src/app/store/${folderName}`)
-        ]);
+        const templateSource = apply(url('./files'), [template({ ...strings, ...options, singular }), move(`./src/app/store/${folderName}`)]);
 
         // Update the root module
         updateRootModule(tree, options.name);

@@ -1,14 +1,11 @@
 <nav class="flex items-center justify-center space-x-2 text-sm text-gray-600">
-    @if( isAtRoot$()){
-
+    @if (isAtRoot$()) {
         <a [routerLink]="'/'">
             <mat-icon>home</mat-icon>
         </a>
     } @else {
-
-        <a (click)="onNavigateBack()">
+        <a (click)="onNavigateBack()" (keydown.enter)="onNavigateBack()" (keydown.space)="onNavigateBack()" tabindex="0">
             <mat-icon>arrow_back</mat-icon>
         </a>
     }
-
 </nav>

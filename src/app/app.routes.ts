@@ -27,14 +27,12 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard',
-        loadComponent: () =>
-            import('./core/components/dashboard/dashboard.component').then((c) => c.DashboardComponent),
+        loadComponent: () => import('./core/components/dashboard/dashboard.component').then((c) => c.DashboardComponent),
         title: 'login'
     },
     {
         path: 'notifications',
-        loadComponent: () =>
-            import('./core/components/notifications/notifications.component').then((c) => c.NotificationsComponent),
+        loadComponent: () => import('./core/components/notifications/notifications.component').then((c) => c.NotificationsComponent),
         title: 'notifications'
     },
     {

@@ -1,6 +1,6 @@
 <ng-container></ng-container>
-<mat-card class="p-6 max-w-lg mx-auto shadow-lg relative">
-    <div class="flex justify-between items-center mb-4">
+<mat-card class="relative mx-auto max-w-lg p-6 shadow-lg">
+    <div class="mb-4 flex items-center justify-between">
         <h2 class="text-2xl font-bold">Create Event</h2>
         <button mat-icon-button aria-label="Close" (click)="save()">
             <mat-icon class="mb-1">close</mat-icon>
@@ -10,56 +10,45 @@
     <form [formGroup]="eventForm" class="flex flex-col">
         <mat-form-field class="w-full">
             <mat-label>Event Title</mat-label>
-            <input matInput formControlName="title" placeholder="Enter event title">
-            <mat-error *ngIf="eventForm.get('title')?.invalid && eventForm.get('title')?.touched">
-                Title is required
-            </mat-error>
+            <input matInput formControlName="title" placeholder="Enter event title" />
+            <mat-error *ngIf="eventForm.get('title')?.invalid && eventForm.get('title')?.touched"> Title is required </mat-error>
         </mat-form-field>
 
         <div class="flex flex-row gap-3">
             <mat-form-field class="w-full">
                 <mat-label>Start Date</mat-label>
-                <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+                <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
                 <mat-datepicker-toggle class="pr-1" matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
-                <mat-error *ngIf="eventForm.get('startDate')?.invalid && eventForm.get('startDate')?.touched">
-                    Start date is required
-                </mat-error>
+                <mat-error *ngIf="eventForm.get('startDate')?.invalid && eventForm.get('startDate')?.touched"> Start date is required </mat-error>
             </mat-form-field>
 
             <mat-form-field class="w-full">
                 <mat-label>Start Time</mat-label>
-                <input matInput [matTimepicker]="startTimePicker" formControlName="startTime">
+                <input matInput [matTimepicker]="startTimePicker" formControlName="startTime" />
                 <mat-timepicker-toggle class="pr-1" matIconSuffix [for]="startTimePicker"></mat-timepicker-toggle>
                 <mat-timepicker interval="15min" #startTimePicker></mat-timepicker>
-                <mat-error *ngIf="eventForm.get('startTime')?.invalid && eventForm.get('startTime')?.touched">
-                    Start time is required
-                </mat-error>
+                <mat-error *ngIf="eventForm.get('startTime')?.invalid && eventForm.get('startTime')?.touched"> Start time is required </mat-error>
             </mat-form-field>
         </div>
 
         <div class="flex flex-row gap-3">
             <mat-form-field class="w-full">
                 <mat-label>End Date</mat-label>
-                <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+                <input matInput [matDatepicker]="endPicker" formControlName="endDate" />
                 <mat-datepicker-toggle class="pr-1" matSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
-                <mat-error *ngIf="eventForm.get('endDate')?.invalid && eventForm.get('endDate')?.touched">
-                    End date is required
-                </mat-error>
+                <mat-error *ngIf="eventForm.get('endDate')?.invalid && eventForm.get('endDate')?.touched"> End date is required </mat-error>
             </mat-form-field>
 
             <mat-form-field class="w-full">
                 <mat-label>End Time</mat-label>
-                <input matInput [matTimepicker]="endTimePicker" formControlName="endTime">
+                <input matInput [matTimepicker]="endTimePicker" formControlName="endTime" />
                 <mat-timepicker-toggle class="pr-1" matIconSuffix [for]="endTimePicker"></mat-timepicker-toggle>
                 <mat-timepicker interval="15min" #endTimePicker></mat-timepicker>
-                <mat-error *ngIf="eventForm.get('endTime')?.invalid && eventForm.get('endTime')?.touched">
-                    End time is required
-                </mat-error>
+                <mat-error *ngIf="eventForm.get('endTime')?.invalid && eventForm.get('endTime')?.touched"> End time is required </mat-error>
             </mat-form-field>
         </div>
-
 
         <mat-form-field class="w-full">
             <mat-label>Description</mat-label>
@@ -71,10 +60,8 @@
 
         <mat-form-field class="w-full">
             <mat-label>Location</mat-label>
-            <input matInput formControlName="location" placeholder="Enter event location">
-            <mat-error *ngIf="eventForm.get('location')?.invalid && eventForm.get('location')?.touched">
-                Location is required
-            </mat-error>
+            <input matInput formControlName="location" placeholder="Enter event location" />
+            <mat-error *ngIf="eventForm.get('location')?.invalid && eventForm.get('location')?.touched"> Location is required </mat-error>
         </mat-form-field>
 
         <div>
@@ -82,7 +69,7 @@
             <app-files-list [files]="eventFiles$()"></app-files-list>
         </div>
 
-        <div class="flex justify-center gap-2 mt-4">
+        <div class="mt-4 flex justify-center gap-2">
             <button mat-icon-button (click)="clear()">
                 <mat-icon class="mb-2">cancel</mat-icon>
             </button>

@@ -1,25 +1,23 @@
 <ng-container *ngIf="event$ | async as vm">
     <ng-container *ngIf="vm?.event; else loading">
         <mat-card class="p-2">
-            <h2 class="text-2xl font-bold mb-4">{{ vm.event?.title || 'Untitled Event' }}</h2>
+            <h2 class="mb-4 text-2xl font-bold">{{ vm.event?.title || 'Untitled Event' }}</h2>
             <div>
-                <p><strong>Date:</strong> {{ vm.event?.startDate | date: 'fullDate' }} {{ vm.event?.startTime | date: 'shortTime' }} -
-                    {{ vm.event?.endDate | date: 'fullDate' }} {{ vm.event?.endTime | date: 'shortTime' }}</p>
+                <p>
+                    <strong>Date:</strong> {{ vm.event?.startDate | date: 'fullDate' }} {{ vm.event?.startTime | date: 'shortTime' }} -
+                    {{ vm.event?.endDate | date: 'fullDate' }} {{ vm.event?.endTime | date: 'shortTime' }}
+                </p>
 
                 <mat-chip-set *ngIf="vm.createdBy">
                     <mat-chip>
-                        <img
-                                matChipAvatar
-                                [attr.src]="vm.createdBy.photoURL"
-                                alt="Created by"
-                        />
+                        <img matChipAvatar [attr.src]="vm.createdBy.photoURL" alt="Created by" />
                         {{ vm.createdBy.firstName }} {{ vm.createdBy.lastName }}
                     </mat-chip>
                 </mat-chip-set>
             </div>
         </mat-card>
 
-        <div class="flex flex-row gap-2 justify-center mt-2">
+        <div class="mt-2 flex flex-row justify-center gap-2">
             <button mat-stroked-button [color]="'warn'" (click)="onDelete(vm.event!.id)">
                 <mat-icon>delete_forever</mat-icon>
                 Delete

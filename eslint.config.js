@@ -8,6 +8,7 @@ const prettier = require('eslint-config-prettier');
 module.exports = tseslint.config(
     {
         ignores: [
+            'generate-store/',
             'dist/',
             'tmp/',
             'out-tsc/',
@@ -77,6 +78,15 @@ module.exports = tseslint.config(
             ],
             'unused-imports/no-unused-imports': 'error',
             'unused-imports/no-unused-vars': [
+                'warn',
+                {
+                    vars: 'all',
+                    varsIgnorePattern: '^_',
+                    args: 'after-used',
+                    argsIgnorePattern: '^_'
+                }
+            ],
+            '@typescript-eslint/no-unused-vars': [
                 'warn',
                 {
                     vars: 'all',

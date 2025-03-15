@@ -25,11 +25,7 @@ export class ThemeChangerService {
     }
 
     private getPrefers() {
-        return this.colorMode() === 'auto'
-            ? window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark'
-                : 'light'
-            : this.colorMode();
+        return this.colorMode() === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : this.colorMode();
     }
 
     async applyTheme() {

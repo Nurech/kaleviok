@@ -24,11 +24,7 @@ function removeUndefinedRecursively<T>(obj: T): T {
 /**
  * Custom wrapper for Firebase `setDoc` to clean up undefined values before saving.
  */
-export async function setDocClean<T extends Record<string, any>>(
-    docRef: DocumentReference<T>,
-    data: T,
-    options?: SetOptions
-): Promise<void> {
+export async function setDocClean<T extends Record<string, any>>(docRef: DocumentReference<T>, data: T, options?: SetOptions): Promise<void> {
     const cleanedData = removeUndefinedRecursively(data);
 
     console.warn('Saving cleaned data:', cleanedData);

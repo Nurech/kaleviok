@@ -56,6 +56,6 @@
     "password_minlength": "Parool pole {{min}} tähemärki pikk",
     "confirm_password_required": "Kinnita parool on kohustuslik",
     "auth/email-already-in-use": "Email on juba kasutusel",
-  "dark_mode": "Tume režiim",
+    "dark_mode": "Tume režiim",
     "passwords_do_not_match": "Paroolid ei ühti"
 }

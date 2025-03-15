@@ -1,15 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {
-    Firestore,
-    collection,
-    doc,
-    query,
-    where,
-    onSnapshot,
-    getDocs,
-    getDoc,
-    deleteDoc
-} from '@angular/fire/firestore';
+import { Firestore, collection, doc, query, where, onSnapshot, getDocs, getDoc, deleteDoc } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { IEvent } from './events.model';
@@ -64,48 +54,30 @@ export class EventsService {
     private convertTimestampsToISO(event: any): IEvent {
         return {
             ...event,
-            startDate: event.startDate?.seconds
-                ? new Date(event.startDate.seconds * 1000).toISOString()
-                : event.startDate,
+            startDate: event.startDate?.seconds ? new Date(event.startDate.seconds * 1000).toISOString() : event.startDate,
             endDate: event.endDate?.seconds ? new Date(event.endDate.seconds * 1000).toISOString() : event.endDate,
-            startTime: event.startTime?.seconds
-                ? new Date(event.startTime.seconds * 1000).toISOString()
-                : event.startTime,
+            startTime: event.startTime?.seconds ? new Date(event.startTime.seconds * 1000).toISOString() : event.startTime,
             endTime: event.endTime?.seconds ? new Date(event.endTime.seconds * 1000).toISOString() : event.endTime,
-            createdAt: event.createdAt?.seconds
-                ? new Date(event.createdAt.seconds * 1000).toISOString()
-                : event.createdAt,
-            modifiedAt: event.modifiedAt?.seconds
-                ? new Date(event.modifiedAt.seconds * 1000).toISOString()
-                : event.modifiedAt
+            createdAt: event.createdAt?.seconds ? new Date(event.createdAt.seconds * 1000).toISOString() : event.createdAt,
+            modifiedAt: event.modifiedAt?.seconds ? new Date(event.modifiedAt.seconds * 1000).toISOString() : event.modifiedAt
         };
     }
 
     getEventById(eventId: string): Observable<IEvent | null> {
         const eventDocRef = doc(this.firestore, `events/${eventId}`);
-        return from(getDoc(eventDocRef)).pipe(
-            map((docSnapshot) => (docSnapshot.exists() ? this.convertTimestampsToISO(docSnapshot.data()) : null))
-        );
+        return from(getDoc(eventDocRef)).pipe(map((docSnapshot) => (docSnapshot.exists() ? this.convertTimestampsToISO(docSnapshot.data()) : null)));
     }
 
     getUpcoming(): Observable<IEvent[]> {
         const now = new Date();
         const upcomingQuery = query(this.collectionRef, where('startDate', '>=', now));
-        return from(
-            getDocs(upcomingQuery).then((snapshot) =>
-                snapshot.docs.map((doc) => this.convertTimestampsToISO({ id: doc.id, ...doc.data() }))
-            )
-        );
+        return from(getDocs(upcomingQuery).then((snapshot) => snapshot.docs.map((doc) => this.convertTimestampsToISO({ id: doc.id, ...doc.data() }))));
     }
 
     getPast(): Observable<IEvent[]> {
         const now = new Date();
         const pastQuery = query(this.collectionRef, where('endDate', '<', now));
-        return from(
-            getDocs(pastQuery).then((snapshot) =>
-                snapshot.docs.map((doc) => this.convertTimestampsToISO({ id: doc.id, ...doc.data() }))
-            )
-        );
+        return from(getDocs(pastQuery).then((snapshot) => snapshot.docs.map((doc) => this.convertTimestampsToISO({ id: doc.id, ...doc.data() }))));
     }
 
     delete(eventId: string): Observable<void> {

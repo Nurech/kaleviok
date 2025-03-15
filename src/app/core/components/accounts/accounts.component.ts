@@ -16,17 +16,7 @@ import { AvatarComponent } from '../../../shared/components/avatar/avatar.compon
     selector: 'app-accounts',
     templateUrl: './accounts.component.html',
     styleUrls: ['./accounts.component.scss'],
-    imports: [
-        MatFormFieldModule,
-        MatInputModule,
-        MatTableModule,
-        MatSortModule,
-        MatPaginatorModule,
-        MatIcon,
-        AvatarComponent,
-        MatIconButton,
-        RouterLink
-    ],
+    imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIcon, AvatarComponent, MatIconButton, RouterLink],
     standalone: true
 })
 export class AccountsComponent implements OnInit {

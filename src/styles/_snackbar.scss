@@ -25,11 +25,7 @@
         color: var(--snackbar-info-text);
 
         .mat-mdc-snack-bar-label {
-            background-color: color-mix(
-                in srgb,
-                var(--snackbar-info-bg) var(--snackbar-mix-opacity),
-                var(--snackbar-mix)
-            );
+            background-color: color-mix(in srgb, var(--snackbar-info-bg) var(--snackbar-mix-opacity), var(--snackbar-mix));
         }
     }
 
@@ -38,11 +34,7 @@
         color: var(--snackbar-success-text);
 
         .mat-mdc-snack-bar-label {
-            background-color: color-mix(
-                in srgb,
-                var(--snackbar-success-bg) var(--snackbar-mix-opacity),
-                var(--snackbar-mix)
-            );
+            background-color: color-mix(in srgb, var(--snackbar-success-bg) var(--snackbar-mix-opacity), var(--snackbar-mix));
         }
     }
 
@@ -51,11 +43,7 @@
         color: var(--snackbar-warn-text);
 
         .mat-mdc-snack-bar-label {
-            background-color: color-mix(
-                in srgb,
-                var(--snackbar-warn-bg) var(--snackbar-mix-opacity),
-                var(--snackbar-mix)
-            );
+            background-color: color-mix(in srgb, var(--snackbar-warn-bg) var(--snackbar-mix-opacity), var(--snackbar-mix));
         }
     }
 
@@ -64,11 +52,7 @@
         color: var(--snackbar-error-text);
 
         .mat-mdc-snack-bar-label {
-            background-color: color-mix(
-                in srgb,
-                var(--snackbar-error-bg) var(--snackbar-mix-opacity),
-                var(--snackbar-mix)
-            );
+            background-color: color-mix(in srgb, var(--snackbar-error-bg) var(--snackbar-mix-opacity), var(--snackbar-mix));
         }
     }
 

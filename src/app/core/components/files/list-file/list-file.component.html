@@ -1,5 +1,5 @@
 @if (file(); as f) {
-    <mat-card appearance="outlined" class="m-1">
+    <mat-card appearance="outlined" class="my-1">
         <mat-card-content class="p-1">
             <div class="flex flex-col">
                 <div class="flex flex-row items-center justify-between">
@@ -11,11 +11,10 @@
                         }
                     </div>
 
-
                     <!-- buttons-->
-                    <div class="flex items-center mb-1">
+                    <div class="mb-1 flex items-center">
                         <button mat-icon-button (click)="deleteFile()">
-                            <mat-icon class="mb-2">cancel</mat-icon>
+                            <mat-icon class="mb-2">delete_forever</mat-icon>
                         </button>
                     </div>
                 </div>
@@ -27,6 +26,4 @@
             </div>
         </mat-card-content>
     </mat-card>
-
 }
-

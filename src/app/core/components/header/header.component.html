@@ -1,21 +1,21 @@
 <ng-template [ngTemplateOutlet]="progressBar"></ng-template>
-<div class="pl-2 flex flex-row items-center justify-between">
-  <app-breadcrumbs></app-breadcrumbs>
-  <button
-    [attr.aria-label]="drawerService.isOpen() ? ('close_menu' | translate) : ('open_menu' | translate)"
-    mat-icon-button
-    class="right-0 top-0 z-10 m-2"
-    (click)="drawerService.open()">
-    <mat-icon class="mb-1">menu</mat-icon>
-  </button>
+<div class="flex flex-row items-center justify-between pl-2">
+    <app-breadcrumbs></app-breadcrumbs>
+    <button
+        [attr.aria-label]="drawerService.isOpen() ? ('close_menu' | translate) : ('open_menu' | translate)"
+        mat-icon-button
+        class="right-0 top-0 z-10 m-2"
+        (click)="drawerService.open()">
+        <mat-icon class="mb-1">menu</mat-icon>
+    </button>
 </div>
 
 <ng-template #progressBar>
-  <div class="absolute top-0 w-full">
-    @if (isLoading$ | async) {
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    } @else {
-      <div class="h-[4px]"></div>
-    }
-  </div>
+    <div class="absolute top-0 w-full">
+        @if (isLoading$ | async) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        } @else {
+            <div class="h-[4px]"></div>
+        }
+    </div>
 </ng-template>

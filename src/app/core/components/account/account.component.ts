@@ -18,24 +18,13 @@ import { updateSetting } from '../../../store/settings/settings.actions';
 @Component({
     selector: 'app-account',
     standalone: true,
-    imports: [
-        AvatarComponent,
-        AsyncPipe,
-        ClipboardComponent,
-        MatSlideToggle,
-        MatIcon,
-        NgForOf,
-        TranslatePipe,
-        FormsModule
-    ],
+    imports: [AvatarComponent, AsyncPipe, ClipboardComponent, MatSlideToggle, MatIcon, NgForOf, TranslatePipe, FormsModule],
     templateUrl: './account.component.html',
     styleUrl: './account.component.scss'
 })
 export class AccountComponent {
     private store$ = inject(Store);
-    settings$: Observable<Setting[]> = this.store$
-        .select(selectUserSettings)
-        .pipe(map((settings) => settings.map((setting) => ({ ...setting }))));
+    settings$: Observable<Setting[]> = this.store$.select(selectUserSettings).pipe(map((settings) => settings.map((setting) => ({ ...setting }))));
 
     account$ = this.store$.select(selectAuthenticatedAccount);
 

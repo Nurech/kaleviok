@@ -1,6 +1,6 @@
 # KaleviOK project
 
-## Environments 
+## Environments
 
 ### dev
 

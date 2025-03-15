@@ -1,49 +1,38 @@
-<div class="flex flex-col h-screen">
-  <h1 class="font-bold text-3xl">
-    @if (!(isCreating$ | async)) {
-      {{ 'events' | translate }}
-    } @else if (isCreating$ | async) {
-<!--      {{ 'create_event' | translate }}-->
-    }
-  </h1>
+<div class="flex h-screen flex-col">
+    <h1 class="text-3xl font-bold">
+        @if (isCreating$ | async) {
+            {{ 'events' | translate }}
+        }
+    </h1>
 
-  <mat-tab-group
-    class="max-w-full"
-    *ngIf="!(isCreating$ | async)"
-    [selectedIndex]="selectedIndex$ | async"
-    (selectedIndexChange)="onTabChange($event)">
+    <mat-tab-group
+        class="max-w-full"
+        *ngIf="(isCreating$ | async) === false"
+        [selectedIndex]="selectedIndex$ | async"
+        (selectedIndexChange)="onTabChange($event)">
+        <mat-tab [label]="'upcoming' | translate" [disabled]="isUpcoming$ | async"> Tulevased üritused </mat-tab>
 
-    <mat-tab [label]="'upcoming' | translate" [disabled]="isUpcoming$ | async">
-      Tulevased üritused
-    </mat-tab>
+        <mat-tab [label]="'past' | translate" [disabled]="isPast$ | async"> Möödunud üritused </mat-tab>
 
-    <mat-tab [label]="'past' | translate" [disabled]="isPast$ | async">
-      Möödunud üritused
-    </mat-tab>
+        <mat-tab [label]="'created' | translate" [disabled]="isCreated$ | async">
+            <app-events-list></app-events-list>
+        </mat-tab>
+    </mat-tab-group>
 
-    <mat-tab [label]="'created' | translate" [disabled]="isCreated$ | async">
-        <app-events-list></app-events-list>
-    </mat-tab>
-  </mat-tab-group>
+    <div *ngIf="isCreating$ | async">
+        <router-outlet></router-outlet>
+    </div>
 
-
-
-  <div *ngIf="isCreating$ | async">
-    <router-outlet></router-outlet>
-
-  </div>
-
-  <div class="flex flex-row gap-2 justify-center mt-2">
-    @if (!(isCreating$ | async)) {
-      <button mat-stroked-button (click)="onCreate()">
-        <mat-icon>add_circle</mat-icon>
-        Loo üritus
-      </button>
-      <button mat-stroked-button (click)="openEventsCalendar()">
-        Kalender
-        <mat-icon>calendar_month</mat-icon>
-      </button>
-    }
-
-  </div>
+    <div class="mt-2 flex flex-row justify-center gap-2">
+        @if ((isCreating$ | async) === false) {
+            <button mat-stroked-button (click)="onCreate()">
+                <mat-icon>add_circle</mat-icon>
+                Loo üritus
+            </button>
+            <button mat-stroked-button (click)="openEventsCalendar()">
+                Kalender
+                <mat-icon>calendar_month</mat-icon>
+            </button>
+        }
+    </div>
 </div>

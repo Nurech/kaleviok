@@ -45,17 +45,10 @@ export class AuthService {
                     .then(resolve)
                     .catch(async (error) => {
                         console.error('Email login failed:', error.code);
-                        if (
-                            ['auth/user-not-found', 'auth/wrong-password', 'auth/invalid-credential'].includes(
-                                error.code
-                            )
-                        ) {
+                        if (['auth/user-not-found', 'auth/wrong-password', 'auth/invalid-credential'].includes(error.code)) {
                             try {
                                 const googleUserCredential = await signInWithPopup(this.auth, new GoogleAuthProvider());
-                                await linkWithCredential(
-                                    googleUserCredential.user,
-                                    EmailAuthProvider.credential(email, password)
-                                );
+                                await linkWithCredential(googleUserCredential.user, EmailAuthProvider.credential(email, password));
                                 await this.promptSetPassword(googleUserCredential.user);
                                 resolve(googleUserCredential);
                             } catch (googleError) {

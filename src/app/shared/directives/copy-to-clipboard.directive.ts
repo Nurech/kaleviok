@@ -23,11 +23,9 @@ export class CopyToClipboardDirective {
     constructor() {
         this.cdkCopyToClipboard.copied.subscribe((copied) => {
             if (copied) {
-                this.snackbar.open(
-                    `Copied ${this.snackBarText() ? this.snackBarText() : this.libCopyToClipboard()} to clipboard!`,
-                    undefined,
-                    { duration: 3000 }
-                );
+                this.snackbar.open(`Copied ${this.snackBarText() ? this.snackBarText() : this.libCopyToClipboard()} to clipboard!`, undefined, {
+                    duration: 3000
+                });
             } else {
                 this.snackbar.open('Please try after some time');
             }
