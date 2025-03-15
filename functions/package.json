@@ -6,8 +6,9 @@
         "serve": "npm run build && firebase emulators:start --only functions",
         "shell": "npm run build && firebase functions:shell",
         "start": "npm run shell",
-        "deploy:dev": "npm run build && firebase deploy --only functions",
-        "deploy:prod": "npm run build && firebase deploy --only functions"
+        "deploy:dev": "npm run build && firebase deploy --only functions --project kaleviok-dev",
+        "deploy:prod": "npm run build && firebase deploy --only functions --project kaleviok-9aeb0",
+        "logs": "firebase functions:log"
     },
     "engines": {
         "node": "20"
