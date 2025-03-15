@@ -95,12 +95,29 @@ module.exports = tseslint.config(
                     argsIgnorePattern: '^_'
                 }
             ],
-            'semi': ['error', 'always']
+            'semi': ['error', 'always'],
+            'no-multiple-empty-lines': [
+                'error',
+                {
+                    max: 1,
+                    maxEOF: 1,
+                    maxBOF: 0
+                }
+            ]
         }
     },
     {
         files: ['**/*.html'],
         extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
-        rules: {}
+        rules: {
+            'no-multiple-empty-lines': [
+                'error',
+                {
+                    max: 1,
+                    maxEOF: 1,
+                    maxBOF: 0
+                }
+            ]
+        }
     }
 );

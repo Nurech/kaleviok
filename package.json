@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.150",
+  "version": "0.0.151",
   "scripts": {
     "ng": "ng",
     "watch": "ng build --watch --configuration development",
@@ -26,7 +26,7 @@
     "format": "prettier --write \"**/*.{js,ts,html,json,css,scss,md}\""
   },
   "lint-staged": {
-    "**/*.{js,ts,jsx,tsx}": [
+    "src/**/*.{js,ts}": [
       "prettier --write",
       "eslint --fix"
     ]
