@@ -8,10 +8,10 @@
                     } @else {
                         <mat-icon>description</mat-icon>
                     }
-                    <div class="flex items-center space-x-2 overflow-hidden justify-between w-full">
-                        <p class="truncate grow min-w-0 ml-2">{{ f.name }}</p>
-                        @if(f?.metadata?.size) {
-                            <span class="italic text-gray-500 flex-shrink-0 pr-1">{{ ((f.metadata?.size || 0) / 1048576) | number:'1.2-2' }} MB</span>
+                    <div class="flex w-full items-center justify-between space-x-2 overflow-hidden">
+                        <p class="ml-2 min-w-0 grow truncate">{{ f.name }}</p>
+                        @if (f?.metadata?.size) {
+                            <span class="flex-shrink-0 pr-1 italic text-gray-500">{{ (f.metadata?.size || 0) / 1048576 | number: '1.2-2' }} MB</span>
                         }
                         <div class="mb-1 flex items-center">
                             <button mat-icon-button (click)="deleteFile()">
@@ -19,7 +19,6 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
                 @if (f.progress < 100) {
                     <div class="progress-spinner">
