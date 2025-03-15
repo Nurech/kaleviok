@@ -3,7 +3,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as AppSettingsActions from './app-settings.actions';
 import { AppSetting } from './app-settings.model';
 
-export const featureKey = 'AppSettings';
+export const featureKey = 'appSettings';
 
 export const adapter: EntityAdapter<AppSetting> = createEntityAdapter<AppSetting>({
     selectId: (entity) => entity.id
