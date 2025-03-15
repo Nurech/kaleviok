@@ -19,3 +19,7 @@ export const downloadFileFailure = createAction('[Files] Download File Failure',
 export const downloadFilesByEventId = createAction('[Files] Download Files By Event Id', props<{ eventId: string }>());
 export const downloadFilesByEventIdSuccess = createAction('[Files] Download Files By Event Id Success', props<{ payload: AppFile[] }>());
 export const downloadFilesByEventIdFailure = createAction('[Files] Download Files By Event Id Failure', props<{ error: Error }>());
+
+export const fileRefAdded = createAction('[Files] File Reference Added', props<{ payload: AppFile }>());
+export const fileRefModified = createAction('[Files] File Reference Modified', props<{ payload: AppFile }>());
+export const fileRefDeleted = createAction('[Files] File Reference Deleted', props<{ fileId: string }>());

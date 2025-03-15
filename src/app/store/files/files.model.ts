@@ -3,13 +3,15 @@ import { FullMetadata } from '@angular/fire/storage';
 export enum FileStatus {
     UPLOADING = 'UPLOADING',
     UPLOADED = 'UPLOADED',
+    SCANNING = 'SCANNING',
+    VALIDATION_FAILED = 'VALIDATION_FAILED',
     DELETED = 'DELETED',
     HIDDEN = 'HIDDEN',
     VIRUS_FOUND = 'VIRUS_FOUND'
 }
 
 export interface AppFile {
-    uid: string;
+    id: string;
     name: string;
     createdAt: string;
     createdBy: string;

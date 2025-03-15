@@ -5,7 +5,7 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatIconButton } from '@angular/material/button';
 import { Store } from '@ngrx/store';
 import { DecimalPipe } from '@angular/common';
-import { AppFile } from '../../../../store/files/files.model';
+import { AppFile, FileStatus } from '../../../../store/files/files.model';
 import { deleteFile } from '../../../../store/files/files.actions';
 
 @Component({
@@ -22,4 +22,6 @@ export class ListFileComponent {
     deleteFile() {
         this.store$.dispatch(deleteFile({ payload: this.file() }));
     }
+
+    protected readonly FileStatus = FileStatus;
 }

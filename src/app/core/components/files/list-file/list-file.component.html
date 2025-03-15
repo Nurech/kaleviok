@@ -24,6 +24,14 @@
                     <div class="progress-spinner">
                         <mat-progress-bar mode="determinate" [value]="f.progress"></mat-progress-bar>
                     </div>
+                } @else if (f.status === FileStatus.SCANNING) {
+                    <div class="progress-spinner">
+                        <mat-progress-bar mode="query"></mat-progress-bar>
+                    </div>
+                } @else if (f.status === FileStatus.VALIDATION_FAILED) {
+                    <div class="progress-spinner">
+                        <mat-progress-bar [color]="'warn'" mode="buffer"></mat-progress-bar>
+                    </div>
                 }
             </div>
         </mat-card-content>

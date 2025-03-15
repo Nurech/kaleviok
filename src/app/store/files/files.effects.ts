@@ -39,7 +39,7 @@ export class FilesEffects {
         this.actions$.pipe(
             ofType(deleteFile),
             switchMap(({ payload }) =>
-                this.filesService.deleteFile(payload.uid).pipe(
+                this.filesService.deleteFile(payload.id).pipe(
                     map(() => FileActions.deleteFileSuccess({ payload })),
                     catchError((error) => of(FileActions.deleteFileFailure({ error })))
                 )

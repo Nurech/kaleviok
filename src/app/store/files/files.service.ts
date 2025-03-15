@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, doc, getDoc, deleteDoc, collection, getDocs, where, query } from '@angular/fire/firestore';
+import { Firestore, doc, deleteDoc, collection, getDocs, where, query, onSnapshot } from '@angular/fire/firestore';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, getMetadata } from '@angular/fire/storage';
 import { Observable, from, map, firstValueFrom } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppFile, FileStatus } from './files.model';
 import { setDocClean } from '../../shared/interceptors/firebase-utils';
 import { selectAuthenticatedAccount } from '../auth/auth.selectors';
-import { addFile, updateFile } from './files.actions';
+import { addFile, updateFile, fileRefAdded, fileRefModified, fileRefDeleted } from './files.actions';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +16,11 @@ export class FilesService {
     private storage = inject(Storage);
     private collectionName = 'files';
     private store$ = inject(Store);
+    private listener?: () => void;
+
+    constructor() {
+        this.startListen();
+    }
 
     uploadFile(file: AppFile): Observable<AppFile> {
         const newFileDocRef = doc(collection(this.firestore, this.collectionName));
@@ -26,7 +31,7 @@ export class FilesService {
 
         const initialFileState: AppFile = {
             ...file,
-            uid: generatedUid,
+            id: generatedUid,
             progress: 0,
             status: FileStatus.UPLOADING
         };
@@ -52,7 +57,7 @@ export class FilesService {
                         const uploadedFile: Partial<AppFile> = {
                             createdBy: account.uid,
                             name: file.name,
-                            status: FileStatus.UPLOADED,
+                            status: FileStatus.SCANNING, // Initially scanning before validation
                             thumbnail: url,
                             createdAt: new Date(metadata.timeCreated).toISOString(),
                             metadata,
@@ -73,13 +78,55 @@ export class FilesService {
     }
 
     upsert(file: AppFile): Observable<AppFile> {
-        const fileDocRef = doc(this.firestore, `${this.collectionName}/${file.uid}`);
+        const fileDocRef = doc(this.firestore, `${this.collectionName}/${file.id}`);
         return from(setDocClean(fileDocRef, file, { merge: true })).pipe(map(() => file));
     }
 
-    getFileById(fileId: string): Observable<AppFile | null> {
-        const fileDocRef = doc(this.firestore, `${this.collectionName}/${fileId}`);
-        return from(getDoc(fileDocRef)).pipe(map((docSnapshot) => (docSnapshot.exists() ? (docSnapshot.data() as AppFile) : null)));
+    startListen(): void {
+        this.store$.pipe(select(selectAuthenticatedAccount)).subscribe((user) => {
+            if (!user?.uid) {
+                console.log('No authenticated user found, stopping file listener.');
+                this.stopListen();
+                return;
+            }
+
+            console.log(`Files listener started for user: ${user.uid}`);
+
+            const filesQuery = query(
+                collection(this.firestore, this.collectionName),
+                where('createdBy', '==', user.uid) // Filter by authenticated user
+            );
+
+            this.listener = onSnapshot(filesQuery, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    const docData = { id: change.doc.id, ...change.doc.data() } as AppFile;
+
+                    switch (change.type) {
+                        case 'added':
+                            this.store$.dispatch(fileRefAdded({ payload: docData }));
+                            break;
+                        case 'modified':
+                            this.store$.dispatch(fileRefModified({ payload: docData }));
+                            break;
+                        case 'removed':
+                            this.store$.dispatch(fileRefDeleted({ fileId: docData.id }));
+                            break;
+                        default:
+                            console.log(`${this.collectionName} Document default:`, docData);
+                    }
+                });
+            });
+        });
+    }
+
+    stopListen(): void {
+        if (this.listener) {
+            this.listener();
+            this.listener = undefined;
+            console.log(`${this.collectionName} listener stopped.`);
+        } else {
+            console.log(`${this.collectionName} listener is not active.`);
+        }
     }
 
     deleteFile(fileId: string): Observable<void> {
