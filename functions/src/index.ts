@@ -13,9 +13,6 @@ if (!getApps().length) {
 const gcs = new Storage();
 const firestore = getFirestore();
 
-
-
-
 async function findFileAndDelete(filePath: string) {
     try {
         const [buckets] = await gcs.getBuckets();
@@ -38,14 +35,8 @@ async function findFileAndDelete(filePath: string) {
     }
 }
 
-
-
-
 async function getActiveAppSettings(): Promise<{ ALLOWED_FILE_TYPES: string[] }> {
-    const snapshot = await firestore.collection('appSettings')
-        .where('active', '==', true)
-        .limit(1)
-        .get();
+    const snapshot = await firestore.collection('appSettings').where('active', '==', true).limit(1).get();
 
     if (snapshot.empty) {
         throw new Error(`[getActiveAppSettings] No active app settings found.`);
@@ -53,9 +44,6 @@ async function getActiveAppSettings(): Promise<{ ALLOWED_FILE_TYPES: string[] }>
 
     return snapshot.docs[0].data() as { ALLOWED_FILE_TYPES: string[] };
 }
-
-
-
 
 async function validateFileType(filePath: string): Promise<boolean> {
     try {
@@ -89,9 +77,6 @@ async function validateFileType(filePath: string): Promise<boolean> {
     }
 }
 
-
-
-
 async function updateFileStatus(filePath: string, status: 'VALIDATION_FAILED' | 'UPLOADED') {
     const filesCollection = firestore.collection('files');
     const fileRef = await filesCollection.where('metadata.fullPath', '==', filePath).limit(1).get();
@@ -113,9 +98,6 @@ async function updateFileStatus(filePath: string, status: 'VALIDATION_FAILED' | 
     }
 }
 
-
-
-
 export const validateFileOnRefCreated = onDocumentCreated('files/{fileId}', async (event) => {
     const fileData = event.data?.data();
     if (!fileData) {
@@ -136,9 +118,6 @@ export const validateFileOnRefCreated = onDocumentCreated('files/{fileId}', asyn
         await updateFileStatus(filePath, 'VALIDATION_FAILED');
     }
 });
-
-
-
 
 export const deleteFileOnReferenceDeletion = onDocumentDeleted('files/{fileId}', async (event) => {
     const deletedData = event.data?.data();
