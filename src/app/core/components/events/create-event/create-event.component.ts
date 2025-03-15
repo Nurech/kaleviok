@@ -1,5 +1,5 @@
 import { Component, inject, Signal, effect } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,7 +17,9 @@ import { selectCurrentEvent } from '../../../../store/events/events.selectors';
 import { DropZoneComponent } from '../../files/drop-zone/drop-zone.component';
 import { selectAllEventFiles } from '../../../../store/files/files.selectors';
 import { FilesListComponent } from '../../files/files-list/files-list.component';
-import { downloadFilesByEventId } from '../../../../store/files/files.actions';
+import { deleteFile, downloadFilesByEventId } from '../../../../store/files/files.actions';
+import { AppFile } from '../../../../store/files/files.model';
+import { ValidatorsCustom } from '../../../../shared/validators/validators-custom';
 
 @Component({
     selector: 'app-create-event',
@@ -46,7 +48,7 @@ export class CreateEventComponent {
     private dialogService = inject(DialogService);
     eventForm: FormGroup;
     event$: Signal<any> = toSignal(this.store$.pipe(select(selectCurrentEvent)));
-    eventFiles$: Signal<any> = toSignal(this.store$.pipe(select(selectAllEventFiles)));
+    eventFiles$: Signal<AppFile[]> = toSignal(this.store$.pipe(select(selectAllEventFiles)), { initialValue: [] });
 
     constructor() {
         this.eventForm = this.fb.group({
@@ -57,7 +59,8 @@ export class CreateEventComponent {
             endDate: ['', Validators.required],
             endTime: ['', Validators.required],
             description: ['', [Validators.required, Validators.minLength(10)]],
-            location: ['', Validators.required]
+            location: ['', Validators.required],
+            files: this.fb.array([], [ValidatorsCustom.validateFilesAllUploaded])
         });
 
         effect(() => {
@@ -67,10 +70,28 @@ export class CreateEventComponent {
                 this.store$.dispatch(downloadFilesByEventId({ eventId: event.id }));
             }
         });
+
+        effect(() => {
+            this.syncFilesWithForm();
+        });
+    }
+
+    private syncFilesWithForm(): void {
+        const fileArray = this.eventForm.get('files') as FormArray;
+        fileArray.clear();
+
+        const files = this.eventFiles$();
+        files.forEach((file) => {
+            fileArray.push(this.fb.control(file));
+        });
     }
 
     clear(): void {
         this.dialogService.openGenericDialog('Clear Form', 'Are you sure you want to clear the form?', () => {
+            this.eventForm.get('files')?.value.forEach((file: AppFile) => {
+                this.store$.dispatch(deleteFile({ payload: file }));
+            });
+            (this.eventForm.get('files') as FormArray).clear();
             this.eventForm.reset();
         });
     }
@@ -92,6 +113,10 @@ export class CreateEventComponent {
     }
 
     sendToReview(): void {
+        if (this.eventForm.invalid) {
+            return;
+        }
+
         this.dialogService.openGenericDialog('Publish Event', 'Are you sure you want to publish this event?', () => {
             console.log('Publish event:', this.eventForm.value);
             this.store$.dispatch(sendToReview({ payload: this.eventForm.value }));

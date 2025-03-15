@@ -36,7 +36,7 @@ async function findFileAndDelete(filePath: string) {
 }
 
 async function getActiveAppSettings(): Promise<{ ALLOWED_FILE_TYPES: string[] }> {
-    const snapshot = await firestore.collection('appSettings').where('active', '==', true).limit(1).get();
+    const snapshot = await firestore.collection('appSettings').where('ACTIVE', '==', true).limit(1).get();
 
     if (snapshot.empty) {
         throw new Error(`[getActiveAppSettings] No active app settings found.`);

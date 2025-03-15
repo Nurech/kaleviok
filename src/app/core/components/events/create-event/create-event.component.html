@@ -69,6 +69,9 @@
                 <app-drop-zone [eventId]="event$()?.id"></app-drop-zone>
             </div>
             <app-files-list [files]="eventFiles$()"></app-files-list>
+            <p class="flex justify-end text-xs font-bold">
+                <mat-hint>{{ eventFiles$().length }} / 10 files allowed</mat-hint>
+            </p>
         </div>
 
         <div class="mt-4 flex justify-center gap-2">
@@ -80,7 +83,7 @@
                 <mat-icon>Delete</mat-icon>
             </button>
             <button mat-stroked-button (click)="sendToReview()" [disabled]="eventForm.invalid">
-                Saada
+                Ülevaatusele
                 <mat-icon>send</mat-icon>
             </button>
         </div>

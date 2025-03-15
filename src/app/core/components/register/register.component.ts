@@ -10,7 +10,7 @@ import { NgIf } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { CustomValidators } from '../../../shared/validators/custom-validators';
+import { ValidatorsCustom } from '../../../shared/validators/validators-custom';
 import { emailRegisterStart } from '../../../store/auth/auth.actions';
 
 @Component({
@@ -31,7 +31,7 @@ export class RegisterComponent {
             password: new FormControl<string>('123123', [Validators.required, Validators.minLength(6)]),
             confirmPassword: new FormControl<string>('123123', [Validators.required, Validators.minLength(6)])
         },
-        { validators: CustomValidators.match('password', 'confirmPassword') }
+        { validators: ValidatorsCustom.match('password', 'confirmPassword') }
     );
 
     emailSignal: Signal<string | null>;

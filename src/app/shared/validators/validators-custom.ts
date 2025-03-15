@@ -1,6 +1,7 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormArray, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AppFile, FileStatus } from '../../store/files/files.model';
 
-export class CustomValidators {
+export class ValidatorsCustom {
     static match(controlName: string, matchingControlName: string): ValidatorFn {
         return (formGroup: AbstractControl): ValidationErrors | null => {
             const control = formGroup.get(controlName);
@@ -23,4 +24,16 @@ export class CustomValidators {
             }
         };
     }
+
+    static validateFilesAllUploaded: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+        const formArray = control as FormArray;
+        const files: AppFile[] = formArray.value;
+
+        if (!files || files.length === 0) return null;
+
+        console.warn('files', files);
+
+        const allUploaded = files.every((file) => file.status === FileStatus.UPLOADED);
+        return allUploaded ? null : { notAllUploaded: true };
+    };
 }
