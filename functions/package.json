@@ -1,7 +1,6 @@
 {
     "name": "functions",
     "scripts": {
-        "preinstall": "npx only-allow pnpm",
         "build": "tsc",
         "build:watch": "tsc --watch",
         "serve": "pnpm run build && firebase emulators:start --only functions",

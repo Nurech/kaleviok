@@ -1,8 +1,7 @@
 {
   "name": "kaleviok",
-  "version": "0.0.187",
+  "version": "0.0.188",
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "ng": "ng",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
