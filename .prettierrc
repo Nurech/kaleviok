@@ -6,5 +6,6 @@
     "trailingComma": "none",
     "bracketSameLine": true,
     "quoteProps": "consistent",
+    "tailwindConfig": "./tailwind.config.js",
     "plugins": ["prettier-plugin-tailwindcss"]
 }

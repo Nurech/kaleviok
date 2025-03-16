@@ -1,12 +1,12 @@
 import { isDevMode, NgModule } from '@angular/core';
-import { AppSettingsStoreModule } from './app-settings/app-settings.module';
-import { appSettingsFeature } from './app-settings/app-settings.reducer';
 import { MetaReducer, StoreModule, ActionReducer, ActionReducerMap } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { CommonModule } from '@angular/common';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer } from '@ngrx/router-store';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { appSettingsFeature } from './app-settings/app-settings.reducer';
+import { AppSettingsStoreModule } from './app-settings/app-settings.module';
 import { FilesStoreModule } from './files/files.module';
 import { eventsFeature } from './events/events.reducer';
 import { EventsStoreModule } from './events/events.module';
@@ -72,7 +72,7 @@ const rootReducers: ActionReducerMap<any> = {
 };
 
 const featureModules = [
-  AppSettingsStoreModule,
+    AppSettingsStoreModule,
     FilesStoreModule,
     EventsStoreModule,
     SnackbarStoreModule,
