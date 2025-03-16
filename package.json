@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.184",
+  "version": "0.0.185",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "ng": "ng",
