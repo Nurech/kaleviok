@@ -29,7 +29,7 @@ jobs:
         run: pnpm run build:prod
 
       - name: Build Application for Development
-        if: github.ref == 'refs/heads/development'
+        if: github.ref == 'refs/heads/develop'
         run: pnpm run build:dev
 
       - name: Deploy to Firebase (Production)
@@ -41,7 +41,7 @@ jobs:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_PROD }}
 
       - name: Deploy to Firebase (Development)
-        if: github.ref == 'refs/heads/development'
+        if: github.ref == 'refs/heads/develop'
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting,functions --project ${{ secrets.FIREBASE_PROJECT_ID_DEV }}
