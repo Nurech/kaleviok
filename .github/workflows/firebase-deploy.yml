@@ -32,11 +32,21 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: pnpm run build:dev
 
+      # Extract project ID from production service account JSON
+      - name: Extract Firebase Project ID (Production)
+        if: github.ref == 'refs/heads/master'
+        run: echo "PROJECT_ID=$(echo '${{ secrets.GCP_SA_KEY_PROD }}' | jq -r '.project_id')" >> $GITHUB_ENV
+
+      # Extract project ID from development service account JSON
+      - name: Extract Firebase Project ID (Development)
+        if: github.ref == 'refs/heads/develop'
+        run: echo "PROJECT_ID=$(echo '${{ secrets.GCP_SA_KEY_DEV }}' | jq -r '.project_id')" >> $GITHUB_ENV
+
       - name: Deploy to Firebase (Production)
         if: github.ref == 'refs/heads/master'
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:prod,functions --project ${{ secrets.FIREBASE_PROJECT_ID_PROD }}
+          args: deploy --only hosting:prod,functions --project ${{ env.PROJECT_ID }}
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_PROD }}
 
@@ -44,6 +54,6 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:dev,functions --project ${{ secrets.FIREBASE_PROJECT_ID_DEV }}
+          args: deploy --only hosting:dev,functions --project ${{ env.PROJECT_ID }}
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_DEV }}
