@@ -16,11 +16,7 @@
             <mat-form-field class="w-full pb-1">
                 <mat-label>{{ 'enter_your_password' | translate }}</mat-label>
                 <input matInput [formControl]="password" [type]="hide() ? 'password' : 'text'" required />
-                <button
-                    mat-icon-button
-                    matSuffix
-                    (click)="togglePasswordVisibility()"
-                    [attr.aria-label]="hide() ? 'Show password' : 'Hide password'">
+                <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="hide() ? 'Show password' : 'Hide password'">
                     <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
                 </button>
                 @if (password.invalid) {
@@ -34,18 +30,18 @@
         </button>
 
         <div>
-            <div class="flex items-center justify-center">
-                <mat-checkbox
-                    [labelPosition]="'after'"
-                    [checked]="(settings$ | async)?.autologin"
-                    (change)="autologin($event.checked)">
-                    {{ 'remember_me' | translate }}
-                </mat-checkbox>
-                <app-info class="mx-1" [text]="'remember_me_info' | translate"></app-info>
-            </div>
+            <!--            TODO <div class="flex items-center justify-center">-->
+            <!--                <mat-checkbox-->
+            <!--                    [labelPosition]="'after'"-->
+            <!--                    [checked]="(settings$ | async)?.autologin"-->
+            <!--                    (change)="autologin($event.checked)">-->
+            <!--                    {{ 'remember_me' | translate }}-->
+            <!--                </mat-checkbox>-->
+            <!--                <app-info class="mx-1" [text]="'remember_me_info' | translate"></app-info>-->
+            <!--            </div>-->
             <div class="flex items-center justify-center py-2">
                 <a [routerLink]="['/forgot-password']">{{ 'forgot_password' | translate }}</a>
-                <a class="pl-1" [routerLink]="['/register']">{{ 'register' | translate }}</a>
+                <a class="link pl-1" [routerLink]="['/register']">{{ 'register' | translate }}</a>
                 <app-info class="mx-1" [text]="'only_members_can_register' | translate"></app-info>
             </div>
         </div>

@@ -1,9 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ComponentType } from '@angular/cdk/overlay';
-import { navigateTo } from '../../store/router/router.actions';
-import { SheetService } from './sheet.service';
-import { LoginComponent } from '../../core/components/login/login.component';
 import { MiniProfileComponent } from '../../core/components/profile/mini-profile/mini-profile.component';
 import { isAuthenticated } from '../../store/auth/auth.selectors';
 
@@ -14,16 +11,12 @@ export interface MenuItem<T> {
     href?: string;
     show: boolean;
     component?: ComponentType<T>;
-    onClick?: () => void;
     position?: 'start' | 'end';
 }
 
 @Injectable({ providedIn: 'root' })
 export class MenuService {
     private store$ = inject(Store);
-    private sheetService = inject(SheetService);
-    isDrawerOpen = signal(false);
-
     isAuthenticated = signal(false);
 
     constructor() {
@@ -35,21 +28,20 @@ export class MenuService {
             logo: 'logo.svg',
             position: 'start',
             show: !this.isAuthenticated(),
-            href: '/',
-            onClick: () => this.handleNavigation('/')
+            href: '/'
         },
         {
             position: 'start',
             component: MiniProfileComponent,
             show: this.isAuthenticated(),
-            onClick: () => this.handleNavigation('/profile')
+            href: '/profile'
         },
         {
             label: 'login',
             icon: 'login',
             position: 'end',
             show: !this.isAuthenticated(),
-            onClick: () => this.sheetService.open(LoginComponent)
+            href: '/login'
         },
         {
             label: 'dashboard',
@@ -66,11 +58,11 @@ export class MenuService {
             href: '/accounts'
         },
         {
-            label: 'admin_panel_settings',
-            icon: 'admin_panel_settings',
+            label: 'events',
+            icon: 'event',
             position: 'end',
             show: this.isAuthenticated(),
-            href: '/admin-panel-settings'
+            href: '/events'
         },
         {
             label: 'contact_support',
@@ -80,8 +72,4 @@ export class MenuService {
             href: '/contact-support'
         }
     ]);
-
-    private handleNavigation(path: string): void {
-        this.store$.dispatch(navigateTo({ path: [path] }));
-    }
 }

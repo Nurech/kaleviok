@@ -1,38 +1,46 @@
+@use 'styles/tokens';
 @use '@angular/material' as mat;
+@use './styles/_theme-colors.scss' as theme-colors;
+@forward 'styles/sidenav';
+@forward 'styles/dialogue';
+@forward 'styles/icon-sizes';
+@forward 'styles/global';
+@forward 'styles/snackbar';
+@forward 'styles/mat-error';
+@forward 'styles/material-override';
 
-body,
+$theme: mat.define-theme();
+
 html {
+    @include mat.color-variants-backwards-compatibility($theme);
+}
+html {
+    @include mat.theme(
+        (
+            color: (
+                theme-type: light,
+                primary: theme-colors.$primary-palette,
+                tertiary: theme-colors.$tertiary-palette
+            ),
+            typography: Roboto,
+            density: 0
+        )
+    );
+}
+
+html,
+body {
+    overflow: hidden;
     height: 100%;
+    max-height: 100%;
 }
 
-$light-theme: (
-    color: (
-        primary: mat.$blue-palette,
-        theme-type: light
-    ),
-    typography: (
-        use-system-variables: true
-    ),
-    density: 0
-);
-
-$dark-theme: (
-    color: (
-        primary: mat.$blue-palette,
-        theme-type: dark
-    ),
-    typography: (
-        use-system-variables: true
-    ),
-    density: 0
-);
-
-html {
-    color-scheme: light;
-    @include mat.theme($light-theme);
+body {
+    margin: 0;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-html.dark {
-    color-scheme: dark;
-    @include mat.theme($dark-theme);
+body {
+    background: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
 }

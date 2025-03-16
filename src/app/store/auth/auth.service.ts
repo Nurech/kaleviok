@@ -7,9 +7,13 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut,
-    User
+    linkWithCredential,
+    EmailAuthProvider,
+    updatePassword,
+    User,
+    UserCredential
 } from '@angular/fire/auth';
-import { from } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { authChanged } from './auth.actions';
 import { UserMapper } from '../accounts/account.model';
@@ -20,22 +24,10 @@ import { UserMapper } from '../accounts/account.model';
 export class AuthService {
     private auth = inject(Auth);
     private store$ = inject(Store);
-
     private authState = signal<User | null | undefined>(undefined);
 
     constructor() {
-        this.initialize();
-    }
-
-    private initialize() {
-        onAuthStateChanged(this.auth, (user) => {
-            console.log('Auth state changed', user);
-            if (user) {
-                this.setAuthState(user);
-            } else {
-                this.setAuthState(null);
-            }
-        });
+        onAuthStateChanged(this.auth, (user) => this.setAuthState(user || null));
     }
 
     registerWithEmail(email: string, password: string) {
@@ -43,12 +35,43 @@ export class AuthService {
     }
 
     loginWithGoogle() {
-        const provider = new GoogleAuthProvider();
-        return from(signInWithPopup(this.auth, provider));
+        return from(signInWithPopup(this.auth, new GoogleAuthProvider()));
     }
 
-    loginWithEmail(email: string, password: string) {
-        return from(signInWithEmailAndPassword(this.auth, email, password));
+    loginWithEmail(email: string, password: string): Observable<UserCredential> {
+        return from(
+            new Promise<UserCredential>((resolve, reject) => {
+                signInWithEmailAndPassword(this.auth, email, password)
+                    .then(resolve)
+                    .catch(async (error) => {
+                        console.error('Email login failed:', error.code);
+                        if (['auth/user-not-found', 'auth/wrong-password', 'auth/invalid-credential'].includes(error.code)) {
+                            try {
+                                const googleUserCredential = await signInWithPopup(this.auth, new GoogleAuthProvider());
+                                await linkWithCredential(googleUserCredential.user, EmailAuthProvider.credential(email, password));
+                                await this.promptSetPassword(googleUserCredential.user);
+                                resolve(googleUserCredential);
+                            } catch (googleError) {
+                                console.error('Google sign-in failed:', googleError);
+                                reject(googleError);
+                            }
+                            return;
+                        }
+                        reject(error);
+                    });
+            })
+        );
+    }
+
+    private async promptSetPassword(user: UserCredential['user']) {
+        const newPassword = prompt('Set a password for your email login:');
+        if (newPassword) {
+            try {
+                await updatePassword(user, newPassword);
+            } catch (error) {
+                console.error('Error updating password:', error);
+            }
+        }
     }
 
     logout() {
@@ -59,10 +82,8 @@ export class AuthService {
         return this.authState();
     }
 
-    setAuthState(user: User | null) {
+    private setAuthState(user: User | null) {
         this.authState.set(user);
-        if (user) {
-            this.store$.dispatch(authChanged({ payload: UserMapper.mapFirebaseUserToUser(user) }));
-        }
+        if (user) this.store$.dispatch(authChanged({ payload: UserMapper.mapFirebaseUserToUser(user) }));
     }
 }

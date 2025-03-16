@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SnackbarService } from './snackbar.service';
 import { emailRegisterError } from '../auth/auth.actions';
 import { Snackbar } from './snackbar.model';
-import { closeAllSnackbars, openSnackbar } from './snackbar.actions';
+import { closeAllSnackbars, genericSnack, openSnackbar } from './snackbar.actions';
 
 @Injectable()
 export class SnackbarEffects {
@@ -15,12 +15,7 @@ export class SnackbarEffects {
     private translate = inject(TranslateService);
 
     isFirebaseError(error: unknown): error is FirebaseError {
-        return (
-            typeof error === 'object' &&
-            error !== null &&
-            'name' in error &&
-            (error as { name: unknown }).name === 'FirebaseError'
-        );
+        return typeof error === 'object' && error !== null && 'name' in error && (error as { name: unknown }).name === 'FirebaseError';
     }
 
     interceptError$ = createEffect(
@@ -32,9 +27,7 @@ export class SnackbarEffects {
                         const snack: Snackbar = {
                             type: 'warn',
                             message: this.translate.instant(action.error.code),
-                            duration: 5000,
-                            action: 'link',
-                            link: '/forgot-password'
+                            duration: 5000
                         };
 
                         if (action.error.code === 'auth/email-already-in-use') {
@@ -54,8 +47,24 @@ export class SnackbarEffects {
                 ofType(openSnackbar),
                 tap(({ payload }) => {
                     if (!payload.duration) {
-                        payload = { ...payload, duration: 5000 };
+                        payload = { ...payload, duration: 6000 };
                     }
+                    this.snackbarService.open(payload);
+                })
+            ),
+        { dispatch: false }
+    );
+
+    genericSnack = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(genericSnack),
+                tap(({ message }) => {
+                    const payload: Snackbar = {
+                        type: 'info',
+                        message: message,
+                        duration: 5000
+                    };
                     this.snackbarService.open(payload);
                 })
             ),

@@ -7,7 +7,37 @@ const prettier = require('eslint-config-prettier');
 
 module.exports = tseslint.config(
     {
-        ignores: ['.angular/', '**/__*', 'dist/', 'node_modules/']
+        ignores: [
+            'generate-store/',
+            'dist/',
+            'tmp/',
+            'out-tsc/',
+            'bazel-out/',
+            'node_modules/',
+            'npm-debug.log',
+            'yarn-error.log',
+            '.idea/',
+            '.project',
+            '.classpath',
+            '.c9/',
+            '*.launch',
+            '.settings/',
+            '*.sublime-workspace',
+            '.vscode/',
+            '.angular/cache',
+            '.sass-cache/',
+            'connect.lock',
+            'coverage/',
+            'libpeerconnection.log',
+            'testem.log',
+            'typings/',
+            '.DS_Store',
+            'Thumbs.db',
+            '.firebase/',
+            '*-debug.log',
+            '.runtimeconfig.json',
+            '.env.*'
+        ]
     },
     {
         files: ['**/*.ts'],
@@ -15,13 +45,7 @@ module.exports = tseslint.config(
             'unused-imports': unusedImports,
             'import': imports
         },
-        extends: [
-            eslint.configs.recommended,
-            ...tseslint.configs.recommended,
-            ...tseslint.configs.stylistic,
-            ...angular.configs.tsRecommended,
-            prettier
-        ],
+        extends: [eslint.configs.recommended, ...tseslint.configs.recommended, ...tseslint.configs.stylistic, ...angular.configs.tsRecommended, prettier],
         processor: angular.processInlineTemplates,
         rules: {
             'import/order': [
@@ -57,12 +81,39 @@ module.exports = tseslint.config(
                     args: 'after-used',
                     argsIgnorePattern: '^_'
                 }
+            ],
+            '@typescript-eslint/no-unused-vars': [
+                'warn',
+                {
+                    vars: 'all',
+                    varsIgnorePattern: '^_',
+                    args: 'after-used',
+                    argsIgnorePattern: '^_'
+                }
+            ],
+            'semi': ['error', 'always'],
+            'no-multiple-empty-lines': [
+                'error',
+                {
+                    max: 1,
+                    maxEOF: 1,
+                    maxBOF: 0
+                }
             ]
         }
     },
     {
         files: ['**/*.html'],
         extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
-        rules: {}
+        rules: {
+            'no-multiple-empty-lines': [
+                'error',
+                {
+                    max: 1,
+                    maxEOF: 1,
+                    maxBOF: 0
+                }
+            ]
+        }
     }
 );

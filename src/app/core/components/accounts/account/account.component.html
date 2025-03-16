@@ -1,0 +1,14 @@
+<div class="flex flex-col p-2">
+    <div class="flex flex-row items-center justify-center">
+        <div class="relative size-16">
+            <app-avatar [account]="account$ | async"></app-avatar>
+        </div>
+        <div class="flex flex-col pl-4">
+            <p class="font-bold">{{ (account$ | async)?.firstName }} {{ (account$ | async)?.lastName }}</p>
+            <div class="flex flex-row items-center">
+                <p>{{ (account$ | async)?.email }}</p>
+                <app-clipboard [value]="(account$ | async)?.email"></app-clipboard>
+            </div>
+        </div>
+    </div>
+</div>

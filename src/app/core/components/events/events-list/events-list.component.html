@@ -1,0 +1,3 @@
+@for (event of events$ | async; track event) {
+    <app-event-mini [event]="event"></app-event-mini>
+}

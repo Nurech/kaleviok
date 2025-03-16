@@ -10,24 +10,14 @@ import { NgIf } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { CustomValidators } from '../../../shared/validators/custom-validators';
+import { ValidatorsCustom } from '../../../shared/validators/validators-custom';
 import { emailRegisterStart } from '../../../store/auth/auth.actions';
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     standalone: true,
-    imports: [
-        MatFormFieldModule,
-        MatInputModule,
-        MatButton,
-        MatIcon,
-        TranslatePipe,
-        MatDivider,
-        MatIconButton,
-        NgIf,
-        ReactiveFormsModule
-    ],
+    imports: [MatFormFieldModule, MatInputModule, MatButton, MatIcon, TranslatePipe, MatDivider, MatIconButton, NgIf, ReactiveFormsModule],
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
@@ -41,7 +31,7 @@ export class RegisterComponent {
             password: new FormControl<string>('123123', [Validators.required, Validators.minLength(6)]),
             confirmPassword: new FormControl<string>('123123', [Validators.required, Validators.minLength(6)])
         },
-        { validators: CustomValidators.match('password', 'confirmPassword') }
+        { validators: ValidatorsCustom.match('password', 'confirmPassword') }
     );
 
     emailSignal: Signal<string | null>;
@@ -55,15 +45,13 @@ export class RegisterComponent {
             initialValue: this.registerForm.get('email')?.value ?? null
         });
 
-        this.passwordSignal = toSignal(
-            this.registerForm.get('password')?.valueChanges.pipe(debounceTime(300)) ?? of(null),
-            { initialValue: this.registerForm.get('password')?.value ?? null }
-        );
+        this.passwordSignal = toSignal(this.registerForm.get('password')?.valueChanges.pipe(debounceTime(300)) ?? of(null), {
+            initialValue: this.registerForm.get('password')?.value ?? null
+        });
 
-        this.confirmPasswordSignal = toSignal(
-            this.registerForm.get('confirmPassword')?.valueChanges.pipe(debounceTime(300)) ?? of(null),
-            { initialValue: this.registerForm.get('confirmPassword')?.value ?? null }
-        );
+        this.confirmPasswordSignal = toSignal(this.registerForm.get('confirmPassword')?.valueChanges.pipe(debounceTime(300)) ?? of(null), {
+            initialValue: this.registerForm.get('confirmPassword')?.value ?? null
+        });
 
         this.passwordsMatchSignal = computed(() => {
             const password = this.registerForm.get('password')?.value;

@@ -1,0 +1,37 @@
+<mat-card class="m-2 flex flex-row items-center justify-between p-2">
+    <div class="w-full">
+        <p>{{ event.title || 'Untitled Event' }}</p>
+        <p>{{ event.startTime | date: 'shortTime' }} - {{ event.endTime | date: 'shortTime' }}</p>
+
+        <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1"><mat-icon class="text-gray-600">person_check</mat-icon> 0</div>
+            <div class="flex items-center gap-1"><mat-icon class="text-gray-600">visibility</mat-icon> 0</div>
+
+            <div class="flex items-center gap-1">
+                @if (event.status === EventStatus.DRAFT) {
+                    <mat-icon class="text-gray-600">cloud</mat-icon>
+                    <app-info [text]="'Visand'"></app-info>
+                } @else if (event.status === EventStatus.REVIEW) {
+                    <mat-icon class="text-green-600">hourglass_empty</mat-icon>
+                    <app-info [text]="'Kinnitamisel'"></app-info>
+                } @else if (event.status === EventStatus.PUBLISHED) {
+                    <mat-icon class="text-green-600">done_all</mat-icon>
+                    <app-info [text]="'Avalikustatud'"></app-info>
+                } @else if (event.status === EventStatus.REJECTED) {
+                    <mat-icon class="text-red-600">block</mat-icon>
+                    <app-info [text]="'Tagasilükatud'"></app-info>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-row">
+        <button mat-icon-button (click)="viewEvent()">
+            <mat-icon class="mb-1">visibility</mat-icon>
+        </button>
+        @if (event.status !== EventStatus.PUBLISHED) {
+            <button mat-icon-button (click)="onEditEvent()">
+                <mat-icon class="mb-1">edit</mat-icon>
+            </button>
+        }
+    </div>
+</mat-card>

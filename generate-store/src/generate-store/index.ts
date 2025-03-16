@@ -1,15 +1,4 @@
-import {
-    apply,
-    chain,
-    MergeStrategy,
-    mergeWith,
-    move,
-    Rule,
-    SchematicContext,
-    template,
-    Tree,
-    url
-} from '@angular-devkit/schematics';
+import { apply, chain, MergeStrategy, mergeWith, move, Rule, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
 
 interface GenerateStoreSchema {
@@ -25,13 +14,7 @@ function singular(name: string): string {
 }
 
 // Helper function to insert content into a file
-function insertToFile(
-    tree: Tree,
-    filePath: string,
-    searchPattern: RegExp,
-    insertContent: string,
-    marker: string
-): void {
+function insertToFile(tree: Tree, filePath: string, searchPattern: RegExp, insertContent: string, marker: string): void {
     const buffer = tree.read(filePath);
     if (!buffer) {
         throw new Error(`File ${filePath} does not exist.`);
@@ -50,7 +33,7 @@ function insertToFile(
 // Add reducer and module
 function updateRootModule(tree: Tree, name: string): void {
     const dashedName = strings.dasherize(name);
-    const reducerImport = `import { ${name}Feature } from './${dashedName}/${dashedName}.reducer';`;
+    const reducerImport = `import { ${strings.camelize(name)}Feature } from './${dashedName}/${dashedName}.reducer';`;
     const moduleImport = `import { ${strings.classify(name)}StoreModule } from './${dashedName}/${dashedName}.module';`;
 
     const reducerEntry = `  ${strings.camelize(name)}: ${name}Feature.reducer,`;
@@ -61,7 +44,7 @@ function updateRootModule(tree: Tree, name: string): void {
     insertToFile(tree, './src/app/store/root.module.ts', /import.*?;/, moduleImport, `${name}StoreModule`);
 
     // Add to rootReducers
-    insertToFile(tree, './src/app/store/root.module.ts', /const rootReducers = {/, reducerEntry, reducerEntry.trim());
+    insertToFile(tree, './src/app/store/root.module.ts', /const rootReducers: ActionReducerMap<any> = {/, reducerEntry, reducerEntry.trim());
 
     // Add to featureModules
     insertToFile(tree, './src/app/store/root.module.ts', /const featureModules = \[/, moduleEntry, moduleEntry.trim());
@@ -72,10 +55,7 @@ export function generateStore(options: GenerateStoreSchema): Rule {
     return (tree: Tree, _context: SchematicContext) => {
         const folderName = strings.dasherize(options.name);
 
-        const templateSource = apply(url('./files'), [
-            template({ ...strings, ...options, singular }),
-            move(`./src/app/store/${folderName}`)
-        ]);
+        const templateSource = apply(url('./files'), [template({ ...strings, ...options, singular }), move(`./src/app/store/${folderName}`)]);
 
         // Update the root module
         updateRootModule(tree, options.name);

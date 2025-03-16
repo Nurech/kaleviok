@@ -1,16 +1,29 @@
-<div class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full">
-    <img
-        *ngIf="account().photoURL; else fallback"
-        [src]="account().photoURL"
-        alt="Profile"
-        class="h-full w-full object-cover" />
-    <ng-template #fallback>
-        <div
-            class="flex h-full w-full items-center justify-center rounded-full text-center text-lg font-medium"
-            [ngStyle]="{ 'background-color': backgroundColor, 'color': textColor }">
-            <span class="pt-[2px]">
-                {{ initials }}
-            </span>
-        </div>
-    </ng-template>
-</div>
+@if (account(); as account) {
+    <div class="flex h-full w-full items-center justify-center overflow-hidden rounded-full">
+        @if (account?.photoURL) {
+            <button
+                [routerLink]="['/account']"
+                [queryParams]="{ id: account?.uid }"
+                class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-none p-0"
+                [attr.aria-label]="'your_profile' | translate"
+                [ngStyle]="{
+                    'background-image': 'url(' + account.photoURL + ')',
+                    'background-size': 'cover',
+                    'background-position': 'center'
+                }"></button>
+        } @else {
+            <button
+                [routerLink]="['/profile']"
+                class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-none p-0"
+                [attr.aria-label]="'your_profile' | translate">
+                <div
+                    class="flex h-full w-full items-center justify-center rounded-full text-lg font-medium"
+                    [ngStyle]="{ 'background-color': backgroundColor, 'color': textColor }">
+                    <span class="pt-[0.125rem] text-center">
+                        {{ initials }}
+                    </span>
+                </div>
+            </button>
+        }
+    </div>
+}

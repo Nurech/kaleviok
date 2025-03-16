@@ -1,28 +1,33 @@
 import { createReducer, on, createFeature } from '@ngrx/store';
-import { load<%= classify(name) %>, load<%= classify(name) %>Success, load<%= classify(name) %>Failure } from './<%= dasherize(name) %>.actions';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import * as <%= classify(name) %>Actions from './<%= dasherize(name) %>.actions';
+import { <%= singular(classify(name)) %> } from './<%= dasherize(name) %>.model';
 
-export const featureKey = '<%= camelize(name) %>';
+export const featureKey = '<%= classify(name) %>';
 
-export interface State {
-  data: any;
+export const adapter: EntityAdapter<<%= singular(classify(name)) %>> = createEntityAdapter<<%= singular(classify(name)) %>>({
+  selectId: (entity) => entity.id
+});
+
+export interface State extends EntityState<<%= singular(classify(name)) %>> {
   loading: boolean;
   error: any;
 }
 
-export const initialState: State = {
-  data: null,
+export const initialState: State = adapter.getInitialState({
   loading: false,
-  error: null,
-};
+  error: null
+});
 
 const <%= camelize(name) %>Reducer = createReducer(
-  initialState,
-  on(load<%= classify(name) %>, (state) => ({...state, loading: true})),
-  on(load<%= classify(name) %>Success, (state, { data }) => ({...state, loading: false, data})),
-  on(load<%= classify(name) %>Failure, (state, { error }) => ({...state, loading: false, error}))
+    initialState,
+    on(<%= classify(name) %>Actions.load, (state) => ({ ...state, loading: true })),
+    on(<%= classify(name) %>Actions.modified, (state, { id, changes }) => adapter.updateOne({ id, changes }, state)),
+    on(<%= classify(name) %>Actions.added, (state, { payload }) => adapter.addOne(payload, state)),
+    on(<%= classify(name) %>Actions.removed, (state, { payload }) => adapter.removeOne(payload.id, state))
 );
 
 export const <%= camelize(name) %>Feature = createFeature({
   name: featureKey,
-  reducer: <%= camelize(name) %>Reducer,
+  reducer: <%= camelize(name) %>Reducer
 });

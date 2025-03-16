@@ -37,10 +37,7 @@ export class DeviceService {
             if (userAgentData.platform) {
                 if (userAgentData.platform.includes('Win')) {
                     return PlatformType.WINDOWS;
-                } else if (
-                    userAgentData.platform.includes('iOS') ||
-                    (userAgentData.platform.includes('Mac') && navigator.maxTouchPoints > 1)
-                ) {
+                } else if (userAgentData.platform.includes('iOS') || (userAgentData.platform.includes('Mac') && navigator.maxTouchPoints > 1)) {
                     return PlatformType.IOS;
                 } else if (userAgentData.platform.includes('Android')) {
                     return PlatformType.ANDROID;

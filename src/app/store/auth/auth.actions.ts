@@ -16,9 +16,6 @@ export const manualLogin = createAction('[Auth] Manual Login');
 export const authChanged = createAction('[Auth] Auth Changed', props<{ payload: Account | null }>());
 export const firebaseSuccess = createAction('[Auth] Firebase Success', props<{ payload: Account }>());
 
-export const emailRegisterStart = createAction(
-    '[Auth] Email Register Start',
-    props<{ email: string; password: string }>()
-);
+export const emailRegisterStart = createAction('[Auth] Email Register Start', props<{ email: string; password: string }>());
 export const emailRegisterSuccess = createAction('[Auth] Email Register Success', props<{ payload: Account }>());
 export const emailRegisterError = createAction('[Auth] Email Register Error', props<{ error: Error }>());

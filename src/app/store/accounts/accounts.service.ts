@@ -14,7 +14,7 @@ export class AccountsService {
     private store$ = inject(Store);
     private collectionName = 'accounts';
     private collection = collection(this.firestore, this.collectionName);
-    private unsubscribeListen?: () => void;
+    private listener?: () => void;
 
     save(account: Account): Observable<Account> {
         const userRef = doc(this.collection, account.uid);
@@ -51,7 +51,7 @@ export class AccountsService {
     startListen(): void {
         const accountsQuery = query(this.collection, where('uid', '!=', null));
 
-        this.unsubscribeListen = onSnapshot(accountsQuery, (snapshot) => {
+        this.listener = onSnapshot(accountsQuery, (snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 const docData = { uid: change.doc.id, ...change.doc.data() } as Account;
 
@@ -73,9 +73,9 @@ export class AccountsService {
     }
 
     stopListen(): void {
-        if (this.unsubscribeListen) {
-            this.unsubscribeListen();
-            this.unsubscribeListen = undefined;
+        if (this.listener) {
+            this.listener();
+            this.listener = undefined;
             console.log(`${this.collectionName} listener stopped.`);
         } else {
             console.log(`${this.collectionName} listener is not active.`);

@@ -1,13 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import {
-    accountAdded,
-    accountDeleted,
-    accountModified,
-    loadAccountsSuccess,
-    saveAccountSuccess,
-    updateAccountSuccess
-} from './accounts.actions';
+import { accountAdded, accountDeleted, accountModified, loadAccountsSuccess, saveAccountSuccess, updateAccountSuccess } from './accounts.actions';
 import { Account } from './account.model';
 
 export const featureKey = 'accounts';

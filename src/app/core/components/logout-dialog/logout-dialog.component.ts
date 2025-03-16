@@ -9,15 +9,7 @@ import { BackgroundIconDirective } from '../../../shared/directives/background-i
 @Component({
     selector: 'app-logout-dialog',
     standalone: true,
-    imports: [
-        MatDialogTitle,
-        MatDialogContent,
-        MatDialogActions,
-        MatButton,
-        MatDialogClose,
-        TranslatePipe,
-        BackgroundIconDirective
-    ],
+    imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatButton, MatDialogClose, TranslatePipe, BackgroundIconDirective],
     templateUrl: './logout-dialog.component.html',
     styles: ``
 })

@@ -11,8 +11,8 @@
                         #link="routerLinkActive"
                         [attr.aria-current]="link.isActive"
                         role="link"
-                        class="section-link h-auto w-auto px-1"
-                        (click)="item.onClick && item.onClick()">
+                        (click)="onClick()"
+                        class="section-link h-auto w-auto px-1">
                         @if (item.logo) {
                             <img alt="Logo" class="relative mt-2 size-16" src="{{ item.logo }}" />
                         }
@@ -27,7 +27,4 @@
             }
         </nav>
     }
-    <div class="dark-mode-switch-container">
-        <app-dark-mode-switch variant="compact"></app-dark-mode-switch>
-    </div>
 </div>

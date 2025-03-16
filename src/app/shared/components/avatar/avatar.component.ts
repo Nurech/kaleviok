@@ -1,34 +1,39 @@
-import { Component, OnInit, input } from '@angular/core';
-import { NgIf, NgStyle } from '@angular/common';
+import { Component, input, effect } from '@angular/core';
+import { NgStyle } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Account } from '../../../store/accounts/account.model';
 
 @Component({
     selector: 'app-avatar',
     standalone: true,
-    imports: [NgIf, NgStyle],
+    imports: [NgStyle, RouterLink, TranslatePipe],
     templateUrl: './avatar.component.html',
     styleUrl: './avatar.component.scss'
 })
-export class AvatarComponent implements OnInit {
-    readonly account = input.required<Account>();
-
+export class AvatarComponent {
+    account = input.required<Account | null>();
     initials = '';
     backgroundColor = '';
     textColor = '';
 
-    ngOnInit(): void {
-        this.extractInitials();
-        this.generateColorsFromUID();
+    constructor() {
+        effect(() => {
+            const acc = this.account();
+            if (acc) {
+                this.extractInitials(acc);
+                this.generateColorsFromUID(acc);
+            }
+        });
     }
 
-    private extractInitials(): void {
-        const firstInitial = this.account()?.firstName?.charAt(0) || '';
-        const lastInitial = this.account()?.lastName?.charAt(0) || '';
+    private extractInitials(account: Account): void {
+        const firstInitial = account?.firstName?.charAt(0) || '';
+        const lastInitial = account?.lastName?.charAt(0) || '';
         this.initials = (firstInitial + lastInitial).toUpperCase();
     }
 
-    private generateColorsFromUID(): void {
-        const account = this.account();
+    private generateColorsFromUID(account: Account): void {
         if (!account?.uid) {
             this.backgroundColor = '#aaa';
             this.textColor = '#fff';
