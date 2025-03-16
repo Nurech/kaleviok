@@ -17,7 +17,7 @@ export const routes: Routes = [
     },
     {
         path: 'account',
-        loadComponent: () => import('./core/components/account/account.component').then((c) => c.AccountComponent),
+        loadComponent: () => import('./core/components/accounts/account/account.component').then((c) => c.AccountComponent),
         title: 'account'
     },
     {

@@ -11,17 +11,4 @@
             </div>
         </div>
     </div>
-    <div class="mt-2 h-full overflow-y-auto">
-        <div *ngFor="let setting of settings$ | async" class="flex flex-row items-center justify-between py-1">
-            <p class="flex items-center">
-                @if (setting?.icon) {
-                    <mat-icon class="mr-1">{{ setting.icon }}</mat-icon>
-                }
-                @if (setting.description) {
-                    {{ setting.description | translate }}
-                }
-            </p>
-            <mat-slide-toggle [(ngModel)]="setting.value" (change)="onChangeSetting(setting)"></mat-slide-toggle>
-        </div>
-    </div>
 </div>
