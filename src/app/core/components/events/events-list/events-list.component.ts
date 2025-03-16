@@ -4,7 +4,7 @@ import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { selectEvents } from '../../../../store/events/events.selectors';
 import { EventMiniComponent } from '../event-mini/event-mini.component';
-import { IEvent } from '../../../../store/events/events.model';
+import { Event } from '../../../../store/events/events.model';
 
 @Component({
     selector: 'app-events-list',
@@ -15,5 +15,5 @@ import { IEvent } from '../../../../store/events/events.model';
 })
 export class EventsListComponent {
     store$ = inject(Store);
-    events$: Observable<IEvent[] | any[]> = this.store$.pipe(select(selectEvents));
+    events$: Observable<Event[] | any[]> = this.store$.pipe(select(selectEvents));
 }

@@ -9,15 +9,15 @@ import {
     createEventSuccess,
     updateEventSuccess
 } from './events.actions';
-import { IEvent } from './events.model';
+import { Event } from './events.model';
 
 export const featureKey = 'events';
 
-export const eventAdapter = createEntityAdapter<IEvent>({
+export const eventAdapter = createEntityAdapter<Event>({
     selectId: (event) => event.id
 });
 
-export interface State extends EntityState<IEvent> {
+export interface State extends EntityState<Event> {
     loading: boolean;
     error: any;
 }

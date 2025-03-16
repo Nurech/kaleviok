@@ -9,7 +9,7 @@ export enum EventStatus {
     REJECTED = 'rejected'
 }
 
-export interface IEvent {
+export interface Event {
     id: string;
     status: EventStatus;
     title?: string;
@@ -25,7 +25,7 @@ export interface IEvent {
 }
 
 export interface EventVM {
-    event: IEvent | null;
+    event: Event | null;
     files: AppFile[] | [];
     createdBy: Account | null;
 }

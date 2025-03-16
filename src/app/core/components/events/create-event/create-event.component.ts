@@ -21,7 +21,7 @@ import { downloadFilesByEventId } from '../../../../store/files/files.actions';
 import { AppFile } from '../../../../store/files/files.model';
 import { ValidatorsCustom } from '../../../../shared/validators/validators-custom';
 import { selectMaxFilesAllowedWhenCreateEvent } from '../../../../store/app-settings/app-settings.selectors';
-import { EventStatus, IEvent } from '../../../../store/events/events.model';
+import { EventStatus, Event } from '../../../../store/events/events.model';
 
 @Component({
     selector: 'app-create-event',
@@ -50,7 +50,7 @@ export class CreateEventComponent {
     private store$ = inject(Store);
     private dialogService = inject(DialogService);
     maxFilesAllowed$: Signal<number> = toSignal(this.store$.select(selectMaxFilesAllowedWhenCreateEvent), { initialValue: 10 });
-    event$: Signal<IEvent> = toSignal(this.store$.pipe(select(selectCurrentEvent)), { initialValue: {} as IEvent });
+    event$: Signal<Event> = toSignal(this.store$.pipe(select(selectCurrentEvent)), { initialValue: {} as Event });
     eventFiles$: Signal<AppFile[]> = toSignal(this.store$.pipe(select(selectAllEventFiles)), { initialValue: [] });
 
     eventForm: FormGroup = this.fb.group({

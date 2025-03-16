@@ -5,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { EventStatus, IEvent } from '../../../../store/events/events.model';
+import { EventStatus, Event } from '../../../../store/events/events.model';
 import { InfoComponent } from '../../../../shared/components/info/info.component';
 import { editEvent } from '../../../../store/events/events.actions';
 @Component({
@@ -16,7 +16,7 @@ import { editEvent } from '../../../../store/events/events.actions';
     styleUrl: './event-mini.component.scss'
 })
 export class EventMiniComponent {
-    @Input() event!: IEvent;
+    @Input() event!: Event;
     router = inject(Router);
     store$ = inject(Store);
 
