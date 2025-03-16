@@ -1,6 +1,6 @@
 {
   "name": "kaleviok",
-  "version": "0.0.180",
+  "version": "0.0.181",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "ng": "ng",
@@ -8,12 +8,10 @@
     "test": "ng test",
     "prepare": "husky",
     "prebuild": "node ./scripts/update-ngsw.js",
-    "start:dev": "gcloud config set project kaleviok-dev && pnpm run env:dev && ng serve --configuration development --disable-host-check",
+    "start:dev": "gcloud config set project kaleviok-dev && ng serve --configuration development --disable-host-check",
     "start:prod": "gcloud config set project kaleviok-9aeb0 && pnpm run env:prod && ng serve --configuration production --disable-host-check",
-    "build:dev": "pnpm run prebuild && pnpm run env:dev && ng build --configuration development",
-    "build:prod": "pnpm run prebuild && pnpm run env:prod && ng build --configuration production",
-    "env:dev": "cross-env NODE_ENV=dev node ./scripts/replace-env.js",
-    "env:prod": "cross-env NODE_ENV=prod node ./scripts/replace-env.js",
+    "build:dev": "pnpm run prebuild && ng build --configuration development",
+    "build:prod": "pnpm run prebuild ng build --configuration production",
     "bump-version": "node ./scripts/bump-version.js",
     "install:generate-store": "cd generate-store && pnpm install && pnpm run build && pnpm link && cd .. && pnpm i --save-dev ./generate-store",
     "install:functions": "cd functions && pnpm install",
