@@ -31,7 +31,6 @@ Open browser at http://localhost:4200
 
 # Schematics
 
-
 Provide a way to generate feature modules with ngrx store, actions, effects, reducers, selectors and service. This helps to keep the codebase consistent and reduces the time to create new feature modules and keeps the codebase consistent.
 
 Located in `<root>/generate-store` they need to be installed first. If not already installed run `npm install` at project root, it should install and link the schematics package.
