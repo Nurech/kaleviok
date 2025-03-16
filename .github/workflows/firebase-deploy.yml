@@ -20,7 +20,7 @@ jobs:
                   node-version: 20
 
             - name: Install dependencies
-              run: npm install
+              run: pnpm install
 
             - name: Determine Build and Deployment Environment
               run: |
@@ -50,10 +50,10 @@ jobs:
                   fi
 
             - name: Replace environment variables
-              run: npm run env:${{ env.DEPLOY_ENV }}
+              run: pnpm run env:${{ env.DEPLOY_ENV }}
 
             - name: Build application
-              run: npm run build:${{ env.DEPLOY_ENV }}
+              run: pnpm run build:${{ env.DEPLOY_ENV }}
 
             - name: Deploy to Firebase Hosting
               uses: w9jds/firebase-action@master
