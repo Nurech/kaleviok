@@ -16,7 +16,7 @@ npm run start:prod
 
 ### Run locally
 
-Ensure .env (not in git - secret!) file is present in the root of the project. At build time we replace values from `.env` file to `environment.ts` file (dev or prod) based on the environment.
+Ensure .env (not in git - secret!) file is present in the root of the project. At build time we replace values from `.env` file to `environmentDev.ts` file (dev or prod) based on the environmentDev.
 
 Run the following command to start the project locally.
 

@@ -25,7 +25,7 @@ import localeEt from '@angular/common/locales/et';
 import localeEtExtra from '@angular/common/locales/extra/et';
 import { MissingTranslationService } from './shared/services/missing-translation.service';
 import { PwaService } from './shared/services/pwa.service';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.dev';
 import { routes } from './app.routes';
 import { RootStoreModule } from './store/root.module';
 import { ThemeChangerService } from './shared/services/theme-changer.service';

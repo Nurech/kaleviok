@@ -36,8 +36,8 @@ module.exports = tseslint.config(
             '.firebase/',
             '*-debug.log',
             '.runtimeconfig.json',
-            'src/environments/environment.ts',
-            'src/environments/environment.prod.ts',
+            'src/environments/environmentDev.ts',
+            'src/environments/environmentDev.prod.ts',
             '.env.prod',
             '.env.dev',
             '.env.*'
